@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org">
+<body>
+
+<!--
+  Phân trang cho danh sách sản phẩm. Giữ nguyên toàn bộ điều kiện lọc trên mọi liên kết
+  (keyword, hãng, loại, khoảng giá, sắp xếp) – nếu thiếu, sang trang 2 là mất bộ lọc.
+  pageNumbers do Controller tính sẵn (chỉ vài nút quanh trang hiện tại) để template không chứa logic.
+-->
+<nav th:fragment="productPager(page, pageNumbers, filter)" th:if="${page.totalPages > 1}"
+     class="mt-4" aria-label="Phân trang danh sách sản phẩm">
+    <ul class="pagination justify-content-center mb-1">
+        <li class="page-item" th:classappend="${page.first} ? 'disabled'">
+            <a class="page-link" rel="prev"
+               th:href="@{/san-pham(page=${page.number}, keyword=${filter.keyword}, brandId=${filter.brandId},
+                                    categoryId=${filter.categoryId}, minPrice=${filter.minPrice},
+                                    maxPrice=${filter.maxPrice}, sort=${filter.sort})}">
+                <i class="bi bi-chevron-left"></i> Trước
+            </a>
+        </li>
+        <li class="page-item" th:each="n : ${pageNumbers}" th:classappend="${n == page.number} ? 'active'">
+            <a class="page-link" th:text="${n + 1}"
+               th:href="@{/san-pham(page=${n + 1}, keyword=${filter.keyword}, brandId=${filter.brandId},
+                                    categoryId=${filter.categoryId}, minPrice=${filter.minPrice},
+                                    maxPrice=${filter.maxPrice}, sort=${filter.sort})}">1</a>
+        </li>
+        <li class="page-item" th:classappend="${page.last} ? 'disabled'">
+            <a class="page-link" rel="next"
+               th:href="@{/san-pham(page=${page.number + 2}, keyword=${filter.keyword}, brandId=${filter.brandId},
+                                    categoryId=${filter.categoryId}, minPrice=${filter.minPrice},
+                                    maxPrice=${filter.maxPrice}, sort=${filter.sort})}">
+                Sau <i class="bi bi-chevron-right"></i>
+            </a>
+        </li>
+    </ul>
+    <p class="text-center text-muted small mb-0"
+       th:text="|Trang ${page.number + 1}/${page.totalPages} – ${page.totalElements} sản phẩm|">Trang 1/1</p>
+</nav>
+
+</body>
+</html>

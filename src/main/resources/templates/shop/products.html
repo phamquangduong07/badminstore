@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="vi"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/base}">
+<head>
+    <title>Danh mục vợt cầu lông</title>
+</head>
+<body>
+
+<th:block layout:fragment="content">
+
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a th:href="@{/}">Trang chủ</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Sản phẩm</li>
+        </ol>
+    </nav>
+
+    <div class="d-flex flex-wrap justify-content-between align-items-center gap-2 mb-3">
+        <h1 class="h4 mb-0">Vợt cầu lông</h1>
+        <span class="text-muted small" th:text="|${page.totalElements} sản phẩm phù hợp|">0 sản phẩm</span>
+    </div>
+
+    <!-- ===== Bộ lọc: gửi bằng GET để lọc xong copy được URL, F5 không hỏi lại ===== -->
+    <form class="card border-0 shadow-sm mb-4" method="get" th:action="@{/san-pham}" th:object="${filter}">
+        <div class="card-body">
+            <div class="row g-3">
+                <div class="col-12 col-lg-4">
+                    <label class="form-label" for="keyword">Tên vợt</label>
+                    <input class="form-control" type="search" id="keyword" th:field="*{keyword}"
+                           maxlength="100" placeholder="Ví dụ: Astrox, Thruster, JetSpeed…">
+                </div>
+                <div class="col-6 col-lg-2">
+                    <label class="form-label" for="brandId">Hãng</label>
+                    <select class="form-select" id="brandId" th:field="*{brandId}">
+                        <option value="">Tất cả hãng</option>
+                        <option th:each="brand : ${brands}" th:value="${brand.id}" th:text="${brand.name}">Yonex</option>
+                    </select>
+                </div>
+                <div class="col-6 col-lg-2">
+                    <label class="form-label" for="categoryId">Loại vợt</label>
+                    <select class="form-select" id="categoryId" th:field="*{categoryId}">
+                        <option value="">Tất cả loại</option>
+                        <option th:each="category : ${categories}" th:value="${category.id}" th:text="${category.name}">Tấn công</option>
+                    </select>
+                </div>
+                <div class="col-6 col-lg-2">
+                    <label class="form-label" for="minPrice">Giá từ (₫)</label>
+                    <input class="form-control" type="number" id="minPrice" th:field="*{minPrice}"
+                           min="0" step="10000" placeholder="0">
+                    <div class="text-danger small" th:if="${#fields.hasErrors('minPrice')}">Giá không hợp lệ</div>
+                </div>
+                <div class="col-6 col-lg-2">
+                    <label class="form-label" for="maxPrice">Giá đến (₫)</label>
+                    <input class="form-control" type="number" id="maxPrice" th:field="*{maxPrice}"
+                           min="0" step="10000" placeholder="Không giới hạn">
+                    <div class="text-danger small" th:if="${#fields.hasErrors('maxPrice')}">Giá không hợp lệ</div>
+                </div>
+
+                <div class="col-12 col-md-6 col-lg-4">
+                    <label class="form-label" for="sort">Sắp xếp theo</label>
+                    <select class="form-select" id="sort" th:field="*{sort}">
+                        <option th:each="item : ${sorts}" th:value="${item.name()}" th:text="${item.label}"
+                                th:selected="${filter.sort == item.name()}">Mới nhất</option>
+                    </select>
+                </div>
+                <div class="col-12 col-lg-8 d-flex align-items-end gap-2">
+                    <button class="btn btn-primary" type="submit"><i class="bi bi-search"></i> Tìm kiếm</button>
+                    <a class="btn btn-outline-secondary" th:href="@{/san-pham}"
+                       th:if="${filter.keyword != null or filter.brandId != null or filter.categoryId != null
+                                or filter.minPrice != null or filter.maxPrice != null}">
+                        <i class="bi bi-x-circle"></i> Xoá bộ lọc
+                    </a>
+                </div>
+            </div>
+        </div>
+    </form>
+
+    <!-- ===== Không có sản phẩm phù hợp ===== -->
+    <div class="card border-0 shadow-sm" th:if="${page.totalElements == 0}">
+        <div class="card-body empty-state">
+            <i class="bi bi-inboxes" aria-hidden="true"></i>
+            <h2 class="h5">Chưa có sản phẩm phù hợp</h2>
+            <p class="text-muted mb-3">Bạn thử đổi từ khoá hoặc bỏ bớt điều kiện lọc nhé.</p>
+            <a class="btn btn-outline-primary" th:href="@{/san-pham}">Xem toàn bộ vợt</a>
+        </div>
+    </div>
+
+    <!-- ===== Lưới sản phẩm ===== -->
+    <div class="row g-3 g-lg-4">
+        <div class="col-6 col-md-4 col-lg-3" th:each="card : ${page.content}" data-aos="fade-up">
+            <div th:replace="~{fragments/product-card :: card(${card})}"></div>
+        </div>
+    </div>
+
+    <div th:replace="~{fragments/pagination :: productPager(${page}, ${pageNumbers}, ${filter})}"></div>
+
+</th:block>
+
+</body>
+</html>

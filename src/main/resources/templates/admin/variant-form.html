@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="vi"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/admin}">
+<head>
+    <title th:text="${variantId == null} ? 'Thêm biến thể' : 'Sửa biến thể'">Biến thể</title>
+</head>
+<body>
+
+<th:block layout:fragment="content">
+
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a th:href="@{/admin}">Tổng quan</a></li>
+            <li class="breadcrumb-item"><a th:href="@{/admin/san-pham}">Sản phẩm</a></li>
+            <li class="breadcrumb-item">
+                <a th:href="@{/admin/san-pham/{id}/bien-the(id=${product.id})}" th:text="${product.name}">Sản phẩm</a>
+            </li>
+            <li class="breadcrumb-item active" aria-current="page"
+                th:text="${variantId == null} ? 'Thêm biến thể' : 'Sửa biến thể'">Thêm biến thể</li>
+        </ol>
+    </nav>
+
+    <h1 class="h4 mb-3">
+        <i class="bi bi-boxes text-primary"></i>
+        <span th:text="${variantId == null} ? |Thêm biến thể cho &quot;${product.name}&quot;| : |Sửa biến thể #${variantId} của &quot;${product.name}&quot;|">Biến thể</span>
+    </h1>
+
+    <div class="alert alert-warning" th:if="${formError != null}" role="alert">
+        <i class="bi bi-exclamation-triangle"></i> <span th:text="${formError}">Lý do lỗi</span>
+    </div>
+
+    <!-- Biểu thức ternary phải nằm trên MỘT dòng: Thymeleaf không xuống dòng ngay trước dấu ? -->
+    <form th:action="${variantId == null} ? @{/admin/san-pham/{id}/bien-the(id=${product.id})} : @{/admin/san-pham/{id}/bien-the/{variantId}(id=${product.id}, variantId=${variantId})}"
+          th:object="${form}" method="post" novalidate
+          data-confirm="Lưu biến thể này?">
+        <div class="row g-3">
+            <div class="col-lg-7">
+                <div class="card border-0 shadow-sm">
+                    <div class="card-header bg-white fw-semibold"><i class="bi bi-upc-scan"></i> Nhận diện biến thể</div>
+                    <div class="card-body row g-3">
+                        <div class="col-sm-6">
+                            <label class="form-label" for="sku">SKU <span class="text-danger">*</span></label>
+                            <input class="form-control text-uppercase" id="sku" th:field="*{sku}"
+                                   th:classappend="${#fields.hasErrors('sku')} ? 'is-invalid'"
+                                   maxlength="50" required placeholder="YX-AX100ZZ-01">
+                            <div class="invalid-feedback" th:if="${#fields.hasErrors('sku')}"
+                                 th:errors="*{sku}">SKU không hợp lệ</div>
+                            <div class="form-text">Duy nhất trong toàn hệ thống, dùng để tra cứu và trừ kho.</div>
+                        </div>
+                        <div class="col-sm-6">
+                            <label class="form-label" for="color">Màu sắc <span class="text-danger">*</span></label>
+                            <input class="form-control" id="color" th:field="*{color}"
+                                   th:classappend="${#fields.hasErrors('color')} ? 'is-invalid'"
+                                   maxlength="50" required placeholder="Xanh đen">
+                            <div class="invalid-feedback" th:if="${#fields.hasErrors('color')}"
+                                 th:errors="*{color}">Màu không hợp lệ</div>
+                        </div>
+                        <div class="col-sm-6">
+                            <label class="form-label" for="weightClass">Trọng lượng <span class="text-danger">*</span></label>
+                            <select class="form-select" id="weightClass" th:field="*{weightClass}"
+                                    th:classappend="${#fields.hasErrors('weightClass')} ? 'is-invalid'" required>
+                                <option value="">-- Chọn --</option>
+                                <option th:each="weight : ${weightClasses}" th:value="${weight}" th:text="${weight}">4U</option>
+                            </select>
+                            <div class="invalid-feedback" th:if="${#fields.hasErrors('weightClass')}"
+                                 th:errors="*{weightClass}">Trọng lượng không hợp lệ</div>
+                        </div>
+                        <div class="col-sm-6">
+                            <label class="form-label" for="gripSize">Cỡ cán <span class="text-danger">*</span></label>
+                            <select class="form-select" id="gripSize" th:field="*{gripSize}"
+                                    th:classappend="${#fields.hasErrors('gripSize')} ? 'is-invalid'" required>
+                                <option value="">-- Chọn --</option>
+                                <option th:each="grip : ${gripSizes}" th:value="${grip}" th:text="${grip}">G5</option>
+                            </select>
+                            <div class="invalid-feedback" th:if="${#fields.hasErrors('gripSize')}"
+                                 th:errors="*{gripSize}">Cỡ cán không hợp lệ</div>
+                        </div>
+                        <div class="col-12">
+                            <label class="form-label" for="imageUrl">Ảnh riêng của biến thể (tuỳ chọn)</label>
+                            <input class="form-control" id="imageUrl" th:field="*{imageUrl}" maxlength="500"
+                                   placeholder="/images/yonex-astrox-100zz-xanh-den.svg">
+                            <div class="form-text">
+                                Đường dẫn ảnh dùng cho giỏ hàng và đơn hàng; bỏ trống thì dùng ảnh chính của sản phẩm.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-5">
+                <div class="card border-0 shadow-sm">
+                    <div class="card-header bg-white fw-semibold"><i class="bi bi-cash-coin"></i> Giá &amp; tồn kho</div>
+                    <div class="card-body row g-3">
+                        <div class="col-sm-6">
+                            <label class="form-label" for="price">Giá bán (₫) <span class="text-danger">*</span></label>
+                            <input class="form-control" id="price" th:field="*{price}" type="number"
+                                   th:classappend="${#fields.hasErrors('price')} ? 'is-invalid'"
+                                   min="0" step="1000" required placeholder="4690000">
+                            <div class="invalid-feedback" th:if="${#fields.hasErrors('price')}"
+                                 th:errors="*{price}">Giá không hợp lệ</div>
+                        </div>
+                        <div class="col-sm-6">
+                            <label class="form-label" for="originalPrice">Giá gạch ngang (₫)</label>
+                            <input class="form-control" id="originalPrice" th:field="*{originalPrice}" type="number"
+                                   th:classappend="${#fields.hasErrors('originalPrice')} ? 'is-invalid'"
+                                   min="0" step="1000" placeholder="5.290.000 = 5290000">
+                            <div class="invalid-feedback" th:if="${#fields.hasErrors('originalPrice')}"
+                                 th:errors="*{originalPrice}">Giá gốc không hợp lệ</div>
+                            <div class="form-text">Bỏ trống nếu không giảm giá; nếu nhập phải ≥ giá bán.</div>
+                        </div>
+                        <div class="col-sm-6">
+                            <label class="form-label" for="stockQuantity">Tồn kho (chiếc) <span class="text-danger">*</span></label>
+                            <input class="form-control" id="stockQuantity" th:field="*{stockQuantity}" type="number"
+                                   th:classappend="${#fields.hasErrors('stockQuantity')} ? 'is-invalid'"
+                                   min="0" max="100000" required>
+                            <div class="invalid-feedback" th:if="${#fields.hasErrors('stockQuantity')}"
+                                 th:errors="*{stockQuantity}">Tồn kho không hợp lệ</div>
+                        </div>
+                        <div class="col-sm-6">
+                            <label class="form-label" for="status">Trạng thái bán <span class="text-danger">*</span></label>
+                            <select class="form-select" id="status" th:field="*{status}"
+                                    th:classappend="${#fields.hasErrors('status')} ? 'is-invalid'">
+                                <option th:each="item : ${variantStatuses}" th:value="${item.name()}"
+                                        th:text="${item.name() == 'ACTIVE'} ? 'Đang bán' : 'Ngừng bán'">Trạng thái</option>
+                            </select>
+                            <div class="invalid-feedback" th:if="${#fields.hasErrors('status')}"
+                                 th:errors="*{status}">Chưa chọn trạng thái</div>
+                        </div>
+                    </div>
+                    <div class="card-footer bg-white d-flex gap-2">
+                        <button class="btn btn-primary flex-grow-1" type="submit">
+                            <i class="bi bi-save"></i> Lưu biến thể
+                        </button>
+                        <a class="btn btn-outline-secondary"
+                           th:href="@{/admin/san-pham/{id}/bien-the(id=${product.id})}">Huỷ</a>
+                    </div>
+                </div>
+
+                <div class="alert alert-info small mt-3">
+                    <i class="bi bi-info-circle"></i> Mỗi tổ hợp <strong>màu × trọng lượng × cỡ cán</strong> chỉ được tạo
+                    một lần cho một sản phẩm (ràng buộc UQ_product_variant). Tồn kho được trừ tự động khi đơn được xác nhận.
+                </div>
+            </div>
+        </div>
+    </form>
+
+</th:block>
+
+</body>
+</html>

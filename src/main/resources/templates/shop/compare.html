@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="vi"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/base}">
+<head>
+    <title>So sánh sản phẩm</title>
+</head>
+<body>
+
+<th:block layout:fragment="content">
+
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a th:href="@{/}">Trang chủ</a></li>
+            <li class="breadcrumb-item"><a th:href="@{/san-pham}">Sản phẩm</a></li>
+            <li class="breadcrumb-item active" aria-current="page">So sánh</li>
+        </ol>
+    </nav>
+
+    <div class="d-flex flex-wrap justify-content-between align-items-center gap-2 mb-3">
+        <div>
+            <h1 class="h4 mb-0"><i class="bi bi-bar-chart-steps text-primary"></i> So sánh sản phẩm</h1>
+            <p class="text-muted small mb-0"
+               th:text="|Chọn tối đa ${maxItems} sản phẩm để đặt cạnh nhau và so thông số. Đang có ${items.size()} sản phẩm.|">
+                Chọn tối đa 4 sản phẩm.
+            </p>
+        </div>
+        <div class="d-flex gap-2" th:if="${!items.isEmpty()}">
+            <a class="btn btn-sm btn-outline-primary" th:href="@{/san-pham}">
+                <i class="bi bi-plus-lg"></i> Thêm sản phẩm khác
+            </a>
+            <form th:action="@{/so-sanh/xoa-het}" method="post"
+                  data-confirm="Xoá toàn bộ danh sách so sánh?">
+                <button class="btn btn-sm btn-outline-danger" type="submit">
+                    <i class="bi bi-x-circle"></i> Xoá tất cả
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Trạng thái rỗng: hướng dẫn khách cách thêm sản phẩm -->
+    <div class="card border-0 shadow-sm" th:if="${items.isEmpty()}">
+        <div class="card-body text-center py-5">
+            <i class="bi bi-bar-chart-steps display-4 text-muted"></i>
+            <p class="mt-3 mb-2 fw-semibold">Danh sách so sánh đang trống</p>
+            <p class="text-muted mb-3">
+                Vào trang sản phẩm và bấm <strong>“So sánh”</strong> ở mỗi mẫu vợt bạn quan tâm
+                (tối đa <span th:text="${maxItems}">4</span> mẫu).
+            </p>
+            <a class="btn btn-primary" th:href="@{/san-pham}">
+                <i class="bi bi-grid"></i> Xem danh sách vợt
+            </a>
+        </div>
+    </div>
+
+    <!-- Bảng so sánh: mỗi sản phẩm là một cột, mỗi tiêu chí là một dòng -->
+    <div class="card border-0 shadow-sm" th:unless="${items.isEmpty()}">
+        <div class="table-responsive">
+            <table class="table table-bordered align-middle mb-0 compare-table">
+                <thead class="table-light">
+                <tr>
+                    <th scope="col" class="compare-criteria">Tiêu chí</th>
+                    <th scope="col" th:each="item : ${items}" class="text-center">
+                        <img th:if="${item.thumbnailUrl != null}" th:src="@{${item.thumbnailUrl}}"
+                             th:alt="${'Ảnh ' + item.product.name}" class="compare-thumb mb-2">
+                        <div>
+                            <a class="text-decoration-none fw-semibold"
+                               th:href="@{/san-pham/{id}(id=${item.product.id})}"
+                               th:text="${item.product.name}">Tên vợt</a>
+                        </div>
+                        <div class="small text-muted" th:text="${item.product.productCode}">MÃ</div>
+                    </th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <th scope="row" class="text-muted fw-normal">Giá từ</th>
+                    <td class="text-center" th:each="item : ${items}">
+                        <span class="price-current"
+                              th:insert="~{fragments/common :: money(${item.minPrice})}">0 ₫</span>
+                    </td>
+                </tr>
+                <tr>
+                    <th scope="row" class="text-muted fw-normal">Tình trạng</th>
+                    <td class="text-center" th:each="item : ${items}">
+                        <span class="badge"
+                              th:classappend="${item.variantLabel == '—'} ? 'text-bg-secondary'
+                                             : (${item.available} ? 'text-bg-success' : 'text-bg-danger')"
+                              th:text="${item.stockLabel}">Còn hàng</span>
+                    </td>
+                </tr>
+                <tr>
+                    <th scope="row" class="text-muted fw-normal">Hãng</th>
+                    <td class="text-center" th:each="item : ${items}" th:text="${item.product.brand.name}">Hãng</td>
+                </tr>
+                <tr>
+                    <th scope="row" class="text-muted fw-normal">Lối chơi</th>
+                    <td class="text-center" th:each="item : ${items}" th:text="${item.product.category.name}">Loại</td>
+                </tr>
+                <tr>
+                    <th scope="row" class="text-muted fw-normal">Số phiên bản</th>
+                    <td class="text-center" th:each="item : ${items}" th:text="${item.variantLabel}">3 phiên bản</td>
+                </tr>
+                <tr>
+                    <th scope="row" class="text-muted fw-normal">Tồn kho</th>
+                    <td class="text-center" th:each="item : ${items}" th:text="${item.stockQuantityLabel}">12 chiếc</td>
+                </tr>
+                <tr>
+                    <th scope="row" class="text-muted fw-normal">Chiều dài</th>
+                    <td class="text-center" th:each="item : ${items}" th:text="${item.lengthLabel}">675 mm</td>
+                </tr>
+                <tr>
+                    <th scope="row" class="text-muted fw-normal">Điểm cân bằng</th>
+                    <td class="text-center" th:each="item : ${items}" th:text="${item.balancePointLabel}">295 mm</td>
+                </tr>
+                <tr>
+                    <th scope="row" class="text-muted fw-normal">Kiểu cân bằng</th>
+                    <td class="text-center" th:each="item : ${items}" th:text="${item.balanceTypeLabel}">Nặng đầu</td>
+                </tr>
+                <tr>
+                    <th scope="row" class="text-muted fw-normal">Độ cứng thân</th>
+                    <td class="text-center" th:each="item : ${items}" th:text="${item.flexibilityLabel}">Cứng</td>
+                </tr>
+                <tr>
+                    <th scope="row" class="text-muted fw-normal">Căng tối đa</th>
+                    <td class="text-center" th:each="item : ${items}" th:text="${item.maxTensionLabel}">30 kg</td>
+                </tr>
+                <tr>
+                    <th scope="row" class="text-muted fw-normal">Vật liệu khung</th>
+                    <td class="text-center" th:each="item : ${items}" th:text="${item.frameMaterialLabel}">Graphite</td>
+                </tr>
+                <tr>
+                    <th scope="row" class="text-muted fw-normal">Vật liệu thân</th>
+                    <td class="text-center" th:each="item : ${items}" th:text="${item.shaftMaterialLabel}">Graphite</td>
+                </tr>
+                <tr>
+                    <th scope="row" class="text-muted fw-normal">Thao tác</th>
+                    <td class="text-center" th:each="item : ${items}">
+                        <div class="d-flex flex-column gap-1 align-items-center">
+                            <a class="btn btn-sm btn-primary"
+                               th:href="@{/san-pham/{id}(id=${item.product.id})}">
+                                <i class="bi bi-eye"></i> Xem chi tiết
+                            </a>
+                            <form th:action="@{/so-sanh/xoa}" method="post"
+                                  th:data-confirm="${'Bỏ ' + item.product.name + ' khỏi danh sách so sánh?'}">
+                                <input type="hidden" name="productId" th:value="${item.product.id}">
+                                <button class="btn btn-sm btn-outline-danger" type="submit">
+                                    <i class="bi bi-x-lg"></i> Bỏ
+                                </button>
+                            </form>
+                        </div>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+</th:block>
+
+</body>
+</html>

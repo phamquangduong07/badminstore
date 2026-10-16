@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="vi"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/admin}">
+<head>
+    <title>Phiếu bán hàng</title>
+</head>
+<body>
+
+<th:block layout:fragment="content">
+
+    <div class="d-flex flex-wrap justify-content-between align-items-center gap-2 mb-3 d-print-none">
+        <h1 class="h4 mb-0"><i class="bi bi-receipt text-primary"></i> Phiếu bán hàng</h1>
+        <div class="d-flex flex-wrap gap-2">
+            <button class="btn btn-primary" type="button" onclick="window.print()">
+                <i class="bi bi-printer"></i> In phiếu
+            </button>
+            <a class="btn btn-success" th:href="@{/admin/ban-hang}">
+                <i class="bi bi-plus-circle"></i> Bán tiếp
+            </a>
+            <a class="btn btn-outline-secondary" th:href="@{'/admin/don-hang/' + ${detail.order.id}}">
+                <i class="bi bi-box-arrow-up-right"></i> Xem đơn trong hệ thống
+            </a>
+        </div>
+    </div>
+
+    <div class="alert alert-success d-print-none" role="alert" th:if="${cashReceived != null}">
+        <i class="bi bi-check2-circle"></i>
+        Khách đưa <strong th:insert="~{fragments/common :: money(${cashReceived})}">0 ₫</strong>
+        – tiền thừa trả khách <strong th:insert="~{fragments/common :: money(${changeAmount})}">0 ₫</strong>.
+    </div>
+
+    <!-- Phiếu in: khổ hẹp như hoá đơn máy in nhiệt, chỉ gồm nội dung cần cho khách -->
+    <div class="pos-receipt card border-0 shadow-sm">
+        <div class="card-body">
+            <div class="text-center mb-3">
+                <div class="fw-bold fs-5" th:text="${shop.name}">BadStore</div>
+                <div class="small" th:text="${shop.address}">Địa chỉ cửa hàng</div>
+                <div class="small">
+                    Hotline: <span th:text="${shop.hotline}">1900 0000</span>
+                    – Email: <span th:text="${shop.email}">cskh@badstore.local</span>
+                </div>
+            </div>
+
+            <div class="text-center fw-semibold mb-3 text-uppercase">Phiếu bán hàng</div>
+
+            <table class="table table-sm table-borderless pos-receipt-meta mb-2">
+                <tbody>
+                <tr>
+                    <td>Số phiếu:</td>
+                    <td class="fw-semibold" th:text="${detail.order.orderCode}">BS000000</td>
+                </tr>
+                <tr>
+                    <td>Ngày bán:</td>
+                    <td th:text="${#temporals.format(detail.order.createdAt, 'dd/MM/yyyy HH:mm')}">01/01/2026 09:00</td>
+                </tr>
+                <tr>
+                    <td>Khách hàng:</td>
+                    <td th:text="${detail.order.receiverName}">Khách lẻ</td>
+                </tr>
+                <tr>
+                    <td>Điện thoại:</td>
+                    <td th:text="${detail.order.receiverPhone}">0000000000</td>
+                </tr>
+                <tr th:if="${detail.order.user != null}">
+                    <td>Tài khoản:</td>
+                    <td th:text="${detail.order.user.email}">khach@example.com</td>
+                </tr>
+                </tbody>
+            </table>
+
+            <table class="table table-sm pos-receipt-items">
+                <thead>
+                <tr>
+                    <th scope="col">Sản phẩm</th>
+                    <th scope="col" class="text-center">SL</th>
+                    <th scope="col" class="text-end">Đơn giá</th>
+                    <th scope="col" class="text-end">Thành tiền</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="item : ${detail.order.items}">
+                    <td>
+                        <div th:text="${item.productName}">Tên vợt</div>
+                        <div class="small text-muted"
+                             th:text="|${item.color} / ${item.weightClass} / ${item.gripSize} · SKU ${item.sku}|">
+                            Phiên bản
+                        </div>
+                    </td>
+                    <td class="text-center" th:text="${item.quantity}">1</td>
+                    <td class="text-end" th:insert="~{fragments/common :: money(${item.unitPrice})}">0 ₫</td>
+                    <td class="text-end" th:insert="~{fragments/common :: money(${item.subtotal})}">0 ₫</td>
+                </tr>
+                </tbody>
+            </table>
+
+            <table class="table table-sm table-borderless pos-receipt-meta mb-2">
+                <tbody>
+                <tr>
+                    <td>Tạm tính:</td>
+                    <td class="text-end" th:insert="~{fragments/common :: money(${detail.order.subtotal})}">0 ₫</td>
+                </tr>
+                <tr th:if="${detail.order.discountAmount.signum() > 0}">
+                    <td>
+                        Giảm giá
+                        <span class="small text-muted" th:if="${detail.voucherLabel != null}"
+                              th:text="|(${detail.voucherLabel})|">(mã)</span>:
+                    </td>
+                    <td class="text-end">−<span th:insert="~{fragments/common :: money(${detail.order.discountAmount})}">0 ₫</span></td>
+                </tr>
+                <tr th:if="${detail.order.shippingFee.signum() > 0}">
+                    <td>Phí vận chuyển:</td>
+                    <td class="text-end" th:insert="~{fragments/common :: money(${detail.order.shippingFee})}">0 ₫</td>
+                </tr>
+                <tr class="fw-bold fs-5 border-top">
+                    <td>Khách phải trả:</td>
+                    <td class="text-end" th:insert="~{fragments/common :: money(${detail.order.totalAmount})}">0 ₫</td>
+                </tr>
+                <tr th:if="${cashReceived != null}">
+                    <td>Tiền khách đưa:</td>
+                    <td class="text-end" th:insert="~{fragments/common :: money(${cashReceived})}">0 ₫</td>
+                </tr>
+                <tr th:if="${changeAmount != null}" class="fw-semibold">
+                    <td>Tiền thừa trả khách:</td>
+                    <td class="text-end" th:insert="~{fragments/common :: money(${changeAmount})}">0 ₫</td>
+                </tr>
+                <tr>
+                    <td>Thanh toán:</td>
+                    <td class="text-end">
+                        <span th:text="${detail.paymentMethodLabel}">Tiền mặt tại quầy</span>
+                        <span class="badge text-bg-success ms-1" th:if="${detail.paymentStatusLabel == 'Đã thanh toán'}">
+                            Đã thu tiền
+                        </span>
+                        <span class="badge text-bg-warning ms-1" th:unless="${detail.paymentStatusLabel == 'Đã thanh toán'}"
+                              th:text="${detail.paymentStatusLabel}">Chờ thanh toán</span>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+
+            <p class="small mb-1" th:if="${detail.order.note != null}">
+                <span class="fw-semibold">Ghi chú:</span> <span th:text="${detail.order.note}">Ghi chú</span>
+            </p>
+            <p class="small mb-1">
+                <span class="fw-semibold">Hình thức nhận hàng:</span>
+                <span th:text="${detail.order.shippingAddress}">Khách nhận tại quầy</span>
+            </p>
+            <p class="small text-muted mb-3">
+                Trạng thái đơn: <span th:text="${detail.order.orderStatus.label}">Đã xác nhận</span>
+                – Bảo hành theo phiếu, đổi trả trong 7 ngày nếu còn nguyên tem.
+            </p>
+
+            <div class="text-center small">
+                <div class="fw-semibold">Cảm ơn quý khách đã mua hàng tại <span th:text="${shop.name}">BadStore</span>!</div>
+                <div class="text-muted">Phiếu này là chứng từ bán hàng tại quầy.</div>
+            </div>
+        </div>
+    </div>
+
+</th:block>
+
+</body>
+</html>

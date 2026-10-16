@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org">
+<body>
+
+<!--
+  Các fragment định dạng dùng lại ở nhiều trang.
+  Quy ước hiển thị của dự án: tiền "1.500.000 ₫" (dấu chấm ngăn nghìn), ngày "dd/MM/yyyy HH:mm".
+  Dùng th:insert (không dùng th:replace) khi cần giữ class/style của thẻ bao ngoài.
+-->
+
+<!-- Tiền VND. Giá null = sản phẩm chưa có biến thể đang bán ⇒ hiện "Liên hệ". -->
+<span th:fragment="money(value)"
+      th:text="${value != null} ? |${#numbers.formatInteger(value, 0, 'POINT')} ₫| : 'Liên hệ'">0 ₫</span>
+
+<!-- Ngày giờ. -->
+<span th:fragment="dateTime(value)"
+      th:text="${value != null} ? ${#temporals.format(value, 'dd/MM/yyyy HH:mm')} : ''"></span>
+
+</body>
+</html>

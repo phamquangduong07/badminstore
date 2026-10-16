@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org">
+<body>
+
+<!--
+  Flash message (thêm bằng RedirectAttributes) hiển thị dưới dạng alert Bootstrap
+  và được js/main.js đọc lên để bật toast SweetAlert2.
+-->
+<div th:fragment="flash">
+    <div class="alert alert-success d-flex align-items-center shadow-sm" role="alert" th:if="${successMessage}">
+        <i class="bi bi-check-circle-fill me-2 fs-5" aria-hidden="true"></i>
+        <div th:text="${successMessage}">Thao tác thành công.</div>
+    </div>
+    <div class="alert alert-danger d-flex align-items-center shadow-sm" role="alert" th:if="${errorMessage}">
+        <i class="bi bi-exclamation-triangle-fill me-2 fs-5" aria-hidden="true"></i>
+        <div th:text="${errorMessage}">Đã xảy ra lỗi.</div>
+    </div>
+    <div id="flash-notifications" class="d-none"
+         th:attr="data-success=${successMessage}, data-error=${errorMessage}"></div>
+</div>
+
+</body>
+</html>

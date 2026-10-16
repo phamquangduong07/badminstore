@@ -1,0 +1,64 @@
+# ============================================================
+# File AI coding tool – KHÔNG đẩy lên GitHub
+# ============================================================
+AGENTS.md
+CLAUDE.md
+opencode.json
+.claude/
+.cursor/
+.opencode/
+.aider*
+.codex/
+.gemini/
+.github/copilot-instructions.md
+# Nhật ký dùng AI – giữ trên máy, nộp riêng kèm đồ án
+docs/AI_USAGE_LOG.md
+# README của bộ cấu hình AI – không dùng cho repo
+README.md
+
+# ============================================================
+# Build output
+# ============================================================
+target/
+build/
+out/
+bin/
+*.class
+
+# ============================================================
+# IDE / Editor
+# ============================================================
+.idea/
+*.iml
+.vscode/
+.settings/
+.classpath
+.project
+nbproject/
+
+# ============================================================
+# Secret & cấu hình riêng của máy
+# ============================================================
+.env
+.env.local
+src/main/resources/application-local.yml
+src/main/resources/application-local.properties
+
+# ============================================================
+# File tải lên & log
+# ============================================================
+uploads/
+logs/
+*.log
+
+# ============================================================
+# File rác của hệ điều hành
+# ============================================================
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# ============================================================
+# File không cần thiết khác
+# ============================================================
+HELP.md

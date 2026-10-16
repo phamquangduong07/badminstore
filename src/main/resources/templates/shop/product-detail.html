@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="vi"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/base}">
+<head>
+    <title th:text="${product.name}">Chi tiết sản phẩm</title>
+</head>
+<body>
+
+<th:block layout:fragment="content">
+
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a th:href="@{/}">Trang chủ</a></li>
+            <li class="breadcrumb-item"><a th:href="@{/san-pham}">Sản phẩm</a></li>
+            <li class="breadcrumb-item active" aria-current="page" th:text="${product.name}">Tên vợt</li>
+        </ol>
+    </nav>
+
+    <div class="row g-4">
+        <!-- ===== Bộ ảnh: nhiều ảnh thì dùng carousel Bootstrap, 1 ảnh thì hiện thẳng, chưa có ảnh thì dùng ảnh mặc định ===== -->
+        <div class="col-lg-6">
+            <div class="card border-0 shadow-sm">
+                <div class="card-body p-2">
+                    <div th:if="${images.size() > 1}" id="productGallery" class="carousel slide" data-bs-ride="carousel">
+                        <div class="carousel-inner rounded-3">
+                            <div class="carousel-item" th:each="image, iter : ${images}"
+                                 th:classappend="${iter.first} ? 'active'">
+                                <img class="d-block w-100 product-thumb" th:src="${image.imageUrl}"
+                                     th:alt="|Ảnh ${product.name} – hình ${iter.count}|" loading="lazy">
+                            </div>
+                        </div>
+                        <button class="carousel-control-prev" type="button" data-bs-target="#productGallery" data-bs-slide="prev">
+                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                            <span class="visually-hidden">Ảnh trước</span>
+                        </button>
+                        <button class="carousel-control-next" type="button" data-bs-target="#productGallery" data-bs-slide="next">
+                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                            <span class="visually-hidden">Ảnh sau</span>
+                        </button>
+                    </div>
+
+                    <img th:if="${images.size() == 1}" class="d-block w-100 product-thumb rounded-3"
+                         th:src="${images[0].imageUrl}" th:alt="|Ảnh ${product.name}|">
+
+                    <img th:if="${images.isEmpty()}" class="d-block w-100 product-thumb rounded-3"
+                         th:src="@{/images/no-image.svg}" th:alt="|Chưa có ảnh cho ${product.name}|">
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-6">
+            <div class="card border-0 shadow-sm h-100 buy-box">
+                <div class="card-body">
+                    <div class="d-flex flex-wrap gap-2 mb-2">
+                        <a class="badge text-bg-primary text-decoration-none"
+                           th:href="@{/san-pham(brandId=${product.brand.id})}" th:text="${product.brand.name}">Hãng</a>
+                        <a class="badge text-bg-secondary text-decoration-none"
+                           th:href="@{/san-pham(categoryId=${product.category.id})}" th:text="${product.category.name}">Loại</a>
+                        <span class="badge text-bg-danger" th:if="${detail.discounted}">Đang giảm giá</span>
+                    </div>
+
+                    <h1 class="h4" th:text="${product.name}">Tên vợt</h1>
+                    <p class="text-muted small mb-3" th:text="|Mã sản phẩm: ${product.productCode}|">Mã sản phẩm</p>
+
+                    <div class="d-flex align-items-baseline gap-2 flex-wrap mb-3">
+                        <span class="text-muted" th:if="${detail.priceRange}">từ</span>
+                        <span class="fs-3 price-current" th:insert="~{fragments/common :: money(${detail.minPrice})}">0 ₫</span>
+                        <span class="text-muted" th:if="${detail.priceRange}"
+                              th:text="|– ${#numbers.formatInteger(detail.maxPrice, 0, 'POINT')} ₫|">– 0 ₫</span>
+                    </div>
+
+                    <p class="mb-3">
+                        <span class="badge text-bg-success" th:if="${detail.purchasable}">
+                            <i class="bi bi-check-circle"></i> Còn hàng
+                        </span>
+                        <span class="badge text-bg-secondary" th:unless="${detail.purchasable}">
+                            <i class="bi bi-slash-circle"></i> Tạm hết hàng
+                        </span>
+                        <span class="text-muted small ms-2"
+                              th:text="|${variants.size()} phiên bản (màu · trọng lượng · cỡ cán)|">0 phiên bản</span>
+                    </p>
+
+                    <!-- Thông số tóm tắt, chi tiết đầy đủ ở bảng bên dưới -->
+                    <ul class="list-unstyled mb-3">
+                        <li th:if="${product.balanceType != null}">
+                            <i class="bi bi-bullseye text-primary"></i>
+                            Điểm cân bằng: <span th:text="${product.balanceType.label}">Cân bằng</span>
+                            <span class="text-muted" th:if="${product.balancePointMm != null}"
+                                  th:text="|(${product.balancePointMm} mm)|"></span>
+                        </li>
+                        <li th:if="${product.shaftFlexibility != null}">
+                            <i class="bi bi-activity text-primary"></i>
+                            Độ cứng thân: <span th:text="${product.shaftFlexibility.label}">Trung bình</span>
+                        </li>
+                        <li th:if="${product.maxTensionKg != null}">
+                            <i class="bi bi-arrows-vertical text-primary"></i>
+                            Mức căng tối đa: <span th:text="|${product.maxTensionKg} kg|">30 kg</span>
+                        </li>
+                    </ul>
+
+                    <!--
+                      Chọn phiên bản (màu × trọng lượng × cỡ cán) rồi thêm vào giỏ.
+                      Số lượng tối đa lấy theo tồn kho của phiên bản đang chọn (JS đồng bộ khi đổi phiên bản),
+                      còn tồn kho thật vẫn được kiểm tra lại ở CartService.
+                    -->
+                    <div sec:authorize="isAuthenticated()">
+                        <form th:if="${detail.purchasable}" th:action="@{/gio-hang/them}" method="post"
+                              class="row g-2 align-items-end" data-confirm="Thêm phiên bản đang chọn vào giỏ hàng?">
+                            <input type="hidden" name="back" th:value="|/san-pham/${product.id}|">
+                            <div class="col-12 col-sm-7">
+                                <label class="form-label small text-muted" for="variantId">Chọn phiên bản</label>
+                                <select class="form-select" id="variantId" name="variantId" required data-variant-picker>
+                                    <option th:each="variant : ${variants}"
+                                            th:value="${variant.id}"
+                                            th:disabled="${!variant.inStock}"
+                                            th:selected="${variant.id == detail.defaultVariantId}"
+                                            th:attr="data-stock=${variant.stockQuantity}"
+                                            th:text="${variant.inStock}
+                                                ? |${variant.color} · ${variant.weightClass} · ${variant.gripSize} – ${#numbers.formatInteger(variant.price, 0, 'POINT')} ₫|
+                                                : |${variant.color} · ${variant.weightClass} · ${variant.gripSize} – hết hàng|">
+                                        Phiên bản
+                                    </option>
+                                </select>
+                            </div>
+                            <div class="col-4 col-sm-2">
+                                <label class="form-label small text-muted" for="quantity">Số lượng</label>
+                                <input type="number" class="form-control" id="quantity" name="quantity"
+                                       value="1" min="1" th:max="${detail.maxStock}">
+                            </div>
+                            <div class="col-8 col-sm-3">
+                                <button type="submit" class="btn btn-primary w-100">
+                                    <i class="bi bi-cart-plus"></i> Thêm vào giỏ
+                                </button>
+                            </div>
+                        </form>
+
+                        <div class="alert alert-secondary mb-0" th:unless="${detail.purchasable}">
+                            <i class="bi bi-slash-circle"></i>
+                            Sản phẩm này tạm hết hàng ở mọi phiên bản. Bạn có thể xem
+                            <a th:href="@{/san-pham}" class="alert-link">các mẫu vợt khác</a> đang còn hàng.
+                        </div>
+                    </div>
+
+                    <div class="alert alert-info mb-0" sec:authorize="isAnonymous()">
+                        <i class="bi bi-box-arrow-in-right"></i>
+                        Bạn cần <a th:href="@{/dang-nhap}" class="alert-link">đăng nhập</a> để thêm sản phẩm vào giỏ hàng.
+                    </div>
+
+                    <!-- So sánh sản phẩm: chỉ lưu trong session, không cần đăng nhập -->
+                    <div class="mt-3 d-flex flex-wrap align-items-center gap-2">
+                        <form th:action="@{/so-sanh/them}" method="post">
+                            <input type="hidden" name="productId" th:value="${product.id}">
+                            <button class="btn btn-outline-primary" type="submit">
+                                <i class="bi bi-bar-chart-steps"></i> Thêm vào so sánh
+                            </button>
+                        </form>
+                        <a class="btn btn-link" th:href="@{/so-sanh}"
+                           th:if="${compareCount != null and compareCount > 0}"
+                           th:text="|Xem danh sách so sánh (${compareCount})|">Xem danh sách so sánh</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ===== Các phiên bản đang bán ===== -->
+    <div class="card border-0 shadow-sm mt-4">
+        <div class="card-header bg-white fw-semibold">Phiên bản &amp; giá bán</div>
+        <div class="table-responsive">
+            <table class="table table-hover align-middle mb-0">
+                <caption class="px-3 pb-3 text-muted small">
+                    Giá và tồn kho của từng phiên bản. Phiên bản hết hàng vẫn hiển thị để bạn tham khảo.
+                </caption>
+                <thead class="table-light">
+                <tr>
+                    <th scope="col">Màu</th>
+                    <th scope="col">Trọng lượng</th>
+                    <th scope="col">Cỡ cán</th>
+                    <th scope="col">Mã SKU</th>
+                    <th scope="col" class="text-end">Giá bán</th>
+                    <th scope="col" class="text-center">Tình trạng</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="variant : ${variants}">
+                    <td>
+                        <span class="text-muted" th:text="${variant.color}">Màu</span>
+                        <img th:if="${variant.imageUrl != null}" th:src="${variant.imageUrl}"
+                             th:alt="|Ảnh phiên bản ${variant.color}|" class="variant-thumb ms-2 rounded border" loading="lazy">
+                    </td>
+                    <td th:text="${variant.weightClass}">3U</td>
+                    <td th:text="${variant.gripSize}">G5</td>
+                    <td class="text-muted small" th:text="${variant.sku}">SKU</td>
+                    <td class="text-end">
+                        <span class="price-current" th:insert="~{fragments/common :: money(${variant.price})}">0 ₫</span>
+                        <span class="price-original d-block" th:if="${variant.discounted}"
+                              th:insert="~{fragments/common :: money(${variant.originalPrice})}">0 ₫</span>
+                    </td>
+                    <td class="text-center">
+                        <span class="badge text-bg-success" th:if="${variant.inStock}"
+                              th:text="|Còn ${variant.stockQuantity}|">Còn 5</span>
+                        <span class="badge text-bg-secondary" th:unless="${variant.inStock}">Hết hàng</span>
+                    </td>
+                </tr>
+                <tr th:if="${variants.isEmpty()}">
+                    <td colspan="6" class="text-center text-muted py-4">
+                        Sản phẩm này tạm chưa có phiên bản nào được bán.
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- ===== Mô tả + thông số kỹ thuật ===== -->
+    <div class="row g-4 mt-1">
+        <div class="col-lg-7" th:if="${product.description != null and !product.description.isBlank()}">
+            <div class="card border-0 shadow-sm h-100">
+                <div class="card-header bg-white fw-semibold">Mô tả sản phẩm</div>
+                <div class="card-body description-text" th:text="${product.description}">Mô tả…</div>
+            </div>
+        </div>
+
+        <div class="col-lg-5">
+            <div class="card border-0 shadow-sm h-100">
+                <div class="card-header bg-white fw-semibold">Thông số kỹ thuật</div>
+                <div class="table-responsive">
+                    <table class="table table-sm mb-0">
+                        <tbody>
+                        <tr><th scope="row" class="text-muted fw-normal">Hãng</th><td th:text="${product.brand.name}">Hãng</td></tr>
+                        <tr><th scope="row" class="text-muted fw-normal">Loại vợt</th><td th:text="${product.category.name}">Loại</td></tr>
+                        <tr th:if="${product.lengthMm != null}">
+                            <th scope="row" class="text-muted fw-normal">Chiều dài</th>
+                            <td th:text="|${product.lengthMm} mm|">675 mm</td>
+                        </tr>
+                        <tr th:if="${product.balancePointMm != null}">
+                            <th scope="row" class="text-muted fw-normal">Điểm cân bằng</th>
+                            <td th:text="|${product.balancePointMm} mm|">295 mm</td>
+                        </tr>
+                        <tr th:if="${product.balanceType != null}">
+                            <th scope="row" class="text-muted fw-normal">Kiểu cân bằng</th>
+                            <td th:text="${product.balanceType.label}">Cân bằng</td>
+                        </tr>
+                        <tr th:if="${product.shaftFlexibility != null}">
+                            <th scope="row" class="text-muted fw-normal">Độ cứng thân</th>
+                            <td th:text="${product.shaftFlexibility.label}">Trung bình</td>
+                        </tr>
+                        <tr th:if="${product.maxTensionKg != null}">
+                            <th scope="row" class="text-muted fw-normal">Mức căng tối đa</th>
+                            <td th:text="|${product.maxTensionKg} kg|">30 kg</td>
+                        </tr>
+                        <tr th:if="${product.frameMaterial != null}">
+                            <th scope="row" class="text-muted fw-normal">Vật liệu khung</th>
+                            <td th:text="${product.frameMaterial}">Graphite</td>
+                        </tr>
+                        <tr th:if="${product.shaftMaterial != null}">
+                            <th scope="row" class="text-muted fw-normal">Vật liệu thân</th>
+                            <td th:text="${product.shaftMaterial}">Graphite</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ===== Đánh giá sản phẩm (mức Khá): chỉ khách đã mua & đã nhận hàng mới viết được ===== -->
+    <div class="card border-0 shadow-sm mt-4" id="danh-gia">
+        <div class="card-header bg-white d-flex flex-wrap justify-content-between align-items-center gap-2">
+            <span class="fw-semibold"><i class="bi bi-chat-square-heart"></i> Đánh giá sản phẩm</span>
+            <span class="d-flex align-items-center gap-2">
+                <span class="text-warning" aria-hidden="true">
+                    <i class="bi" th:each="star : ${#numbers.sequence(1, 5)}"
+                       th:classappend="${star <= reviewSummary.filledStars} ? 'bi-star-fill' : 'bi-star'"></i>
+                </span>
+                <span class="small text-muted" th:text="${reviewSummary.summaryLabel}">Chưa có đánh giá</span>
+            </span>
+        </div>
+        <div class="card-body">
+            <!-- Khách đã nhận hàng và còn lượt đánh giá thì hiện form -->
+            <div class="border rounded p-3 mb-4 bg-light" sec:authorize="isAuthenticated()" th:if="${reviewable}">
+                <p class="fw-semibold mb-2">Chia sẻ cảm nhận của bạn về mẫu vợt này</p>
+                <form th:action="@{/danh-gia}" method="post" data-confirm="Gửi đánh giá này?">
+                    <input type="hidden" name="productId" th:value="${product.id}">
+                    <div class="row g-2">
+                        <div class="col-md-4">
+                            <label class="form-label mb-1" for="rating">Số sao</label>
+                            <select class="form-select" id="rating" name="rating" required>
+                                <option value="5">5 sao – Rất hài lòng</option>
+                                <option value="4">4 sao – Hài lòng</option>
+                                <option value="3">3 sao – Bình thường</option>
+                                <option value="2">2 sao – Chưa hài lòng</option>
+                                <option value="1">1 sao – Không hài lòng</option>
+                            </select>
+                        </div>
+                        <div class="col-md-8">
+                            <label class="form-label mb-1" for="comment">Cảm nhận</label>
+                            <textarea class="form-control" id="comment" name="comment" rows="3" maxlength="1000"
+                                      required placeholder="Cảm giác cầm, độ cứng thân, sức căng phù hợp, đóng gói…"></textarea>
+                        </div>
+                    </div>
+                    <button class="btn btn-primary mt-3" type="submit">
+                        <i class="bi bi-send"></i> Gửi đánh giá
+                    </button>
+                </form>
+            </div>
+
+            <div class="alert alert-success mb-4" sec:authorize="isAuthenticated()" th:if="${purchased and !reviewable}">
+                <i class="bi bi-patch-check-fill"></i>
+                Cảm ơn bạn đã mua và đánh giá sản phẩm này. Mỗi lượt mua chỉ được đánh giá một lần.
+            </div>
+            <div class="alert alert-secondary mb-4" sec:authorize="isAuthenticated()" th:if="${!purchased and !reviewable}">
+                <i class="bi bi-info-circle"></i>
+                Chỉ khách <strong>đã mua và đã nhận hàng</strong> sản phẩm này mới viết được đánh giá.
+            </div>
+            <div class="alert alert-secondary mb-4" sec:authorize="isAnonymous()">
+                <i class="bi bi-box-arrow-in-right"></i>
+                Bạn đã mua mẫu vợt này? Hãy <a th:href="@{/dang-nhap}" class="alert-link">đăng nhập</a> để đánh giá sản phẩm.
+            </div>
+
+            <!-- Danh sách đánh giá đang hiển thị -->
+            <p class="text-muted text-center py-4 mb-0" th:if="${reviewSummary.isEmpty()}">
+                <i class="bi bi-chat-square-text display-6 d-block mb-2"></i>
+                Chưa có đánh giá nào cho sản phẩm này.
+            </p>
+
+            <ul class="list-unstyled mb-0" th:unless="${reviewSummary.isEmpty()}">
+                <li class="border-bottom pb-3 mb-3" th:each="review : ${reviews.content}">
+                    <div class="d-flex flex-wrap justify-content-between gap-2">
+                        <div>
+                            <span class="fw-semibold" th:text="${review.user.fullName}">Tên khách hàng</span>
+                            <span class="text-warning ms-2" aria-hidden="true">
+                                <i class="bi" th:each="star : ${#numbers.sequence(1, 5)}"
+                                   th:classappend="${star <= review.rating} ? 'bi-star-fill' : 'bi-star'"></i>
+                            </span>
+                            <span class="visually-hidden"
+                                  th:text="|${review.rating} trên 5 sao|">5 trên 5 sao</span>
+                        </div>
+                        <span class="small text-muted"
+                              th:insert="~{fragments/common :: dateTime(${review.createdAt})}">01/01/2026 08:00</span>
+                    </div>
+                    <p class="mb-0 mt-1" th:text="${review.comment}">Nội dung đánh giá</p>
+                </li>
+            </ul>
+
+            <div class="d-flex justify-content-between align-items-center gap-2 mt-3" th:if="${reviews.totalPages > 1}">
+                <a class="btn btn-sm btn-outline-secondary" th:if="${!reviews.first}"
+                   th:href="@{/san-pham/{id}(id=${product.id}, reviewPage=${reviews.number})}">
+                    <i class="bi bi-chevron-left"></i> Đánh giá mới hơn
+                </a>
+                <span th:unless="${!reviews.first}"></span>
+                <span class="small text-muted" th:text="|Trang ${reviews.number + 1}/${reviews.totalPages}|">Trang 1/1</span>
+                <a class="btn btn-sm btn-outline-secondary" th:if="${!reviews.last}"
+                   th:href="@{/san-pham/{id}(id=${product.id}, reviewPage=${reviews.number + 2})}">
+                    Đánh giá cũ hơn <i class="bi bi-chevron-right"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+
+</th:block>
+
+</body>
+</html>

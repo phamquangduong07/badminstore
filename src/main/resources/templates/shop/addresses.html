@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="vi"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/base}">
+<head>
+    <title>Sổ địa chỉ giao hàng</title>
+</head>
+<body>
+
+<th:block layout:fragment="content">
+
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a th:href="@{/}">Trang chủ</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Sổ địa chỉ</li>
+        </ol>
+    </nav>
+
+    <h1 class="h4 mb-3"><i class="bi bi-geo-alt text-primary"></i> Sổ địa chỉ giao hàng</h1>
+
+    <div class="row g-4">
+        <div class="col-lg-7">
+            <div class="card border-0 shadow-sm mb-3" th:if="${addresses.isEmpty()}">
+                <div class="card-body text-center py-4">
+                    <i class="bi bi-geo display-6 text-muted" aria-hidden="true"></i>
+                    <p class="mt-3 mb-1 fw-semibold">Bạn chưa lưu địa chỉ giao hàng nào.</p>
+                    <p class="text-muted mb-0">Thêm địa chỉ ở khung bên cạnh để đặt hàng nhanh hơn.</p>
+                </div>
+            </div>
+
+            <div class="card border-0 shadow-sm mb-3" th:each="address : ${addresses}">
+                <div class="card-body">
+                    <div class="d-flex flex-wrap justify-content-between align-items-start gap-2">
+                        <div>
+                            <div class="fw-semibold">
+                                <i class="bi bi-person" aria-hidden="true"></i>
+                                <span th:text="${address.receiverName}">Người nhận</span>
+                                <span class="text-muted" th:text="| · ${address.receiverPhone}|"></span>
+                                <span class="badge text-bg-success ms-1" th:if="${address.defaultAddress}">
+                                    <i class="bi bi-check2-circle"></i> Mặc định
+                                </span>
+                            </div>
+                            <div class="text-muted small mt-1">
+                                <i class="bi bi-house-door" aria-hidden="true"></i>
+                                <span th:text="${address.fullAddress}">Địa chỉ</span>
+                            </div>
+                        </div>
+                        <div class="d-flex gap-2">
+                            <form th:if="${!address.defaultAddress}" th:action="@{/dia-chi/mac-dinh}" method="post"
+                                  data-confirm="Đặt địa chỉ này làm mặc định?">
+                                <input type="hidden" name="addressId" th:value="${address.id}">
+                                <input type="hidden" name="next" th:value="${param.next}">
+                                <button type="submit" class="btn btn-sm btn-outline-primary">
+                                    <i class="bi bi-check2-circle"></i> Đặt mặc định
+                                </button>
+                            </form>
+                            <form th:action="@{/dia-chi/xoa}" method="post"
+                                  data-confirm="Xoá địa chỉ này khỏi sổ địa chỉ?">
+                                <input type="hidden" name="addressId" th:value="${address.id}">
+                                <input type="hidden" name="next" th:value="${param.next}">
+                                <button type="submit" class="btn btn-sm btn-outline-danger"
+                                        th:attr="aria-label=|Xoá địa chỉ của ${address.receiverName}|">
+                                    <i class="bi bi-trash"></i>
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <p class="text-muted small mb-0">Mỗi tài khoản lưu được tối đa 5 địa chỉ giao hàng.</p>
+        </div>
+
+        <div class="col-lg-5">
+            <div class="card border-0 shadow-sm">
+                <div class="card-header bg-white fw-semibold">
+                    <i class="bi bi-plus-circle"></i> Thêm địa chỉ mới
+                </div>
+                <div class="card-body">
+                    <!-- Validate 2 lớp: HTML (required/pattern) + Bean Validation ở server -->
+                    <form th:action="@{/dia-chi/them}" th:object="${form}" method="post" novalidate>
+                        <input type="hidden" name="next" th:value="${param.next}">
+
+                        <div class="mb-3">
+                            <label class="form-label" for="receiverName">Tên người nhận <span class="text-danger">*</span></label>
+                            <input class="form-control" id="receiverName" type="text" th:field="*{receiverName}"
+                                   th:classappend="${#fields.hasErrors('receiverName')} ? 'is-invalid'"
+                                   required maxlength="100" autocomplete="name">
+                            <div class="invalid-feedback" th:if="${#fields.hasErrors('receiverName')}"
+                                 th:errors="*{receiverName}">Vui lòng nhập tên người nhận</div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label" for="receiverPhone">Số điện thoại <span class="text-danger">*</span></label>
+                            <input class="form-control" id="receiverPhone" type="tel" th:field="*{receiverPhone}"
+                                   th:classappend="${#fields.hasErrors('receiverPhone')} ? 'is-invalid'"
+                                   required pattern="0\d{9,10}" maxlength="20" autocomplete="tel">
+                            <div class="invalid-feedback" th:if="${#fields.hasErrors('receiverPhone')}"
+                                 th:errors="*{receiverPhone}">Số điện thoại không hợp lệ</div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label" for="provinceName">Tỉnh / thành phố <span class="text-danger">*</span></label>
+
+                            <!-- Chọn nhanh theo dữ liệu GHN: tự điền 3 ô bên dưới + lưu mã quận để tính phí ship -->
+                            <div class="card bg-light border-0 mb-2" th:if="${ghnEnabled}" data-ghn-picker>
+                                <div class="card-body py-2">
+                                    <div class="small fw-semibold mb-2">
+                                        <i class="bi bi-truck text-primary"></i> Chọn nhanh theo địa chỉ GHN
+                                        <span class="badge text-bg-warning ms-1" th:if="${ghnMock}">Dữ liệu demo</span>
+                                    </div>
+                                    <div class="row g-2">
+                                        <div class="col-sm-6">
+                                            <label class="form-label small mb-1" for="ghnProvince">Tỉnh / thành phố</label>
+                                            <select class="form-select form-select-sm" id="ghnProvince" data-ghn-province>
+                                                <option value="">-- Chọn tỉnh/thành --</option>
+                                                <option th:each="province : ${ghnProvinces}"
+                                                        th:value="${province.id}"
+                                                        th:text="${province.name}"
+                                                        th:attr="data-name=${province.name}">Hà Nội</option>
+                                            </select>
+                                        </div>
+                                        <div class="col-sm-6">
+                                            <label class="form-label small mb-1" for="ghnDistrict">Quận / huyện</label>
+                                            <select class="form-select form-select-sm" id="ghnDistrict" data-ghn-district disabled>
+                                                <option value="">-- Chọn quận/huyện --</option>
+                                            </select>
+                                        </div>
+                                        <div class="col-sm-6">
+                                            <label class="form-label small mb-1" for="ghnWard">Phường / xã</label>
+                                            <select class="form-select form-select-sm" id="ghnWard" data-ghn-ward disabled>
+                                                <option value="">-- Chọn phường/xã --</option>
+                                            </select>
+                                        </div>
+                                        <div class="col-sm-6 d-flex align-items-end">
+                                            <p class="small text-muted mb-1" data-ghn-hint>
+                                                Phí giao hàng dự kiến: <span class="fw-semibold" data-ghn-fee>--</span>
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <input type="hidden" th:field="*{provinceId}">
+                            <input type="hidden" th:field="*{districtId}">
+                            <input type="hidden" th:field="*{wardCode}">
+
+                            <input class="form-control" id="provinceName" type="text" th:field="*{provinceName}"
+                                   th:classappend="${#fields.hasErrors('provinceName')} ? 'is-invalid'"
+                                   required maxlength="100" placeholder="Ví dụ: TP. Hồ Chí Minh">
+                            <div class="invalid-feedback" th:if="${#fields.hasErrors('provinceName')}"
+                                 th:errors="*{provinceName}">Vui lòng nhập tỉnh/thành phố</div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-sm-6 mb-3">
+                                <label class="form-label" for="districtName">Quận / huyện <span class="text-danger">*</span></label>
+                                <input class="form-control" id="districtName" type="text" th:field="*{districtName}"
+                                       th:classappend="${#fields.hasErrors('districtName')} ? 'is-invalid'"
+                                       required maxlength="100" placeholder="Ví dụ: Quận 1">
+                                <div class="invalid-feedback" th:if="${#fields.hasErrors('districtName')}"
+                                     th:errors="*{districtName}">Vui lòng nhập quận/huyện</div>
+                            </div>
+                            <div class="col-sm-6 mb-3">
+                                <label class="form-label" for="wardName">Phường / xã <span class="text-danger">*</span></label>
+                                <input class="form-control" id="wardName" type="text" th:field="*{wardName}"
+                                       th:classappend="${#fields.hasErrors('wardName')} ? 'is-invalid'"
+                                       required maxlength="100" placeholder="Ví dụ: Phường Bến Thành">
+                                <div class="invalid-feedback" th:if="${#fields.hasErrors('wardName')}"
+                                     th:errors="*{wardName}">Vui lòng nhập phường/xã</div>
+                            </div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label" for="addressDetail">Số nhà, tên đường <span class="text-danger">*</span></label>
+                            <input class="form-control" id="addressDetail" type="text" th:field="*{addressDetail}"
+                                   th:classappend="${#fields.hasErrors('addressDetail')} ? 'is-invalid'"
+                                   required maxlength="255" placeholder="Ví dụ: 123 Nguyễn Trãi">
+                            <div class="invalid-feedback" th:if="${#fields.hasErrors('addressDetail')}"
+                                 th:errors="*{addressDetail}">Vui lòng nhập số nhà, tên đường</div>
+                        </div>
+
+                        <div class="form-check mb-3">
+                            <input class="form-check-input" type="checkbox" id="defaultAddress" th:field="*{defaultAddress}">
+                            <label class="form-check-label" for="defaultAddress">Đặt làm địa chỉ mặc định</label>
+                        </div>
+
+                        <button type="submit" class="btn btn-primary w-100">
+                            <i class="bi bi-save"></i> Lưu địa chỉ
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</th:block>
+
+</body>
+</html>

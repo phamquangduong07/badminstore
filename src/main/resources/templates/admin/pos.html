@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="vi"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/admin}">
+<head>
+    <title>Bán hàng tại quầy</title>
+    <!-- Token CSRF cho các lời gọi AJAX (tính tiền, tra khách) -->
+    <meta name="_csrf" th:content="${_csrf.token}">
+    <meta name="_csrf_header" th:content="${_csrf.headerName}">
+</head>
+<body>
+
+<th:block layout:fragment="content">
+
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a th:href="@{/admin}">Tổng quan</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Bán hàng tại quầy</li>
+        </ol>
+    </nav>
+
+    <div class="d-flex flex-wrap justify-content-between align-items-center gap-2 mb-3">
+        <h1 class="h4 mb-0"><i class="bi bi-cash-register text-primary"></i> Bán hàng tại quầy</h1>
+        <div class="d-flex flex-wrap gap-2">
+            <a class="btn btn-sm btn-outline-secondary" th:href="@{/admin/don-hang/tao-don}">
+                <i class="bi bi-pencil-square"></i> Tạo đơn giao hàng (điện thoại)
+            </a>
+            <a class="btn btn-sm btn-outline-secondary" th:href="@{/admin/don-hang}">
+                <i class="bi bi-receipt"></i> Danh sách đơn
+            </a>
+        </div>
+    </div>
+
+    <div class="alert alert-danger d-flex gap-2" role="alert" th:if="${formError != null}">
+        <i class="bi bi-exclamation-octagon-fill" aria-hidden="true"></i>
+        <div>
+            <strong>Chưa bán được hoá đơn này:</strong> <span th:text="${formError}">Lý do</span>
+            <div class="small">Hoá đơn bên dưới vẫn giữ nguyên – nhân viên sửa rồi bấm “Thu tiền &amp; in phiếu” lại.</div>
+        </div>
+    </div>
+
+    <form th:action="@{/admin/ban-hang}" th:object="${form}" method="post" id="posForm" novalidate>
+
+        <!-- Dữ liệu hoá đơn đang lập khi trang được tải lại sau lỗi (JS đọc để dựng lại hoá đơn) -->
+        <div hidden id="posInitialLines">
+            <span th:each="line : *{lines}"
+                  th:if="${line != null and line.sku != null and !#strings.isEmpty(line.sku)}"
+                  data-pos-initial
+                  th:attr="data-sku=${line.sku},data-quantity=${line.quantity}"></span>
+        </div>
+
+        <div class="row g-3">
+            <!-- ===================== Cột trái: tìm sản phẩm ===================== -->
+            <div class="col-xl-7">
+                <div class="card border-0 shadow-sm">
+                    <div class="card-body pb-2">
+                        <div class="input-group input-group-lg">
+                            <span class="input-group-text bg-white"><i class="bi bi-upc-scan"></i></span>
+                            <label class="visually-hidden" for="posSearch">Tìm sản phẩm theo SKU hoặc tên</label>
+                            <input class="form-control" type="search" id="posSearch" autocomplete="off"
+                                   placeholder="Quét mã SKU hoặc gõ tên vợt rồi Enter…">
+                            <button class="btn btn-primary" type="button" id="posSearchButton">
+                                <i class="bi bi-search"></i> Tìm
+                            </button>
+                        </div>
+                        <div class="form-text">
+                            Máy quét mã vạch: quét SKU rồi Enter là sản phẩm vào hoá đơn ngay.
+                            Chỉ hiện sản phẩm/biến thể đang bán, kèm tồn kho thực tế.
+                        </div>
+                    </div>
+                    <div class="card-body pt-0">
+                        <div id="posResults" class="pos-results"></div>
+                        <p class="text-muted small mb-0" id="posNoResult" hidden>
+                            <i class="bi bi-search"></i> Không tìm thấy sản phẩm nào phù hợp.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ===================== Cột phải: hoá đơn & thanh toán ===================== -->
+            <div class="col-xl-5 pos-summary">
+
+                <!-- Hoá đơn -->
+                <div class="card border-0 shadow-sm mb-3">
+                    <div class="card-header bg-white d-flex justify-content-between align-items-center">
+                        <span class="fw-semibold"><i class="bi bi-receipt-cutoff"></i> Hoá đơn tại quầy</span>
+                        <button class="btn btn-sm btn-outline-danger" type="button" id="posClear">
+                            <i class="bi bi-trash3"></i> Xoá hết
+                        </button>
+                    </div>
+                    <div class="card-body">
+                        <div id="posLines"></div>
+                        <p class="text-muted small mb-0" id="posEmpty">
+                            Chưa có sản phẩm nào. Tìm ở khung bên trái rồi bấm vào sản phẩm để thêm vào hoá đơn.
+                        </p>
+
+                        <dl class="row mb-0 mt-3" id="posTotals" hidden>
+                            <dt class="col-7 fw-normal text-muted">Tạm tính</dt>
+                            <dd class="col-5 text-end mb-1" data-pos-subtotal>0 ₫</dd>
+
+                            <dt class="col-7 fw-normal text-muted">Giảm giá</dt>
+                            <dd class="col-5 text-end mb-1 text-success">−<span data-pos-discount>0 ₫</span></dd>
+
+                            <dt class="col-7 fw-semibold fs-5 mb-0">Khách phải trả</dt>
+                            <dd class="col-5 text-end mb-0 pos-total" data-pos-total>0 ₫</dd>
+                        </dl>
+                    </div>
+                </div>
+
+                <!-- Mã giảm giá -->
+                <div class="card border-0 shadow-sm mb-3">
+                    <div class="card-header bg-white fw-semibold">
+                        <i class="bi bi-ticket-perforated"></i> Mã giảm giá (nếu khách có)
+                    </div>
+                    <div class="card-body">
+                        <label class="visually-hidden" for="posVoucherCode">Mã giảm giá</label>
+                        <input class="form-control text-uppercase" id="posVoucherCode" th:field="*{voucherCode}"
+                               maxlength="50" placeholder="Ví dụ: BADSTORE10">
+                        <p class="small mb-0 mt-2 text-success" id="posVoucherOk" hidden></p>
+                        <p class="small mb-0 mt-2 text-danger" id="posVoucherError" hidden></p>
+                    </div>
+                </div>
+
+                <!-- Khách hàng -->
+                <div class="card border-0 shadow-sm mb-3">
+                    <div class="card-header bg-white fw-semibold"><i class="bi bi-person-badge"></i> Khách hàng</div>
+                    <div class="card-body">
+                        <div class="input-group mb-2">
+                            <span class="input-group-text"><i class="bi bi-telephone"></i></span>
+                            <label class="visually-hidden" for="posCustomerPhone">Số điện thoại khách hàng</label>
+                            <input class="form-control" id="posCustomerPhone" th:field="*{customerPhone}"
+                                   inputmode="numeric" maxlength="15" placeholder="SĐT khách quen (bỏ trống = khách lẻ)">
+                            <button class="btn btn-outline-primary" type="button" id="posLookupCustomer">Tra khách</button>
+                        </div>
+                        <div class="alert alert-success py-2 small mb-2" id="posCustomerFound" hidden></div>
+                        <input type="hidden" th:field="*{customerEmail}">
+
+                        <div class="row g-2">
+                            <div class="col-sm-6">
+                                <label class="form-label small" for="posReceiverName">Tên khách trên phiếu</label>
+                                <input class="form-control" id="posReceiverName" th:field="*{receiverName}"
+                                       maxlength="100" placeholder="Khách lẻ tại quầy">
+                            </div>
+                            <div class="col-sm-6">
+                                <label class="form-label small" for="posReceiverPhone">SĐT trên phiếu</label>
+                                <input class="form-control" id="posReceiverPhone" th:field="*{receiverPhone}"
+                                       maxlength="15" placeholder="Để trống nếu khách không cho SĐT">
+                            </div>
+                            <div class="col-12">
+                                <label class="form-label small" for="posNote">Ghi chú nội bộ</label>
+                                <input class="form-control" id="posNote" th:field="*{note}" maxlength="200"
+                                       placeholder="Ví dụ: khách quen, đã kiểm tra vợt, in hoá đơn…">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Thanh toán -->
+                <div class="card border-0 shadow-sm mb-3">
+                    <div class="card-header bg-white fw-semibold"><i class="bi bi-cash-coin"></i> Thanh toán</div>
+                    <div class="card-body">
+                        <div class="btn-group w-100 mb-3" role="group" aria-label="Phương thức thanh toán">
+                            <input type="radio" class="btn-check" name="paymentMethod" value="CASH" id="posPayCash"
+                                   th:checked="${form.paymentMethod == null or form.paymentMethod == 'CASH'}">
+                            <label class="btn btn-outline-success" for="posPayCash">
+                                <i class="bi bi-cash-stack"></i> Tiền mặt
+                            </label>
+                            <input type="radio" class="btn-check" name="paymentMethod" value="BANK_TRANSFER"
+                                   id="posPayTransfer" th:checked="${form.paymentMethod == 'BANK_TRANSFER'}">
+                            <label class="btn btn-outline-primary" for="posPayTransfer">
+                                <i class="bi bi-qr-code-scan"></i> Chuyển khoản
+                            </label>
+                        </div>
+
+                        <div data-pos-cash-panel>
+                            <label class="form-label small" for="posCashReceived">Tiền khách đưa (₫)</label>
+                            <input class="form-control form-control-lg" id="posCashReceived" th:field="*{cashReceived}"
+                                   type="number" min="0" step="1000" placeholder="Bỏ trống = khách đưa đúng tiền">
+                            <div class="d-flex flex-wrap gap-1 mt-2">
+                                <button class="btn btn-sm btn-outline-secondary" type="button" data-pos-cash="exact">Đúng tiền</button>
+                                <button class="btn btn-sm btn-outline-secondary" type="button" data-pos-cash="50000">50.000</button>
+                                <button class="btn btn-sm btn-outline-secondary" type="button" data-pos-cash="100000">100.000</button>
+                                <button class="btn btn-sm btn-outline-secondary" type="button" data-pos-cash="200000">200.000</button>
+                                <button class="btn btn-sm btn-outline-secondary" type="button" data-pos-cash="500000">500.000</button>
+                            </div>
+                            <p class="mb-0 mt-2" data-pos-change>
+                                Tiền thừa trả khách: <strong>0 ₫</strong>
+                            </p>
+                        </div>
+
+                        <div class="form-check mt-2" data-pos-transfer-panel hidden>
+                            <input class="form-check-input" type="checkbox" th:field="*{transferConfirmed}"
+                                   id="posTransferConfirmed">
+                            <label class="form-check-label" for="posTransferConfirmed">
+                                Đã nhận được tiền chuyển khoản (đánh dấu hoá đơn đã thanh toán)
+                            </label>
+                        </div>
+                    </div>
+                    <div class="card-footer bg-white">
+                        <button class="btn btn-success btn-lg w-100" type="submit" id="posSubmit">
+                            <i class="bi bi-printer"></i> Thu tiền &amp; in phiếu
+                        </button>
+                        <p class="small text-muted mb-0 mt-2 text-center">
+                            Hoá đơn được xác nhận và <strong>trừ kho ngay</strong>; tiền mặt được ghi nhận đã thanh toán.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Hoá đơn gần đây: in lại khi khách quay lại -->
+                <div class="card border-0 shadow-sm" th:if="${recentOrders != null and !recentOrders.isEmpty()}">
+                    <div class="card-header bg-white fw-semibold">
+                        <i class="bi bi-clock-history"></i> Hoá đơn gần đây
+                    </div>
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item d-flex justify-content-between align-items-center gap-2"
+                            th:each="order : ${recentOrders}">
+                            <span class="small text-truncate">
+                                <span class="fw-semibold" th:text="${order.orderCode}">BS000000</span>
+                                <span class="text-muted"
+                                      th:text="| · ${#temporals.format(order.createdAt, 'dd/MM/yyyy HH:mm')}|"></span>
+                                <span class="badge text-bg-light ms-1"
+                                      th:text="${order.orderStatus.label}">Trạng thái</span>
+                            </span>
+                            <span class="d-flex align-items-center gap-2">
+                                <span class="small fw-semibold" th:insert="~{fragments/common :: money(${order.totalAmount})}">0 ₫</span>
+                                <a class="btn btn-sm btn-outline-secondary" th:href="@{'/admin/ban-hang/phieu/' + ${order.id}}"
+                                   th:attr="aria-label=|In lại phiếu ${order.orderCode}|">
+                                    <i class="bi bi-printer"></i>
+                                </a>
+                            </span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </form>
+
+</th:block>
+
+<th:block layout:fragment="scripts">
+    <script th:src="@{/js/pos.js}"></script>
+</th:block>
+
+</body>
+</html>

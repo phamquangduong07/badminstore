@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org">
+<body>
+
+<!--
+  Menu dọc của khu quản trị. Controller đặt model "adminMenu" = dashboard|orders|products|vouchers
+  để tô đậm mục đang mở (null cũng an toàn: mọi so sánh đều sai).
+-->
+<nav th:fragment="sidebar(active)" class="admin-sidebar d-flex flex-column p-3 text-white">
+    <a class="d-flex align-items-center mb-2 text-white text-decoration-none fs-5 fw-bold" th:href="@{/admin}">
+        <i class="bi bi-speedometer2 me-2"></i> BadStore Admin
+    </a>
+    <hr class="text-white-50 mt-0">
+
+    <ul class="nav nav-pills flex-column mb-auto gap-1">
+        <li class="nav-item">
+            <a class="nav-link text-white" th:classappend="${active == 'dashboard'} ? 'active bg-primary'"
+               th:href="@{/admin}">
+                <i class="bi bi-graph-up-arrow me-2"></i> Tổng quan
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link text-white" th:classappend="${active == 'pos'} ? 'active bg-primary'"
+               th:href="@{/admin/ban-hang}">
+                <i class="bi bi-cash-register me-2"></i> Bán hàng tại quầy
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link text-white" th:classappend="${active == 'orders'} ? 'active bg-primary'"
+               th:href="@{/admin/don-hang}">
+                <i class="bi bi-receipt me-2"></i> Đơn hàng
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link text-white" th:classappend="${active == 'products'} ? 'active bg-primary'"
+               th:href="@{/admin/san-pham}">
+                <i class="bi bi-box-seam me-2"></i> Sản phẩm &amp; biến thể
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link text-white" th:classappend="${active == 'vouchers'} ? 'active bg-primary'"
+               th:href="@{/admin/voucher}">
+                <i class="bi bi-ticket-perforated me-2"></i> Voucher
+            </a>
+        </li>
+    </ul>
+
+    <hr class="text-white-50">
+    <a class="btn btn-sm btn-outline-light" th:href="@{/}">
+        <i class="bi bi-shop"></i> Xem cửa hàng
+    </a>
+</nav>
+
+</body>
+</html>

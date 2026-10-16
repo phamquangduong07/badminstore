@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="vi"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      layout:decorate="~{layout/base}">
+<head>
+    <title>Trang chủ</title>
+</head>
+<body>
+
+<th:block layout:fragment="content">
+
+    <!-- Slider banner (Swiper) – mỗi slide một thông điệp bán hàng kèm nút hành động -->
+    <div class="hero-swiper js-swiper swiper mb-4" data-aos="fade-up">
+        <div class="swiper-wrapper">
+            <div class="swiper-slide">
+                <div class="hero-slide">
+                    <span class="badge text-bg-light text-dark align-self-start mb-2">Vợt chính hãng 100%</span>
+                    <h1 class="h3 fw-bold mb-2">Vợt cầu lông cho mọi lối chơi</h1>
+                    <p class="mb-0">Yonex · Li-Ning · Victor · Mizuno · Kumpoo · Apacs – chọn đúng cây vợt theo lối chơi của bạn.</p>
+                    <div class="hero-actions">
+                        <a class="btn btn-light" th:href="@{/san-pham}">
+                            <i class="bi bi-grid"></i> Xem danh mục vợt
+                        </a>
+                        <a class="btn btn-outline-light" th:href="@{/so-sanh}">
+                            <i class="bi bi-bar-chart-steps"></i> So sánh sản phẩm
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="swiper-slide">
+                <div class="hero-slide">
+                    <span class="badge text-bg-light text-dark align-self-start mb-2">Tư vấn miễn phí</span>
+                    <h2 class="h3 fw-bold mb-2">Tư vấn theo lối chơi</h2>
+                    <p class="mb-0">Tấn công, phòng thủ hay toàn diện? Xem thông số kỹ thuật và so sánh trực tiếp giữa các mẫu vợt.</p>
+                    <div class="hero-actions">
+                        <a class="btn btn-light" th:href="@{/san-pham}">
+                            <i class="bi bi-search"></i> Tìm vợt phù hợp
+                        </a>
+                        <a class="btn btn-outline-light" th:href="@{/gio-hang}">
+                            <i class="bi bi-cart3"></i> Giỏ hàng của bạn
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="swiper-pagination"></div>
+    </div>
+
+    <!-- Ba ô thông tin nhanh -->
+    <div class="row g-4 mb-4">
+        <div class="col-md-4" data-aos="fade-up">
+            <div class="card border-0 shadow-sm h-100">
+                <div class="card-body text-center">
+                    <i class="bi bi-box-seam fs-2 text-primary"></i>
+                    <div class="display-6 fw-bold" th:text="${totalProducts}">0</div>
+                    <div class="text-muted">Sản phẩm đang bán</div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4" data-aos="fade-up" data-aos-delay="100">
+            <div class="card border-0 shadow-sm h-100">
+                <div class="card-body text-center">
+                    <i class="bi bi-patch-check fs-2 text-primary"></i>
+                    <div class="display-6 fw-bold">100%</div>
+                    <div class="text-muted">Hàng chính hãng, bảo hành theo hãng</div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4" data-aos="fade-up" data-aos-delay="200">
+            <div class="card border-0 shadow-sm h-100">
+                <div class="card-body text-center">
+                    <i class="bi bi-truck fs-2 text-primary"></i>
+                    <div class="display-6 fw-bold">30.000 ₫</div>
+                    <div class="text-muted">Phí giao hàng toàn quốc</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Chọn nhanh theo loại vợt (danh mục lấy từ CSDL) -->
+    <h2 class="h5 section-title">Chọn nhanh theo lối chơi</h2>
+    <div class="row g-3 mb-4">
+        <div class="col-6 col-lg-3" th:each="category : ${categories}" data-aos="fade-up">
+            <a class="quick-tile" th:href="@{/san-pham(categoryId=${category.id})}">
+                <span class="quick-tile-icon mb-2"><i class="bi bi-lightning-charge"></i></span>
+                <div class="fw-semibold" th:text="${category.name}">Tấn công</div>
+                <div class="small text-muted">Xem các mẫu vợt</div>
+            </a>
+        </div>
+        <div class="col-6 col-lg-3" data-aos="fade-up">
+            <a class="quick-tile" th:href="@{/san-pham}">
+                <span class="quick-tile-icon mb-2"><i class="bi bi-list-ul"></i></span>
+                <div class="fw-semibold">Tất cả sản phẩm</div>
+                <div class="small text-muted">Lọc theo hãng và giá</div>
+            </a>
+        </div>
+    </div>
+
+    <!-- Sản phẩm mới nhất (dùng chung fragment thẻ sản phẩm với trang danh mục) -->
+    <div class="d-flex flex-wrap justify-content-between align-items-center gap-2 mb-3 mt-4">
+        <h2 class="h5 mb-0 section-title">Vợt mới về</h2>
+        <a class="btn btn-sm btn-outline-primary" th:href="@{/san-pham}">
+            Xem tất cả <i class="bi bi-arrow-right"></i>
+        </a>
+    </div>
+
+    <div class="row g-3 g-lg-4 mb-4" th:if="${!featuredProducts.isEmpty()}">
+        <div class="col-6 col-md-4 col-lg-3" th:each="card : ${featuredProducts}" data-aos="fade-up">
+            <div th:replace="~{fragments/product-card :: card(${card})}"></div>
+        </div>
+    </div>
+
+    <div class="card border-0 shadow-sm mb-4" th:if="${featuredProducts.isEmpty()}">
+        <div class="card-body empty-state">
+            <i class="bi bi-inboxes" aria-hidden="true"></i>
+            <p class="mb-0">Cửa hàng chưa có sản phẩm nào đang bán.</p>
+        </div>
+    </div>
+
+    <!-- Vì sao mua ở BadStore -->
+    <div class="card border-0 shadow-sm" data-aos="fade-up">
+        <div class="card-body p-4">
+            <h2 class="h5 section-title">Mua vợt ở BadStore</h2>
+            <div class="row g-4">
+                <div class="col-md-4">
+                    <div class="d-flex gap-3">
+                        <span class="stat-icon bg-primary-subtle text-primary"><i class="bi bi-shield-check"></i></span>
+                        <div>
+                            <div class="fw-semibold">Chính hãng, có bảo hành</div>
+                            <div class="small text-muted">Thông tin hãng, mã sản phẩm và tình trạng kho hiển thị công khai.</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="d-flex gap-3">
+                        <span class="stat-icon bg-success-subtle text-success"><i class="bi bi-cash-coin"></i></span>
+                        <div>
+                            <div class="fw-semibold">Thanh toán linh hoạt</div>
+                            <div class="small text-muted">COD khi nhận hàng, chuyển khoản trước, hoặc mua trực tiếp tại quầy.</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="d-flex gap-3">
+                        <span class="stat-icon bg-warning-subtle text-warning"><i class="bi bi-arrow-repeat"></i></span>
+                        <div>
+                            <div class="fw-semibold">Đổi trả rõ ràng</div>
+                            <div class="small text-muted">Đơn đã giao có thể yêu cầu hoàn trả 100% ngay trên trang đơn hàng của bạn.</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="mt-4 d-flex flex-wrap gap-2" sec:authorize="isAnonymous()">
+                <a class="btn btn-primary" th:href="@{/dang-nhap}">
+                    <i class="bi bi-box-arrow-in-right"></i> Đăng nhập để mua hàng
+                </a>
+                <a class="btn btn-outline-primary" th:href="@{/dang-ky}">
+                    <i class="bi bi-person-plus"></i> Tạo tài khoản mới
+                </a>
+            </div>
+        </div>
+    </div>
+
+</th:block>
+
+</body>
+</html>

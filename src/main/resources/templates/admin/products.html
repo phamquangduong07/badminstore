@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="vi"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/admin}">
+<head>
+    <title>Quản lý sản phẩm</title>
+</head>
+<body>
+
+<th:block layout:fragment="content">
+
+    <div class="d-flex flex-wrap justify-content-between align-items-center gap-2 mb-3">
+        <h1 class="h4 mb-0"><i class="bi bi-box-seam text-primary"></i> Quản lý sản phẩm</h1>
+        <div class="d-flex align-items-center gap-2">
+            <span class="text-muted small" th:text="|Tổng ${products.totalElements} sản phẩm phù hợp|">Tổng 0</span>
+            <a class="btn btn-sm btn-primary" th:href="@{/admin/san-pham/tao-moi}">
+                <i class="bi bi-plus-square"></i> Thêm sản phẩm
+            </a>
+        </div>
+    </div>
+
+    <form class="card border-0 shadow-sm mb-3" method="get" th:action="@{/admin/san-pham}">
+        <div class="card-body row g-2 align-items-end">
+            <div class="col-sm-6 col-lg-3">
+                <label class="form-label small" for="keyword">Tìm theo mã / tên</label>
+                <input class="form-control" id="keyword" name="keyword" th:value="${keyword}"
+                       placeholder="Ví dụ: Astrox 100 ZZ">
+            </div>
+            <div class="col-sm-6 col-lg-2">
+                <label class="form-label small" for="brandId">Hãng</label>
+                <select class="form-select" id="brandId" name="brandId">
+                    <option value="" th:selected="${brandFilter == null}">-- Tất cả --</option>
+                    <option th:each="brand : ${brands}" th:value="${brand.id}" th:text="${brand.name}"
+                            th:selected="${brand.id == brandFilter}">Hãng</option>
+                </select>
+            </div>
+            <div class="col-sm-6 col-lg-2">
+                <label class="form-label small" for="categoryId">Loại (lối chơi)</label>
+                <select class="form-select" id="categoryId" name="categoryId">
+                    <option value="" th:selected="${categoryFilter == null}">-- Tất cả --</option>
+                    <option th:each="category : ${categories}" th:value="${category.id}" th:text="${category.name}"
+                            th:selected="${category.id == categoryFilter}">Loại</option>
+                </select>
+            </div>
+            <div class="col-sm-6 col-lg-2">
+                <label class="form-label small" for="status">Trạng thái</label>
+                <select class="form-select" id="status" name="status">
+                    <option value="" th:selected="${statusFilter == null}">-- Tất cả --</option>
+                    <option th:each="item : ${statuses}" th:value="${item.name()}" th:text="${item.label}"
+                            th:selected="${item == statusFilter}">Trạng thái</option>
+                </select>
+            </div>
+            <div class="col-lg-3 d-flex gap-2">
+                <button class="btn btn-primary" type="submit"><i class="bi bi-search"></i> Lọc</button>
+                <a class="btn btn-outline-secondary" th:href="@{/admin/san-pham}">Xoá lọc</a>
+            </div>
+        </div>
+    </form>
+
+    <div class="card border-0 shadow-sm">
+        <div class="table-responsive">
+            <table class="table align-middle mb-0">
+                <thead class="table-light">
+                <tr>
+                    <th scope="col">Ảnh</th>
+                    <th scope="col">Mã / Tên sản phẩm</th>
+                    <th scope="col">Hãng – Loại</th>
+                    <th scope="col">Giá từ</th>
+                    <th scope="col" class="text-center">Biến thể / Tồn kho</th>
+                    <th scope="col">Trạng thái</th>
+                    <th scope="col" class="text-end">Thao tác</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="row : ${products.content}">
+                    <td style="width: 76px;">
+                        <img th:if="${row.thumbnailUrl != null}" th:src="@{${row.thumbnailUrl}}"
+                             th:alt="${'Ảnh ' + row.product.name}" class="rounded border"
+                             style="width: 60px; height: 60px; object-fit: contain;">
+                        <span th:unless="${row.thumbnailUrl != null}"
+                              class="d-inline-flex align-items-center justify-content-center rounded border bg-light text-muted"
+                              style="width: 60px; height: 60px;">
+                            <i class="bi bi-image"></i>
+                        </span>
+                    </td>
+                    <td>
+                        <div class="fw-semibold" th:text="${row.product.name}">Tên sản phẩm</div>
+                        <div class="small text-muted" th:text="${row.product.productCode}">MÃ-SP</div>
+                    </td>
+                    <td class="small">
+                        <div th:text="${row.product.brand.name}">Hãng</div>
+                        <div class="text-muted" th:text="${row.product.category.name}">Loại</div>
+                    </td>
+                    <td>
+                        <span th:insert="~{fragments/common :: money(${row.minPrice})}">Liên hệ</span>
+                    </td>
+                    <td class="text-center">
+                        <span th:text="${row.activeVariantCount}">0</span> biến thể –
+                        <span th:text="${row.totalStock}">0</span> chiếc
+                    </td>
+                    <td>
+                        <span class="badge"
+                              th:classappend="${row.product.status.name() == 'ACTIVE'} ? 'text-bg-success'
+                                             : (${row.product.status.name() == 'DRAFT'} ? 'text-bg-warning'
+                                                : 'text-bg-secondary')"
+                              th:text="${row.product.status.label}">Đang bán</span>
+                    </td>
+                    <td class="text-end">
+                        <div class="d-flex justify-content-end flex-wrap gap-1">
+                            <a class="btn btn-sm btn-outline-primary"
+                               th:href="@{/admin/san-pham/{id}/sua(id=${row.product.id})}">
+                                <i class="bi bi-pencil-square"></i> Sửa
+                            </a>
+                            <a class="btn btn-sm btn-outline-dark"
+                               th:href="@{/admin/san-pham/{id}/bien-the(id=${row.product.id})}">
+                                <i class="bi bi-boxes"></i> Biến thể &amp; ảnh
+                            </a>
+                            <form th:action="@{/admin/san-pham/{id}/doi-trang-thai(id=${row.product.id})}"
+                                  method="post" class="d-inline"
+                                  th:data-confirm="${row.product.status.name() == 'ACTIVE'}
+                                          ? 'Ẩn sản phẩm ' + ${row.product.name} + ' khỏi trang khách?'
+                                          : 'Cho hiển thị lại sản phẩm ' + ${row.product.name} + '?'">
+                                <button class="btn btn-sm"
+                                        th:classappend="${row.product.status.name() == 'ACTIVE'}
+                                                ? 'btn-outline-secondary' : 'btn-outline-success'"
+                                        type="submit"
+                                        th:text="${row.product.status.name() == 'ACTIVE'} ? 'Ẩn' : 'Hiện'">Ẩn</button>
+                            </form>
+                            <form th:action="@{/admin/san-pham/{id}/xoa(id=${row.product.id})}"
+                                  method="post" class="d-inline"
+                                  th:data-confirm="${'Xoá sản phẩm ' + row.product.name + '? Sản phẩm sẽ biến mất khỏi cửa hàng (đơn hàng cũ vẫn giữ nguyên).'}">
+                                <button class="btn btn-sm btn-outline-danger" type="submit">
+                                    <i class="bi bi-trash3"></i> Xoá
+                                </button>
+                            </form>
+                        </div>
+                    </td>
+                </tr>
+                <tr th:if="${products.empty}">
+                    <td colspan="7" class="text-center text-muted py-5">
+                        <i class="bi bi-box display-6 d-block mb-2"></i>
+                        Không có sản phẩm nào phù hợp bộ lọc.
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <nav th:if="${products.totalPages > 1}" class="mt-3" aria-label="Phân trang sản phẩm">
+        <ul class="pagination justify-content-center mb-1">
+            <li class="page-item" th:classappend="${products.first} ? 'disabled'">
+                <a class="page-link" rel="prev"
+                   th:href="@{/admin/san-pham(page=${products.number}, keyword=${keyword}, brandId=${brandFilter},
+                             categoryId=${categoryFilter}, status=${statusFilter})}">
+                    <i class="bi bi-chevron-left"></i> Trước
+                </a>
+            </li>
+            <li class="page-item" th:each="n : ${pageNumbers}" th:classappend="${n == products.number} ? 'active'">
+                <a class="page-link" th:text="${n + 1}"
+                   th:href="@{/admin/san-pham(page=${n + 1}, keyword=${keyword}, brandId=${brandFilter},
+                             categoryId=${categoryFilter}, status=${statusFilter})}">1</a>
+            </li>
+            <li class="page-item" th:classappend="${products.last} ? 'disabled'">
+                <a class="page-link" rel="next"
+                   th:href="@{/admin/san-pham(page=${products.number + 2}, keyword=${keyword}, brandId=${brandFilter},
+                             categoryId=${categoryFilter}, status=${statusFilter})}">
+                    Sau <i class="bi bi-chevron-right"></i>
+                </a>
+            </li>
+        </ul>
+        <p class="text-center text-muted small mb-0"
+           th:text="|Trang ${products.number + 1}/${products.totalPages}|">Trang 1/1</p>
+    </nav>
+
+</th:block>
+
+</body>
+</html>

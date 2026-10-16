@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="vi"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/base}">
+<head>
+    <title>Đăng nhập</title>
+</head>
+<body>
+
+<th:block layout:fragment="content">
+    <div class="row justify-content-center">
+        <div class="col-md-7 col-lg-5">
+            <div class="card border-0 shadow-sm" data-aos="fade-up">
+                <div class="card-body p-4">
+                    <h1 class="h4 text-center mb-1">Đăng nhập</h1>
+                    <p class="text-center text-muted small mb-4">Dùng email đã đăng ký để tiếp tục mua hàng.</p>
+
+                    <div class="alert alert-danger" role="alert" th:if="${param.error}">
+                        <i class="bi bi-exclamation-triangle-fill"></i> Email hoặc mật khẩu không đúng.
+                    </div>
+                    <div class="alert alert-info" role="alert" th:if="${param.logout}">
+                        <i class="bi bi-info-circle-fill"></i> Bạn đã đăng xuất khỏi hệ thống.
+                    </div>
+
+                    <form th:action="@{/dang-nhap}" method="post" novalidate>
+                        <div class="mb-3">
+                            <label class="form-label" for="email">Email</label>
+                            <input class="form-control" id="email" name="email" type="email"
+                                   autocomplete="email" required autofocus>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label" for="password">Mật khẩu</label>
+                            <input class="form-control" id="password" name="password" type="password"
+                                   autocomplete="current-password" required>
+                        </div>
+                        <button class="btn btn-primary w-100" type="submit">
+                            <i class="bi bi-box-arrow-in-right"></i> Đăng nhập
+                        </button>
+                    </form>
+
+                    <p class="text-center mt-3 mb-0">
+                        Chưa có tài khoản?
+                        <a th:href="@{/dang-ky}" class="fw-semibold">Đăng ký ngay</a>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</th:block>
+
+</body>
+</html>

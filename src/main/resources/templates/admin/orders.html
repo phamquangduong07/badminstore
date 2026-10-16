@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="vi"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/admin}">
+<head>
+    <title>Quản lý đơn hàng</title>
+</head>
+<body>
+
+<th:block layout:fragment="content">
+
+    <div class="d-flex flex-wrap justify-content-between align-items-center gap-2 mb-3">
+        <h1 class="h4 mb-0"><i class="bi bi-receipt text-primary"></i> Quản lý đơn hàng</h1>
+        <div class="d-flex align-items-center gap-2">
+            <span class="text-muted small" th:text="|Tổng ${orders.totalElements} đơn phù hợp|">Tổng 0 đơn</span>
+            <a class="btn btn-sm btn-primary" th:href="@{/admin/don-hang/tao-don}">
+                <i class="bi bi-plus-square"></i> Tạo đơn thủ công
+            </a>
+        </div>
+    </div>
+
+    <!-- Lọc trạng thái + tìm kiếm mã đơn / SĐT / email -->
+    <form class="card border-0 shadow-sm mb-3" method="get" th:action="@{/admin/don-hang}">
+        <div class="card-body row g-2 align-items-end">
+            <div class="col-sm-6 col-lg-3">
+                <label class="form-label small" for="status">Trạng thái</label>
+                <select class="form-select" id="status" name="status">
+                    <option value="" th:selected="${statusFilter == null}">-- Tất cả --</option>
+                    <option th:each="status : ${statuses}" th:value="${status.name()}"
+                            th:text="${status.label}" th:selected="${status == statusFilter}">Trạng thái</option>
+                </select>
+            </div>
+            <div class="col-sm-6 col-lg-4">
+                <label class="form-label small" for="keyword">Mã đơn / SĐT / email khách</label>
+                <input class="form-control" id="keyword" name="keyword" th:value="${keyword}"
+                       placeholder="Ví dụ: BS261016… hoặc 0987…">
+            </div>
+            <div class="col-lg-5 d-flex gap-2">
+                <button class="btn btn-primary" type="submit"><i class="bi bi-search"></i> Lọc</button>
+                <a class="btn btn-outline-secondary" th:href="@{/admin/don-hang}">Xoá lọc</a>
+            </div>
+        </div>
+    </form>
+
+    <div class="card border-0 shadow-sm">
+        <div class="table-responsive">
+            <table class="table align-middle mb-0">
+                <thead class="table-light">
+                <tr>
+                    <th scope="col">Mã đơn</th>
+                    <th scope="col">Khách</th>
+                    <th scope="col">Ngày đặt</th>
+                    <th scope="col" class="text-center">SL</th>
+                    <th scope="col" class="text-end">Tổng tiền</th>
+                    <th scope="col">Trạng thái</th>
+                    <th scope="col">Thanh toán</th>
+                    <th scope="col" class="text-end">Thao tác</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="row : ${orders.content}">
+                    <td>
+                        <a class="fw-semibold text-decoration-none" th:href="@{/admin/don-hang/{id}(id=${row.id})}"
+                           th:text="${row.orderCode}">BS000</a>
+                        <span class="badge text-bg-light d-block" th:if="${row.orderSource.name() == 'MANUAL'}">
+                            Tạo thủ công
+                        </span>
+                    </td>
+                    <td>
+                        <div th:text="${row.customerLabel}">khach@example.com</div>
+                        <div class="small text-muted" th:text="${row.receiverName}">Người nhận</div>
+                    </td>
+                    <td class="small text-muted"
+                        th:insert="~{fragments/common :: dateTime(${row.createdAt})}">00/00/0000</td>
+                    <td class="text-center" th:text="${row.itemQuantity}">0</td>
+                    <td class="text-end fw-semibold" th:insert="~{fragments/common :: money(${row.totalAmount})}">0 ₫</td>
+                    <td><span class="badge" th:classappend="${row.statusBadgeClass}"
+                              th:text="${row.orderStatus.label}">Trạng thái</span></td>
+                    <td>
+                        <div class="small" th:text="${row.paymentMethodLabel}">COD</div>
+                        <span class="badge" th:classappend="${row.paymentBadgeClass}"
+                              th:text="${row.paymentStatusLabel}">Chờ</span>
+                    </td>
+                    <td class="text-end">
+                        <div class="d-flex justify-content-end gap-1">
+                            <form th:if="${row.orderStatus.name() == 'PENDING'}"
+                                  th:action="@{/admin/don-hang/{id}/xac-nhan(id=${row.id})}" method="post"
+                                  data-confirm="Xác nhận đơn này và TRỪ KHO ngay?">
+                                <button class="btn btn-sm btn-success" type="submit">
+                                    <i class="bi bi-check2-circle"></i> Xác nhận
+                                </button>
+                            </form>
+                            <a class="btn btn-sm btn-outline-primary" th:href="@{/admin/don-hang/{id}(id=${row.id})}">
+                                Chi tiết
+                            </a>
+                        </div>
+                    </td>
+                </tr>
+                <tr th:if="${orders.empty}">
+                    <td colspan="8" class="text-center text-muted py-5">
+                        <i class="bi bi-inbox display-6 d-block mb-2"></i>
+                        Không có đơn hàng nào phù hợp bộ lọc.
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- Phân trang giữ nguyên bộ lọc -->
+    <nav th:if="${orders.totalPages > 1}" class="mt-3" aria-label="Phân trang đơn hàng">
+        <ul class="pagination justify-content-center mb-1">
+            <li class="page-item" th:classappend="${orders.first} ? 'disabled'">
+                <a class="page-link" rel="prev"
+                   th:href="@{/admin/don-hang(page=${orders.number}, status=${statusFilter}, keyword=${keyword})}">
+                    <i class="bi bi-chevron-left"></i> Trước
+                </a>
+            </li>
+            <li class="page-item" th:each="n : ${pageNumbers}" th:classappend="${n == orders.number} ? 'active'">
+                <a class="page-link" th:text="${n + 1}"
+                   th:href="@{/admin/don-hang(page=${n + 1}, status=${statusFilter}, keyword=${keyword})}">1</a>
+            </li>
+            <li class="page-item" th:classappend="${orders.last} ? 'disabled'">
+                <a class="page-link" rel="next"
+                   th:href="@{/admin/don-hang(page=${orders.number + 2}, status=${statusFilter}, keyword=${keyword})}">
+                    Sau <i class="bi bi-chevron-right"></i>
+                </a>
+            </li>
+        </ul>
+        <p class="text-center text-muted small mb-0"
+           th:text="|Trang ${orders.number + 1}/${orders.totalPages}|">Trang 1/1</p>
+    </nav>
+
+</th:block>
+
+</body>
+</html>

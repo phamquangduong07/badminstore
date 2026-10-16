@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="vi"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/base}">
+<head>
+    <title>Giỏ hàng</title>
+</head>
+<body>
+
+<th:block layout:fragment="content">
+
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a th:href="@{/}">Trang chủ</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Giỏ hàng</li>
+        </ol>
+    </nav>
+
+    <h1 class="h4 mb-3"><i class="bi bi-cart3 text-primary"></i> Giỏ hàng của bạn</h1>
+
+    <!-- ===== Giỏ trống ===== -->
+    <div th:if="${cart.empty}" class="card border-0 shadow-sm">
+        <div class="card-body text-center py-5">
+            <i class="bi bi-cart-x display-5 text-muted" aria-hidden="true"></i>
+            <p class="mt-3 mb-1 fw-semibold">Giỏ hàng của bạn đang trống.</p>
+            <p class="text-muted">Hãy chọn một cây vợt ưng ý rồi quay lại đây nhé.</p>
+            <a class="btn btn-primary" th:href="@{/san-pham}">
+                <i class="bi bi-grid"></i> Xem danh sách sản phẩm
+            </a>
+        </div>
+    </div>
+
+    <!-- ===== Có sản phẩm ===== -->
+    <div th:unless="${cart.empty}" class="row g-4">
+        <div class="col-lg-8">
+
+            <div class="alert alert-warning d-flex gap-2" role="alert" th:if="${cart.hasIssues}">
+                <i class="bi bi-exclamation-triangle-fill" aria-hidden="true"></i>
+                <div>
+                    Một số sản phẩm trong giỏ không còn đủ hàng để đặt. Bạn hãy cập nhật số lượng
+                    hoặc xoá các sản phẩm được đánh dấu bên dưới trước khi đặt hàng.
+                </div>
+            </div>
+
+            <div class="card border-0 shadow-sm">
+                <div class="table-responsive">
+                    <table class="table align-middle mb-0">
+                        <caption class="px-3 pt-3 text-muted small">
+                            Giá bán và tồn kho được kiểm tra lại ngay tại thời điểm bạn đặt hàng.
+                        </caption>
+                        <thead class="table-light">
+                        <tr>
+                            <th scope="col">Sản phẩm</th>
+                            <th scope="col" class="text-end">Đơn giá</th>
+                            <th scope="col" class="text-center">Số lượng</th>
+                            <th scope="col" class="text-end">Thành tiền</th>
+                            <th scope="col"><span class="visually-hidden">Thao tác</span></th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr th:each="line : ${cart.lines}" th:classappend="${!line.available} ? 'table-warning'">
+                            <td>
+                                <div class="d-flex align-items-center gap-3">
+                                    <img class="cart-thumb rounded border bg-white" th:src="${line.imageUrl}"
+                                         th:alt="|Ảnh ${line.productName}|" width="72" height="72" loading="lazy">
+                                    <div>
+                                        <a class="fw-semibold text-decoration-none"
+                                           th:href="@{/san-pham/{id}(id=${line.productId})}"
+                                           th:text="${line.productName}">Tên vợt</a>
+                                        <div class="small text-muted"
+                                             th:text="|${line.variantLabel} · SKU ${line.sku}|">Phiên bản</div>
+                                        <span class="badge text-bg-danger mt-1" th:if="${line.issue != null}"
+                                              th:text="${line.issue}">Lỗi</span>
+                                        <span class="badge text-bg-success mt-1" th:if="${line.available}"
+                                              th:text="|Còn ${line.stockQuantity}|">Còn 5</span>
+                                    </div>
+                                </div>
+                            </td>
+                            <td class="text-end">
+                                <span class="price-current" th:insert="~{fragments/common :: money(${line.price})}">0 ₫</span>
+                                <span class="price-original d-block" th:if="${line.discounted}"
+                                      th:insert="~{fragments/common :: money(${line.originalPrice})}">0 ₫</span>
+                            </td>
+                            <td class="text-center">
+                                <form th:action="@{/gio-hang/cap-nhat}" method="post" class="d-inline-block"
+                                      data-confirm="Cập nhật số lượng của sản phẩm này?">
+                                    <input type="hidden" name="cartItemId" th:value="${line.cartItemId}">
+                                    <div class="input-group input-group-sm mx-auto js-quantity quantity-group">
+                                        <button class="btn btn-outline-secondary js-quantity-down" type="button"
+                                                th:disabled="${!line.available}" aria-label="Giảm số lượng">−</button>
+                                        <input type="number" class="form-control text-center" name="quantity"
+                                               th:value="${line.quantity}" min="1" th:max="${line.maxQuantity}"
+                                               th:disabled="${!line.available}" aria-label="Số lượng sản phẩm">
+                                        <button class="btn btn-outline-secondary js-quantity-up" type="button"
+                                                th:disabled="${!line.available}" aria-label="Tăng số lượng">+</button>
+                                    </div>
+                                    <button type="submit" class="btn btn-sm btn-outline-primary mt-1"
+                                            th:disabled="${!line.available}">
+                                        <i class="bi bi-arrow-repeat"></i> Cập nhật
+                                    </button>
+                                </form>
+                            </td>
+                            <td class="text-end fw-semibold">
+                                <span th:insert="~{fragments/common :: money(${line.lineTotal})}">0 ₫</span>
+                            </td>
+                            <td class="text-end">
+                                <form th:action="@{/gio-hang/xoa}" method="post"
+                                      data-confirm="Xoá sản phẩm này khỏi giỏ hàng?">
+                                    <input type="hidden" name="cartItemId" th:value="${line.cartItemId}">
+                                    <button type="submit" class="btn btn-sm btn-outline-danger"
+                                            th:attr="aria-label=|Xoá ${line.productName} khỏi giỏ hàng|">
+                                        <i class="bi bi-trash"></i>
+                                    </button>
+                                </form>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="d-flex flex-wrap justify-content-between gap-2 mt-3">
+                <a class="btn btn-outline-secondary btn-sm" th:href="@{/san-pham}">
+                    <i class="bi bi-arrow-left"></i> Tiếp tục mua sắm
+                </a>
+                <form th:action="@{/gio-hang/xoa-tat-ca}" method="post"
+                      data-confirm="Xoá toàn bộ sản phẩm trong giỏ hàng?">
+                    <button type="submit" class="btn btn-outline-danger btn-sm">
+                        <i class="bi bi-trash3"></i> Xoá tất cả
+                    </button>
+                </form>
+            </div>
+        </div>
+
+        <!-- ===== Tóm tắt ===== -->
+        <div class="col-lg-4">
+            <div class="card border-0 shadow-sm summary-card">
+                <div class="card-header bg-white fw-semibold">Tóm tắt giỏ hàng</div>
+                <div class="card-body">
+                    <dl class="row mb-0">
+                        <dt class="col-7 fw-normal text-muted">Số sản phẩm</dt>
+                        <dd class="col-5 text-end mb-2" th:text="${cart.totalQuantity}">0</dd>
+                        <dt class="col-7 fw-normal text-muted">Tạm tính</dt>
+                        <dd class="col-5 text-end mb-2 fw-semibold"
+                            th:insert="~{fragments/common :: money(${cart.subtotal})}">0 ₫</dd>
+                        <dt class="col-7 fw-normal text-muted">Phí vận chuyển</dt>
+                        <dd class="col-5 text-end mb-2 text-muted small">tính ở bước đặt hàng</dd>
+                    </dl>
+                    <hr>
+                    <div class="d-flex justify-content-between align-items-baseline">
+                        <span class="fw-semibold">Tổng cộng</span>
+                        <span class="fs-5 price-current"
+                              th:insert="~{fragments/common :: money(${cart.subtotal})}">0 ₫</span>
+                    </div>
+                    <!-- Còn hàng đủ thì cho sang bước thanh toán; có dòng lỗi thì chặn và nhắc xử lý -->
+                    <a class="btn btn-primary btn-lg w-100 mt-3" th:href="@{/thanh-toan}"
+                       th:unless="${cart.hasIssues}">
+                        <i class="bi bi-bag-check"></i> Tiến hành đặt hàng
+                    </a>
+                    <button type="button" class="btn btn-primary btn-lg w-100 mt-3" disabled
+                            th:if="${cart.hasIssues}">
+                        <i class="bi bi-bag-check"></i> Tiến hành đặt hàng
+                    </button>
+                    <p class="small text-muted mb-0 mt-2" th:if="${cart.hasIssues}">
+                        Bạn cần xử lý các sản phẩm được đánh dấu ở trên trước khi đặt hàng.
+                    </p>
+                </div>
+            </div>
+
+            <div class="card border-0 shadow-sm mt-3">
+                <div class="card-body small text-muted">
+                    <div><i class="bi bi-shield-check text-success"></i> Hàng chính hãng, bảo hành theo hãng.</div>
+                    <div class="mt-2"><i class="bi bi-truck text-primary"></i> Kiểm tra hàng trước khi thanh toán.</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</th:block>
+
+</body>
+</html>

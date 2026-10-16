@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="vi"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/base}">
+<head>
+    <title>Đăng ký tài khoản</title>
+</head>
+<body>
+
+<th:block layout:fragment="content">
+    <div class="row justify-content-center">
+        <div class="col-md-8 col-lg-6">
+            <div class="card border-0 shadow-sm" data-aos="fade-up">
+                <div class="card-body p-4">
+                    <h1 class="h4 text-center mb-1">Đăng ký tài khoản</h1>
+                    <p class="text-center text-muted small mb-4">Chỉ mất một phút để bắt đầu mua sắm.</p>
+
+                    <!-- Validate 2 lớp: HTML (required/minlength/pattern) + Bean Validation ở server -->
+                    <form th:action="@{/dang-ky}" th:object="${registerRequest}" method="post" novalidate>
+                        <!-- Lỗi nghiệp vụ trả về từ Service (email trùng, mật khẩu xác nhận sai…).
+                             BẮT BUỘC đặt trong form có th:object thì #fields mới hoạt động. -->
+                        <div class="alert alert-danger" role="alert" th:if="${#fields.hasGlobalErrors()}">
+                            <i class="bi bi-exclamation-triangle-fill"></i>
+                            <span th:each="err : ${#fields.globalErrors()}" th:text="${err}">Lỗi</span>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label" for="email">Email <span class="text-danger">*</span></label>
+                            <input class="form-control" id="email" type="email" th:field="*{email}"
+                                   th:classappend="${#fields.hasErrors('email')} ? 'is-invalid'"
+                                   autocomplete="email" required maxlength="100">
+                            <div class="invalid-feedback" th:if="${#fields.hasErrors('email')}"
+                                 th:errors="*{email}">Email không hợp lệ</div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label" for="fullName">Họ và tên <span class="text-danger">*</span></label>
+                            <input class="form-control" id="fullName" type="text" th:field="*{fullName}"
+                                   th:classappend="${#fields.hasErrors('fullName')} ? 'is-invalid'"
+                                   autocomplete="name" required maxlength="100">
+                            <div class="invalid-feedback" th:if="${#fields.hasErrors('fullName')}"
+                                 th:errors="*{fullName}">Vui lòng nhập họ tên</div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label" for="phone">Số điện thoại</label>
+                            <input class="form-control" id="phone" type="tel" th:field="*{phone}"
+                                   th:classappend="${#fields.hasErrors('phone')} ? 'is-invalid'"
+                                   autocomplete="tel" maxlength="20" pattern="^(0|\+84)\d{8,10}$">
+                            <div class="form-text">Không bắt buộc – ví dụ: 0912345678</div>
+                            <div class="invalid-feedback" th:if="${#fields.hasErrors('phone')}"
+                                 th:errors="*{phone}">Số điện thoại không hợp lệ</div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label" for="password">Mật khẩu <span class="text-danger">*</span></label>
+                                <input class="form-control" id="password" type="password" th:field="*{password}"
+                                       th:classappend="${#fields.hasErrors('password')} ? 'is-invalid'"
+                                       autocomplete="new-password" required minlength="6" maxlength="72">
+                                <div class="invalid-feedback" th:if="${#fields.hasErrors('password')}"
+                                     th:errors="*{password}">Mật khẩu từ 6 đến 72 ký tự</div>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label" for="confirmPassword">Xác nhận mật khẩu <span class="text-danger">*</span></label>
+                                <input class="form-control" id="confirmPassword" type="password"
+                                       th:field="*{confirmPassword}"
+                                       th:classappend="${#fields.hasErrors('confirmPassword')} ? 'is-invalid'"
+                                       autocomplete="new-password" required maxlength="72">
+                                <div class="invalid-feedback" th:if="${#fields.hasErrors('confirmPassword')}"
+                                     th:errors="*{confirmPassword}">Vui lòng xác nhận mật khẩu</div>
+                            </div>
+                        </div>
+
+                        <button class="btn btn-primary w-100" type="submit">
+                            <i class="bi bi-person-plus"></i> Tạo tài khoản
+                        </button>
+                    </form>
+
+                    <p class="text-center mt-3 mb-0">
+                        Đã có tài khoản?
+                        <a th:href="@{/dang-nhap}" class="fw-semibold">Đăng nhập</a>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</th:block>
+
+</body>
+</html>
