@@ -11,6 +11,7 @@ opencode.json
 .codex/
 .gemini/
 .github/copilot-instructions.md
+.docs
 # Nhật ký dùng AI – giữ trên máy, nộp riêng kèm đồ án
 docs/AI_USAGE_LOG.md
 # README của bộ cấu hình AI – không dùng cho repo
