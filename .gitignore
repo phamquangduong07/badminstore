@@ -42,8 +42,7 @@ nbproject/
 # ============================================================
 .env
 .env.local
-src/main/resources/application-local.yml
-src/main/resources/application-local.properties
+
 
 # ============================================================
 # File tải lên & log
