@@ -19,14 +19,28 @@
 
     <h1 class="h4 mb-3"><i class="bi bi-cart3 text-primary"></i> Giỏ hàng của bạn</h1>
 
+    <!-- Thanh bước mua hàng: Giỏ hàng (đang ở) → Thanh toán → Hoàn tất -->
+    <ol class="checkout-steps" aria-label="Các bước mua hàng">
+        <li class="checkout-step step-current" aria-current="step">
+            <span class="step-index">1</span> Giỏ hàng
+        </li>
+        <li class="checkout-step">
+            <span class="step-index">2</span> Thanh toán
+            <span class="step-sep" aria-hidden="true">›</span>
+        </li>
+        <li class="checkout-step">
+            <span class="step-index">3</span> Hoàn tất
+        </li>
+    </ol>
+
     <!-- ===== Giỏ trống ===== -->
     <div th:if="${cart.empty}" class="card border-0 shadow-sm">
-        <div class="card-body text-center py-5">
-            <i class="bi bi-cart-x display-5 text-muted" aria-hidden="true"></i>
-            <p class="mt-3 mb-1 fw-semibold">Giỏ hàng của bạn đang trống.</p>
-            <p class="text-muted">Hãy chọn một cây vợt ưng ý rồi quay lại đây nhé.</p>
+        <div class="card-body empty-state">
+            <i class="bi bi-cart-x" aria-hidden="true"></i>
+            <p class="mb-1 fw-semibold">Giỏ hàng của bạn đang trống.</p>
+            <p>Hãy chọn một cây vợt ưng ý rồi quay lại đây nhé.</p>
             <a class="btn btn-primary" th:href="@{/san-pham}">
-                <i class="bi bi-grid"></i> Xem danh sách sản phẩm
+                <i class="bi bi-grid" aria-hidden="true"></i> Tiếp tục mua sắm
             </a>
         </div>
     </div>
@@ -45,7 +59,8 @@
 
             <div class="card border-0 shadow-sm">
                 <div class="table-responsive">
-                    <table class="table align-middle mb-0">
+                    <!-- cart-table: dưới 768px mỗi dòng hàng là một thẻ (không cuộn ngang) -->
+                    <table class="table align-middle mb-0 cart-table">
                         <caption class="px-3 pt-3 text-muted small">
                             Giá bán và tồn kho được kiểm tra lại ngay tại thời điểm bạn đặt hàng.
                         </caption>
@@ -60,7 +75,7 @@
                         </thead>
                         <tbody>
                         <tr th:each="line : ${cart.lines}" th:classappend="${!line.available} ? 'table-warning'">
-                            <td>
+                            <td data-label="Sản phẩm">
                                 <div class="d-flex align-items-center gap-3">
                                     <img class="cart-thumb rounded border bg-white" th:src="${line.imageUrl}"
                                          th:alt="|Ảnh ${line.productName}|" width="72" height="72" loading="lazy">
@@ -77,12 +92,12 @@
                                     </div>
                                 </div>
                             </td>
-                            <td class="text-end">
+                            <td class="text-end" data-label="Đơn giá">
                                 <span class="price-current" th:insert="~{fragments/common :: money(${line.price})}">0 ₫</span>
                                 <span class="price-original d-block" th:if="${line.discounted}"
                                       th:insert="~{fragments/common :: money(${line.originalPrice})}">0 ₫</span>
                             </td>
-                            <td class="text-center">
+                            <td class="text-center" data-label="Số lượng">
                                 <form th:action="@{/gio-hang/cap-nhat}" method="post" class="d-inline-block"
                                       data-confirm="Cập nhật số lượng của sản phẩm này?">
                                     <input type="hidden" name="cartItemId" th:value="${line.cartItemId}">
@@ -101,10 +116,10 @@
                                     </button>
                                 </form>
                             </td>
-                            <td class="text-end fw-semibold">
+                            <td class="text-end fw-semibold" data-label="Thành tiền">
                                 <span th:insert="~{fragments/common :: money(${line.lineTotal})}">0 ₫</span>
                             </td>
-                            <td class="text-end">
+                            <td class="text-end" data-label="Thao tác">
                                 <form th:action="@{/gio-hang/xoa}" method="post"
                                       data-confirm="Xoá sản phẩm này khỏi giỏ hàng?">
                                     <input type="hidden" name="cartItemId" th:value="${line.cartItemId}">

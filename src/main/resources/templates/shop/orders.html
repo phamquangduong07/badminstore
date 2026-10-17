@@ -10,96 +10,152 @@
 
 <th:block layout:fragment="content">
 
-    <nav aria-label="breadcrumb">
-        <ol class="breadcrumb">
-            <li class="breadcrumb-item"><a th:href="@{/}">Trang chủ</a></li>
-            <li class="breadcrumb-item active" aria-current="page">Đơn hàng của tôi</li>
-        </ol>
-    </nav>
+    <div class="orders-page">
 
-    <h1 class="h4 mb-3"><i class="bi bi-receipt text-primary"></i> Đơn hàng của tôi</h1>
+        <!--
+          CSS riêng của nhóm trang tài khoản/đơn hàng, nạp ngay trong nội dung trang
+          (sau theme.css) và mọi rule đều scope trong .orders-page nên không ảnh hưởng trang khác.
+        -->
+        <link rel="stylesheet" th:href="@{/css/account-orders.css}">
 
-    <!-- Chưa có đơn nào -->
-    <div class="card border-0 shadow-sm" th:if="${orders.empty}">
-        <div class="card-body text-center py-5">
-            <i class="bi bi-clipboard-x display-5 text-muted" aria-hidden="true"></i>
-            <p class="mt-3 mb-1 fw-semibold">Bạn chưa có đơn hàng nào.</p>
-            <p class="text-muted">Chọn một cây vợt ưng ý rồi quay lại đây để theo dõi đơn nhé.</p>
-            <a class="btn btn-primary" th:href="@{/san-pham}">
-                <i class="bi bi-grid"></i> Xem danh sách sản phẩm
-            </a>
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a th:href="@{/}">Trang chủ</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Đơn hàng của tôi</li>
+            </ol>
+        </nav>
+
+        <!-- Tiêu đề + số đơn để khách biết mình đang có bao nhiêu đơn -->
+        <div class="d-flex flex-wrap justify-content-between align-items-center gap-2 mb-3">
+            <h1 class="h4 mb-0">
+                <i class="bi bi-receipt text-primary" aria-hidden="true"></i> Đơn hàng của tôi
+                <span class="badge badge-soft-primary rounded-pill ms-1" th:if="${!orders.empty}"
+                      th:text="|${orders.totalElements} đơn|">0 đơn</span>
+            </h1>
+            <p class="text-muted small mb-0">
+                Theo dõi trạng thái và xem lại chi tiết từng đơn bạn đã đặt.
+            </p>
         </div>
-    </div>
 
-    <div th:unless="${orders.empty}">
-        <div class="card border-0 shadow-sm mb-3" th:each="row : ${orders.content}">
-            <div class="card-body">
-                <div class="d-flex flex-wrap justify-content-between align-items-center gap-2">
-                    <div>
-                        <a class="fw-semibold text-decoration-none" th:href="@{/don-hang/{id}(id=${row.id})}"
-                           th:text="|Đơn ${row.orderCode}|">Đơn hàng</a>
-                        <span class="badge ms-1" th:classappend="${row.statusBadgeClass}"
-                              th:text="${row.orderStatus.label}">Trạng thái</span>
-                        <span class="badge text-bg-light ms-1" th:if="${row.orderSource.name() == 'MANUAL'}">
-                            Tạo tại quầy
-                        </span>
-                    </div>
-                    <div class="text-muted small">
-                        <i class="bi bi-clock" aria-hidden="true"></i>
-                        <span th:insert="~{fragments/common :: dateTime(${row.createdAt})}">00/00/0000</span>
-                    </div>
-                </div>
-
-                <div class="row small text-muted mt-2 g-2">
-                    <div class="col-sm-4">
-                        Người nhận: <span class="text-body" th:text="${row.receiverName}">Tên</span>
-                    </div>
-                    <div class="col-sm-4">
-                        <span th:text="|${row.itemQuantity} sản phẩm (${row.lineCount} dòng hàng)|">0 sản phẩm</span>
-                    </div>
-                    <div class="col-sm-4">
-                        Thanh toán: <span class="text-body" th:text="${row.paymentMethodLabel}">COD</span>
-                        <span class="badge ms-1" th:classappend="${row.paymentBadgeClass}"
-                              th:text="${row.paymentStatusLabel}">Chờ</span>
-                    </div>
-                </div>
-
-                <hr class="my-2">
-
-                <div class="d-flex flex-wrap justify-content-between align-items-center gap-2">
-                    <span>
-                        Tổng tiền:
-                        <span class="price-current" th:insert="~{fragments/common :: money(${row.totalAmount})}">0 ₫</span>
-                    </span>
-                    <a class="btn btn-sm btn-outline-primary" th:href="@{/don-hang/{id}(id=${row.id})}">
-                        Xem chi tiết <i class="bi bi-chevron-right"></i>
-                    </a>
-                </div>
+        <!-- Chưa có đơn nào -->
+        <div class="card border-0 shadow-sm" th:if="${orders.empty}">
+            <div class="card-body empty-state">
+                <i class="bi bi-receipt-cutoff" aria-hidden="true"></i>
+                <h2 class="h5 mb-1">Bạn chưa có đơn hàng nào</h2>
+                <p class="mb-3">Chọn một cây vợt ưng ý rồi quay lại đây để theo dõi hành trình đơn hàng nhé.</p>
+                <a class="btn btn-primary" th:href="@{/san-pham}">
+                    <i class="bi bi-grid" aria-hidden="true"></i> Xem danh sách sản phẩm
+                </a>
             </div>
         </div>
 
-        <!-- Phân trang danh sách đơn -->
-        <nav th:if="${orders.totalPages > 1}" aria-label="Phân trang đơn hàng">
-            <ul class="pagination justify-content-center mb-1">
-                <li class="page-item" th:classappend="${orders.first} ? 'disabled'">
-                    <a class="page-link" rel="prev" th:href="@{/don-hang(page=${orders.number})}">
-                        <i class="bi bi-chevron-left"></i> Trước
-                    </a>
-                </li>
-                <li class="page-item" th:each="n : ${pageNumbers}" th:classappend="${n == orders.number} ? 'active'">
-                    <a class="page-link" th:text="${n + 1}" th:href="@{/don-hang(page=${n + 1})}">1</a>
-                </li>
-                <li class="page-item" th:classappend="${orders.last} ? 'disabled'">
-                    <a class="page-link" rel="next" th:href="@{/don-hang(page=${orders.number + 2})}">
-                        Sau <i class="bi bi-chevron-right"></i>
-                    </a>
-                </li>
-            </ul>
-            <p class="text-center text-muted small mb-0"
-               th:text="|Trang ${orders.number + 1}/${orders.totalPages} – ${orders.totalElements} đơn hàng|">
-                Trang 1/1
-            </p>
-        </nav>
+        <div th:unless="${orders.empty}">
+            <article class="card border-0 order-card mb-3" th:each="row : ${orders.content}" data-aos="fade-up">
+                <div class="card-body p-3 p-md-4">
+
+                    <!-- Dòng 1: mã đơn + trạng thái (status-pill) + nguồn đơn + thời điểm đặt -->
+                    <div class="d-flex flex-wrap justify-content-between align-items-center gap-2">
+                        <div class="d-flex flex-wrap align-items-center gap-2">
+                            <a class="fw-semibold text-decoration-none" th:href="@{/don-hang/{id}(id=${row.id})}"
+                               th:text="|Đơn ${row.orderCode}|">Đơn hàng</a>
+                            <span class="status-pill" th:classappend="|status-${row.orderStatus.name()}|"
+                                  th:text="${row.orderStatus.label}">Trạng thái</span>
+                            <span class="badge badge-soft-secondary rounded-pill" th:if="${row.orderSource.name() == 'MANUAL'}">
+                                <i class="bi bi-shop" aria-hidden="true"></i> Tạo tại quầy
+                            </span>
+                        </div>
+                        <div class="text-muted small">
+                            <i class="bi bi-clock" aria-hidden="true"></i>
+                            <span th:insert="~{fragments/common :: dateTime(${row.createdAt})}">00/00/0000</span>
+                        </div>
+                    </div>
+
+                    <!-- Dòng 2: người nhận – số sản phẩm – thanh toán -->
+                    <div class="row g-3 small mt-1">
+                        <div class="col-12 col-md-4">
+                            <div class="text-muted">Người nhận</div>
+                            <div class="fw-semibold" th:text="${row.receiverName}">Tên người nhận</div>
+                        </div>
+                        <div class="col-6 col-md-4">
+                            <div class="text-muted">Sản phẩm</div>
+                            <div class="fw-semibold"
+                                 th:text="|${row.itemQuantity} sản phẩm · ${row.lineCount} dòng hàng|">0 sản phẩm</div>
+                        </div>
+                        <div class="col-6 col-md-4">
+                            <div class="text-muted">Thanh toán</div>
+                            <div class="fw-semibold d-flex flex-wrap align-items-center gap-2">
+                                <span th:text="${row.paymentMethodLabel}">COD</span>
+                                <span class="badge rounded-pill" th:classappend="${row.paymentBadgeClass}"
+                                      th:text="${row.paymentStatusLabel}">Chờ</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Gợi ý bước tiếp theo của đơn: khách biết mình cần chờ gì -->
+                    <p class="small text-muted mb-0 mt-2" th:switch="${row.orderStatus.name()}">
+                        <span th:case="'PENDING'">
+                            <i class="bi bi-hourglass-split" aria-hidden="true"></i>
+                            BadStore đang kiểm tra tồn kho và sẽ xác nhận đơn của bạn.
+                        </span>
+                        <span th:case="'CONFIRMED'">
+                            <i class="bi bi-box-seam" aria-hidden="true"></i>
+                            Đơn đã được xác nhận và đang chờ bàn giao cho đơn vị vận chuyển.
+                        </span>
+                        <span th:case="'SHIPPING'">
+                            <i class="bi bi-truck" aria-hidden="true"></i>
+                            Đơn đang trên đường tới bạn. Nhớ kiểm tra hàng khi nhận.
+                        </span>
+                        <span th:case="'DELIVERED'">
+                            <i class="bi bi-patch-check" aria-hidden="true"></i>
+                            Đã giao thành công – bạn có thể đánh giá sản phẩm đã mua.
+                        </span>
+                        <span th:case="'CANCELLED'">
+                            <i class="bi bi-x-circle" aria-hidden="true"></i>
+                            Đơn đã huỷ; hàng (nếu đã trừ kho) đã được trả lại kho bán.
+                        </span>
+                        <span th:case="'RETURNED'">
+                            <i class="bi bi-arrow-counterclockwise" aria-hidden="true"></i>
+                            Đơn đã hoàn trả 100% giá trị.
+                        </span>
+                    </p>
+
+                    <!-- Dòng 3: tổng tiền (nhấn mạnh) + nút xem chi tiết -->
+                    <div class="d-flex flex-wrap justify-content-between align-items-center gap-2 border-top mt-3 pt-3">
+                        <div class="text-muted small">
+                            Tổng tiền
+                            <div class="price-current order-total"
+                                 th:insert="~{fragments/common :: money(${row.totalAmount})}">0 ₫</div>
+                        </div>
+                        <a class="btn btn-sm btn-outline-primary" th:href="@{/don-hang/{id}(id=${row.id})}">
+                            Xem chi tiết <i class="bi bi-chevron-right" aria-hidden="true"></i>
+                        </a>
+                    </div>
+                </div>
+            </article>
+
+            <!-- Phân trang danh sách đơn -->
+            <nav th:if="${orders.totalPages > 1}" aria-label="Phân trang đơn hàng" class="mt-4">
+                <ul class="pagination justify-content-center mb-1">
+                    <li class="page-item" th:classappend="${orders.first} ? 'disabled'">
+                        <a class="page-link" rel="prev" th:href="@{/don-hang(page=${orders.number})}">
+                            <i class="bi bi-chevron-left" aria-hidden="true"></i> Trước
+                        </a>
+                    </li>
+                    <li class="page-item" th:each="n : ${pageNumbers}" th:classappend="${n == orders.number} ? 'active'">
+                        <a class="page-link" th:text="${n + 1}" th:href="@{/don-hang(page=${n + 1})}">1</a>
+                    </li>
+                    <li class="page-item" th:classappend="${orders.last} ? 'disabled'">
+                        <a class="page-link" rel="next" th:href="@{/don-hang(page=${orders.number + 2})}">
+                            Sau <i class="bi bi-chevron-right" aria-hidden="true"></i>
+                        </a>
+                    </li>
+                </ul>
+                <p class="text-center text-muted small mb-0"
+                   th:text="|Trang ${orders.number + 1}/${orders.totalPages} – ${orders.totalElements} đơn hàng|">
+                    Trang 1/1
+                </p>
+            </nav>
+        </div>
     </div>
 
 </th:block>

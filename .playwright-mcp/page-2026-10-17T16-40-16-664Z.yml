@@ -1,0 +1,177 @@
+- generic [active] [ref=f12e1]:
+  - link "Bỏ qua tới nội dung chính" [ref=f12e2] [cursor=pointer]:
+    - /url: "#noi-dung-chinh"
+  - generic [ref=f12e4]:
+    - generic "Menu quản trị" [ref=f12e6]:
+      - navigation [ref=f12e8]:
+        - link " BadStore Trang quản trị" [ref=f12e9] [cursor=pointer]:
+          - /url: /admin
+          - generic [ref=f12e10]: 
+          - generic [ref=f12e12]:
+            - text: BadStore
+            - generic [ref=f12e13]: Trang quản trị
+        - paragraph [ref=f12e14]: Bán hàng
+        - list [ref=f12e15]:
+          - listitem [ref=f12e16]:
+            - link " Tổng quan" [ref=f12e17] [cursor=pointer]:
+              - /url: /admin
+              - generic [ref=f12e18]: 
+              - text: Tổng quan
+          - listitem [ref=f12e19]:
+            - link " Bán hàng tại quầy" [ref=f12e20] [cursor=pointer]:
+              - /url: /admin/ban-hang
+              - generic [ref=f12e21]: 
+              - text: Bán hàng tại quầy
+          - listitem [ref=f12e22]:
+            - link " Đơn hàng" [ref=f12e23] [cursor=pointer]:
+              - /url: /admin/don-hang
+              - generic [ref=f12e24]: 
+              - text: Đơn hàng
+        - paragraph [ref=f12e25]: Hàng hoá & khuyến mãi
+        - list [ref=f12e26]:
+          - listitem [ref=f12e27]:
+            - link " Sản phẩm & biến thể" [ref=f12e28] [cursor=pointer]:
+              - /url: /admin/san-pham
+              - generic [ref=f12e29]: 
+              - text: Sản phẩm & biến thể
+          - listitem [ref=f12e30]:
+            - link " Voucher" [ref=f12e31] [cursor=pointer]:
+              - /url: /admin/voucher
+              - generic [ref=f12e32]: 
+              - text: Voucher
+        - generic [ref=f12e33]:
+          - link " Xem cửa hàng" [ref=f12e34] [cursor=pointer]:
+            - /url: /
+            - generic [ref=f12e35]: 
+            - text: Xem cửa hàng
+          - paragraph [ref=f12e36]:
+            - generic [ref=f12e37]: 
+            - text: Đổi trạng thái đơn sẽ trừ/cộng kho ngay.
+    - main [ref=f12e38]:
+      - generic [ref=f12e39]:
+        - text: 
+        - generic [ref=f12e40]:
+          - generic [ref=f12e41]: 
+          - text: Khu quản trị BadStore
+        - generic [ref=f12e42]:
+          - link " Xem cửa hàng" [ref=f12e43] [cursor=pointer]:
+            - /url: /
+            - generic [ref=f12e44]: 
+            - text: Xem cửa hàng
+          - generic [ref=f12e45]:
+            - generic [ref=f12e46]: 
+            - generic [ref=f12e47]: admin@badstore.local
+          - button " Đăng xuất" [ref=f12e49] [cursor=pointer]:
+            - generic [ref=f12e50]: 
+            - text: Đăng xuất
+      - generic [ref=f12e51]:
+        - generic [ref=f12e52]:
+          - heading " Tổng quan bán hàng" [level=1] [ref=f12e53]:
+            - generic [ref=f12e54]: 
+            - text: Tổng quan bán hàng
+          - link " Xử lý đơn chờ xác nhận" [ref=f12e55] [cursor=pointer]:
+            - /url: /admin/don-hang?status=PENDING
+            - generic [ref=f12e56]: 
+            - text: Xử lý đơn chờ xác nhận
+        - generic [ref=f12e57]:
+          - generic [ref=f12e59]:
+            - generic [ref=f12e60]: 
+            - generic [ref=f12e62]:
+              - generic [ref=f12e63]: Đơn chờ xác nhận
+              - generic [ref=f12e64]: "0"
+          - generic [ref=f12e66]:
+            - generic [ref=f12e67]: 
+            - generic [ref=f12e69]:
+              - generic [ref=f12e70]: Đơn tạo hôm nay
+              - generic [ref=f12e71]: "1"
+          - generic [ref=f12e73]:
+            - generic [ref=f12e74]: 
+            - generic [ref=f12e76]:
+              - generic [ref=f12e77]: Doanh thu hôm nay
+              - generic [ref=f12e78]: 0 ₫
+              - generic [ref=f12e79]: Chỉ tính đơn đã giao thành công
+          - generic [ref=f12e81]:
+            - generic [ref=f12e82]: 
+            - generic [ref=f12e84]:
+              - generic [ref=f12e85]: Doanh thu tháng này
+              - generic [ref=f12e86]: 5.780.000 ₫
+              - generic [ref=f12e87]: 9 khách hàng · 20 sản phẩm · 48 biến thể đang bán
+        - generic [ref=f12e88]:
+          - generic [ref=f12e90]:
+            - generic [ref=f12e91]:
+              - generic [ref=f12e92]: 
+              - text: Doanh thu & số đơn 14 ngày gần nhất
+            - generic "Biểu đồ doanh thu 14 ngày" [ref=f12e95]
+          - generic [ref=f12e97]:
+            - generic [ref=f12e98]:
+              - generic [ref=f12e99]: 
+              - text: Đơn hàng theo trạng thái
+            - generic "Biểu đồ trạng thái đơn hàng" [ref=f12e102]
+        - generic [ref=f12e103]:
+          - generic [ref=f12e105]:
+            - generic [ref=f12e106]:
+              - generic [ref=f12e107]: 
+              - text: Sản phẩm bán chạy
+            - table [ref=f12e109]:
+              - rowgroup [ref=f12e110]:
+                - row [ref=f12e111]:
+                  - columnheader "Sản phẩm" [ref=f12e112]
+                  - columnheader "Đã bán" [ref=f12e113]
+                  - columnheader "Doanh thu" [ref=f12e114]
+              - rowgroup [ref=f12e115]:
+                - row [ref=f12e116]:
+                  - cell "Vợt cầu lông Apacs Feather Weight 55" [ref=f12e117]
+                  - cell "3" [ref=f12e118]
+                  - cell "2.970.000 ₫" [ref=f12e119]
+                - row [ref=f12e120]:
+                  - cell "Vợt cầu lông Apacs Z-Ziggler 2" [ref=f12e121]
+                  - cell "2" [ref=f12e122]
+                  - cell "2.580.000 ₫" [ref=f12e123]
+                - row [ref=f12e124]:
+                  - cell "Vot Yonex Test" [ref=f12e125]
+                  - cell "2" [ref=f12e126]
+                  - cell "3.000.000 ₫" [ref=f12e127]
+                - row [ref=f12e128]:
+                  - cell "Vợt cầu lông chạy thử giỏ hàng" [ref=f12e129]
+                  - cell "1" [ref=f12e130]
+                  - cell "1.490.000 ₫" [ref=f12e131]
+                - row [ref=f12e132]:
+                  - cell "Vợt cầu lông Li-Ning Axforce 100" [ref=f12e133]
+                  - cell "1" [ref=f12e134]
+                  - cell "4.990.000 ₫" [ref=f12e135]
+          - generic [ref=f12e137]:
+            - generic [ref=f12e138]:
+              - generic [ref=f12e139]: 
+              - text: Sắp hết hàng (tồn ≤ 5)
+            - table [ref=f12e141]:
+              - rowgroup [ref=f12e142]:
+                - row [ref=f12e143]:
+                  - columnheader "Biến thể" [ref=f12e144]
+                  - columnheader "Tồn kho" [ref=f12e145]
+              - rowgroup [ref=f12e146]:
+                - row [ref=f12e147]:
+                  - cell "Vợt cầu lông Yonex Astrox 88D Pro YX-AX88DP-02 · Đen · 3U · G5" [ref=f12e148]:
+                    - generic [ref=f12e149]: Vợt cầu lông Yonex Astrox 88D Pro
+                    - generic [ref=f12e150]: YX-AX88DP-02 · Đen · 3U · G5
+                  - cell "0" [ref=f12e151]
+                - row [ref=f12e153]:
+                  - cell "Vợt cầu lông Yonex Astrox 88D Pro YX-AX88DP-03 · Đồng · 4U · G5" [ref=f12e154]:
+                    - generic [ref=f12e155]: Vợt cầu lông Yonex Astrox 88D Pro
+                    - generic [ref=f12e156]: YX-AX88DP-03 · Đồng · 4U · G5
+                  - cell "0" [ref=f12e157]
+                - row [ref=f12e159]:
+                  - cell "Vợt cầu lông Yonex Arcsaber 11 Pro YX-ARC11P-02 · Bạc · 3U · G5" [ref=f12e160]:
+                    - generic [ref=f12e161]: Vợt cầu lông Yonex Arcsaber 11 Pro
+                    - generic [ref=f12e162]: YX-ARC11P-02 · Bạc · 3U · G5
+                  - cell "0" [ref=f12e163]
+                - row [ref=f12e165]:
+                  - cell "Vợt cầu lông Victor Thruster Ryuga II VC-TKRYUGA2-01 · Đen kim tuyến · 4U · G5" [ref=f12e166]:
+                    - generic [ref=f12e167]: Vợt cầu lông Victor Thruster Ryuga II
+                    - generic [ref=f12e168]: VC-TKRYUGA2-01 · Đen kim tuyến · 4U · G5
+                  - cell "0" [ref=f12e169]
+                - row [ref=f12e171]:
+                  - cell "Vợt cầu lông Victor Thruster Ryuga II VC-TKRYUGA2-02 · Đỏ · 3U · G5" [ref=f12e172]:
+                    - generic [ref=f12e173]: Vợt cầu lông Victor Thruster Ryuga II
+                    - generic [ref=f12e174]: VC-TKRYUGA2-02 · Đỏ · 3U · G5
+                  - cell "0" [ref=f12e175]
+  - text: 

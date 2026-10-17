@@ -1,0 +1,256 @@
+/* =========================================================================
+   BadStore – CSS riêng cho KHU QUẢN TRỊ (các trang /admin/**)
+   Được nạp SAU theme.css trong layout/admin.html.
+
+   Lưu ý: theme.css dùng chung cho cả trang khách và có thể được chỉnh sửa
+   thường xuyên, nên các lớp mà template admin phụ thuộc được khai báo đầy đủ
+   ở đây (giá trị trùng khớp với theme.css – file nạp sau nên thắng).
+   ========================================================================= */
+
+/* --- 1. Biến màu cho biểu đồ Chart.js của dashboard ---------------------
+   JS đọc qua getComputedStyle nên phải khai báo trong CSS, không viết ở template */
+:root {
+    --bad-chart-1: #0f8a5f;   /* xanh thương hiệu */
+    --bad-chart-2: #ffb703;   /* vàng accent */
+    --bad-chart-3: #3b82f6;   /* xanh dương */
+    --bad-chart-4: #e63946;   /* đỏ */
+    --bad-chart-5: #8b5cf6;   /* tím */
+    --bad-chart-6: #14b8a6;   /* xanh ngọc */
+}
+
+/* --- 2. Menu dọc ------------------------------------------------------- */
+/* Nền xanh đậm của cột sidebar (layout/admin.html đặt ở .admin-shell) */
+.admin-shell {
+    background: #0b1f1a;
+    color: #cbd5e1;
+}
+
+.admin-sidebar {
+    min-height: 100%;
+}
+
+.admin-sidebar .nav-link {
+    display: flex;
+    align-items: center;
+    gap: .55rem;
+    margin: .15rem .5rem;
+    border-radius: .6rem;
+    opacity: .85;
+    color: rgba(255, 255, 255, .9);
+}
+
+.admin-sidebar .nav-link:hover,
+.admin-sidebar .nav-link:focus-visible {
+    opacity: 1;
+    background-color: rgba(255, 255, 255, .12);
+    color: #fff;
+}
+
+.admin-sidebar .nav-link.active {
+    opacity: 1;
+    background-color: var(--bs-primary) !important;
+    box-shadow: inset 3px 0 0 var(--bad-accent);
+    color: #fff;
+}
+
+/* Thương hiệu trong sidebar */
+.admin-brand {
+    display: flex;
+    align-items: center;
+    gap: .65rem;
+    color: #fff;
+    font-size: 1.1rem;
+    font-weight: 700;
+    text-decoration: none;
+}
+
+.admin-brand:hover,
+.admin-brand:focus-visible {
+    color: #fff;
+}
+
+.admin-brand-mark {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex: 0 0 auto;
+    width: 40px;
+    height: 40px;
+    border-radius: 12px;
+    background: var(--bs-primary);
+    color: #fff;
+    font-size: 1.2rem;
+}
+
+/* Nhóm mục trong menu dọc */
+.nav-section {
+    margin: .9rem 0 .35rem;
+    padding: 0 .5rem;
+    font-size: .72rem;
+    font-weight: 600;
+    letter-spacing: .06em;
+    text-transform: uppercase;
+    color: rgba(255, 255, 255, .45);
+}
+
+/* Chân sidebar: đường kẻ mảnh tách khỏi menu */
+.admin-foot {
+    border-top: 1px solid rgba(255, 255, 255, .12);
+}
+
+/* Offcanvas trên mobile dùng đúng nền xanh đậm của sidebar desktop */
+.admin-offcanvas {
+    --bs-offcanvas-bg: #0b1f1a;
+    --bs-offcanvas-color: #cbd5e1;
+}
+
+/* --- 3. Thanh trên cùng ------------------------------------------------- */
+.admin-topbar {
+    position: sticky;
+    top: 0;
+    z-index: 1020;
+    display: flex;
+    align-items: center;
+    gap: .5rem;
+    padding: .6rem 1rem;
+    background: rgba(255, 255, 255, .97);
+    backdrop-filter: blur(8px);
+    border-bottom: 1px solid var(--bad-border);
+}
+
+/* --- 4. Vùng nội dung --------------------------------------------------- */
+/* Cho phép co lại để bảng rộng tự cuộn ngang, không phá lưới */
+.admin-content {
+    min-width: 0;
+}
+
+/* Thẻ card-soft trong khu quản trị: đầu/chân thẻ tách bằng đường kẻ nhẹ thay vì nền xám */
+.admin-content .card-soft > .card-header,
+.admin-content .card-soft > .card-footer {
+    background-color: transparent;
+    border-color: var(--bad-border);
+    font-weight: 600;
+}
+
+/* Bảng trong khu quản trị: hàng tiêu đề nhỏ, in hoa, đồng bộ với bảng ngoài trang khách */
+.admin-content .table thead th {
+    background: var(--bs-tertiary-bg);
+    border-bottom-color: var(--bad-border);
+    color: var(--bad-muted);
+    font-size: .8rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: .02em;
+    white-space: nowrap;
+}
+
+/* --- 5. Đầu trang: tiêu đề bên trái, nút hành động bên phải ------------ */
+.page-head {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: .75rem;
+    margin-bottom: 1rem;
+}
+
+.page-title {
+    display: flex;
+    align-items: center;
+    gap: .5rem;
+    margin: 0;
+    font-size: 1.3rem;
+    font-weight: 700;
+    line-height: 1.3;
+}
+
+.page-title > .bi {
+    color: var(--bs-primary);
+}
+
+/* --- 6. Thẻ số liệu & ảnh trong khu quản trị ---------------------------- */
+/* Ô số liệu dashboard: icon + nhãn + giá trị */
+.stat-card {
+    display: flex;
+    align-items: center;
+    gap: .85rem;
+    height: 100%;
+    padding: 1rem 1.1rem;
+    background: var(--bad-surface);
+    border-radius: var(--bs-border-radius-lg);
+    box-shadow: var(--bad-card-shadow);
+}
+
+/* Ô ảnh trống (sản phẩm chưa có ảnh): cùng kích thước .admin-thumb để bảng thẳng hàng */
+.admin-thumb-empty {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 60px;
+    height: 60px;
+    border: 1px dashed var(--bad-border);
+    border-radius: .5rem;
+    background: #fff;
+    color: var(--bad-muted);
+    font-size: 1.35rem;
+}
+
+/* Ảnh thẻ trong bộ ảnh sản phẩm: cao cố định, viền dưới ngăn với phần nút */
+.admin-photo {
+    display: block;
+    width: 100%;
+    height: 140px;
+    object-fit: contain;
+    background: #fff;
+    border-bottom: 1px solid var(--bad-border);
+    border-radius: var(--bs-border-radius-lg) var(--bs-border-radius-lg) 0 0;
+}
+
+/* --- 7. Màn hình lớn: sidebar dính khi cuộn, menu tự cuộn nếu quá dài --- */
+@media (min-width: 992px) {
+    .admin-shell {
+        position: sticky;
+        top: 0;
+        height: 100vh;
+        overflow-y: auto;
+    }
+
+    .admin-offcanvas,
+    .admin-offcanvas > .offcanvas-body {
+        height: 100%;
+    }
+
+    .admin-topbar {
+        padding-inline: 1.5rem;
+    }
+}
+
+/* --- 8. Điện thoại (≤ 575px): tiêu đề và thẻ số liệu gọn lại cho vừa 375px */
+@media (max-width: 575.98px) {
+    .page-title {
+        font-size: 1.15rem;
+    }
+
+    .stat-card {
+        padding: .75rem .85rem;
+        gap: .6rem;
+    }
+}
+
+/* --- 9. Bảng quản trị: tiền, nhãn, nút không xuống dòng để cột gọn, dễ quét --- */
+.admin-content .table .price,
+.admin-content .table td.text-end,
+.admin-content .table .status-pill,
+.admin-content .table .btn,
+.admin-content .table .badge {
+    white-space: nowrap;
+}
+
+/* --- 10. Dưới lg: menu và nội dung xếp thành hai dòng –
+   dòng chứa cột menu rỗng không được kéo giãn thành dải xanh đầu trang
+   (align-content mặc định của flex là stretch nên hay "chia đều" khoảng trống) --- */
+@media (max-width: 991.98px) {
+    .admin-layout {
+        align-content: flex-start;
+    }
+}

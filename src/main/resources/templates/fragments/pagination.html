@@ -6,30 +6,33 @@
   Phân trang cho danh sách sản phẩm. Giữ nguyên toàn bộ điều kiện lọc trên mọi liên kết
   (keyword, hãng, loại, khoảng giá, sắp xếp) – nếu thiếu, sang trang 2 là mất bộ lọc.
   pageNumbers do Controller tính sẵn (chỉ vài nút quanh trang hiện tại) để template không chứa logic.
+  Kiểu dáng (viên thuốc, màu xanh thương hiệu) nằm ở .catalog-pager trong static/css/theme.css.
 -->
 <nav th:fragment="productPager(page, pageNumbers, filter)" th:if="${page.totalPages > 1}"
-     class="mt-4" aria-label="Phân trang danh sách sản phẩm">
-    <ul class="pagination justify-content-center mb-1">
+     class="catalog-pager mt-4" aria-label="Phân trang danh sách sản phẩm">
+    <ul class="pagination justify-content-center flex-wrap gap-1 mb-2">
         <li class="page-item" th:classappend="${page.first} ? 'disabled'">
-            <a class="page-link" rel="prev"
+            <a class="page-link" rel="prev" th:aria-disabled="${page.first}"
                th:href="@{/san-pham(page=${page.number}, keyword=${filter.keyword}, brandId=${filter.brandId},
                                     categoryId=${filter.categoryId}, minPrice=${filter.minPrice},
                                     maxPrice=${filter.maxPrice}, sort=${filter.sort})}">
-                <i class="bi bi-chevron-left"></i> Trước
+                <i class="bi bi-chevron-left" aria-hidden="true"></i>
+                <span class="d-none d-sm-inline">Trước</span>
             </a>
         </li>
         <li class="page-item" th:each="n : ${pageNumbers}" th:classappend="${n == page.number} ? 'active'">
-            <a class="page-link" th:text="${n + 1}"
+            <a class="page-link" th:text="${n + 1}" th:aria-current="${n == page.number} ? 'page' : null"
                th:href="@{/san-pham(page=${n + 1}, keyword=${filter.keyword}, brandId=${filter.brandId},
                                     categoryId=${filter.categoryId}, minPrice=${filter.minPrice},
                                     maxPrice=${filter.maxPrice}, sort=${filter.sort})}">1</a>
         </li>
         <li class="page-item" th:classappend="${page.last} ? 'disabled'">
-            <a class="page-link" rel="next"
+            <a class="page-link" rel="next" th:aria-disabled="${page.last}"
                th:href="@{/san-pham(page=${page.number + 2}, keyword=${filter.keyword}, brandId=${filter.brandId},
                                     categoryId=${filter.categoryId}, minPrice=${filter.minPrice},
                                     maxPrice=${filter.maxPrice}, sort=${filter.sort})}">
-                Sau <i class="bi bi-chevron-right"></i>
+                <span class="d-none d-sm-inline">Sau</span>
+                <i class="bi bi-chevron-right" aria-hidden="true"></i>
             </a>
         </li>
     </ul>

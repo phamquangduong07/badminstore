@@ -18,16 +18,16 @@
         </ol>
     </nav>
 
-    <div class="d-flex flex-wrap justify-content-between align-items-center gap-2 mb-3">
+    <div class="page-head">
         <div>
-            <h1 class="h4 mb-0" th:text="${product.name}">Tên sản phẩm</h1>
+            <h1 class="page-title" th:text="${product.name}">Tên sản phẩm</h1>
             <p class="text-muted small mb-0">
                 Mã: <span class="fw-semibold" th:text="${product.productCode}">MÃ-SP</span> –
                 <span th:text="${product.brand.name}">Hãng</span> /
                 <span th:text="${product.category.name}">Loại</span>
             </p>
         </div>
-        <div class="d-flex gap-2">
+        <div class="d-flex flex-wrap gap-2">
             <a class="btn btn-sm btn-outline-primary"
                th:href="@{/admin/san-pham/{id}/sua(id=${product.id})}">
                 <i class="bi bi-pencil-square"></i> Sửa thông tin chung
@@ -40,15 +40,15 @@
     </div>
 
     <!-- ===================== BIẾN THỂ ===================== -->
-    <div class="card border-0 shadow-sm mb-4">
-        <div class="card-header bg-white fw-semibold">
+    <div class="card-soft mb-4">
+        <div class="card-header fw-semibold">
             <i class="bi bi-boxes"></i> Biến thể (giá bán &amp; tồn kho)
             <span class="text-muted small" th:text="|– ${variants.size()} biến thể|">– 0 biến thể</span>
         </div>
 
         <!-- Cập nhật giá hàng loạt (mục 13 mức Khá): các ô tích trong bảng gắn vào form này
              bằng thuộc tính HTML5 form="..." nên không phải lồng form vào nhau. -->
-        <form id="bulkPriceForm" class="row g-2 align-items-end border-bottom bg-light px-3 py-3"
+        <form id="bulkPriceForm" class="row g-2 align-items-end border-bottom bg-body-tertiary px-3 py-3"
               th:action="@{/admin/san-pham/{id}/bien-the/cap-nhat-gia(id=${product.id})}" method="post"
               data-confirm="Cập nhật giá cho các biến thể đã tích chọn?">
             <div class="col-sm-4 col-lg-3">
@@ -74,10 +74,10 @@
         </form>
 
         <div class="table-responsive">
-            <table class="table align-middle mb-0">
-                <thead class="table-light">
+            <table class="table table-hover align-middle mb-0">
+                <thead>
                 <tr>
-                    <th scope="col" class="text-center" style="width: 44px;">
+                    <th scope="col" class="text-center">
                         <input class="form-check-input" type="checkbox" id="bulkCheckAll"
                                aria-label="Chọn tất cả biến thể để cập nhật giá">
                     </th>
@@ -115,9 +115,10 @@
                               th:text="${variant.stockQuantity}">0</span>
                     </td>
                     <td>
-                        <span class="badge"
-                              th:classappend="${variant.status.name() == 'ACTIVE'} ? 'text-bg-success' : 'text-bg-secondary'"
-                              th:text="${variant.status.name() == 'ACTIVE'} ? 'Đang bán' : 'Ngừng bán'">Đang bán</span>
+                        <span class="status-pill" th:if="${variant.status.name() == 'ACTIVE'}"
+                              th:classappend="status-ACTIVE">Đang bán</span>
+                        <span class="status-pill" th:unless="${variant.status.name() == 'ACTIVE'}"
+                              th:classappend="status-INACTIVE">Ngừng bán</span>
                     </td>
                     <td class="text-end">
                         <div class="d-flex justify-content-end gap-1">
@@ -139,17 +140,20 @@
                             <form th:action="@{/admin/san-pham/{id}/bien-the/{variantId}/xoa(id=${product.id}, variantId=${variant.id})}"
                                   method="post" class="d-inline"
                                   th:data-confirm="${'Xoá biến thể ' + variant.sku + '? Chỉ xoá được khi biến thể chưa từng có trong đơn hàng.'}">
-                                <button class="btn btn-sm btn-outline-danger" type="submit">
-                                    <i class="bi bi-trash3"></i>
+                                <button class="btn btn-sm btn-outline-danger" type="submit"
+                                        th:aria-label="|Xoá biến thể ${variant.sku}|">
+                                    <i class="bi bi-trash3" aria-hidden="true"></i>
                                 </button>
                             </form>
                         </div>
                     </td>
                 </tr>
                 <tr th:if="${variants.isEmpty()}">
-                    <td colspan="10" class="text-center text-muted py-5">
-                        <i class="bi bi-boxes display-6 d-block mb-2"></i>
-                        Sản phẩm chưa có biến thể nào – khách sẽ thấy “Liên hệ”, hãy thêm biến thể để mở bán.
+                    <td colspan="10">
+                        <div class="empty-state">
+                            <i class="bi bi-boxes"></i>
+                            <p>Sản phẩm chưa có biến thể nào – khách sẽ thấy “Liên hệ”, hãy thêm biến thể để mở bán.</p>
+                        </div>
                     </td>
                 </tr>
                 </tbody>
@@ -158,17 +162,17 @@
     </div>
 
     <!-- ===================== ẢNH ===================== -->
-    <div class="card border-0 shadow-sm">
-        <div class="card-header bg-white fw-semibold">
+    <div class="card-soft">
+        <div class="card-header fw-semibold">
             <i class="bi bi-images"></i> Bộ ảnh sản phẩm
             <span class="text-muted small" th:text="|– ${images.size()} ảnh|">– 0 ảnh</span>
         </div>
         <div class="card-body">
             <div class="row g-3">
                 <div class="col-sm-6 col-lg-4 col-xl-3" th:each="image : ${images}">
-                    <div class="card h-100">
+                    <div class="card-soft h-100">
                         <img th:src="@{${image.imageUrl}}" th:alt="${'Ảnh sản phẩm ' + product.name}"
-                             class="card-img-top bg-light p-2" style="height: 160px; object-fit: contain;">
+                             class="admin-photo" loading="lazy" width="400" height="400">
                         <div class="card-body p-2 text-center">
                             <span class="badge text-bg-success mb-2" th:if="${image.primaryImage}">
                                 <i class="bi bi-star-fill"></i> Ảnh chính
@@ -195,13 +199,14 @@
                 </div>
 
                 <div class="col-12" th:if="${images.isEmpty()}">
-                    <p class="text-muted mb-0">
-                        <i class="bi bi-image"></i> Chưa có ảnh nào – hãy tải ảnh thật của vợt để khách xem rõ hơn.
-                    </p>
+                    <div class="empty-state">
+                        <i class="bi bi-image"></i>
+                        <p>Chưa có ảnh nào – hãy tải ảnh thật của vợt để khách xem rõ hơn.</p>
+                    </div>
                 </div>
             </div>
         </div>
-        <div class="card-footer bg-white">
+        <div class="card-footer">
             <form th:action="@{/admin/san-pham/{id}/anh(id=${product.id})}" method="post"
                   enctype="multipart/form-data" class="row g-2 align-items-end"
                   data-confirm="Tải ảnh này lên cho sản phẩm?">

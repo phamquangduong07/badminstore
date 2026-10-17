@@ -1,0 +1,164 @@
+/* =========================================================================
+   Trang chủ BadStore – CSS riêng, nạp SAU theme.css trong shop/home.html.
+   Mọi rule đều scope trong .home-page nên không ảnh hưởng trang khác.
+   Màu / bo góc / bóng lấy từ token --bad-* và --bs-* của theme.css (UI_GUIDE):
+   KHÔNG hard-code màu, không viết CSS inline trong template.
+   ========================================================================= */
+
+/* Nhịp dọc: mỗi khối cách nhau một khoảng đều, nền tảng là "mobile-first" */
+.home-page > * + * {
+    margin-top: 2.5rem;
+}
+
+/* Tiêu đề khối có thể xuống dòng (tiêu đề + nhãn số sản phẩm trên một hàng, 375px không tràn) */
+.home-page .section-title {
+    flex-wrap: wrap;
+}
+
+/* Khi bấm nút trong banner nhảy tới khối bên dưới: chừa chỗ cho header dính */
+.home-page [id] {
+    scroll-margin-top: 5.5rem;
+}
+
+/* ============ 1. Banner Swiper ============ */
+/* Chấm phân trang màu trắng (nền slide xanh đậm) – thay chấm đen mặc định rất mờ */
+.home-page .hero-swiper {
+    --swiper-pagination-bullet-inactive-color: #fff;
+    --swiper-pagination-bullet-inactive-opacity: .55;
+    --swiper-pagination-bullet-size: 10px;
+    --swiper-pagination-bullet-horizontal-gap: 6px;
+    --swiper-pagination-bottom: 14px;
+}
+
+/* Tiêu đề slide co giãn theo bề rộng màn hình: không tràn ở 375px, không thưa ở 1366px */
+.home-page .hero-slide h1,
+.home-page .hero-slide h2 {
+    font-size: clamp(1.3rem, 1rem + 1.4vw, 2.05rem);
+    line-height: 1.25;
+    max-width: 40rem;
+}
+
+/* Dòng mô tả ngắn gọn, không dài quá 46rem cho dễ đọc trên màn hình lớn */
+.home-page .hero-slide p {
+    max-width: 46rem;
+}
+
+/* Trên điện thoại: slide gọn hơn để thấy được CTA ngay khi mở trang */
+@media (max-width: 767.98px) {
+    .home-page .hero-slide {
+        min-height: 13rem;
+        padding: 1.75rem 1.25rem;
+    }
+}
+
+/* ============ 2. Dải lợi ích (Chính hãng / Giao nhanh / Đổi trả) ============ */
+/* Lưới 1 cột (điện thoại) → 3 cột (từ tablet).
+   Dùng grid thay cho .row của Bootstrap vì theme.css đặt padding riêng cho <li>,
+   dùng cột sẽ mất khe giữa các thẻ. */
+.home-page .benefit-strip {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: .85rem;
+    margin: 0;
+}
+
+@media (min-width: 768px) {
+    .home-page .benefit-strip {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+}
+
+/* Dải lợi ích gọn hơn ở màn hình nhỏ: icon 42px cho vừa 2 dòng chữ */
+@media (max-width: 575.98px) {
+    .home-page .benefit-strip > li {
+        padding: .8rem .85rem;
+    }
+
+    .home-page .benefit-strip .stat-icon {
+        width: 42px;
+        height: 42px;
+        font-size: 1.2rem;
+    }
+}
+
+/* ============ 3. Thẻ hãng ("Theo hãng") ============ */
+/* Ô hãng là cả một liên kết lớn: rê chuột nổi nhẹ giống thẻ sản phẩm */
+.home-page .brand-tile {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    padding: 1rem;
+    border-radius: var(--bs-border-radius-lg);
+    background: var(--bad-surface);
+    box-shadow: var(--bad-card-shadow);
+    color: inherit;
+    text-decoration: none;
+    transition: transform var(--bad-transition), box-shadow var(--bad-transition),
+                color var(--bad-transition);
+}
+
+.home-page .brand-tile:hover,
+.home-page .brand-tile:focus-visible {
+    transform: translateY(-3px);
+    box-shadow: var(--bad-card-shadow-hover);
+    color: var(--bs-primary);
+}
+
+/* Chữ cái đầu của hãng làm "logo" – không hotlink ảnh hãng bên ngoài */
+.home-page .brand-tile-initial {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 44px;
+    height: 44px;
+    margin-bottom: .6rem;
+    border-radius: 14px;
+    background: var(--bs-primary-bg-subtle);
+    color: var(--bs-primary);
+    font-size: 1.05rem;
+    font-weight: 700;
+}
+
+.home-page .brand-tile-name {
+    font-weight: 600;
+}
+
+.home-page .brand-tile-lines {
+    margin-top: .15rem;
+    color: var(--bad-muted);
+    font-size: .82rem;
+    line-height: 1.35;
+}
+
+/* ============ 4. Lời mời đăng nhập (khách chưa đăng nhập) ============ */
+.home-page .home-cta {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    padding: 1.25rem 1.5rem;
+    border-radius: var(--bs-border-radius-lg);
+    background: var(--bs-primary-bg-subtle);
+}
+
+.home-page .home-cta-title {
+    font-weight: 700;
+    margin-bottom: .15rem;
+}
+
+.home-page .home-cta-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: .5rem;
+}
+
+@media (max-width: 575.98px) {
+    .home-page .home-cta {
+        padding: 1.1rem 1rem;
+    }
+
+    .home-page .home-cta-actions .btn {
+        flex: 1 1 auto;
+    }
+}

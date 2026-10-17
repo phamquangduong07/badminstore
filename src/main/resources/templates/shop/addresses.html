@@ -79,7 +79,8 @@
                 </div>
                 <div class="card-body">
                     <!-- Validate 2 lớp: HTML (required/pattern) + Bean Validation ở server -->
-                    <form th:action="@{/dia-chi/them}" th:object="${form}" method="post" novalidate>
+                    <form th:action="@{/dia-chi/them}" th:object="${form}" method="post" novalidate
+                          data-confirm="Lưu địa chỉ giao hàng này vào sổ địa chỉ?">
                         <input type="hidden" name="next" th:value="${param.next}">
 
                         <div class="mb-3">

@@ -3,52 +3,65 @@
 <body>
 
 <!--
-  Menu dọc của khu quản trị. Controller đặt model "adminMenu" = dashboard|orders|products|vouchers
+  Menu dọc của khu quản trị. Controller đặt model "adminMenu" = dashboard|pos|orders|products|vouchers
   để tô đậm mục đang mở (null cũng an toàn: mọi so sánh đều sai).
 -->
-<nav th:fragment="sidebar(active)" class="admin-sidebar d-flex flex-column p-3 text-white">
-    <a class="d-flex align-items-center mb-2 text-white text-decoration-none fs-5 fw-bold" th:href="@{/admin}">
-        <i class="bi bi-speedometer2 me-2"></i> BadStore Admin
-    </a>
-    <hr class="text-white-50 mt-0">
+<nav th:fragment="sidebar(active)" class="admin-sidebar d-flex flex-column p-3">
 
-    <ul class="nav nav-pills flex-column mb-auto gap-1">
+    <a class="admin-brand mb-3" th:href="@{/admin}">
+        <span class="admin-brand-mark"><i class="bi bi-speedometer2"></i></span>
+        <span>
+            BadStore
+            <span class="d-block small fw-normal text-white-50">Trang quản trị</span>
+        </span>
+    </a>
+
+    <p class="nav-section">Bán hàng</p>
+    <ul class="nav flex-column gap-1">
         <li class="nav-item">
-            <a class="nav-link text-white" th:classappend="${active == 'dashboard'} ? 'active bg-primary'"
-               th:href="@{/admin}">
-                <i class="bi bi-graph-up-arrow me-2"></i> Tổng quan
+            <a class="nav-link" th:classappend="${active == 'dashboard'} ? 'active'"
+               th:aria-current="${active == 'dashboard'} ? 'page' : null" th:href="@{/admin}">
+                <i class="bi bi-graph-up-arrow"></i> Tổng quan
             </a>
         </li>
         <li class="nav-item">
-            <a class="nav-link text-white" th:classappend="${active == 'pos'} ? 'active bg-primary'"
-               th:href="@{/admin/ban-hang}">
-                <i class="bi bi-cash-register me-2"></i> Bán hàng tại quầy
+            <a class="nav-link" th:classappend="${active == 'pos'} ? 'active'"
+               th:aria-current="${active == 'pos'} ? 'page' : null" th:href="@{/admin/ban-hang}">
+                <i class="bi bi-cash-stack"></i> Bán hàng tại quầy
             </a>
         </li>
         <li class="nav-item">
-            <a class="nav-link text-white" th:classappend="${active == 'orders'} ? 'active bg-primary'"
-               th:href="@{/admin/don-hang}">
-                <i class="bi bi-receipt me-2"></i> Đơn hàng
-            </a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link text-white" th:classappend="${active == 'products'} ? 'active bg-primary'"
-               th:href="@{/admin/san-pham}">
-                <i class="bi bi-box-seam me-2"></i> Sản phẩm &amp; biến thể
-            </a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link text-white" th:classappend="${active == 'vouchers'} ? 'active bg-primary'"
-               th:href="@{/admin/voucher}">
-                <i class="bi bi-ticket-perforated me-2"></i> Voucher
+            <a class="nav-link" th:classappend="${active == 'orders'} ? 'active'"
+               th:aria-current="${active == 'orders'} ? 'page' : null" th:href="@{/admin/don-hang}">
+                <i class="bi bi-receipt"></i> Đơn hàng
             </a>
         </li>
     </ul>
 
-    <hr class="text-white-50">
-    <a class="btn btn-sm btn-outline-light" th:href="@{/}">
-        <i class="bi bi-shop"></i> Xem cửa hàng
-    </a>
+    <p class="nav-section">Hàng hoá &amp; khuyến mãi</p>
+    <ul class="nav flex-column gap-1">
+        <li class="nav-item">
+            <a class="nav-link" th:classappend="${active == 'products'} ? 'active'"
+               th:aria-current="${active == 'products'} ? 'page' : null" th:href="@{/admin/san-pham}">
+                <i class="bi bi-box-seam"></i> Sản phẩm &amp; biến thể
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" th:classappend="${active == 'vouchers'} ? 'active'"
+               th:aria-current="${active == 'vouchers'} ? 'page' : null" th:href="@{/admin/voucher}">
+                <i class="bi bi-ticket-perforated"></i> Voucher
+            </a>
+        </li>
+    </ul>
+
+    <div class="admin-foot mt-auto pt-3 d-grid gap-2">
+        <a class="btn btn-sm btn-outline-light" th:href="@{/}">
+            <i class="bi bi-shop"></i> Xem cửa hàng
+        </a>
+        <p class="small text-white-50 mb-0">
+            <i class="bi bi-info-circle"></i> Đổi trạng thái đơn sẽ trừ/cộng kho ngay.
+        </p>
+    </div>
 </nav>
 
 </body>

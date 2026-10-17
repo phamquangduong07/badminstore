@@ -4,113 +4,138 @@
 <body>
 
 <!--
-  Header dùng chung. Menu theo vai trò bằng sec:authorize.
-  Các mục Giỏ hàng / Đơn hàng / Quản trị sẽ được bổ sung ở các bước sau.
+  Header dùng chung cho mọi trang khách (layout/base.html):
+  – navbar DÍNH trên cùng: logo, ô tìm kiếm nhanh, so sánh, giỏ hàng có badge, tài khoản;
+  – mobile (< lg): menu gom vào offcanvas trượt từ phải;
+  – badge lấy từ CartCountAdvice (cartCount) và session so sánh (compareCount).
 -->
-<header th:fragment="header" class="site-header">
-    <nav class="navbar navbar-expand-lg">
+<header th:fragment="header" class="navbar-bad">
+    <nav class="navbar navbar-expand-lg p-0" aria-label="Điều hướng chính">
         <div class="container">
-            <a class="navbar-brand fw-bold d-flex align-items-center" th:href="@{/}" aria-label="BadStore – về trang chủ">
+
+            <!-- Logo về trang chủ -->
+            <a class="navbar-brand fw-bold d-flex align-items-center" th:href="@{/}"
+               aria-label="BadStore – về trang chủ">
                 <span class="brand-mark"><i class="bi bi-activity" aria-hidden="true"></i></span>
                 <span>BadStore</span>
             </a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNav"
-                    aria-controls="mainNav" aria-expanded="false" aria-label="Mở menu">
-                <span class="navbar-toggler-icon"></span>
-            </button>
 
-            <div class="collapse navbar-collapse" id="mainNav">
-                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                    <li class="nav-item">
-                        <a class="nav-link" th:href="@{/}"><i class="bi bi-house-door"></i> Trang chủ</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" th:href="@{/san-pham}"><i class="bi bi-grid"></i> Sản phẩm</a>
-                    </li>
-                </ul>
+            <!-- Mobile: giỏ hàng nhanh + nút mở menu offcanvas -->
+            <div class="d-flex align-items-center gap-1 ms-auto">
+                <a class="nav-link position-relative d-lg-none px-2" th:href="@{/gio-hang}" aria-label="Giỏ hàng">
+                    <i class="bi bi-cart3 fs-5" aria-hidden="true"></i>
+                    <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill text-bg-danger cart-badge"
+                          th:if="${cartCount != null and cartCount > 0}" th:text="${cartCount}">0</span>
+                </a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#mainNav"
+                        aria-controls="mainNav" aria-label="Mở menu">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+            </div>
 
-                <!-- Tìm kiếm nhanh: gửi GET sang trang danh mục nên dán/copy URL được -->
-                <form class="nav-search flex-grow-1 me-lg-3" role="search" method="get"
-                      th:action="@{/san-pham}">
-                    <i class="bi bi-search" aria-hidden="true"></i>
-                    <input class="form-control" type="search" name="keyword" maxlength="100"
-                           placeholder="Tìm vợt theo tên, hãng…" aria-label="Tìm sản phẩm theo tên">
-                </form>
+            <!-- Menu chính: offcanvas trên mobile, dàn ngang từ màn hình lg -->
+            <div class="offcanvas-lg offcanvas-end flex-grow-1" tabindex="-1" id="mainNav"
+                 aria-labelledby="mainNavLabel">
+                <div class="offcanvas-header">
+                    <span class="offcanvas-title fw-bold" id="mainNavLabel">Menu BadStore</span>
+                    <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#mainNav"
+                            aria-label="Đóng menu"></button>
+                </div>
 
-                <ul class="navbar-nav align-items-lg-center gap-lg-2">
-                    <!-- So sánh sản phẩm: danh sách nằm trong session (compareCount do CartCountAdvice gắn vào) -->
-                    <li class="nav-item">
-                        <a class="nav-link position-relative pe-lg-3" th:href="@{/so-sanh}">
-                            <i class="bi bi-bar-chart-steps fs-5"></i>
-                            <span class="d-lg-none ms-1">So sánh</span>
-                            <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill text-bg-primary cart-badge"
-                                  th:if="${compareCount != null and compareCount > 0}" th:text="${compareCount}">0</span>
-                        </a>
-                    </li>
+                <div class="offcanvas-body">
+                    <ul class="navbar-nav">
+                        <li class="nav-item">
+                            <a class="nav-link" th:href="@{/}"><i class="bi bi-house-door"></i> Trang chủ</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" th:href="@{/san-pham}"><i class="bi bi-grid"></i> Sản phẩm</a>
+                        </li>
+                    </ul>
 
-                    <!-- Giỏ hàng: badge đếm sản phẩm (cartCount do CartCountAdvice gắn vào mọi trang) -->
-                    <li class="nav-item">
-                        <a class="nav-link position-relative pe-lg-3" th:href="@{/gio-hang}">
-                            <i class="bi bi-cart3 fs-5"></i>
-                            <span class="d-lg-none ms-1">Giỏ hàng</span>
-                            <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill text-bg-danger cart-badge"
-                                  th:if="${cartCount != null and cartCount > 0}" th:text="${cartCount}">0</span>
-                        </a>
-                    </li>
+                    <!-- Tìm kiếm nhanh: gửi GET sang trang danh mục nên dán/copy URL được -->
+                    <form class="nav-search flex-grow-1 mx-lg-3 my-2 my-lg-0" role="search" method="get"
+                          th:action="@{/san-pham}">
+                        <label class="visually-hidden" for="navKeyword">Tìm sản phẩm theo tên</label>
+                        <i class="bi bi-search" aria-hidden="true"></i>
+                        <input class="form-control" type="search" id="navKeyword" name="keyword" maxlength="100"
+                               placeholder="Tìm vợt theo tên, hãng…"
+                               th:value="${param.keyword != null} ? ${param.keyword[0]} : ''">
+                    </form>
 
-                    <!-- Khách chưa đăng nhập -->
-                    <li class="nav-item" sec:authorize="isAnonymous()">
-                        <a class="nav-link" th:href="@{/dang-nhap}">
-                            <i class="bi bi-box-arrow-in-right"></i> Đăng nhập
-                        </a>
-                    </li>
-                    <li class="nav-item" sec:authorize="isAnonymous()">
-                        <a class="btn btn-primary btn-sm px-3" th:href="@{/dang-ky}">Đăng ký</a>
-                    </li>
+                    <ul class="navbar-nav align-items-lg-center gap-lg-2 ms-lg-auto">
+                        <!-- So sánh sản phẩm: danh sách nằm trong session, khách vãng lai vẫn dùng được -->
+                        <li class="nav-item">
+                            <a class="nav-link position-relative" th:href="@{/so-sanh}" aria-label="So sánh sản phẩm">
+                                <i class="bi bi-bar-chart-steps fs-5" aria-hidden="true"></i>
+                                <span class="d-lg-none ms-1">So sánh</span>
+                                <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill text-bg-primary cart-badge"
+                                      th:if="${compareCount != null and compareCount > 0}" th:text="${compareCount}">0</span>
+                            </a>
+                        </li>
 
-                    <!-- Đã đăng nhập -->
-                    <li class="nav-item dropdown" sec:authorize="isAuthenticated()">
-                        <a class="nav-link dropdown-toggle d-flex align-items-center gap-1" href="#" role="button"
-                           data-bs-toggle="dropdown" aria-expanded="false">
-                            <i class="bi bi-person-circle fs-5"></i>
-                            <span th:text="${#authentication.principal.fullName}">Khách hàng</span>
-                        </a>
-                        <ul class="dropdown-menu dropdown-menu-end shadow">
-                            <li class="px-3 py-2">
-                                <div class="fw-semibold" th:text="${#authentication.principal.fullName}">Khách hàng</div>
-                                <div class="small text-muted" th:text="${#authentication.principal.email}">email</div>
-                                <span class="badge text-bg-primary mt-1"
-                                      th:text="${#authentication.principal.admin} ? 'Quản trị viên' : 'Khách hàng'">Khách hàng</span>
-                            </li>
-                            <li><hr class="dropdown-divider"></li>
-                            <li>
-                                <a class="dropdown-item" th:href="@{/don-hang}">
-                                    <i class="bi bi-receipt"></i> Đơn hàng của tôi
-                                </a>
-                            </li>
-                            <li sec:authorize="!hasRole('ADMIN')">
-                                <a class="dropdown-item" th:href="@{/dia-chi}">
-                                    <i class="bi bi-geo-alt"></i> Sổ địa chỉ
-                                </a>
-                            </li>
-                            <li sec:authorize="hasRole('ADMIN')">
-                                <a class="dropdown-item fw-semibold text-primary" th:href="@{/admin}">
-                                    <i class="bi bi-speedometer2"></i> Vào khu quản trị
-                                </a>
-                            </li>
-                            <li><hr class="dropdown-divider"></li>
-                            <li>
-                                <!-- Đăng xuất là thao tác thay đổi trạng thái đăng nhập: POST + CSRF + xác nhận SweetAlert2 -->
-                                <form th:action="@{/dang-xuat}" method="post"
-                                      data-confirm="Bạn chắc chắn muốn đăng xuất khỏi BadStore?">
-                                    <button type="submit" class="dropdown-item text-danger">
-                                        <i class="bi bi-box-arrow-right"></i> Đăng xuất
-                                    </button>
-                                </form>
-                            </li>
-                        </ul>
-                    </li>
-                </ul>
+                        <!-- Giỏ hàng: badge đếm số sản phẩm; ẩn trên mobile vì đã có icon ở thanh trên -->
+                        <li class="nav-item d-none d-lg-block">
+                            <a class="nav-link position-relative" th:href="@{/gio-hang}" aria-label="Giỏ hàng">
+                                <i class="bi bi-cart3 fs-5" aria-hidden="true"></i>
+                                <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill text-bg-danger cart-badge"
+                                      th:if="${cartCount != null and cartCount > 0}" th:text="${cartCount}">0</span>
+                            </a>
+                        </li>
+
+                        <!-- Khách chưa đăng nhập -->
+                        <li class="nav-item" sec:authorize="isAnonymous()">
+                            <a class="nav-link" th:href="@{/dang-nhap}">
+                                <i class="bi bi-box-arrow-in-right"></i> Đăng nhập
+                            </a>
+                        </li>
+                        <li class="nav-item" sec:authorize="isAnonymous()">
+                            <a class="btn btn-primary btn-sm px-3" th:href="@{/dang-ky}">Đăng ký</a>
+                        </li>
+
+                        <!-- Đã đăng nhập: menu tài khoản theo vai trò -->
+                        <li class="nav-item dropdown" sec:authorize="isAuthenticated()">
+                            <a class="nav-link dropdown-toggle d-flex align-items-center gap-1" href="#" role="button"
+                               data-bs-toggle="dropdown" aria-expanded="false">
+                                <i class="bi bi-person-circle fs-5" aria-hidden="true"></i>
+                                <span th:text="${#authentication.principal.fullName}">Khách hàng</span>
+                            </a>
+                            <ul class="dropdown-menu dropdown-menu-end shadow">
+                                <li class="px-3 py-2">
+                                    <div class="fw-semibold" th:text="${#authentication.principal.fullName}">Khách hàng</div>
+                                    <div class="small text-muted" th:text="${#authentication.principal.email}">email</div>
+                                    <span class="badge text-bg-primary mt-1"
+                                          th:text="${#authentication.principal.admin} ? 'Quản trị viên' : 'Khách hàng'">Khách hàng</span>
+                                </li>
+                                <li><hr class="dropdown-divider"></li>
+                                <li>
+                                    <a class="dropdown-item" th:href="@{/don-hang}">
+                                        <i class="bi bi-receipt"></i> Đơn hàng của tôi
+                                    </a>
+                                </li>
+                                <li sec:authorize="!hasRole('ADMIN')">
+                                    <a class="dropdown-item" th:href="@{/dia-chi}">
+                                        <i class="bi bi-geo-alt"></i> Sổ địa chỉ
+                                    </a>
+                                </li>
+                                <li sec:authorize="hasRole('ADMIN')">
+                                    <a class="dropdown-item fw-semibold text-primary" th:href="@{/admin}">
+                                        <i class="bi bi-speedometer2"></i> Vào khu quản trị
+                                    </a>
+                                </li>
+                                <li><hr class="dropdown-divider"></li>
+                                <li>
+                                    <!-- Đăng xuất là thao tác đổi trạng thái đăng nhập: POST + CSRF + xác nhận SweetAlert2 -->
+                                    <form th:action="@{/dang-xuat}" method="post"
+                                          data-confirm="Bạn chắc chắn muốn đăng xuất khỏi BadStore?">
+                                        <button type="submit" class="dropdown-item text-danger">
+                                            <i class="bi bi-box-arrow-right"></i> Đăng xuất
+                                        </button>
+                                    </form>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
             </div>
         </div>
     </nav>

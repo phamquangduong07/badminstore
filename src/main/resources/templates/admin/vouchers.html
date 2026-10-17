@@ -10,8 +10,8 @@
 
 <th:block layout:fragment="content">
 
-    <div class="d-flex flex-wrap justify-content-between align-items-center gap-2 mb-3">
-        <h1 class="h4 mb-0"><i class="bi bi-ticket-perforated text-primary"></i> Quản lý voucher</h1>
+    <div class="page-head">
+        <h1 class="page-title"><i class="bi bi-ticket-perforated"></i> Quản lý voucher</h1>
         <div class="d-flex align-items-center gap-2">
             <span class="text-muted small" th:text="|Tổng ${vouchers.totalElements} voucher|">Tổng 0</span>
             <a class="btn btn-sm btn-primary" th:href="@{/admin/voucher/tao-moi}">
@@ -20,7 +20,7 @@
         </div>
     </div>
 
-    <form class="card border-0 shadow-sm mb-3" method="get" th:action="@{/admin/voucher}">
+    <form class="card-soft mb-3" method="get" th:action="@{/admin/voucher}">
         <div class="card-body row g-2 align-items-end">
             <div class="col-sm-6 col-lg-3">
                 <label class="form-label small" for="status">Trạng thái</label>
@@ -42,10 +42,10 @@
         </div>
     </form>
 
-    <div class="card border-0 shadow-sm">
+    <div class="card-soft">
         <div class="table-responsive">
-            <table class="table align-middle mb-0">
-                <thead class="table-light">
+            <table class="table table-hover align-middle mb-0">
+                <thead>
                 <tr>
                     <th scope="col">Mã / Chương trình</th>
                     <th scope="col">Giảm giá</th>
@@ -64,7 +64,7 @@
                         <div class="small text-muted fst-italic" th:if="${voucher.description != null}"
                              th:text="${voucher.description}">Mô tả</div>
                     </td>
-                    <td th:text="${voucher.describe()}">Giảm 10%</td>
+                    <td class="fw-semibold" th:text="${voucher.describe()}">Giảm 10%</td>
                     <td class="small">
                         <div>Đơn từ
                             <span th:insert="~{fragments/common :: money(${voucher.minOrderValue})}">0 ₫</span>
@@ -84,17 +84,17 @@
                         </div>
                     </td>
                     <td>
-                        <span class="badge"
-                              th:classappend="${voucher.displayStatusCode(now) == 'ACTIVE'} ? 'text-bg-success'
-                                             : (${voucher.displayStatusCode(now) == 'INACTIVE'} ? 'text-bg-secondary'
-                                                : 'text-bg-warning')"
+                        <span class="status-pill"
+                              th:classappend="|status-${voucher.displayStatusCode(now)}|"
                               th:text="${voucher.displayStatusLabel(now)}">Đang áp dụng</span>
                     </td>
                     <td class="text-end">
                         <div class="d-flex justify-content-end gap-1">
                             <a class="btn btn-sm btn-outline-primary"
-                               th:href="@{/admin/voucher/{id}/sua(id=${voucher.id})}">
-                                <i class="bi bi-pencil-square"></i> Sửa
+                               th:href="@{/admin/voucher/{id}/sua(id=${voucher.id})}"
+                               th:attr="aria-label=|Sửa voucher ${voucher.code}|" title="Sửa voucher">
+                                <i class="bi bi-pencil-square"></i>
+                                <span class="d-none d-xl-inline">Sửa</span>
                             </a>
                             <form th:action="@{/admin/voucher/{id}/doi-trang-thai(id=${voucher.id})}"
                                   method="post" class="d-inline"
@@ -105,16 +105,23 @@
                                         th:classappend="${voucher.status.name() == 'ACTIVE'}
                                                 ? 'btn-outline-danger' : 'btn-outline-success'"
                                         type="submit"
-                                        th:text="${voucher.status.name() == 'ACTIVE'}
-                                                ? 'Ngừng' : 'Bật'">Đổi</button>
+                                        th:attr="aria-label=|Đổi trạng thái voucher ${voucher.code}|"
+                                        th:title="${voucher.status.name() == 'ACTIVE'} ? 'Ngừng áp dụng' : 'Bật áp dụng lại'">
+                                    <i class="bi"
+                                       th:classappend="${voucher.status.name() == 'ACTIVE'} ? 'bi-pause-circle' : 'bi-play-circle'"></i>
+                                    <span class="d-none d-xl-inline"
+                                          th:text="${voucher.status.name() == 'ACTIVE'} ? 'Ngừng' : 'Bật'">Đổi</span>
+                                </button>
                             </form>
                         </div>
                     </td>
                 </tr>
                 <tr th:if="${vouchers.empty}">
-                    <td colspan="7" class="text-center text-muted py-5">
-                        <i class="bi bi-ticket-detailed display-6 d-block mb-2"></i>
-                        Không có voucher nào phù hợp bộ lọc.
+                    <td colspan="7">
+                        <div class="empty-state">
+                            <i class="bi bi-ticket-detailed"></i>
+                            <p>Không có voucher nào phù hợp bộ lọc.</p>
+                        </div>
                     </td>
                 </tr>
                 </tbody>
@@ -142,7 +149,7 @@
             </li>
         </ul>
         <p class="text-center text-muted small mb-0"
-           th:text="|Trang ${vouchers.number + 1}/${vouchers.totalPages}|\">Trang 1/1</p>
+           th:text="|Trang ${vouchers.number + 1}/${vouchers.totalPages}|">Trang 1/1</p>
     </nav>
 
 </th:block>

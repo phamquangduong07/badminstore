@@ -38,6 +38,9 @@
         if (flash.dataset.error) {
             showToast('error', flash.dataset.error);
         }
+        if (flash.dataset.info) {
+            showToast('info', flash.dataset.info);
+        }
     }
 
     /** Hộp thoại xác nhận trước khi submit form / theo link có data-confirm. */
@@ -49,9 +52,25 @@
             showCancelButton: true,
             confirmButtonText: 'Đồng ý',
             cancelButtonText: 'Huỷ bỏ',
-            confirmButtonColor: '#0d6efd',
+            confirmButtonColor: '#0f8a5f', // xanh brand (đồng bộ --bs-primary trong theme.css)
             cancelButtonColor: '#6c757d',
             reverseButtons: true
+        });
+    }
+
+    /**
+     * Sau khi khách đồng ý: khoá nút gửi + gắn vòng xoay để biết máy chủ đang xử lý.
+     * Chỉ khoá nút KHÔNG có name (nút có name sẽ bị bỏ khỏi dữ liệu form khi disable).
+     */
+    function setFormLoading(form) {
+        form.querySelectorAll('button[type="submit"]').forEach(function (button) {
+            var spinner = document.createElement('span');
+            spinner.className = 'spinner-border spinner-border-sm me-1';
+            spinner.setAttribute('aria-hidden', 'true');
+            button.prepend(spinner);
+            if (!button.name) {
+                button.disabled = true;
+            }
         });
     }
 
@@ -65,6 +84,7 @@
                 askConfirm(form.dataset.confirm).then(function (result) {
                     if (result.isConfirmed) {
                         form.dataset.confirmed = 'true';
+                        setFormLoading(form);
                         form.submit();
                     }
                 });
@@ -122,37 +142,6 @@
                 });
             }
         });
-    }
-
-    /**
-     * Ô chọn phiên bản ở trang chi tiết sản phẩm: đổi phiên bản thì cập nhật lại
-     * số lượng tối đa theo tồn kho của phiên bản đó (tồn kho thật vẫn do server kiểm tra).
-     */
-    function initVariantPicker() {
-        var select = document.querySelector('[data-variant-picker]');
-        if (!select) {
-            return;
-        }
-        var quantity = document.getElementById('quantity');
-        function sync() {
-            if (!quantity) {
-                return;
-            }
-            var option = select.options[select.selectedIndex];
-            var stock = option ? parseInt(option.getAttribute('data-stock') || '0', 10) : 0;
-            var max = stock > 0 ? stock : 1;
-            quantity.setAttribute('max', String(max));
-            var value = parseInt(quantity.value, 10);
-            if (isNaN(value) || value < 1) {
-                value = 1;
-            }
-            if (value > max) {
-                value = max;
-            }
-            quantity.value = String(value);
-        }
-        select.addEventListener('change', sync);
-        sync();
     }
 
     function initSwiper() {        if (!window.Swiper) {
@@ -468,6 +457,87 @@
         refresh();
     }
 
+    /**
+     * Nút hiện/ẩn mật khẩu ở trang đăng nhập/đăng ký (chỉ đổi type của ô nhập,
+     * giá trị gửi lên server không thay đổi).
+     */
+    function initPasswordToggles() {
+        document.querySelectorAll('[data-toggle-password]').forEach(function (button) {
+            var input = document.querySelector(button.dataset.togglePassword);
+            if (!input) {
+                return;
+            }
+            button.addEventListener('click', function () {
+                var isHidden = input.type === 'password';
+                input.type = isHidden ? 'text' : 'password';
+                button.setAttribute('aria-pressed', isHidden ? 'true' : 'false');
+                button.setAttribute('aria-label', isHidden ? 'Ẩn mật khẩu' : 'Hiện mật khẩu');
+                var icon = button.querySelector('i');
+                if (icon) {
+                    icon.className = isHidden ? 'bi bi-eye-slash' : 'bi bi-eye';
+                }
+                input.focus();
+            });
+        });
+    }
+
+    /**
+     * Trang danh mục sản phẩm: form có data-auto-submit (bộ lọc hãng/loại và ô "Sắp xếp") tự gửi
+     * ngay khi khách đổi lựa chọn. Vẫn là GET nên URL copy được, F5 không hỏi lại.
+     * Riêng ô nhập khoảng giá KHÔNG tự gửi để tránh lọc liên tục khi khách đang gõ số.
+     */
+    function initAutoSubmitForms() {
+        document.querySelectorAll('form[data-auto-submit]').forEach(function (form) {
+            form.querySelectorAll('select, input[type="radio"], input[type="checkbox"]').forEach(function (control) {
+                control.addEventListener('change', function () {
+                    if (typeof form.requestSubmit === 'function') {
+                        form.requestSubmit();
+                    } else {
+                        form.submit();
+                    }
+                });
+            });
+        });
+    }
+
+    /**
+     * Header khách: đánh dấu mục menu của trang hiện tại bằng aria-current="page"
+     * (hỗ trợ trình đọc màn hình). Suy ra từ URL nên không cần controller gắn biến mới.
+     */
+    function initNavCurrent() {
+        var currentPath = window.location.pathname;
+        document.querySelectorAll('.navbar-bad .navbar-nav a.nav-link[href]').forEach(function (link) {
+            var href = link.getAttribute('href');
+            if (!href || href.charAt(0) === '#') {
+                return;
+            }
+            var url;
+            try {
+                url = new URL(link.href, window.location.origin);
+            } catch (error) {
+                return;
+            }
+            if (url.origin !== window.location.origin) {
+                return;
+            }
+            var isCurrent = url.pathname === '/'
+                ? currentPath === '/'
+                : (currentPath === url.pathname || currentPath.indexOf(url.pathname + '/') === 0);
+            if (isCurrent) {
+                link.setAttribute('aria-current', 'page');
+            }
+        });
+    }
+
+    /** Nút in (data-print): thay cho onclick inline, dùng chung cho mọi trang có nút in. */
+    function initPrintButtons() {
+        document.querySelectorAll('[data-print]').forEach(function (button) {
+            button.addEventListener('click', function () {
+                window.print();
+            });
+        });
+    }
+
     document.addEventListener('DOMContentLoaded', function () {
         if (window.AOS) {
             AOS.init({ duration: 600, once: true, offset: 40 });
@@ -476,10 +546,13 @@
         initFlashToasts();
         initConfirmations();
         initQuantitySteppers();
-        initVariantPicker();
+        initPasswordToggles();
         initManualOrderLines();
         initBulkPriceTable();
         initGhnAddressPicker();
         initGhnFeePreview();
+        initAutoSubmitForms();
+        initNavCurrent();
+        initPrintButtons();
     });
 })();

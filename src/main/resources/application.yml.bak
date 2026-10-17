@@ -1,0 +1,69 @@
+spring:
+  application:
+    name: badstore
+  profiles:
+    default: local
+  datasource:
+    url: ${DB_URL:jdbc:sqlserver://localhost:1433;databaseName=BadminStore;encrypt=true;trustServerCertificate=true}
+    username: ${DB_USERNAME:sa}
+    password: ${DB_PASSWORD:}
+    driver-class-name: com.microsoft.sqlserver.jdbc.SQLServerDriver
+  jpa:
+    hibernate:
+      ddl-auto: validate          # KHÔNG để Hibernate tự sửa schema
+    open-in-view: false
+    properties:
+      hibernate:
+        format_sql: true
+  thymeleaf:
+    cache: false                  # bật true khi deploy
+  servlet:
+    multipart:
+      max-file-size: 5MB
+      max-request-size: 10MB
+  messages:
+    basename: messages
+    encoding: UTF-8
+
+server:
+  servlet:
+    encoding:
+      charset: UTF-8
+      force: true
+
+app:
+  upload-dir: ${UPLOAD_DIR:uploads}
+  shipping:
+    default-fee: 30000            # phí ship cố định (VND) – dùng khi GHN tắt hoặc khách nhập địa chỉ tay
+  shop:                           # thông tin in trên phiếu bán hàng tại quầy + chân trang
+    name: ${SHOP_NAME:BadStore}
+    address: ${SHOP_ADDRESS:Số 1 Đại Cồ Việt, Bách Khoa, Hà Nội}
+    hotline: ${SHOP_HOTLINE:1900 0000}
+    email: ${SHOP_EMAIL:cskh@badstore.local}
+  ghn:                            # tích hợp Giao Hàng Nhanh (GHN) – chi tiết: docs/HUONG_DAN_CHAY.md
+    enabled: ${GHN_ENABLED:false} # false = chạy offline: địa chỉ nhập tay, phí ship cố định
+    mock: ${GHN_MOCK:false}       # true = dữ liệu GHN giả để demo/thuyết trình khi không có mạng
+    mock-status: ${GHN_MOCK_STATUS:delivering}
+    base-url: ${GHN_BASE_URL:https://dev-online-gateway.ghn.vn/shiip/public-api}
+    token: ${GHN_TOKEN:}          # KHÔNG lưu token trong repo: truyền qua biến môi trường
+    shop-id: ${GHN_SHOP_ID:}
+    from-district-id: ${GHN_FROM_DISTRICT_ID:}
+    from-ward-code: ${GHN_FROM_WARD_CODE:}
+    from-name: ${app.shop.name}
+    from-phone: ${app.shop.hotline}
+    from-address: ${app.shop.address}
+    weight-gram: 1500             # 1 cây vợt + hộp; mỗi cây thêm 300g (GhnAddressService)
+    length-cm: 60
+    width-cm: 20
+    height-cm: 12
+    service-type-id: 2            # 2 = chuyển phát thương mại điện tử
+    payment-type-id: 1            # 1 = shop trả phí vận chuyển
+    insurance-value: 500000
+    connect-timeout-ms: 3000
+    read-timeout-ms: 5000
+    cache-ttl-seconds: 600        # cache Tỉnh–Huyện–Xã & phí ship trong 10 phút
+    sync-enabled: ${GHN_SYNC_ENABLED:false}   # bật để tự đồng bộ trạng thái vận đơn định kỳ
+    sync-delay-ms: 600000
+  admin:                          # DataInitializer tạo ADMIN lần đầu (BCrypt do Spring sinh)
+    email: ${ADMIN_EMAIL:admin@badstore.local}
+    password: ${ADMIN_PASSWORD:}

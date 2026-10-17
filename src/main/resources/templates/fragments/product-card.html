@@ -6,44 +6,61 @@
   Thẻ 1 sản phẩm trên lưới danh sách / trang chủ.
   Dữ liệu là ProductCardView (id, name, brandName, categoryName, minPrice, minOriginalPrice, totalStock, variantCount, imageUrl).
   Giá hiển thị = giá thấp nhất của các biến thể đang bán; ảnh do Service gắn sẵn (ảnh đại diện, thiếu thì dùng ảnh mặc định).
+  Thẻ dùng class của static/css/theme.css: .product-card / .thumb / .name / .price / .badge-brand.
+  position-relative + .card-action (z-index) để nút "So sánh" vẫn bấm được trên nền thẻ có stretched-link.
 -->
-<article th:fragment="card(card)" class="card h-100 border-0 shadow-sm product-card position-relative">
-    <a th:href="@{/san-pham/{id}(id=${card.id})}" class="d-block text-decoration-none">
-        <img class="card-img-top product-thumb"
-             th:src="${card.imageUrl}"
+<article th:fragment="card(card)" class="product-card card h-100 position-relative"
+         th:classappend="${card.available} ? '' : 'card-out'">
+
+    <a class="thumb d-block" th:href="@{/san-pham/{id}(id=${card.id})}"
+       th:aria-label="|Xem chi tiết vợt ${card.name}|">
+        <img th:src="${card.imageUrl}"
              th:alt="|Ảnh vợt cầu lông ${card.name}|"
              width="600" height="600" loading="lazy">
-        <span class="badge text-bg-danger position-absolute top-0 start-0 m-2"
-              th:if="${card.discounted}" th:text="'Giảm giá'">Giảm giá</span>
     </a>
+
+    <span class="badge badge-sale position-absolute top-0 start-0 m-2"
+          th:if="${card.discounted}" th:text="'Giảm giá'">Giảm giá</span>
+
     <div class="card-body d-flex flex-column">
-        <div class="small text-muted mb-1" th:text="|${card.brandName} · ${card.categoryName}|">Hãng · Loại</div>
-        <h3 class="h6 card-title mb-2 product-card-name">
-            <a class="stretched-link text-decoration-none text-dark"
+        <div class="d-flex align-items-center flex-wrap gap-1 mb-2">
+            <span class="badge badge-brand" th:text="${card.brandName}">Yonex</span>
+            <span class="text-muted small text-truncate" th:text="${card.categoryName}">Vợt tấn công</span>
+        </div>
+
+        <h3 class="name mb-2">
+            <a class="stretched-link text-reset text-decoration-none"
                th:href="@{/san-pham/{id}(id=${card.id})}" th:text="${card.name}">Tên vợt</a>
         </h3>
 
         <div class="mt-auto">
-            <div class="d-flex align-items-baseline gap-2 flex-wrap">
-                <span class="price-current fs-5" th:insert="~{fragments/common :: money(${card.minPrice})}">0 ₫</span>
-                <span class="price-original" th:if="${card.discounted}"
+            <div class="d-flex align-items-baseline flex-wrap gap-2">
+                <span class="price" th:insert="~{fragments/common :: money(${card.minPrice})}">0 ₫</span>
+                <span class="price-old" th:if="${card.discounted}"
                       th:insert="~{fragments/common :: money(${card.minOriginalPrice})}">0 ₫</span>
             </div>
-            <div class="mt-2 d-flex align-items-center gap-2 flex-wrap">
+
+            <div class="d-flex align-items-center flex-wrap gap-2 mt-2">
                 <span class="badge badge-soft-success" th:if="${card.available}">Còn hàng</span>
-                <span class="badge badge-soft-secondary" th:unless="${card.available}">Tạm hết hàng</span>
+                <span class="badge badge-soft-secondary" th:unless="${card.available}">Hết hàng</span>
                 <span class="small text-muted" th:if="${card.variantCount != null and card.variantCount > 1}"
                       th:text="|${card.variantCount} phiên bản|">2 phiên bản</span>
             </div>
 
             <!-- So sánh: chỉ lưu trong session nên khách vãng lai vẫn dùng được.
-                 position-relative + z-index để bấm được dù thẻ có stretched-link. -->
-            <form th:action="@{/so-sanh/them}" method="post" class="mt-2 position-relative" style="z-index: 2;">
-                <input type="hidden" name="productId" th:value="${card.id}">
-                <button class="btn btn-sm btn-outline-secondary w-100" type="submit">
-                    <i class="bi bi-bar-chart-steps"></i> So sánh
-                </button>
-            </form>
+                 Thêm vào giỏ phải chọn đúng phiên bản ⇒ nút chính dẫn sang trang chi tiết. -->
+            <div class="d-grid gap-2 mt-3 card-action">
+                <a class="btn btn-sm btn-primary" th:href="@{/san-pham/{id}(id=${card.id})}"
+                   th:attr="aria-label=|Chọn phiên bản và thêm ${card.name} vào giỏ|">
+                    <i class="bi bi-cart-plus" aria-hidden="true"></i> Chọn phiên bản
+                </a>
+                <form th:action="@{/so-sanh/them}" method="post">
+                    <input type="hidden" name="productId" th:value="${card.id}">
+                    <button class="btn btn-sm btn-outline-primary w-100" type="submit">
+                        <i class="bi bi-bar-chart-steps" aria-hidden="true"></i> So sánh
+                    </button>
+                </form>
+            </div>
         </div>
     </div>
 </article>

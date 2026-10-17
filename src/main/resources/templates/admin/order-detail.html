@@ -18,15 +18,15 @@
         </ol>
     </nav>
 
-    <div class="d-flex flex-wrap justify-content-between align-items-center gap-2 mb-3">
-        <h1 class="h4 mb-0">
-            <i class="bi bi-receipt text-primary"></i>
+    <div class="page-head">
+        <h1 class="page-title">
+            <i class="bi bi-receipt"></i>
             Đơn <span th:text="${detail.order.orderCode}">BS000</span>
         </h1>
-        <div class="d-flex align-items-center gap-2">
-            <span class="badge fs-6" th:classappend="${detail.statusBadgeClass}"
+        <div class="d-flex flex-wrap align-items-center gap-2">
+            <span class="status-pill" th:classappend="|status-${detail.order.orderStatus.name()}|"
                   th:text="${detail.order.orderStatus.label}">Trạng thái</span>
-            <span class="badge fs-6 text-bg-light" th:if="${detail.order.orderSource.name() == 'MANUAL'}">
+            <span class="badge badge-brand" th:if="${detail.order.orderSource.name() == 'MANUAL'}">
                 Tạo thủ công
             </span>
             <a class="btn btn-sm btn-outline-secondary" th:href="@{/admin/don-hang}">
@@ -38,13 +38,13 @@
     <div class="row g-3">
         <!-- ===== Hàng hoá + tiền + lịch sử ===== -->
         <div class="col-xl-8">
-            <div class="card border-0 shadow-sm mb-3">
-                <div class="card-header bg-white fw-semibold">
+            <div class="card-soft mb-3">
+                <div class="card-header fw-semibold">
                     <i class="bi bi-box-seam"></i> Sản phẩm trong đơn
                 </div>
                 <div class="table-responsive">
-                    <table class="table align-middle mb-0">
-                        <thead class="table-light">
+                    <table class="table table-hover align-middle mb-0">
+                        <thead>
                         <tr>
                             <th scope="col">Sản phẩm</th>
                             <th scope="col" class="text-end">Đơn giá</th>
@@ -56,9 +56,9 @@
                         <tr th:each="item : ${detail.order.items}">
                             <td>
                                 <div class="d-flex align-items-center gap-2">
-                                    <img class="rounded border bg-white" width="48" height="48"
+                                    <img class="admin-thumb border" loading="lazy"
                                          th:src="${item.imageUrl != null} ? ${item.imageUrl} : '/images/no-image.svg'"
-                                         th:alt="|Ảnh ${item.productName}|" loading="lazy">
+                                         th:alt="|Ảnh ${item.productName}|">
                                     <div>
                                         <div class="fw-semibold" th:text="${item.productName}">Tên vợt</div>
                                         <div class="small text-muted"
@@ -75,7 +75,7 @@
                         </tbody>
                     </table>
                 </div>
-                <div class="card-footer bg-white">
+                <div class="card-footer">
                     <dl class="row mb-0">
                         <dt class="col-8 fw-normal text-muted">Tạm tính</dt>
                         <dd class="col-4 text-end mb-1" th:insert="~{fragments/common :: money(${detail.order.subtotal})}">0 ₫</dd>
@@ -88,14 +88,14 @@
                                  th:text="${detail.voucherLabel}">Mã giảm giá</div>
                         </dd>
                         <dt class="col-8 border-top pt-2">Tổng thanh toán</dt>
-                        <dd class="col-4 text-end border-top pt-2 fs-5 fw-bold price-current"
+                        <dd class="col-4 text-end border-top pt-2 fs-5 fw-bold price"
                             th:insert="~{fragments/common :: money(${detail.order.totalAmount})}">0 ₫</dd>
                     </dl>
                 </div>
             </div>
 
-            <div class="card border-0 shadow-sm">
-                <div class="card-header bg-white fw-semibold">
+            <div class="card-soft">
+                <div class="card-header fw-semibold">
                     <i class="bi bi-clock-history"></i> Lịch sử trạng thái
                 </div>
                 <ul class="list-group list-group-flush">
@@ -119,8 +119,8 @@
 
         <!-- ===== Khách + thanh toán + thao tác ===== -->
         <div class="col-xl-4">
-            <div class="card border-0 shadow-sm mb-3">
-                <div class="card-header bg-white fw-semibold"><i class="bi bi-person"></i> Khách &amp; giao hàng</div>
+            <div class="card-soft mb-3">
+                <div class="card-header fw-semibold"><i class="bi bi-person"></i> Khách &amp; giao hàng</div>
                 <div class="card-body">
                     <div class="small text-muted">Tài khoản đặt</div>
                     <div th:text="${detail.customerLabel}">khach@example.com</div>
@@ -143,12 +143,13 @@
                 </div>
             </div>
 
-            <div class="card border-0 shadow-sm mb-3">
-                <div class="card-header bg-white fw-semibold"><i class="bi bi-credit-card"></i> Thanh toán</div>
+            <div class="card-soft mb-3">
+                <div class="card-header fw-semibold"><i class="bi bi-credit-card"></i> Thanh toán</div>
                 <div class="card-body">
                     <div class="d-flex justify-content-between align-items-center">
                         <span th:text="${detail.paymentMethodLabel}">Phương thức</span>
-                        <span class="badge" th:classappend="${detail.paymentBadgeClass}"
+                        <span class="status-pill"
+                              th:classappend="${detail.paymentStatus != null} ? |status-${detail.paymentStatus.name()}| : 'status-INACTIVE'"
                               th:text="${detail.paymentStatusLabel}">Chờ</span>
                     </div>
                     <div class="small text-muted mt-1" th:if="${detail.transactionCode != null}">
@@ -171,8 +172,8 @@
             </div>
 
             <!-- ===== Vận chuyển GHN: tạo vận đơn + đồng bộ trạng thái giao hàng ===== -->
-            <div class="card border-0 shadow-sm mb-3" th:if="${ghnEnabled}">
-                <div class="card-header bg-white fw-semibold d-flex justify-content-between align-items-center">
+            <div class="card-soft mb-3" th:if="${ghnEnabled}">
+                <div class="card-header fw-semibold d-flex justify-content-between align-items-center">
                     <span><i class="bi bi-truck"></i> Vận chuyển GHN</span>
                     <span class="badge text-bg-warning" th:if="${ghnMock}">Dữ liệu demo</span>
                 </div>
@@ -229,8 +230,8 @@
                 </div>
             </div>
 
-            <div class="card border-0 shadow-sm mb-3" th:if="${!#lists.isEmpty(nextStatuses)}">
-                <div class="card-header bg-white fw-semibold"><i class="bi bi-arrow-repeat"></i> Đổi trạng thái đơn</div>
+            <div class="card-soft mb-3" th:if="${!#lists.isEmpty(nextStatuses)}">
+                <div class="card-header fw-semibold"><i class="bi bi-arrow-repeat"></i> Đổi trạng thái đơn</div>
                 <div class="card-body">
                     <form th:action="@{/admin/don-hang/{id}/trang-thai(id=${detail.order.id})}" method="post"
                           data-confirm="Chuyển trạng thái đơn hàng này?">

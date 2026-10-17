@@ -10,10 +10,10 @@
 
 <th:block layout:fragment="content">
 
-    <div class="d-flex flex-wrap justify-content-between align-items-center gap-2 mb-3 d-print-none">
-        <h1 class="h4 mb-0"><i class="bi bi-receipt text-primary"></i> Phiếu bán hàng</h1>
+    <div class="page-head d-print-none">
+        <h1 class="page-title"><i class="bi bi-receipt"></i> Phiếu bán hàng</h1>
         <div class="d-flex flex-wrap gap-2">
-            <button class="btn btn-primary" type="button" onclick="window.print()">
+            <button class="btn btn-primary" type="button" data-print>
                 <i class="bi bi-printer"></i> In phiếu
             </button>
             <a class="btn btn-success" th:href="@{/admin/ban-hang}">
@@ -32,7 +32,7 @@
     </div>
 
     <!-- Phiếu in: khổ hẹp như hoá đơn máy in nhiệt, chỉ gồm nội dung cần cho khách -->
-    <div class="pos-receipt card border-0 shadow-sm">
+    <div class="pos-receipt card-soft">
         <div class="card-body">
             <div class="text-center mb-3">
                 <div class="fw-bold fs-5" th:text="${shop.name}">BadStore</div>
@@ -129,10 +129,10 @@
                     <td>Thanh toán:</td>
                     <td class="text-end">
                         <span th:text="${detail.paymentMethodLabel}">Tiền mặt tại quầy</span>
-                        <span class="badge text-bg-success ms-1" th:if="${detail.paymentStatusLabel == 'Đã thanh toán'}">
+                        <span class="status-pill status-PAID ms-1" th:if="${detail.paymentStatusLabel == 'Đã thanh toán'}">
                             Đã thu tiền
                         </span>
-                        <span class="badge text-bg-warning ms-1" th:unless="${detail.paymentStatusLabel == 'Đã thanh toán'}"
+                        <span class="status-pill status-PENDING ms-1" th:unless="${detail.paymentStatusLabel == 'Đã thanh toán'}"
                               th:text="${detail.paymentStatusLabel}">Chờ thanh toán</span>
                     </td>
                 </tr>

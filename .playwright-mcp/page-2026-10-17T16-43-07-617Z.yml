@@ -1,0 +1,13 @@
+- main [ref=f33e2]:
+  - generic [ref=f33e5]:
+    - link "BadStore – về trang chủ" [ref=f33e6] [cursor=pointer]:
+      - /url: /
+      - generic [aria-hidden] [ref=f33e8]: 
+      - generic [ref=f33e9]: BadStore
+    - generic [ref=f33e10]: "404"
+    - heading "Không tìm thấy trang bạn cần" [level=1] [ref=f33e11]
+    - paragraph [ref=f33e12]: No static resource khong-ton-tai.
+    - link "Về trang chủ" [ref=f33e13] [cursor=pointer]:
+      - /url: /
+      - generic [aria-hidden] [ref=f33e14]: 
+      - text: Về trang chủ

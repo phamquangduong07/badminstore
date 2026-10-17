@@ -57,13 +57,16 @@
     <!-- Bảng so sánh: mỗi sản phẩm là một cột, mỗi tiêu chí là một dòng -->
     <div class="card border-0 shadow-sm" th:unless="${items.isEmpty()}">
         <div class="table-responsive">
+            <p class="text-muted small d-md-none mb-2">
+                <i class="bi bi-arrows-move" aria-hidden="true"></i> Kéo ngang bảng để xem đủ các mẫu vợt đang so sánh.
+            </p>
             <table class="table table-bordered align-middle mb-0 compare-table">
                 <thead class="table-light">
                 <tr>
                     <th scope="col" class="compare-criteria">Tiêu chí</th>
                     <th scope="col" th:each="item : ${items}" class="text-center">
                         <img th:if="${item.thumbnailUrl != null}" th:src="@{${item.thumbnailUrl}}"
-                             th:alt="${'Ảnh ' + item.product.name}" class="compare-thumb mb-2">
+                             th:alt="${'Ảnh ' + item.product.name}" class="compare-thumb mb-2" loading="lazy">
                         <div>
                             <a class="text-decoration-none fw-semibold"
                                th:href="@{/san-pham/{id}(id=${item.product.id})}"

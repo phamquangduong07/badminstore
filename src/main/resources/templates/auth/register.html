@@ -9,83 +9,163 @@
 <body>
 
 <th:block layout:fragment="content">
-    <div class="row justify-content-center">
-        <div class="col-md-8 col-lg-6">
-            <div class="card border-0 shadow-sm" data-aos="fade-up">
-                <div class="card-body p-4">
-                    <h1 class="h4 text-center mb-1">Đăng ký tài khoản</h1>
-                    <p class="text-center text-muted small mb-4">Chỉ mất một phút để bắt đầu mua sắm.</p>
 
-                    <!-- Validate 2 lớp: HTML (required/minlength/pattern) + Bean Validation ở server -->
-                    <form th:action="@{/dang-ky}" th:object="${registerRequest}" method="post" novalidate>
-                        <!-- Lỗi nghiệp vụ trả về từ Service (email trùng, mật khẩu xác nhận sai…).
-                             BẮT BUỘC đặt trong form có th:object thì #fields mới hoạt động. -->
-                        <div class="alert alert-danger" role="alert" th:if="${#fields.hasGlobalErrors()}">
-                            <i class="bi bi-exclamation-triangle-fill"></i>
-                            <span th:each="err : ${#fields.globalErrors()}" th:text="${err}">Lỗi</span>
+    <div class="auth-page">
+
+        <!--
+          CSS riêng của nhóm trang tài khoản/đơn hàng, nạp ngay trong nội dung trang
+          (sau theme.css) và mọi rule đều scope trong .auth-page nên không ảnh hưởng trang khác.
+        -->
+        <link rel="stylesheet" th:href="@{/css/account-orders.css}">
+
+        <div class="row g-4 g-lg-5 align-items-stretch justify-content-center my-lg-2">
+
+            <!-- Cột form đăng ký: chia 2 nhóm trường để không bị "một khối chữ dài" -->
+            <div class="col-12 col-lg-7" data-aos="fade-up">
+                <div class="card border-0 shadow-sm h-100">
+                    <div class="card-body p-4 p-lg-5">
+                        <div class="text-center mb-4">
+                            <span class="auth-icon-badge mb-3"><i class="bi bi-person-plus" aria-hidden="true"></i></span>
+                            <h1 class="h4 mb-1">Đăng ký tài khoản</h1>
+                            <p class="text-muted small mb-0">Chỉ mất một phút để bắt đầu mua sắm tại BadStore.</p>
                         </div>
 
-                        <div class="mb-3">
-                            <label class="form-label" for="email">Email <span class="text-danger">*</span></label>
-                            <input class="form-control" id="email" type="email" th:field="*{email}"
-                                   th:classappend="${#fields.hasErrors('email')} ? 'is-invalid'"
-                                   autocomplete="email" required maxlength="100">
-                            <div class="invalid-feedback" th:if="${#fields.hasErrors('email')}"
-                                 th:errors="*{email}">Email không hợp lệ</div>
-                        </div>
-
-                        <div class="mb-3">
-                            <label class="form-label" for="fullName">Họ và tên <span class="text-danger">*</span></label>
-                            <input class="form-control" id="fullName" type="text" th:field="*{fullName}"
-                                   th:classappend="${#fields.hasErrors('fullName')} ? 'is-invalid'"
-                                   autocomplete="name" required maxlength="100">
-                            <div class="invalid-feedback" th:if="${#fields.hasErrors('fullName')}"
-                                 th:errors="*{fullName}">Vui lòng nhập họ tên</div>
-                        </div>
-
-                        <div class="mb-3">
-                            <label class="form-label" for="phone">Số điện thoại</label>
-                            <input class="form-control" id="phone" type="tel" th:field="*{phone}"
-                                   th:classappend="${#fields.hasErrors('phone')} ? 'is-invalid'"
-                                   autocomplete="tel" maxlength="20" pattern="^(0|\+84)\d{8,10}$">
-                            <div class="form-text">Không bắt buộc – ví dụ: 0912345678</div>
-                            <div class="invalid-feedback" th:if="${#fields.hasErrors('phone')}"
-                                 th:errors="*{phone}">Số điện thoại không hợp lệ</div>
-                        </div>
-
-                        <div class="row">
-                            <div class="col-md-6 mb-3">
-                                <label class="form-label" for="password">Mật khẩu <span class="text-danger">*</span></label>
-                                <input class="form-control" id="password" type="password" th:field="*{password}"
-                                       th:classappend="${#fields.hasErrors('password')} ? 'is-invalid'"
-                                       autocomplete="new-password" required minlength="6" maxlength="72">
-                                <div class="invalid-feedback" th:if="${#fields.hasErrors('password')}"
-                                     th:errors="*{password}">Mật khẩu từ 6 đến 72 ký tự</div>
+                        <!-- Validate 2 lớp: HTML (required/minlength/pattern) + Bean Validation ở server -->
+                        <form class="auth-form" th:action="@{/dang-ky}" th:object="${registerRequest}" method="post"
+                              novalidate data-confirm="Tạo tài khoản với thông tin bạn vừa nhập?">
+                            <!-- Lỗi nghiệp vụ trả về từ Service (email trùng, mật khẩu xác nhận sai…).
+                                 BẮT BUỘC đặt trong form có th:object thì #fields mới hoạt động. -->
+                            <div class="alert alert-danger d-flex align-items-start gap-2" role="alert"
+                                 th:if="${#fields.hasGlobalErrors()}">
+                                <i class="bi bi-exclamation-triangle-fill" aria-hidden="true"></i>
+                                <div>
+                                    <span th:each="err : ${#fields.globalErrors()}" th:text="${err}">Lỗi</span>
+                                </div>
                             </div>
-                            <div class="col-md-6 mb-3">
-                                <label class="form-label" for="confirmPassword">Xác nhận mật khẩu <span class="text-danger">*</span></label>
-                                <input class="form-control" id="confirmPassword" type="password"
-                                       th:field="*{confirmPassword}"
-                                       th:classappend="${#fields.hasErrors('confirmPassword')} ? 'is-invalid'"
-                                       autocomplete="new-password" required maxlength="72">
-                                <div class="invalid-feedback" th:if="${#fields.hasErrors('confirmPassword')}"
-                                     th:errors="*{confirmPassword}">Vui lòng xác nhận mật khẩu</div>
+
+                            <h2 class="auth-section-title"><i class="bi bi-person-vcard" aria-hidden="true"></i> Thông tin của bạn</h2>
+                            <div class="row g-3">
+                                <div class="col-12 col-md-6">
+                                    <label class="form-label" for="fullName">Họ và tên <span class="text-danger">*</span></label>
+                                    <input class="form-control" id="fullName" type="text" th:field="*{fullName}"
+                                           th:classappend="${#fields.hasErrors('fullName')} ? 'is-invalid'"
+                                           autocomplete="name" placeholder="Nguyễn Văn A" required maxlength="100">
+                                    <div class="invalid-feedback" th:if="${#fields.hasErrors('fullName')}"
+                                         th:errors="*{fullName}">Vui lòng nhập họ tên</div>
+                                </div>
+                                <div class="col-12 col-md-6">
+                                    <label class="form-label" for="phone">Số điện thoại</label>
+                                    <input class="form-control" id="phone" type="tel" th:field="*{phone}"
+                                           th:classappend="${#fields.hasErrors('phone')} ? 'is-invalid'"
+                                           autocomplete="tel" placeholder="0912345678" maxlength="20" pattern="^(0|\+84)\d{8,10}$">
+                                    <div class="form-text">Không bắt buộc – ví dụ: 0912345678</div>
+                                    <div class="invalid-feedback" th:if="${#fields.hasErrors('phone')}"
+                                         th:errors="*{phone}">Số điện thoại không hợp lệ</div>
+                                </div>
                             </div>
-                        </div>
 
-                        <button class="btn btn-primary w-100" type="submit">
-                            <i class="bi bi-person-plus"></i> Tạo tài khoản
-                        </button>
-                    </form>
+                            <h2 class="auth-section-title mt-4"><i class="bi bi-shield-lock" aria-hidden="true"></i> Thông tin đăng nhập</h2>
+                            <div class="mb-3">
+                                <label class="form-label" for="email">Email <span class="text-danger">*</span></label>
+                                <div class="input-group">
+                                    <span class="input-group-text"><i class="bi bi-envelope" aria-hidden="true"></i></span>
+                                    <input class="form-control" id="email" type="email" th:field="*{email}"
+                                           th:classappend="${#fields.hasErrors('email')} ? 'is-invalid'"
+                                           autocomplete="email" placeholder="email@vi-du.com" required maxlength="100">
+                                    <div class="invalid-feedback" th:if="${#fields.hasErrors('email')}"
+                                         th:errors="*{email}">Email không hợp lệ</div>
+                                </div>
+                            </div>
 
-                    <p class="text-center mt-3 mb-0">
-                        Đã có tài khoản?
-                        <a th:href="@{/dang-nhap}" class="fw-semibold">Đăng nhập</a>
-                    </p>
+                            <div class="row g-3">
+                                <div class="col-12 col-md-6">
+                                    <label class="form-label" for="password">Mật khẩu <span class="text-danger">*</span></label>
+                                    <div class="input-group">
+                                        <span class="input-group-text"><i class="bi bi-lock" aria-hidden="true"></i></span>
+                                        <input class="form-control" id="password" type="password" th:field="*{password}"
+                                               th:classappend="${#fields.hasErrors('password')} ? 'is-invalid'"
+                                               autocomplete="new-password" required minlength="6" maxlength="72">
+                                        <button class="btn btn-outline-secondary" type="button"
+                                                data-toggle-password="#password"
+                                                aria-label="Hiện mật khẩu" aria-pressed="false">
+                                            <i class="bi bi-eye" aria-hidden="true"></i>
+                                        </button>
+                                        <div class="invalid-feedback" th:if="${#fields.hasErrors('password')}"
+                                             th:errors="*{password}">Mật khẩu từ 6 đến 72 ký tự</div>
+                                    </div>
+                                    <div class="form-text">Từ 6 đến 72 ký tự, nên kết hợp chữ và số.</div>
+                                </div>
+                                <div class="col-12 col-md-6">
+                                    <label class="form-label" for="confirmPassword">Xác nhận mật khẩu <span class="text-danger">*</span></label>
+                                    <div class="input-group">
+                                        <span class="input-group-text"><i class="bi bi-lock-fill" aria-hidden="true"></i></span>
+                                        <input class="form-control" id="confirmPassword" type="password"
+                                               th:field="*{confirmPassword}"
+                                               th:classappend="${#fields.hasErrors('confirmPassword')} ? 'is-invalid'"
+                                               autocomplete="new-password" required maxlength="72">
+                                        <button class="btn btn-outline-secondary" type="button"
+                                                data-toggle-password="#confirmPassword"
+                                                aria-label="Hiện mật khẩu" aria-pressed="false">
+                                            <i class="bi bi-eye" aria-hidden="true"></i>
+                                        </button>
+                                        <div class="invalid-feedback" th:if="${#fields.hasErrors('confirmPassword')}"
+                                             th:errors="*{confirmPassword}">Vui lòng xác nhận mật khẩu</div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <button class="btn btn-primary w-100 mt-4" type="submit">
+                                <i class="bi bi-person-plus" aria-hidden="true"></i> Tạo tài khoản
+                            </button>
+                        </form>
+
+                        <p class="text-center text-muted mb-0 mt-3">
+                            Đã có tài khoản?
+                            <a th:href="@{/dang-nhap}" class="fw-semibold">Đăng nhập</a>
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Cột giới thiệu: chỉ hiện từ màn hình lg -->
+            <div class="col-lg-5 d-none d-lg-block" data-aos="fade-left">
+                <div class="auth-aside">
+                    <div>
+                        <span class="auth-brand"><i class="bi bi-activity" aria-hidden="true"></i> BadStore</span>
+                        <p class="h3 fw-bold mt-4 mb-2">Tạo tài khoản để mua sắm dễ hơn</p>
+                        <p class="mb-0 opacity-75">
+                            Miễn phí và chỉ mất một phút. Thông tin của bạn được dùng để giao hàng và chăm sóc đơn hàng.
+                        </p>
+                    </div>
+
+                    <ul class="auth-benefits list-unstyled mb-0">
+                        <li>
+                            <span class="auth-benefit-icon"><i class="bi bi-receipt" aria-hidden="true"></i></span>
+                            <div>
+                                <div class="fw-semibold">Theo dõi đơn hàng</div>
+                                <div class="small opacity-75">Xem trạng thái từng bước: chờ xác nhận, đang giao, đã giao.</div>
+                            </div>
+                        </li>
+                        <li>
+                            <span class="auth-benefit-icon"><i class="bi bi-geo-alt" aria-hidden="true"></i></span>
+                            <div>
+                                <div class="fw-semibold">Lưu sổ địa chỉ</div>
+                                <div class="small opacity-75">Đặt lại lần sau nhanh hơn với địa chỉ nhận hàng đã lưu.</div>
+                            </div>
+                        </li>
+                        <li>
+                            <span class="auth-benefit-icon"><i class="bi bi-star" aria-hidden="true"></i></span>
+                            <div>
+                                <div class="fw-semibold">Đánh giá sản phẩm</div>
+                                <div class="small opacity-75">Chỉ khách đã mua và nhận hàng mới được đánh giá vợt.</div>
+                            </div>
+                        </li>
+                    </ul>
                 </div>
             </div>
         </div>
     </div>
+
 </th:block>
 
 </body>

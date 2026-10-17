@@ -10,8 +10,8 @@
 
 <th:block layout:fragment="content">
 
-    <div class="d-flex flex-wrap justify-content-between align-items-center gap-2 mb-3">
-        <h1 class="h4 mb-0"><i class="bi bi-box-seam text-primary"></i> Quản lý sản phẩm</h1>
+    <div class="page-head">
+        <h1 class="page-title"><i class="bi bi-box-seam"></i> Quản lý sản phẩm</h1>
         <div class="d-flex align-items-center gap-2">
             <span class="text-muted small" th:text="|Tổng ${products.totalElements} sản phẩm phù hợp|">Tổng 0</span>
             <a class="btn btn-sm btn-primary" th:href="@{/admin/san-pham/tao-moi}">
@@ -20,7 +20,7 @@
         </div>
     </div>
 
-    <form class="card border-0 shadow-sm mb-3" method="get" th:action="@{/admin/san-pham}">
+    <form class="card-soft mb-3" method="get" th:action="@{/admin/san-pham}">
         <div class="card-body row g-2 align-items-end">
             <div class="col-sm-6 col-lg-3">
                 <label class="form-label small" for="keyword">Tìm theo mã / tên</label>
@@ -58,10 +58,10 @@
         </div>
     </form>
 
-    <div class="card border-0 shadow-sm">
+    <div class="card-soft">
         <div class="table-responsive">
-            <table class="table align-middle mb-0">
-                <thead class="table-light">
+            <table class="table table-hover align-middle mb-0">
+                <thead>
                 <tr>
                     <th scope="col">Ảnh</th>
                     <th scope="col">Mã / Tên sản phẩm</th>
@@ -74,13 +74,10 @@
                 </thead>
                 <tbody>
                 <tr th:each="row : ${products.content}">
-                    <td style="width: 76px;">
+                    <td>
                         <img th:if="${row.thumbnailUrl != null}" th:src="@{${row.thumbnailUrl}}"
-                             th:alt="${'Ảnh ' + row.product.name}" class="rounded border"
-                             style="width: 60px; height: 60px; object-fit: contain;">
-                        <span th:unless="${row.thumbnailUrl != null}"
-                              class="d-inline-flex align-items-center justify-content-center rounded border bg-light text-muted"
-                              style="width: 60px; height: 60px;">
+                             th:alt="${'Ảnh ' + row.product.name}" class="admin-thumb border" loading="lazy">
+                        <span th:unless="${row.thumbnailUrl != null}" class="admin-thumb-empty" aria-hidden="true">
                             <i class="bi bi-image"></i>
                         </span>
                     </td>
@@ -92,29 +89,27 @@
                         <div th:text="${row.product.brand.name}">Hãng</div>
                         <div class="text-muted" th:text="${row.product.category.name}">Loại</div>
                     </td>
-                    <td>
-                        <span th:insert="~{fragments/common :: money(${row.minPrice})}">Liên hệ</span>
-                    </td>
+                    <td class="price" th:insert="~{fragments/common :: money(${row.minPrice})}">Liên hệ</td>
                     <td class="text-center">
                         <span th:text="${row.activeVariantCount}">0</span> biến thể –
                         <span th:text="${row.totalStock}">0</span> chiếc
                     </td>
                     <td>
-                        <span class="badge"
-                              th:classappend="${row.product.status.name() == 'ACTIVE'} ? 'text-bg-success'
-                                             : (${row.product.status.name() == 'DRAFT'} ? 'text-bg-warning'
-                                                : 'text-bg-secondary')"
+                        <span class="status-pill"
+                              th:classappend="|status-${row.product.status.name()}|"
                               th:text="${row.product.status.label}">Đang bán</span>
                     </td>
                     <td class="text-end">
-                        <div class="d-flex justify-content-end flex-wrap gap-1">
+                        <div class="d-flex justify-content-end gap-1">
                             <a class="btn btn-sm btn-outline-primary"
-                               th:href="@{/admin/san-pham/{id}/sua(id=${row.product.id})}">
-                                <i class="bi bi-pencil-square"></i> Sửa
+                               th:href="@{/admin/san-pham/{id}/sua(id=${row.product.id})}"
+                               th:attr="aria-label=|Sửa ${row.product.name}|" title="Sửa thông tin sản phẩm">
+                                <i class="bi bi-pencil-square"></i>
                             </a>
                             <a class="btn btn-sm btn-outline-dark"
-                               th:href="@{/admin/san-pham/{id}/bien-the(id=${row.product.id})}">
-                                <i class="bi bi-boxes"></i> Biến thể &amp; ảnh
+                               th:href="@{/admin/san-pham/{id}/bien-the(id=${row.product.id})}"
+                               th:attr="aria-label=|Biến thể và ảnh của ${row.product.name}|" title="Biến thể &amp; ảnh">
+                                <i class="bi bi-boxes"></i>
                             </a>
                             <form th:action="@{/admin/san-pham/{id}/doi-trang-thai(id=${row.product.id})}"
                                   method="post" class="d-inline"
@@ -125,22 +120,29 @@
                                         th:classappend="${row.product.status.name() == 'ACTIVE'}
                                                 ? 'btn-outline-secondary' : 'btn-outline-success'"
                                         type="submit"
-                                        th:text="${row.product.status.name() == 'ACTIVE'} ? 'Ẩn' : 'Hiện'">Ẩn</button>
+                                        th:attr="aria-label=|Đổi trạng thái ${row.product.name}|"
+                                        th:title="${row.product.status.name() == 'ACTIVE'} ? 'Ẩn khỏi trang khách' : 'Cho hiển thị lại'">
+                                    <i class="bi"
+                                       th:classappend="${row.product.status.name() == 'ACTIVE'} ? 'bi-eye-slash' : 'bi-eye'"></i>
+                                </button>
                             </form>
                             <form th:action="@{/admin/san-pham/{id}/xoa(id=${row.product.id})}"
                                   method="post" class="d-inline"
                                   th:data-confirm="${'Xoá sản phẩm ' + row.product.name + '? Sản phẩm sẽ biến mất khỏi cửa hàng (đơn hàng cũ vẫn giữ nguyên).'}">
-                                <button class="btn btn-sm btn-outline-danger" type="submit">
-                                    <i class="bi bi-trash3"></i> Xoá
+                                <button class="btn btn-sm btn-outline-danger" type="submit"
+                                        th:attr="aria-label=|Xoá ${row.product.name}|" title="Xoá sản phẩm">
+                                    <i class="bi bi-trash3"></i>
                                 </button>
                             </form>
                         </div>
                     </td>
                 </tr>
                 <tr th:if="${products.empty}">
-                    <td colspan="7" class="text-center text-muted py-5">
-                        <i class="bi bi-box display-6 d-block mb-2"></i>
-                        Không có sản phẩm nào phù hợp bộ lọc.
+                    <td colspan="7">
+                        <div class="empty-state">
+                            <i class="bi bi-box"></i>
+                            <p>Không có sản phẩm nào phù hợp bộ lọc.</p>
+                        </div>
                     </td>
                 </tr>
                 </tbody>

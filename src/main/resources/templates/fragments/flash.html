@@ -3,20 +3,35 @@
 <body>
 
 <!--
-  Flash message (thêm bằng RedirectAttributes) hiển thị dưới dạng alert Bootstrap
-  và được js/main.js đọc lên để bật toast SweetAlert2.
+  Flash message (gắn bằng RedirectAttributes theo Post-Redirect-Get) hiển thị dưới dạng alert
+  và được js/main.js đọc thêm để bật toast SweetAlert2 ở góc phải trên.
+  Ba loại: thành công – lỗi – thông tin (info dùng cho ghi chú không phải lỗi).
 -->
-<div th:fragment="flash">
-    <div class="alert alert-success d-flex align-items-center shadow-sm" role="alert" th:if="${successMessage}">
-        <i class="bi bi-check-circle-fill me-2 fs-5" aria-hidden="true"></i>
-        <div th:text="${successMessage}">Thao tác thành công.</div>
+<div th:fragment="flash" aria-live="polite">
+    <div class="alert alert-success alert-dismissible d-flex align-items-start gap-2 shadow-sm"
+         role="alert" th:if="${successMessage}">
+        <i class="bi bi-check-circle-fill fs-5" aria-hidden="true"></i>
+        <div class="flex-grow-1" th:text="${successMessage}">Thao tác thành công.</div>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Đóng thông báo"></button>
     </div>
-    <div class="alert alert-danger d-flex align-items-center shadow-sm" role="alert" th:if="${errorMessage}">
-        <i class="bi bi-exclamation-triangle-fill me-2 fs-5" aria-hidden="true"></i>
-        <div th:text="${errorMessage}">Đã xảy ra lỗi.</div>
+
+    <div class="alert alert-danger alert-dismissible d-flex align-items-start gap-2 shadow-sm"
+         role="alert" th:if="${errorMessage}">
+        <i class="bi bi-exclamation-triangle-fill fs-5" aria-hidden="true"></i>
+        <div class="flex-grow-1" th:text="${errorMessage}">Đã xảy ra lỗi.</div>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Đóng thông báo"></button>
     </div>
+
+    <div class="alert alert-info alert-dismissible d-flex align-items-start gap-2 shadow-sm"
+         role="alert" th:if="${infoMessage}">
+        <i class="bi bi-info-circle-fill fs-5" aria-hidden="true"></i>
+        <div class="flex-grow-1" th:text="${infoMessage}">Thông tin.</div>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Đóng thông báo"></button>
+    </div>
+
+    <!-- Dữ liệu cho SweetAlert2 – main.js đọc rồi bật toast sau khi redirect -->
     <div id="flash-notifications" class="d-none"
-         th:attr="data-success=${successMessage}, data-error=${errorMessage}"></div>
+         th:attr="data-success=${successMessage}, data-error=${errorMessage}, data-info=${infoMessage}"></div>
 </div>
 
 </body>

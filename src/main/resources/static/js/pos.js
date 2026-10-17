@@ -79,6 +79,25 @@
         return element;
     }
 
+    /** Dự phòng khi SweetAlert2 không tải được: hiện danh sách lỗi bằng hộp Bootstrap
+        ngay trên form (không dùng window.alert để trải nghiệm thống nhất toàn hệ thống). */
+    function showClientProblems(problems) {
+        var box = document.getElementById('posClientProblems');
+        if (!box) {
+            box = document.createElement('div');
+            box.id = 'posClientProblems';
+            box.className = 'alert alert-danger d-flex gap-2';
+            box.setAttribute('role', 'alert');
+            form.parentNode.insertBefore(box, form);
+        }
+        box.innerHTML = '<i class="bi bi-exclamation-octagon-fill" aria-hidden="true"></i>'
+            + '<div><strong>Chưa thể thu tiền:</strong>'
+            + '<ul class="mb-0 small">' + problems.map(function (item) {
+                return '<li>' + escapeHtml(item) + '</li>';
+            }).join('') + '</ul></div>';
+        box.scrollIntoView({ block: 'center' });
+    }
+
     function request(url, options) {
         return fetch(url, options).then(function (response) {
             if (!response.ok) {
@@ -551,9 +570,15 @@
             if (window.Swal) {
                 Swal.fire({ icon: 'error', title: 'Chưa thể thu tiền', html: html, confirmButtonText: 'Đã hiểu' });
             } else {
-                window.alert(problems.join('\n'));
+                showClientProblems(problems);
             }
             return;
+        }
+
+        // Hết lỗi: gỡ hộp cảnh báo dự phòng (chỉ xuất hiện khi SweetAlert2 không tải được)
+        var staleProblems = document.getElementById('posClientProblems');
+        if (staleProblems) {
+            staleProblems.remove();
         }
 
         var detail = '<div>Tổng thu: <strong>' + money(state.total) + '</strong></div>';
@@ -574,7 +599,7 @@
             showCancelButton: true,
             confirmButtonText: 'Thu tiền & trừ kho',
             cancelButtonText: 'Xem lại',
-            confirmButtonColor: '#198754',
+            confirmButtonColor: '#0f8a5f', // xanh brand (đồng bộ --bs-primary trong theme.css)
             reverseButtons: true
         }).then(function (result) {
             if (result.isConfirmed) {

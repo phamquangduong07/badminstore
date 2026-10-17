@@ -9,44 +9,120 @@
 <body>
 
 <th:block layout:fragment="content">
-    <div class="row justify-content-center">
-        <div class="col-md-7 col-lg-5">
-            <div class="card border-0 shadow-sm" data-aos="fade-up">
-                <div class="card-body p-4">
-                    <h1 class="h4 text-center mb-1">Đăng nhập</h1>
-                    <p class="text-center text-muted small mb-4">Dùng email đã đăng ký để tiếp tục mua hàng.</p>
 
-                    <div class="alert alert-danger" role="alert" th:if="${param.error}">
-                        <i class="bi bi-exclamation-triangle-fill"></i> Email hoặc mật khẩu không đúng.
+    <div class="auth-page">
+
+        <!--
+          CSS riêng của nhóm trang tài khoản/đơn hàng, nạp ngay trong nội dung trang
+          (sau theme.css) và mọi rule đều scope trong .auth-page nên không ảnh hưởng trang khác.
+        -->
+        <link rel="stylesheet" th:href="@{/css/account-orders.css}">
+
+        <div class="row g-4 g-lg-5 align-items-stretch justify-content-center my-lg-2">
+
+            <!-- Cột giới thiệu: chỉ hiện từ màn hình lg để form là tâm điểm trên điện thoại -->
+            <div class="col-lg-6 d-none d-lg-block" data-aos="fade-right">
+                <div class="auth-aside">
+                    <div>
+                        <span class="auth-brand"><i class="bi bi-activity" aria-hidden="true"></i> BadStore</span>
+                        <p class="h3 fw-bold mt-4 mb-2">Vợt cầu lông chính hãng cho mọi lối chơi</p>
+                        <p class="mb-0 opacity-75">
+                            Đăng nhập để theo dõi đơn hàng, lưu sổ địa chỉ nhận hàng và đánh giá sản phẩm đã mua.
+                        </p>
                     </div>
-                    <div class="alert alert-info" role="alert" th:if="${param.logout}">
-                        <i class="bi bi-info-circle-fill"></i> Bạn đã đăng xuất khỏi hệ thống.
+
+                    <ul class="auth-benefits list-unstyled mb-0">
+                        <li>
+                            <span class="auth-benefit-icon"><i class="bi bi-shield-check" aria-hidden="true"></i></span>
+                            <div>
+                                <div class="fw-semibold">Chính hãng, có bảo hành</div>
+                                <div class="small opacity-75">Thông tin hãng, mã sản phẩm và tình trạng kho hiển thị công khai.</div>
+                            </div>
+                        </li>
+                        <li>
+                            <span class="auth-benefit-icon"><i class="bi bi-cash-coin" aria-hidden="true"></i></span>
+                            <div>
+                                <div class="fw-semibold">Thanh toán linh hoạt</div>
+                                <div class="small opacity-75">COD khi nhận hàng, chuyển khoản trước hoặc mua trực tiếp tại quầy.</div>
+                            </div>
+                        </li>
+                        <li>
+                            <span class="auth-benefit-icon"><i class="bi bi-arrow-repeat" aria-hidden="true"></i></span>
+                            <div>
+                                <div class="fw-semibold">Đổi trả rõ ràng</div>
+                                <div class="small opacity-75">Đơn đã giao có thể yêu cầu hoàn trả 100% ngay trên website.</div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Cột form đăng nhập -->
+            <div class="col-12 col-md-9 col-lg-5" data-aos="fade-up">
+                <div class="card border-0 shadow-sm h-100">
+                    <div class="card-body p-4 p-lg-5">
+                        <div class="text-center mb-4">
+                            <span class="auth-icon-badge mb-3"><i class="bi bi-person-lock" aria-hidden="true"></i></span>
+                            <h1 class="h4 mb-1">Đăng nhập</h1>
+                            <p class="text-muted small mb-0">Dùng email đã đăng ký để tiếp tục mua hàng.</p>
+                        </div>
+
+                        <div class="alert alert-danger d-flex align-items-center gap-2" role="alert" th:if="${param.error}">
+                            <i class="bi bi-exclamation-triangle-fill" aria-hidden="true"></i>
+                            <div>Email hoặc mật khẩu không đúng.</div>
+                        </div>
+                        <div class="alert alert-info d-flex align-items-center gap-2" role="alert" th:if="${param.logout}">
+                            <i class="bi bi-info-circle-fill" aria-hidden="true"></i>
+                            <div>Bạn đã đăng xuất khỏi hệ thống.</div>
+                        </div>
+
+                        <form class="auth-form" th:action="@{/dang-nhap}" method="post" novalidate>
+                            <div class="mb-3">
+                                <label class="form-label" for="email">Email</label>
+                                <div class="input-group">
+                                    <span class="input-group-text"><i class="bi bi-envelope" aria-hidden="true"></i></span>
+                                    <input class="form-control" id="email" name="email" type="email"
+                                           autocomplete="email" placeholder="email@vi-du.com" required autofocus>
+                                </div>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label" for="password">Mật khẩu</label>
+                                <div class="input-group">
+                                    <span class="input-group-text"><i class="bi bi-lock" aria-hidden="true"></i></span>
+                                    <input class="form-control" id="password" name="password" type="password"
+                                           autocomplete="current-password" placeholder="Mật khẩu của bạn" required>
+                                    <button class="btn btn-outline-secondary" type="button"
+                                            data-toggle-password="#password"
+                                            aria-label="Hiện mật khẩu" aria-pressed="false">
+                                        <i class="bi bi-eye" aria-hidden="true"></i>
+                                    </button>
+                                </div>
+                            </div>
+                            <button class="btn btn-primary w-100" type="submit">
+                                <i class="bi bi-box-arrow-in-right" aria-hidden="true"></i> Đăng nhập
+                            </button>
+                        </form>
+
+                        <div class="d-flex align-items-center gap-2 my-4 text-muted small">
+                            <hr class="flex-grow-1 my-0">
+                            <span>hoặc</span>
+                            <hr class="flex-grow-1 my-0">
+                        </div>
+
+                        <a class="btn btn-outline-primary w-100" th:href="@{/dang-ky}">
+                            <i class="bi bi-person-plus" aria-hidden="true"></i> Tạo tài khoản mới
+                        </a>
+
+                        <p class="text-center text-muted small mb-0 mt-3">
+                            <i class="bi bi-shield-lock" aria-hidden="true"></i>
+                            Mật khẩu được mã hoá khi lưu, BadStore không đọc được mật khẩu của bạn.
+                        </p>
                     </div>
-
-                    <form th:action="@{/dang-nhap}" method="post" novalidate>
-                        <div class="mb-3">
-                            <label class="form-label" for="email">Email</label>
-                            <input class="form-control" id="email" name="email" type="email"
-                                   autocomplete="email" required autofocus>
-                        </div>
-                        <div class="mb-3">
-                            <label class="form-label" for="password">Mật khẩu</label>
-                            <input class="form-control" id="password" name="password" type="password"
-                                   autocomplete="current-password" required>
-                        </div>
-                        <button class="btn btn-primary w-100" type="submit">
-                            <i class="bi bi-box-arrow-in-right"></i> Đăng nhập
-                        </button>
-                    </form>
-
-                    <p class="text-center mt-3 mb-0">
-                        Chưa có tài khoản?
-                        <a th:href="@{/dang-ky}" class="fw-semibold">Đăng ký ngay</a>
-                    </p>
                 </div>
             </div>
         </div>
     </div>
+
 </th:block>
 
 </body>

@@ -22,10 +22,16 @@
         </ol>
     </nav>
 
-    <h1 class="h4 mb-3">
-        <i class="bi bi-boxes text-primary"></i>
-        <span th:text="${variantId == null} ? |Thêm biến thể cho &quot;${product.name}&quot;| : |Sửa biến thể #${variantId} của &quot;${product.name}&quot;|">Biến thể</span>
-    </h1>
+    <div class="page-head">
+        <h1 class="page-title">
+            <i class="bi bi-boxes"></i>
+            <span th:text="${variantId == null} ? |Thêm biến thể cho &quot;${product.name}&quot;| : |Sửa biến thể #${variantId} của &quot;${product.name}&quot;|">Biến thể</span>
+        </h1>
+        <a class="btn btn-sm btn-outline-secondary"
+           th:href="@{/admin/san-pham/{id}/bien-the(id=${product.id})}">
+            <i class="bi bi-arrow-left"></i> Về danh sách biến thể
+        </a>
+    </div>
 
     <div class="alert alert-warning" th:if="${formError != null}" role="alert">
         <i class="bi bi-exclamation-triangle"></i> <span th:text="${formError}">Lý do lỗi</span>
@@ -37,8 +43,8 @@
           data-confirm="Lưu biến thể này?">
         <div class="row g-3">
             <div class="col-lg-7">
-                <div class="card border-0 shadow-sm">
-                    <div class="card-header bg-white fw-semibold"><i class="bi bi-upc-scan"></i> Nhận diện biến thể</div>
+                <div class="card-soft">
+                    <div class="card-header fw-semibold"><i class="bi bi-upc-scan"></i> Nhận diện biến thể</div>
                     <div class="card-body row g-3">
                         <div class="col-sm-6">
                             <label class="form-label" for="sku">SKU <span class="text-danger">*</span></label>
@@ -90,8 +96,8 @@
             </div>
 
             <div class="col-lg-5">
-                <div class="card border-0 shadow-sm">
-                    <div class="card-header bg-white fw-semibold"><i class="bi bi-cash-coin"></i> Giá &amp; tồn kho</div>
+                <div class="card-soft">
+                    <div class="card-header fw-semibold"><i class="bi bi-cash-coin"></i> Giá &amp; tồn kho</div>
                     <div class="card-body row g-3">
                         <div class="col-sm-6">
                             <label class="form-label" for="price">Giá bán (₫) <span class="text-danger">*</span></label>
@@ -129,7 +135,7 @@
                                  th:errors="*{status}">Chưa chọn trạng thái</div>
                         </div>
                     </div>
-                    <div class="card-footer bg-white d-flex gap-2">
+                    <div class="card-footer d-flex gap-2">
                         <button class="btn btn-primary flex-grow-1" type="submit">
                             <i class="bi bi-save"></i> Lưu biến thể
                         </button>

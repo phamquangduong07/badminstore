@@ -20,8 +20,8 @@
         </ol>
     </nav>
 
-    <div class="d-flex flex-wrap justify-content-between align-items-center gap-2 mb-3">
-        <h1 class="h4 mb-0"><i class="bi bi-cash-register text-primary"></i> Bán hàng tại quầy</h1>
+    <div class="page-head">
+        <h1 class="page-title"><i class="bi bi-cash-stack"></i> Bán hàng tại quầy</h1>
         <div class="d-flex flex-wrap gap-2">
             <a class="btn btn-sm btn-outline-secondary" th:href="@{/admin/don-hang/tao-don}">
                 <i class="bi bi-pencil-square"></i> Tạo đơn giao hàng (điện thoại)
@@ -53,7 +53,7 @@
         <div class="row g-3">
             <!-- ===================== Cột trái: tìm sản phẩm ===================== -->
             <div class="col-xl-7">
-                <div class="card border-0 shadow-sm">
+                <div class="card-soft">
                     <div class="card-body pb-2">
                         <div class="input-group input-group-lg">
                             <span class="input-group-text bg-white"><i class="bi bi-upc-scan"></i></span>
@@ -82,8 +82,8 @@
             <div class="col-xl-5 pos-summary">
 
                 <!-- Hoá đơn -->
-                <div class="card border-0 shadow-sm mb-3">
-                    <div class="card-header bg-white d-flex justify-content-between align-items-center">
+                <div class="card-soft mb-3">
+                    <div class="card-header d-flex justify-content-between align-items-center">
                         <span class="fw-semibold"><i class="bi bi-receipt-cutoff"></i> Hoá đơn tại quầy</span>
                         <button class="btn btn-sm btn-outline-danger" type="button" id="posClear">
                             <i class="bi bi-trash3"></i> Xoá hết
@@ -109,8 +109,8 @@
                 </div>
 
                 <!-- Mã giảm giá -->
-                <div class="card border-0 shadow-sm mb-3">
-                    <div class="card-header bg-white fw-semibold">
+                <div class="card-soft mb-3">
+                    <div class="card-header fw-semibold">
                         <i class="bi bi-ticket-perforated"></i> Mã giảm giá (nếu khách có)
                     </div>
                     <div class="card-body">
@@ -123,8 +123,8 @@
                 </div>
 
                 <!-- Khách hàng -->
-                <div class="card border-0 shadow-sm mb-3">
-                    <div class="card-header bg-white fw-semibold"><i class="bi bi-person-badge"></i> Khách hàng</div>
+                <div class="card-soft mb-3">
+                    <div class="card-header fw-semibold"><i class="bi bi-person-badge"></i> Khách hàng</div>
                     <div class="card-body">
                         <div class="input-group mb-2">
                             <span class="input-group-text"><i class="bi bi-telephone"></i></span>
@@ -157,8 +157,8 @@
                 </div>
 
                 <!-- Thanh toán -->
-                <div class="card border-0 shadow-sm mb-3">
-                    <div class="card-header bg-white fw-semibold"><i class="bi bi-cash-coin"></i> Thanh toán</div>
+                <div class="card-soft mb-3">
+                    <div class="card-header fw-semibold"><i class="bi bi-cash-coin"></i> Thanh toán</div>
                     <div class="card-body">
                         <div class="btn-group w-100 mb-3" role="group" aria-label="Phương thức thanh toán">
                             <input type="radio" class="btn-check" name="paymentMethod" value="CASH" id="posPayCash"
@@ -197,7 +197,7 @@
                             </label>
                         </div>
                     </div>
-                    <div class="card-footer bg-white">
+                    <div class="card-footer">
                         <button class="btn btn-success btn-lg w-100" type="submit" id="posSubmit">
                             <i class="bi bi-printer"></i> Thu tiền &amp; in phiếu
                         </button>
@@ -208,8 +208,8 @@
                 </div>
 
                 <!-- Hoá đơn gần đây: in lại khi khách quay lại -->
-                <div class="card border-0 shadow-sm" th:if="${recentOrders != null and !recentOrders.isEmpty()}">
-                    <div class="card-header bg-white fw-semibold">
+                <div class="card-soft" th:if="${recentOrders != null and !recentOrders.isEmpty()}">
+                    <div class="card-header fw-semibold">
                         <i class="bi bi-clock-history"></i> Hoá đơn gần đây
                     </div>
                     <ul class="list-group list-group-flush">
@@ -219,7 +219,7 @@
                                 <span class="fw-semibold" th:text="${order.orderCode}">BS000000</span>
                                 <span class="text-muted"
                                       th:text="| · ${#temporals.format(order.createdAt, 'dd/MM/yyyy HH:mm')}|"></span>
-                                <span class="badge text-bg-light ms-1"
+                                <span class="status-pill ms-1" th:classappend="|status-${order.orderStatus.name()}|"
                                       th:text="${order.orderStatus.label}">Trạng thái</span>
                             </span>
                             <span class="d-flex align-items-center gap-2">

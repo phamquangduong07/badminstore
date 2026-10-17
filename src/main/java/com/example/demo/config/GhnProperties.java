@@ -34,7 +34,7 @@ public class GhnProperties {
     /** Địa chỉ API: dev = dev-online-gateway.ghn.vn, thật = online-gateway.ghn.vn. */
     private String baseUrl = "https://dev-online-gateway.ghn.vn/shiip/public-api";
 
-    private String token = "";
+    private String token = "d444f10b-b72d-11f0-83e1-6217795c23da";
 
     /** ShopId lấy từ tài khoản GHN (bắt buộc khi tạo vận đơn/tính phí). */
     private Integer shopId;

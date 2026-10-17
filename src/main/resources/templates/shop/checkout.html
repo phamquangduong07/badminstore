@@ -21,6 +21,22 @@
 
     <h1 class="h4 mb-3"><i class="bi bi-bag-check text-primary"></i> Đặt hàng &amp; thanh toán</h1>
 
+    <!-- Thanh bước mua hàng: Giỏ hàng → Thanh toán (đang ở) → Hoàn tất -->
+    <ol class="checkout-steps" aria-label="Các bước mua hàng">
+        <li class="checkout-step step-done">
+            <span class="step-index"><i class="bi bi-check-lg" aria-hidden="true"></i></span>
+            <a class="text-reset text-decoration-none" th:href="@{/gio-hang}">Giỏ hàng</a>
+            <span class="step-sep" aria-hidden="true">›</span>
+        </li>
+        <li class="checkout-step step-current" aria-current="step">
+            <span class="step-index">2</span> Thanh toán
+            <span class="step-sep" aria-hidden="true">›</span>
+        </li>
+        <li class="checkout-step">
+            <span class="step-index">3</span> Hoàn tất
+        </li>
+    </ol>
+
     <div class="alert alert-warning d-flex gap-2" role="alert" th:if="${summary.cart.hasIssues}">
         <i class="bi bi-exclamation-triangle-fill" aria-hidden="true"></i>
         <div>
@@ -52,22 +68,24 @@
                             rồi quay lại đặt hàng nhé.
                         </div>
 
-                        <div class="form-check mb-3" th:each="address, iter : ${addresses}">
+                        <!-- Mỗi địa chỉ là một thẻ lớn (bấm được cả dòng) để dễ chọn trên điện thoại -->
+                        <label class="pick-card mb-2" th:each="address, iter : ${addresses}"
+                               th:for="|address-${address.id}|">
                             <input class="form-check-input" type="radio" name="addressId"
                                    th:id="|address-${address.id}|" th:value="${address.id}" required
                                    th:checked="${form.addressId != null and form.addressId == address.id}"
                                    th:attr="data-district-id=${address.districtId},data-ward-code=${address.wardCode}">
-                            <label class="form-check-label" th:for="|address-${address.id}|">
+                            <span>
                                 <span class="fw-semibold" th:text="${address.receiverName}">Người nhận</span>
                                 <span class="text-muted" th:text="| · ${address.receiverPhone}|">SĐT</span>
                                 <span class="badge text-bg-success ms-1" th:if="${address.defaultAddress}">Mặc định</span>
                                 <span class="badge text-bg-info ms-1" th:if="${address.districtId != null}"
                                       title="Địa chỉ có mã quận của GHN nên tính được phí giao hàng thật">
-                                    <i class="bi bi-truck"></i> GHN
+                                    <i class="bi bi-truck" aria-hidden="true"></i> GHN
                                 </span>
                                 <span class="d-block text-muted small" th:text="${address.fullAddress}">Địa chỉ</span>
-                            </label>
-                        </div>
+                            </span>
+                        </label>
                         <div class="invalid-feedback d-block" th:if="${#fields.hasErrors('addressId')}"
                              th:errors="*{addressId}">Vui lòng chọn địa chỉ</div>
                     </div>
@@ -78,10 +96,11 @@
                         <i class="bi bi-credit-card"></i> Phương thức thanh toán
                     </div>
                     <div class="card-body">
-                        <div class="form-check mb-3" th:each="method : ${paymentMethods}">
+                        <label class="pick-card mb-2" th:each="method : ${paymentMethods}"
+                               th:for="|method-${method.name()}|">
                             <input class="form-check-input" type="radio" th:field="*{paymentMethod}"
                                    th:id="|method-${method.name()}|" th:value="${method.name()}">
-                            <label class="form-check-label" th:for="|method-${method.name()}|">
+                            <span>
                                 <span class="fw-semibold" th:text="${method.label}">Phương thức</span>
                                 <span class="d-block text-muted small" th:if="${method.name() == 'COD'}">
                                     Thanh toán bằng tiền mặt khi nhận hàng.
@@ -89,8 +108,8 @@
                                 <span class="d-block text-muted small" th:if="${method.name() == 'BANK_TRANSFER'}">
                                     Chuyển khoản trước; BadStore xác nhận và gửi hàng sau khi nhận được tiền.
                                 </span>
-                            </label>
-                        </div>
+                            </span>
+                        </label>
                         <div class="invalid-feedback d-block" th:if="${#fields.hasErrors('paymentMethod')}"
                              th:errors="*{paymentMethod}">Vui lòng chọn phương thức thanh toán</div>
                     </div>
@@ -139,7 +158,8 @@
                         <div class="col-8">
                             <label class="visually-hidden" for="voucher">Mã giảm giá</label>
                             <input class="form-control text-uppercase" id="voucher" name="voucher" maxlength="50"
-                                   placeholder="Nhập mã, ví dụ BADSTORE10" th:value="${param.voucher}">
+                                   placeholder="Nhập mã, ví dụ BADSTORE10"
+                                   th:value="${param.voucher != null} ? ${param.voucher[0]} : ''">
                         </div>
                         <div class="col-4">
                             <button type="submit" class="btn btn-outline-primary w-100">Áp dụng</button>
@@ -154,8 +174,16 @@
                  th:attr="data-subtotal=${summary.cart.subtotal},data-discount=${summary.discountAmount},
                           data-default-fee=${summary.shippingFee},data-free-shipping=${summary.freeShipping},
                           data-weight=${ghnWeightGram}">
-                <div class="card-header bg-white fw-semibold">Đơn hàng của bạn</div>
-                <div class="card-body">
+                <div class="card-header bg-white d-flex justify-content-between align-items-center gap-2">
+                    <span class="fw-semibold">Đơn hàng của bạn</span>
+                    <!-- Trên điện thoại tóm tắt thu gọn để không đẩy nút Đặt hàng xuống quá xa -->
+                    <button class="btn btn-sm btn-outline-secondary d-lg-none" type="button"
+                            data-bs-toggle="collapse" data-bs-target="#checkoutSummary"
+                            aria-expanded="false" aria-controls="checkoutSummary">
+                        <i class="bi bi-chevron-down" aria-hidden="true"></i> Xem chi tiết
+                    </button>
+                </div>
+                <div class="card-body collapse d-lg-block" id="checkoutSummary">
                     <ul class="list-unstyled mb-3">
                         <li class="d-flex align-items-center gap-2 mb-2"
                             th:each="line : ${summary.cart.lines}">

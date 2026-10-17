@@ -1,0 +1,134 @@
+- generic [active] [ref=f16e1]:
+  - link "Bỏ qua tới nội dung chính" [ref=f16e2] [cursor=pointer]:
+    - /url: "#noi-dung-chinh"
+  - generic [ref=f16e4]:
+    - generic "Menu quản trị" [ref=f16e6]:
+      - navigation [ref=f16e8]:
+        - link " BadStore Trang quản trị" [ref=f16e9] [cursor=pointer]:
+          - /url: /admin
+          - generic [ref=f16e10]: 
+          - generic [ref=f16e12]:
+            - text: BadStore
+            - generic [ref=f16e13]: Trang quản trị
+        - paragraph [ref=f16e14]: Bán hàng
+        - list [ref=f16e15]:
+          - listitem [ref=f16e16]:
+            - link " Tổng quan" [ref=f16e17] [cursor=pointer]:
+              - /url: /admin
+              - generic [ref=f16e18]: 
+              - text: Tổng quan
+          - listitem [ref=f16e19]:
+            - link " Bán hàng tại quầy" [ref=f16e20] [cursor=pointer]:
+              - /url: /admin/ban-hang
+              - generic [ref=f16e21]: 
+              - text: Bán hàng tại quầy
+          - listitem [ref=f16e22]:
+            - link " Đơn hàng" [ref=f16e23] [cursor=pointer]:
+              - /url: /admin/don-hang
+              - generic [ref=f16e24]: 
+              - text: Đơn hàng
+        - paragraph [ref=f16e25]: Hàng hoá & khuyến mãi
+        - list [ref=f16e26]:
+          - listitem [ref=f16e27]:
+            - link " Sản phẩm & biến thể" [ref=f16e28] [cursor=pointer]:
+              - /url: /admin/san-pham
+              - generic [ref=f16e29]: 
+              - text: Sản phẩm & biến thể
+          - listitem [ref=f16e30]:
+            - link " Voucher" [ref=f16e31] [cursor=pointer]:
+              - /url: /admin/voucher
+              - generic [ref=f16e32]: 
+              - text: Voucher
+        - generic [ref=f16e33]:
+          - link " Xem cửa hàng" [ref=f16e34] [cursor=pointer]:
+            - /url: /
+            - generic [ref=f16e35]: 
+            - text: Xem cửa hàng
+          - paragraph [ref=f16e36]:
+            - generic [ref=f16e37]: 
+            - text: Đổi trạng thái đơn sẽ trừ/cộng kho ngay.
+    - main [ref=f16e38]:
+      - generic [ref=f16e39]:
+        - text: 
+        - generic [ref=f16e40]:
+          - generic [ref=f16e41]: 
+          - text: Khu quản trị BadStore
+        - generic [ref=f16e42]:
+          - link " Xem cửa hàng" [ref=f16e43] [cursor=pointer]:
+            - /url: /
+            - generic [ref=f16e44]: 
+            - text: Xem cửa hàng
+          - generic [ref=f16e45]:
+            - generic [ref=f16e46]: 
+            - generic [ref=f16e47]: admin@badstore.local
+          - button " Đăng xuất" [ref=f16e49] [cursor=pointer]:
+            - generic [ref=f16e50]: 
+            - text: Đăng xuất
+      - generic [ref=f16e51]:
+        - generic [ref=f16e52]:
+          - heading " Quản lý voucher" [level=1] [ref=f16e53]:
+            - generic [ref=f16e54]: 
+            - text: Quản lý voucher
+          - generic [ref=f16e55]:
+            - generic [ref=f16e56]: Tổng 1 voucher
+            - link " Tạo voucher" [ref=f16e57] [cursor=pointer]:
+              - /url: /admin/voucher/tao-moi
+              - generic [ref=f16e58]: 
+              - text: Tạo voucher
+        - generic [ref=f16e60]:
+          - generic [ref=f16e61]:
+            - generic [ref=f16e62]: Trạng thái
+            - combobox "Trạng thái" [ref=f16e63]:
+              - option "-- Tất cả --" [selected]
+              - option "Đang áp dụng"
+              - option "Ngừng áp dụng"
+          - generic [ref=f16e64]:
+            - generic [ref=f16e65]: Tìm theo mã / tên chương trình
+            - textbox "Tìm theo mã / tên chương trình" [ref=f16e66]:
+              - /placeholder: "Ví dụ: GIAM10"
+          - generic [ref=f16e67]:
+            - button " Lọc" [ref=f16e68] [cursor=pointer]:
+              - generic [ref=f16e69]: 
+              - text: Lọc
+            - link "Xoá lọc" [ref=f16e70] [cursor=pointer]:
+              - /url: /admin/voucher
+        - table [ref=f16e73]:
+          - rowgroup [ref=f16e74]:
+            - row [ref=f16e75]:
+              - columnheader "Mã / Chương trình" [ref=f16e76]
+              - columnheader "Giảm giá" [ref=f16e77]
+              - columnheader "Điều kiện" [ref=f16e78]
+              - columnheader "Lượt dùng" [ref=f16e79]
+              - columnheader "Thời gian áp dụng" [ref=f16e80]
+              - columnheader "Trạng thái" [ref=f16e81]
+              - columnheader "Thao tác" [ref=f16e82]
+          - rowgroup [ref=f16e83]:
+            - row [ref=f16e84]:
+              - cell "GIAM10 claude code free" [ref=f16e85]:
+                - generic [ref=f16e86]: GIAM10
+                - generic [ref=f16e87]: claude code free
+              - cell "Giảm 99.97% (tối đa 34.434 ₫)" [ref=f16e88]
+              - cell "Đơn từ 322 ₫ Tối đa 34.434 ₫" [ref=f16e89]:
+                - generic [ref=f16e90]:
+                  - text: Đơn từ
+                  - generic [ref=f16e91]: 322 ₫
+                - generic [ref=f16e92]:
+                  - text: Tối đa
+                  - generic [ref=f16e93]: 34.434 ₫
+              - cell "0/10" [ref=f16e94]
+              - cell "16/10/2026 01:35 → 15/11/2026 01:35" [ref=f16e95]:
+                - generic [ref=f16e96]: 16/10/2026 01:35
+                - generic [ref=f16e97]:
+                  - text: →
+                  - generic [ref=f16e98]: 15/11/2026 01:35
+              - cell "Đang áp dụng" [ref=f16e99]
+              - cell [ref=f16e101]:
+                - generic [ref=f16e102]:
+                  - link "Sửa voucher GIAM10" [ref=f16e103] [cursor=pointer]:
+                    - /url: /admin/voucher/83/sua
+                    - generic [ref=f16e104]: 
+                    - text: Sửa
+                  - button "Đổi trạng thái voucher GIAM10" [ref=f16e106] [cursor=pointer]:
+                    - generic [ref=f16e107]: 
+                    - text: Ngừng
+  - text: 

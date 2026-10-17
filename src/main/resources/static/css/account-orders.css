@@ -1,0 +1,226 @@
+/* =========================================================================
+   BadStore – CSS riêng cho nhóm trang tài khoản & đơn hàng của khách
+   Dùng cho: auth/login.html, auth/register.html, shop/orders.html, shop/order-detail.html
+
+   – Nạp ngay trong nội dung trang (sau theme.css trong layout/base.html) nên ghi đè
+     được các quy tắc dùng chung mà không phải sửa theme.css.
+   – MỌI rule đều scope trong .auth-page / .orders-page / .order-detail-page ⇒ không
+     ảnh hưởng trang khác (cùng cách làm với product-detail.css).
+   – Màu – bo góc – bóng lấy từ biến của theme.css (--bad-*, --bs-*), không hard-code.
+   ========================================================================= */
+
+/* ============ 1. Đăng nhập / Đăng ký ============ */
+/* Khối giới thiệu đặt cạnh form: nền xanh thương hiệu, chữ trắng */
+.auth-page .auth-aside {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 2rem;
+    height: 100%;
+    padding: 2.25rem;
+    border-radius: var(--bs-border-radius-lg);
+    background: linear-gradient(140deg, var(--bad-primary-dark) 0%, var(--bs-primary) 100%);
+    color: #fff;
+    box-shadow: var(--bad-card-shadow);
+}
+
+/* Nhãn thương hiệu nhỏ phía trên tiêu đề khối giới thiệu */
+.auth-page .auth-brand {
+    display: inline-flex;
+    align-items: center;
+    gap: .5rem;
+    padding: .35rem .85rem;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, .18);
+    font-weight: 600;
+}
+
+.auth-page .auth-benefits {
+    display: grid;
+    gap: 1rem;
+}
+
+.auth-page .auth-benefits li {
+    display: flex;
+    align-items: flex-start;
+    gap: .75rem;
+}
+
+.auth-page .auth-benefit-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex: 0 0 2.25rem;
+    width: 2.25rem;
+    height: 2.25rem;
+    border-radius: 12px;
+    background: rgba(255, 255, 255, .18);
+    font-size: 1.1rem;
+}
+
+/* Vòng tròn icon ở đầu thẻ form */
+.auth-page .auth-icon-badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 3rem;
+    height: 3rem;
+    border-radius: 1rem;
+    background: var(--bs-primary-bg-subtle);
+    color: var(--bs-primary);
+    font-size: 1.4rem;
+}
+
+/* Ô nhập kèm icon: nền trắng, icon xám để chữ trong ô vẫn là điểm nhấn */
+.auth-page .input-group-text {
+    background: var(--bad-surface);
+    color: var(--bad-muted);
+}
+
+/* Tiêu đề nhóm trường trong form đăng ký */
+.auth-page .auth-section-title {
+    display: flex;
+    align-items: center;
+    gap: .5rem;
+    margin-bottom: .85rem;
+    color: var(--bad-muted);
+    font-size: .75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: .04em;
+}
+
+/* ============ 2. Đơn hàng của tôi ============ */
+/* Thẻ đơn: nổi nhẹ khi rê chuột (không dùng .shadow-sm để giữ được hiệu ứng hover) */
+.orders-page .order-card {
+    background: var(--bad-surface);
+    border-radius: var(--bs-border-radius-lg);
+    box-shadow: var(--bad-card-shadow);
+    transition: transform var(--bad-transition), box-shadow var(--bad-transition);
+}
+
+.orders-page .order-card:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--bad-card-shadow-hover);
+}
+
+/* Tổng tiền của đơn: to hơn giá trên thẻ sản phẩm để dễ so sánh giữa các đơn */
+.orders-page .order-total {
+    font-size: 1.25rem;
+    line-height: 1.2;
+}
+
+/* ============ 3. Chi tiết đơn: tiến trình 4 bước ============ */
+/* Chờ xác nhận → Đã xác nhận → Đang giao hàng → Giao thành công */
+.order-detail-page .order-steps {
+    display: flex;
+    padding: 0;
+    margin: 0;
+    list-style: none;
+}
+
+.order-detail-page .order-step {
+    position: relative;
+    flex: 1 1 0;
+    min-width: 0;
+    padding: 0 .3rem;
+    text-align: center;
+    font-size: .8rem;
+    color: var(--bad-muted);
+}
+
+/* Chặng nối giữa hai bước: nửa trái + nửa phải để màu tiến trình khớp theo từng bước */
+.order-detail-page .order-step::before,
+.order-detail-page .order-step::after {
+    content: "";
+    position: absolute;
+    top: 1.1rem;
+    height: 2px;
+    background: var(--bad-border);
+}
+
+.order-detail-page .order-step::before { left: 0; right: 50%; }
+.order-detail-page .order-step::after { left: 50%; right: 0; }
+.order-detail-page .order-step:first-child::before,
+.order-detail-page .order-step:last-child::after { display: none; }
+
+/* Bước đã đi qua: tô xanh cả bước và chặng nối phía trước */
+.order-detail-page .order-step.step-done::before,
+.order-detail-page .order-step.step-done::after,
+.order-detail-page .order-step.step-current::before { background: var(--bs-primary); }
+
+.order-detail-page .step-dot {
+    position: relative;
+    z-index: 1;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 2.25rem;
+    height: 2.25rem;
+    margin-bottom: .4rem;
+    border-radius: 50%;
+    border: 2px solid var(--bad-border);
+    background: var(--bad-surface);
+    color: var(--bad-muted);
+    font-size: .95rem;
+}
+
+.order-detail-page .step-done .step-dot,
+.order-detail-page .step-current .step-dot {
+    border-color: var(--bs-primary);
+    background: var(--bs-primary);
+    color: #fff;
+}
+
+.order-detail-page .step-current .step-dot {
+    box-shadow: 0 0 0 .3rem rgba(var(--bs-primary-rgb), .15);
+}
+
+.order-detail-page .step-done .step-label { color: var(--bs-body-color); }
+.order-detail-page .step-current .step-label { color: var(--bs-body-color); font-weight: 600; }
+
+/* Mốc mới nhất của timeline: viên to, xanh đậm để thấy ngay trạng thái hiện tại */
+.order-detail-page .timeline-current::before {
+    left: -1.1rem;
+    top: .72rem;
+    width: 12px;
+    height: 12px;
+    background: var(--bad-primary-dark);
+    box-shadow: 0 0 0 3px var(--bs-primary-bg-subtle);
+}
+
+/* Nhãn trạng thái cỡ lớn ở đầu trang chi tiết đơn */
+.order-detail-page .status-pill-lg {
+    padding: .35rem .9rem;
+    font-size: .9rem;
+}
+
+/* Ảnh sản phẩm trong bảng hàng hoá của đơn */
+.order-detail-page .order-thumb {
+    width: 56px;
+    height: 56px;
+    object-fit: contain;
+    background: #fff;
+}
+
+/* ============ 4. Điện thoại nhỏ (375px) ============ */
+@media (max-width: 575.98px) {
+    .auth-page .auth-aside {
+        padding: 1.5rem;
+    }
+
+    .order-detail-page .order-step {
+        font-size: .7rem;
+    }
+
+    .order-detail-page .step-dot {
+        width: 1.9rem;
+        height: 1.9rem;
+        font-size: .8rem;
+    }
+
+    .order-detail-page .order-step::before,
+    .order-detail-page .order-step::after {
+        top: .92rem;
+    }
+}

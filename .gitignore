@@ -62,3 +62,9 @@ desktop.ini
 # File không cần thiết khác
 # ============================================================
 HELP.md
+# Build / IDE
+.mvn/wrapper/maven-wrapper.jar
+# Secrets & local config
+src/main/resources/application-local.yml
+# Uploads & logs
+# OS

@@ -10,8 +10,8 @@
 
 <th:block layout:fragment="content">
 
-    <div class="d-flex flex-wrap justify-content-between align-items-center gap-2 mb-3">
-        <h1 class="h4 mb-0"><i class="bi bi-receipt text-primary"></i> Quản lý đơn hàng</h1>
+    <div class="page-head">
+        <h1 class="page-title"><i class="bi bi-receipt"></i> Quản lý đơn hàng</h1>
         <div class="d-flex align-items-center gap-2">
             <span class="text-muted small" th:text="|Tổng ${orders.totalElements} đơn phù hợp|">Tổng 0 đơn</span>
             <a class="btn btn-sm btn-primary" th:href="@{/admin/don-hang/tao-don}">
@@ -21,7 +21,7 @@
     </div>
 
     <!-- Lọc trạng thái + tìm kiếm mã đơn / SĐT / email -->
-    <form class="card border-0 shadow-sm mb-3" method="get" th:action="@{/admin/don-hang}">
+    <form class="card-soft mb-3" method="get" th:action="@{/admin/don-hang}">
         <div class="card-body row g-2 align-items-end">
             <div class="col-sm-6 col-lg-3">
                 <label class="form-label small" for="status">Trạng thái</label>
@@ -43,10 +43,10 @@
         </div>
     </form>
 
-    <div class="card border-0 shadow-sm">
+    <div class="card-soft">
         <div class="table-responsive">
-            <table class="table align-middle mb-0">
-                <thead class="table-light">
+            <table class="table table-hover align-middle mb-0">
+                <thead>
                 <tr>
                     <th scope="col">Mã đơn</th>
                     <th scope="col">Khách</th>
@@ -63,9 +63,9 @@
                     <td>
                         <a class="fw-semibold text-decoration-none" th:href="@{/admin/don-hang/{id}(id=${row.id})}"
                            th:text="${row.orderCode}">BS000</a>
-                        <span class="badge text-bg-light d-block" th:if="${row.orderSource.name() == 'MANUAL'}">
-                            Tạo thủ công
-                        </span>
+                        <div class="mt-1" th:if="${row.orderSource.name() == 'MANUAL'}">
+                            <span class="badge badge-brand">Tạo thủ công</span>
+                        </div>
                     </td>
                     <td>
                         <div th:text="${row.customerLabel}">khach@example.com</div>
@@ -75,32 +75,41 @@
                         th:insert="~{fragments/common :: dateTime(${row.createdAt})}">00/00/0000</td>
                     <td class="text-center" th:text="${row.itemQuantity}">0</td>
                     <td class="text-end fw-semibold" th:insert="~{fragments/common :: money(${row.totalAmount})}">0 ₫</td>
-                    <td><span class="badge" th:classappend="${row.statusBadgeClass}"
-                              th:text="${row.orderStatus.label}">Trạng thái</span></td>
+                    <td>
+                        <span class="status-pill" th:classappend="|status-${row.orderStatus.name()}|"
+                              th:text="${row.orderStatus.label}">Trạng thái</span>
+                    </td>
                     <td>
                         <div class="small" th:text="${row.paymentMethodLabel}">COD</div>
-                        <span class="badge" th:classappend="${row.paymentBadgeClass}"
+                        <span class="status-pill"
+                              th:classappend="${row.paymentStatus != null} ? |status-${row.paymentStatus.name()}| : 'status-INACTIVE'"
                               th:text="${row.paymentStatusLabel}">Chờ</span>
                     </td>
                     <td class="text-end">
                         <div class="d-flex justify-content-end gap-1">
                             <form th:if="${row.orderStatus.name() == 'PENDING'}"
                                   th:action="@{/admin/don-hang/{id}/xac-nhan(id=${row.id})}" method="post"
-                                  data-confirm="Xác nhận đơn này và TRỪ KHO ngay?">
-                                <button class="btn btn-sm btn-success" type="submit">
-                                    <i class="bi bi-check2-circle"></i> Xác nhận
+                                  data-confirm="Xác nhận đơn này và TRỪ KHO ngay?" class="d-inline">
+                                <button class="btn btn-sm btn-success" type="submit"
+                                        th:attr="aria-label=|Xác nhận đơn ${row.orderCode}|" title="Xác nhận đơn (trừ kho)">
+                                    <i class="bi bi-check2-circle"></i>
+                                    <span class="d-none d-xl-inline">Xác nhận</span>
                                 </button>
                             </form>
-                            <a class="btn btn-sm btn-outline-primary" th:href="@{/admin/don-hang/{id}(id=${row.id})}">
-                                Chi tiết
+                            <a class="btn btn-sm btn-outline-primary" th:href="@{/admin/don-hang/{id}(id=${row.id})}"
+                               th:attr="aria-label=|Xem chi tiết đơn ${row.orderCode}|" title="Chi tiết đơn">
+                                <i class="bi bi-eye"></i>
+                                <span class="d-none d-xl-inline">Chi tiết</span>
                             </a>
                         </div>
                     </td>
                 </tr>
                 <tr th:if="${orders.empty}">
-                    <td colspan="8" class="text-center text-muted py-5">
-                        <i class="bi bi-inbox display-6 d-block mb-2"></i>
-                        Không có đơn hàng nào phù hợp bộ lọc.
+                    <td colspan="8">
+                        <div class="empty-state">
+                            <i class="bi bi-inbox"></i>
+                            <p>Không có đơn hàng nào phù hợp bộ lọc.</p>
+                        </div>
                     </td>
                 </tr>
                 </tbody>
