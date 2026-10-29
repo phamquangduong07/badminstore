@@ -231,9 +231,12 @@
                             Mã giao dịch: <span th:text="${detail.transactionCode}">FT000</span>
                         </div>
                         <div class="small text-muted mt-1" th:if="${detail.paymentMethod != null and detail.paymentMethod.name() == 'BANK_TRANSFER'
-                                and detail.paymentStatus.name() == 'PENDING'}">
+                                and detail.paymentStatus.name() == 'PENDING' and paymentQr == null}">
                             BadStore sẽ liên hệ xác nhận và gửi hàng ngay sau khi nhận được tiền.
                         </div>
+                        <th:block th:if="${paymentQr != null}">
+                            <div th:replace="~{fragments/payment-qr :: qr(${paymentQr})}"></div>
+                        </th:block>
                     </div>
                 </div>
 

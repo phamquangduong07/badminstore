@@ -38,3 +38,12 @@ app:
   admin:                          # DataInitializer tạo ADMIN lần đầu (BCrypt do Spring sinh)
     email: ${ADMIN_EMAIL:admin@badstore.local}
     password: ${ADMIN_PASSWORD:}
+
+  payment:
+    bank:                           # Tài khoản nhận chuyển khoản → mã QR VietQR (DỮ LIỆU DEMO, đổi khi chạy thật)
+      enabled: ${BANK_QR_ENABLED:true}
+      bank-code: ${BANK_CODE:MB}
+      bank-name: ${BANK_NAME:MB Bank (Ngân hàng Quân đội)}
+      account-number: ${BANK_ACCOUNT_NUMBER:0123456789}
+      account-name: ${BANK_ACCOUNT_NAME:CONG TY BADSTORE DEMO}
+      template: compact2

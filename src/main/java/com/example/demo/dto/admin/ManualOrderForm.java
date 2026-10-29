@@ -36,6 +36,9 @@ public class ManualOrderForm {
 
     private boolean confirmNow = true;
 
+    /** Mã đơn cấp trước (POS in QR chuyển khoản trước khi tạo đơn); trống/không hợp lệ ⇒ server tự sinh. */
+    private String orderCode;
+
     /** Các dòng hàng; khởi tạo 1 dòng trống để trang form luôn có sẵn ô nhập. */
     private List<ManualOrderLineForm> lines = new ArrayList<>(List.of(new ManualOrderLineForm()));
 }

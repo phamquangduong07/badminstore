@@ -1,16 +1,17 @@
-# Cấu hình chạy ở máy cá nhân – file này ĐÃ được .gitignore, KHÔNG commit lên Git.
+# Cấu hình chạy ở máy cá nhân.
 spring:
   datasource:
     url: jdbc:sqlserver://localhost:1433;databaseName=BadminStore;encrypt=true;trustServerCertificate=true
-    username: test
+    username: sa
     password: 123456
 
 app:
   admin:
     email: admin@badstore.local
     password: Admin@123
-
-
-
-
-    
+  payment:
+    bank:
+      bank-code: TCB                   # mã ngân hàng của bạn (bảng bên dưới)
+      bank-name: Techcombank
+      account-number: 19037665605010       # số tài khoản thật của bạn
+      account-name: NGUYEN Mau Nam Duong      # tên chủ tài khoản, in hoa, không dấu

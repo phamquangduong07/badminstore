@@ -38,6 +38,7 @@
         cashPanel: document.querySelector('[data-pos-cash-panel]'),
         transferPanel: document.querySelector('[data-pos-transfer-panel]'),
         cashReceived: document.getElementById('posCashReceived'),
+        orderCode: document.getElementById('posOrderCode'),
         change: document.querySelector('[data-pos-change] strong')
     };
 
@@ -357,6 +358,7 @@
             state.total = 0;
             renderTotals();
             renderVoucher(null, null);
+            refreshQr();
             return;
         }
         priceTimer = setTimeout(function () {
@@ -393,6 +395,7 @@
         state.total = Number(result.total || 0);
         renderLines();
         renderVoucher(result.voucherDescription, result.voucherError);
+        refreshQr();
     }
 
     function renderVoucher(description, error) {
@@ -436,6 +439,128 @@
             refs.transferPanel.hidden = cash;
         }
         updateChange();
+        refreshQr();
+    }
+
+    // ------------------------------------------------------------------ mã QR chuyển khoản (VietQR)
+    // Server dựng QR từ giá DB + voucher và cấp sẵn mã đơn (nội dung chuyển khoản); khi bán, server
+    // kiểm tra lại mã đơn nên trình duyệt không thể ép số tiền hay mã đơn tuỳ ý.
+
+    var URL_QR = '/admin/ban-hang/ma-qr';
+    var qrTimer = null;
+    var qrSeq = 0;
+    var qrState = { ready: false, amount: null, qr: null };
+
+    function isTransfer() {
+        var checked = form.querySelector('input[name="paymentMethod"]:checked');
+        return !!checked && checked.value === 'BANK_TRANSFER';
+    }
+
+    function qrRef(name) {
+        return document.querySelector('[data-pos-qr-' + name + ']');
+    }
+
+    function showQrMessage(text) {
+        qrState = { ready: false, amount: null, qr: null };
+        var message = qrRef('message');
+        var content = qrRef('content');
+        if (message) {
+            message.hidden = false;
+            message.textContent = text;
+        }
+        if (content) {
+            content.hidden = true;
+        }
+    }
+
+    function applyQr(result) {
+        if (!result || !result.available || !result.qr) {
+            showQrMessage((result && result.message) || 'Chưa tạo được mã QR.');
+            return;
+        }
+        var qr = result.qr;
+        qrState = { ready: true, amount: Number(result.amount), qr: qr };
+        if (refs.orderCode) {
+            refs.orderCode.value = result.orderCode || '';
+        }
+        var img = qrRef('img');
+        if (img) {
+            img.dataset.fallback = '';
+            img.src = qr.qrImageUrl;
+        }
+        var amount = qrRef('amount');
+        if (amount) {
+            amount.textContent = money(Number(result.amount));
+        }
+        var code = qrRef('code');
+        if (code) {
+            code.textContent = qr.transferContent;
+        }
+        var bank = qrRef('bank');
+        if (bank) {
+            bank.textContent = qr.bankName + ' · ' + qr.accountNumber + ' · ' + qr.accountName;
+        }
+        var message = qrRef('message');
+        var content = qrRef('content');
+        if (message) {
+            message.hidden = true;
+        }
+        if (content) {
+            content.hidden = false;
+        }
+    }
+
+    /** Dựng lại QR theo hoá đơn hiện tại (chờ 250ms; bỏ qua kết quả cũ nếu đã có lần gọi mới hơn). */
+    function refreshQr() {
+        if (qrTimer) {
+            clearTimeout(qrTimer);
+        }
+        if (!isTransfer()) {
+            return;
+        }
+        if (!state.lines.length) {
+            showQrMessage('Hãy thêm sản phẩm để tạo mã QR chuyển khoản.');
+            return;
+        }
+        var seq = ++qrSeq;
+        qrTimer = setTimeout(function () {
+            postJson(URL_QR, {
+                voucherCode: refs.voucher ? refs.voucher.value.trim() : '',
+                orderCode: refs.orderCode ? refs.orderCode.value : '',
+                lines: state.lines.map(function (line) {
+                    return { sku: line.sku, quantity: line.quantity };
+                })
+            }).then(function (result) {
+                if (seq === qrSeq) {
+                    applyQr(result);
+                }
+            }).catch(function () {
+                if (seq === qrSeq) {
+                    showQrMessage('Không kết nối được máy chủ để tạo mã QR.');
+                }
+            });
+        }, 250);
+    }
+
+    /** Phóng to QR để khách quét bằng điện thoại. */
+    function zoomQr() {
+        if (!qrState.ready || !window.Swal) {
+            return;
+        }
+        Swal.fire({
+            title: 'Quét mã để chuyển khoản',
+            html: '<div class="fw-bold text-danger fs-4">' + escapeHtml(money(qrState.amount)) + '</div>'
+                + '<div class="small text-muted">Nội dung: ' + escapeHtml(qrState.qr.transferContent) + '</div>',
+            imageUrl: qrState.qr.qrImageUrl,
+            imageWidth: 340,
+            imageAlt: 'Mã QR chuyển khoản',
+            confirmButtonText: 'Đóng'
+        });
+    }
+
+    var zoomButton = qrRef('zoom');
+    if (zoomButton) {
+        zoomButton.addEventListener('click', zoomQr);
     }
 
     // ------------------------------------------------------------------ khách hàng
@@ -561,6 +686,15 @@
             var received = cashReceived();
             if (received != null && received > 0 && received < state.total) {
                 problems.push('Tiền khách đưa (' + money(received) + ') chưa đủ ' + money(state.total) + '.');
+            }
+        }
+        if (isTransfer()) {
+            var confirmBox = document.getElementById('posTransferConfirmed');
+            if (qrState.ready && qrState.amount !== state.total) {
+                problems.push('Mã QR chưa cập nhật theo hoá đơn mới – vui lòng chờ mã QR làm mới rồi cho khách quét lại.');
+            }
+            if (!confirmBox || !confirmBox.checked) {
+                problems.push('Hãy chờ khách chuyển khoản xong và tích "Đã nhận được tiền chuyển khoản" trước khi thu tiền.');
             }
         }
         if (problems.length) {

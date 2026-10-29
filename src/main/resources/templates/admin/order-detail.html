@@ -156,6 +156,10 @@
                         Mã giao dịch: <span th:text="${detail.transactionCode}">FT000</span>
                     </div>
 
+                    <th:block th:if="${paymentQr != null}">
+                        <div th:replace="~{fragments/payment-qr :: qr(${paymentQr})}"></div>
+                    </th:block>
+
                     <!-- Xác nhận đã nhận tiền: chỉ hiện khi còn chờ và đơn chưa kết thúc -->
                     <form th:if="${detail.paymentStatus != null and detail.paymentStatus.name() == 'PENDING'
                             and !detail.order.orderStatus.final}"
