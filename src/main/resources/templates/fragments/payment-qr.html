@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org">
+<body>
+
+<!--
+  Khối "Chuyển khoản bằng mã QR" (VietQR). qr = PaymentQrView do server dựng (số tiền + nội dung = mã đơn).
+  Dùng ở trang đơn của khách và trang đơn của admin. Nút .btn-copy được app.js xử lý (data-copy).
+-->
+<div th:fragment="qr(qr)" class="payment-qr border rounded-3 p-3 mt-3 bg-light" data-payment-qr>
+    <div class="fw-semibold mb-2"><i class="bi bi-qr-code" aria-hidden="true"></i> Quét mã QR để chuyển khoản</div>
+    <div class="text-center mb-3">
+        <img th:src="${qr.qrImageUrl}" alt="Mã QR chuyển khoản ngân hàng" class="img-fluid rounded bg-white p-2 border"
+             style="max-width: 260px" loading="lazy" referrerpolicy="no-referrer">
+    </div>
+    <dl class="row small mb-2">
+        <dt class="col-5 text-muted fw-normal">Ngân hàng</dt>
+        <dd class="col-7 mb-1" th:text="${qr.bankName}">MB Bank</dd>
+
+        <dt class="col-5 text-muted fw-normal">Số tài khoản</dt>
+        <dd class="col-7 mb-1">
+            <span class="fw-semibold" th:text="${qr.accountNumber}">0123456789</span>
+            <button type="button" class="btn btn-link btn-sm p-0 ms-1 btn-copy" th:attr="data-copy=${qr.accountNumber}"
+                    title="Sao chép số tài khoản"><i class="bi bi-clipboard" aria-hidden="true"></i></button>
+        </dd>
+
+        <dt class="col-5 text-muted fw-normal">Chủ tài khoản</dt>
+        <dd class="col-7 mb-1" th:text="${qr.accountName}">CONG TY BADSTORE</dd>
+
+        <dt class="col-5 text-muted fw-normal">Số tiền</dt>
+        <dd class="col-7 mb-1">
+            <span class="fw-bold text-danger"
+                  th:text="${#numbers.formatDecimal(qr.amount, 0, 'POINT', 0, 'COMMA')} + ' ₫'">0 ₫</span>
+            <button type="button" class="btn btn-link btn-sm p-0 ms-1 btn-copy" th:attr="data-copy=${qr.amount.toPlainString()}"
+                    title="Sao chép số tiền"><i class="bi bi-clipboard" aria-hidden="true"></i></button>
+        </dd>
+
+        <dt class="col-5 text-muted fw-normal">Nội dung</dt>
+        <dd class="col-7 mb-0">
+            <span class="fw-semibold" th:text="${qr.transferContent}">BS260101000000001</span>
+            <button type="button" class="btn btn-link btn-sm p-0 ms-1 btn-copy" th:attr="data-copy=${qr.transferContent}"
+                    title="Sao chép nội dung"><i class="bi bi-clipboard" aria-hidden="true"></i></button>
+        </dd>
+    </dl>
+    <p class="small text-muted mb-0">
+        Hãy chuyển <strong>đúng số tiền</strong> và <strong>đúng nội dung</strong> để BadStore xác nhận nhanh.
+        Đơn được xử lý sau khi cửa hàng nhận được tiền.
+    </p>
+</div>
+</body>
+</html>

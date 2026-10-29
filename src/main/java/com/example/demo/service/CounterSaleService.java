@@ -166,6 +166,7 @@ public class CounterSaleService {
         manual.setShippingFee(BigDecimal.ZERO);
         manual.setVoucherCode(form.getVoucherCode());
         manual.setConfirmNow(true);
+        manual.setOrderCode(paymentMethod == PaymentMethod.BANK_TRANSFER ? form.getOrderCode() : null);
         manual.setNote(buildNote(form, customer));
 
         Order order = orderService.createManualOrder(manual, adminUserId);

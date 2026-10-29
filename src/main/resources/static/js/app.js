@@ -46,3 +46,29 @@
     document.documentElement.classList.add('no-aos');
   }
 })();
+
+/* Nút sao chép (khối chuyển khoản QR): <button class="btn-copy" data-copy="giá trị"> */
+document.addEventListener('click', function (event) {
+    var button = event.target.closest ? event.target.closest('.btn-copy') : null;
+    if (!button) {
+        return;
+    }
+    var text = button.getAttribute('data-copy') || '';
+    var done = function () {
+        var icon = button.querySelector('i');
+        if (icon) {
+            icon.className = 'bi bi-clipboard-check text-success';
+            setTimeout(function () { icon.className = 'bi bi-clipboard'; }, 1500);
+        }
+    };
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(text).then(done);
+    } else {
+        var area = document.createElement('textarea');
+        area.value = text;
+        document.body.appendChild(area);
+        area.select();
+        try { document.execCommand('copy'); done(); } catch (e) { /* bỏ qua */ }
+        document.body.removeChild(area);
+    }
+});

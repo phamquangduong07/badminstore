@@ -64,6 +64,7 @@ app:
 
   admin:                                 # DataInitializer: tạo ADMIN lần đầu (BCrypt)
     email: ${ADMIN_EMAIL:admin@badstore.local}
+<<<<<<< HEAD
     password: ${ADMIN_PASSWORD:}         # trống ⇒ không tạo tài khoản nào
 
   shop:                                  # ShopProperties: phiếu bán tại quầy + chân trang
@@ -99,3 +100,15 @@ app:
     cache-ttl-seconds: 600               # cache Tỉnh–Huyện–Xã & phí ship 10 phút
     sync-enabled: ${GHN_SYNC_ENABLED:false}      # scheduler tự đồng bộ trạng thái vận đơn
     sync-delay-ms: 600000
+=======
+    password: ${ADMIN_PASSWORD:}
+
+  payment:
+    bank:                           # Tài khoản nhận chuyển khoản → mã QR VietQR (DỮ LIỆU DEMO, đổi khi chạy thật)
+      enabled: ${BANK_QR_ENABLED:true}
+      bank-code: ${BANK_CODE:MB}
+      bank-name: ${BANK_NAME:MB Bank (Ngân hàng Quân đội)}
+      account-number: ${BANK_ACCOUNT_NUMBER:0123456789}
+      account-name: ${BANK_ACCOUNT_NAME:CONG TY BADSTORE DEMO}
+      template: compact2
+>>>>>>> 66d042210404905a2dc23dda980f069c783b8120

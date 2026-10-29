@@ -20,6 +20,7 @@ import com.example.demo.service.CustomUserDetails;
 import com.example.demo.service.GhnAddressService;
 import com.example.demo.service.GhnShippingService;
 import com.example.demo.service.OrderService;
+import com.example.demo.service.QrPaymentService;
 import com.example.demo.util.Money;
 import com.example.demo.util.Pagination;
 import java.math.BigDecimal;
@@ -59,6 +60,7 @@ public class AdminOrderController {
     private final UserRepository userRepository;
     private final GhnShippingService ghnShippingService;
     private final GhnAddressService ghnAddressService;
+    private final QrPaymentService qrPaymentService;
 
     @GetMapping
     public String list(@RequestParam(name = "status", required = false) OrderStatus status,
@@ -83,6 +85,7 @@ public class AdminOrderController {
     public String detail(@PathVariable("id") Integer id, Model model) {
         var detail = orderService.adminOrderDetail(id);
         model.addAttribute("detail", detail);
+        qrPaymentService.forOrder(detail).ifPresent(qr -> model.addAttribute("paymentQr", qr));
         // Chỉ hiện các trạng thái mà máy trạng thái cho phép chuyển tới từ trạng thái hiện tại
         model.addAttribute("nextStatuses", detail.getOrder().getOrderStatus().nextStatuses());
         model.addAttribute("ghnEnabled", ghnAddressService.isAvailable());

@@ -42,4 +42,7 @@ public class CounterSaleForm {
     private String voucherCode;
 
     private String note;
+
+    /** Mã đơn đã cấp cho mã QR chuyển khoản (POS gửi lại); server kiểm tra lại trước khi dùng. */
+    private String orderCode;
 }

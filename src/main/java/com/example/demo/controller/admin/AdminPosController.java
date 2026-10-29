@@ -5,12 +5,15 @@ import com.example.demo.dto.admin.CounterSaleResult;
 import com.example.demo.dto.admin.CustomerLookupView;
 import com.example.demo.dto.admin.PosPriceRequest;
 import com.example.demo.dto.admin.PosPriceResult;
+import com.example.demo.dto.admin.PosQrRequest;
+import com.example.demo.dto.admin.PosQrResult;
 import com.example.demo.dto.admin.PosProductView;
 import com.example.demo.enums.PaymentMethod;
 import com.example.demo.exception.BusinessException;
 import com.example.demo.service.CounterSaleService;
 import com.example.demo.service.CustomUserDetails;
 import com.example.demo.service.OrderService;
+import com.example.demo.service.PosQrService;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -47,6 +50,7 @@ public class AdminPosController {
 
     private final CounterSaleService counterSaleService;
     private final OrderService orderService;
+    private final PosQrService posQrService;
 
     /** Màn hình quầy: ô tìm sản phẩm + hoá đơn đang lập. */
     @GetMapping
@@ -77,6 +81,13 @@ public class AdminPosController {
     @ResponseBody
     public PosPriceResult price(@RequestBody PosPriceRequest request) {
         return counterSaleService.priceCart(request);
+    }
+
+    /** Dựng mã QR chuyển khoản (VietQR) cho hoá đơn đang lập; số tiền do server tính lại. */
+    @PostMapping("/ma-qr")
+    @ResponseBody
+    public PosQrResult qr(@RequestBody PosQrRequest request) {
+        return posQrService.qrFor(request);
     }
 
     /** Chốt hoá đơn: tạo đơn MANUAL + xác nhận + trừ kho + ghi nhận thanh toán. */

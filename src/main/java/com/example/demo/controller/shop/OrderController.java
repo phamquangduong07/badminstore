@@ -3,6 +3,7 @@ package com.example.demo.controller.shop;
 import com.example.demo.dto.shop.OrderSummaryView;
 import com.example.demo.service.CustomUserDetails;
 import com.example.demo.service.OrderService;
+import com.example.demo.service.QrPaymentService;
 import java.util.ArrayList;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
@@ -30,6 +31,7 @@ public class OrderController {
     private static final int PAGE_LINK_WINDOW = 5;
 
     private final OrderService orderService;
+    private final QrPaymentService qrPaymentService;
 
     @GetMapping
     public String list(@AuthenticationPrincipal CustomUserDetails currentUser,
@@ -52,7 +54,9 @@ public class OrderController {
     public String detail(@AuthenticationPrincipal CustomUserDetails currentUser,
                          @PathVariable("id") Integer id,
                          Model model) {
-        model.addAttribute("detail", orderService.myOrderDetail(currentUser.getUserId(), id));
+        var detail = orderService.myOrderDetail(currentUser.getUserId(), id);
+        model.addAttribute("detail", detail);
+        qrPaymentService.forOrder(detail).ifPresent(qr -> model.addAttribute("paymentQr", qr));
         return "shop/order-detail";
     }
 

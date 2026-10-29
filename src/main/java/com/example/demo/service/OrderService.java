@@ -264,7 +264,10 @@ public class OrderService {
         shippingFee = shippingFee.setScale(0, RoundingMode.HALF_UP);
 
         Order order = new Order();
-        order.setOrderCode(orderCodeGenerator.next());
+        String requestedCode = trimToNull(form.getOrderCode());
+        order.setOrderCode(requestedCode == null
+                ? orderCodeGenerator.next()
+                : orderCodeGenerator.validatedOrNext(requestedCode));
         order.setOrderSource(OrderSource.MANUAL);
         order.setCreatedBy(admin);
         order.setUser(customer);
