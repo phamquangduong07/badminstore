@@ -3,41 +3,58 @@
 <body>
 
 <!--
-  Phân trang cho danh sách sản phẩm. Giữ nguyên toàn bộ điều kiện lọc trên mọi liên kết
-  (keyword, hãng, loại, khoảng giá, sắp xếp) – nếu thiếu, sang trang 2 là mất bộ lọc.
-  pageNumbers do Controller tính sẵn (chỉ vài nút quanh trang hiện tại) để template không chứa logic.
+  PHÂN TRANG DÙNG CHUNG cho mọi danh sách (shop + admin).
+  Trước đây mỗi trang tự chép một khối <nav><ul class="pagination">…</ul></nav> (5 bản khác nhau),
+  sửa kiểu dáng phải sửa 5 chỗ và dễ quên giữ bộ lọc khi sang trang.
+
+  Tham số:
+    page        – đối tượng Page<…> của Spring Data (page.number là 0-based, còn URL dùng page 1-based)
+    pageNumbers – danh sách số trang Controller đã tính sẵn (Pagination.pageNumbers)
+    url         – đường dẫn gốc, ví dụ '/san-pham', '/admin/don-hang'
+    query       – chuỗi bộ lọc ĐÃ URL-ENCODE, KHÔNG có dấu '?' ở đầu và KHÔNG có '&' ở cuối
+                  (dùng #uris.escapeQueryParam để từ khoá tiếng Việt / ký tự đặc biệt không làm hỏng link);
+                  truyền '' nếu danh sách không có bộ lọc
+    ariaLabel   – nhãn cho trình đọc màn hình, ví dụ 'Phân trang đơn hàng'
+    itemLabel   – danh từ số ít/nhiều để hiện tổng số, ví dụ 'sản phẩm', 'đơn hàng'; truyền null để ẩn
+
+  Ví dụ gọi:
+    <div th:replace="~{fragments/pagination :: pager(page=${products}, pageNumbers=${pageNumbers},
+            url='/admin/san-pham', ariaLabel='Phân trang sản phẩm', itemLabel='sản phẩm',
+            query=|keyword=${#uris.escapeQueryParam(keyword ?: '')}&status=${statusFilter ?: ''}|)}"></div>
+
   Kiểu dáng (viên thuốc, màu xanh thương hiệu) nằm ở .catalog-pager trong static/css/theme.css.
 -->
-<nav th:fragment="productPager(page, pageNumbers, filter)" th:if="${page.totalPages > 1}"
-     class="catalog-pager mt-4" aria-label="Phân trang danh sách sản phẩm">
+<nav th:fragment="pager(page, pageNumbers, url, query, ariaLabel, itemLabel)"
+     th:if="${page.totalPages > 1}"
+     class="catalog-pager mt-4"
+     th:aria-label="${ariaLabel}"
+     th:with="qs=${#strings.isEmpty(query) ? '?' : '?' + query + '&'}">
     <ul class="pagination justify-content-center flex-wrap gap-1 mb-2">
         <li class="page-item" th:classappend="${page.first} ? 'disabled'">
             <a class="page-link" rel="prev" th:aria-disabled="${page.first}"
-               th:href="@{/san-pham(page=${page.number}, keyword=${filter.keyword}, brandId=${filter.brandId},
-                                    categoryId=${filter.categoryId}, minPrice=${filter.minPrice},
-                                    maxPrice=${filter.maxPrice}, sort=${filter.sort})}">
+               th:href="@{${url + qs + 'page=' + page.number}}">
                 <i class="bi bi-chevron-left" aria-hidden="true"></i>
                 <span class="d-none d-sm-inline">Trước</span>
             </a>
         </li>
         <li class="page-item" th:each="n : ${pageNumbers}" th:classappend="${n == page.number} ? 'active'">
-            <a class="page-link" th:text="${n + 1}" th:aria-current="${n == page.number} ? 'page' : null"
-               th:href="@{/san-pham(page=${n + 1}, keyword=${filter.keyword}, brandId=${filter.brandId},
-                                    categoryId=${filter.categoryId}, minPrice=${filter.minPrice},
-                                    maxPrice=${filter.maxPrice}, sort=${filter.sort})}">1</a>
+            <a class="page-link" th:text="${n + 1}"
+               th:aria-current="${n == page.number} ? 'page' : null"
+               th:href="@{${url + qs + 'page=' + (n + 1)}}">1</a>
         </li>
         <li class="page-item" th:classappend="${page.last} ? 'disabled'">
             <a class="page-link" rel="next" th:aria-disabled="${page.last}"
-               th:href="@{/san-pham(page=${page.number + 2}, keyword=${filter.keyword}, brandId=${filter.brandId},
-                                    categoryId=${filter.categoryId}, minPrice=${filter.minPrice},
-                                    maxPrice=${filter.maxPrice}, sort=${filter.sort})}">
+               th:href="@{${url + qs + 'page=' + (page.number + 2)}}">
                 <span class="d-none d-sm-inline">Sau</span>
                 <i class="bi bi-chevron-right" aria-hidden="true"></i>
             </a>
         </li>
     </ul>
     <p class="text-center text-muted small mb-0"
-       th:text="|Trang ${page.number + 1}/${page.totalPages} – ${page.totalElements} sản phẩm|">Trang 1/1</p>
+       th:with="range=|Trang ${page.number + 1}/${page.totalPages}|"
+       th:text="${itemLabel == null} ? ${range} : |${range} – ${page.totalElements} ${itemLabel}|">
+        Trang 1/1
+    </p>
 </nav>
 
 </body>

@@ -21,13 +21,13 @@
     </nav>
 
     <div class="page-head">
-        <h1 class="page-title"><i class="bi bi-cash-stack"></i> Bán hàng tại quầy</h1>
+        <h1 class="page-title"><i class="bi bi-cash-stack" aria-hidden="true"></i> Bán hàng tại quầy</h1>
         <div class="d-flex flex-wrap gap-2">
             <a class="btn btn-sm btn-outline-secondary" th:href="@{/admin/don-hang/tao-don}">
-                <i class="bi bi-pencil-square"></i> Tạo đơn giao hàng (điện thoại)
+                <i class="bi bi-pencil-square" aria-hidden="true"></i> Tạo đơn giao hàng (điện thoại)
             </a>
             <a class="btn btn-sm btn-outline-secondary" th:href="@{/admin/don-hang}">
-                <i class="bi bi-receipt"></i> Danh sách đơn
+                <i class="bi bi-receipt" aria-hidden="true"></i> Danh sách đơn
             </a>
         </div>
     </div>
@@ -40,7 +40,7 @@
         </div>
     </div>
 
-    <form th:action="@{/admin/ban-hang}" th:object="${form}" method="post" id="posForm" novalidate>
+    <form th:action="@{/admin/ban-hang}" th:object="${form}" method="post" id="posForm">
 
         <!-- Dữ liệu hoá đơn đang lập khi trang được tải lại sau lỗi (JS đọc để dựng lại hoá đơn) -->
         <div hidden id="posInitialLines">
@@ -56,23 +56,26 @@
                 <div class="card-soft">
                     <div class="card-body pb-2">
                         <div class="input-group input-group-lg">
-                            <span class="input-group-text bg-white"><i class="bi bi-upc-scan"></i></span>
+                            <span class="input-group-text bg-white"><i class="bi bi-upc-scan" aria-hidden="true"></i></span>
                             <label class="visually-hidden" for="posSearch">Tìm sản phẩm theo SKU hoặc tên</label>
                             <input class="form-control" type="search" id="posSearch" autocomplete="off"
-                                   placeholder="Quét mã SKU hoặc gõ tên vợt rồi Enter…">
+                                   placeholder="Quét mã SKU hoặc gõ tên vợt rồi Enter…"
+                                   aria-describedby="posSearchHelp">
                             <button class="btn btn-primary" type="button" id="posSearchButton">
-                                <i class="bi bi-search"></i> Tìm
+                                <i class="bi bi-search" aria-hidden="true"></i> Tìm
                             </button>
                         </div>
-                        <div class="form-text">
+                        <div class="form-text" id="posSearchHelp">
                             Máy quét mã vạch: quét SKU rồi Enter là sản phẩm vào hoá đơn ngay.
                             Chỉ hiện sản phẩm/biến thể đang bán, kèm tồn kho thực tế.
                         </div>
                     </div>
                     <div class="card-body pt-0">
                         <div id="posResults" class="pos-results"></div>
-                        <p class="text-muted small mb-0" id="posNoResult" hidden>
-                            <i class="bi bi-search"></i> Không tìm thấy sản phẩm nào phù hợp.
+                        <!-- Vùng thông báo cho trình đọc màn hình: số kết quả tìm được (không hiện trên màn hình) -->
+                        <p class="visually-hidden mb-0" role="status" id="posResultsStatus"></p>
+                        <p class="text-muted small mb-0" id="posNoResult" role="status" hidden>
+                            <i class="bi bi-search" aria-hidden="true"></i> Không tìm thấy sản phẩm nào phù hợp.
                         </p>
                     </div>
                 </div>
@@ -84,13 +87,15 @@
                 <!-- Hoá đơn -->
                 <div class="card-soft mb-3">
                     <div class="card-header d-flex justify-content-between align-items-center">
-                        <span class="fw-semibold"><i class="bi bi-receipt-cutoff"></i> Hoá đơn tại quầy</span>
+                        <span class="fw-semibold"><i class="bi bi-receipt-cutoff" aria-hidden="true"></i> Hoá đơn tại quầy</span>
                         <button class="btn btn-sm btn-outline-danger" type="button" id="posClear">
-                            <i class="bi bi-trash3"></i> Xoá hết
+                            <i class="bi bi-trash3" aria-hidden="true"></i> Xoá hết
                         </button>
                     </div>
                     <div class="card-body">
                         <div id="posLines"></div>
+                        <!-- Thông báo cho trình đọc màn hình khi thêm/bớt dòng hoặc đổi tổng tiền -->
+                        <p class="visually-hidden mb-0" role="status" id="posLinesStatus"></p>
                         <p class="text-muted small mb-0" id="posEmpty">
                             Chưa có sản phẩm nào. Tìm ở khung bên trái rồi bấm vào sản phẩm để thêm vào hoá đơn.
                         </p>
@@ -111,23 +116,23 @@
                 <!-- Mã giảm giá -->
                 <div class="card-soft mb-3">
                     <div class="card-header fw-semibold">
-                        <i class="bi bi-ticket-perforated"></i> Mã giảm giá (nếu khách có)
+                        <i class="bi bi-ticket-perforated" aria-hidden="true"></i> Mã giảm giá (nếu khách có)
                     </div>
                     <div class="card-body">
                         <label class="visually-hidden" for="posVoucherCode">Mã giảm giá</label>
                         <input class="form-control text-uppercase" id="posVoucherCode" th:field="*{voucherCode}"
                                maxlength="50" placeholder="Ví dụ: BADSTORE10">
-                        <p class="small mb-0 mt-2 text-success" id="posVoucherOk" hidden></p>
-                        <p class="small mb-0 mt-2 text-danger" id="posVoucherError" hidden></p>
+                        <p class="small mb-0 mt-2 text-success" id="posVoucherOk" role="status" aria-live="polite" hidden></p>
+                        <p class="small mb-0 mt-2 text-danger" id="posVoucherError" role="alert" aria-live="assertive" hidden></p>
                     </div>
                 </div>
 
                 <!-- Khách hàng -->
                 <div class="card-soft mb-3">
-                    <div class="card-header fw-semibold"><i class="bi bi-person-badge"></i> Khách hàng</div>
+                    <div class="card-header fw-semibold"><i class="bi bi-person-badge" aria-hidden="true"></i> Khách hàng</div>
                     <div class="card-body">
                         <div class="input-group mb-2">
-                            <span class="input-group-text"><i class="bi bi-telephone"></i></span>
+                            <span class="input-group-text"><i class="bi bi-telephone" aria-hidden="true"></i></span>
                             <label class="visually-hidden" for="posCustomerPhone">Số điện thoại khách hàng</label>
                             <input class="form-control" id="posCustomerPhone" th:field="*{customerPhone}"
                                    inputmode="numeric" maxlength="15" placeholder="SĐT khách quen (bỏ trống = khách lẻ)">
@@ -158,18 +163,18 @@
 
                 <!-- Thanh toán -->
                 <div class="card-soft mb-3">
-                    <div class="card-header fw-semibold"><i class="bi bi-cash-coin"></i> Thanh toán</div>
+                    <div class="card-header fw-semibold"><i class="bi bi-cash-coin" aria-hidden="true"></i> Thanh toán</div>
                     <div class="card-body">
                         <div class="btn-group w-100 mb-3" role="group" aria-label="Phương thức thanh toán">
                             <input type="radio" class="btn-check" name="paymentMethod" value="CASH" id="posPayCash"
                                    th:checked="${form.paymentMethod == null or form.paymentMethod == 'CASH'}">
                             <label class="btn btn-outline-success" for="posPayCash">
-                                <i class="bi bi-cash-stack"></i> Tiền mặt
+                                <i class="bi bi-cash-stack" aria-hidden="true"></i> Tiền mặt
                             </label>
                             <input type="radio" class="btn-check" name="paymentMethod" value="BANK_TRANSFER"
                                    id="posPayTransfer" th:checked="${form.paymentMethod == 'BANK_TRANSFER'}">
                             <label class="btn btn-outline-primary" for="posPayTransfer">
-                                <i class="bi bi-qr-code-scan"></i> Chuyển khoản
+                                <i class="bi bi-qr-code-scan" aria-hidden="true"></i> Chuyển khoản
                             </label>
                         </div>
 
@@ -184,7 +189,7 @@
                                 <button class="btn btn-sm btn-outline-secondary" type="button" data-pos-cash="200000">200.000</button>
                                 <button class="btn btn-sm btn-outline-secondary" type="button" data-pos-cash="500000">500.000</button>
                             </div>
-                            <p class="mb-0 mt-2" data-pos-change>
+                            <p class="mb-0 mt-2" data-pos-change aria-live="polite">
                                 Tiền thừa trả khách: <strong>0 ₫</strong>
                             </p>
                         </div>
@@ -199,7 +204,7 @@
                     </div>
                     <div class="card-footer">
                         <button class="btn btn-success btn-lg w-100" type="submit" id="posSubmit">
-                            <i class="bi bi-printer"></i> Thu tiền &amp; in phiếu
+                            <i class="bi bi-printer" aria-hidden="true"></i> Thu tiền &amp; in phiếu
                         </button>
                         <p class="small text-muted mb-0 mt-2 text-center">
                             Hoá đơn được xác nhận và <strong>trừ kho ngay</strong>; tiền mặt được ghi nhận đã thanh toán.
@@ -210,7 +215,7 @@
                 <!-- Hoá đơn gần đây: in lại khi khách quay lại -->
                 <div class="card-soft" th:if="${recentOrders != null and !recentOrders.isEmpty()}">
                     <div class="card-header fw-semibold">
-                        <i class="bi bi-clock-history"></i> Hoá đơn gần đây
+                        <i class="bi bi-clock-history" aria-hidden="true"></i> Hoá đơn gần đây
                     </div>
                     <ul class="list-group list-group-flush">
                         <li class="list-group-item d-flex justify-content-between align-items-center gap-2"
@@ -226,7 +231,7 @@
                                 <span class="small fw-semibold" th:insert="~{fragments/common :: money(${order.totalAmount})}">0 ₫</span>
                                 <a class="btn btn-sm btn-outline-secondary" th:href="@{'/admin/ban-hang/phieu/' + ${order.id}}"
                                    th:attr="aria-label=|In lại phiếu ${order.orderCode}|">
-                                    <i class="bi bi-printer"></i>
+                                    <i class="bi bi-printer" aria-hidden="true"></i>
                                 </a>
                             </span>
                         </li>

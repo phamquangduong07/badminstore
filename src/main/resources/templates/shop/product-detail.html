@@ -37,13 +37,19 @@
             <div class="col-md-6 col-lg-7">
                 <div class="card-soft pdp-gallery">
 
-                    <div th:if="${images.size() > 1}" id="productGallery" class="carousel slide" data-bs-ride="carousel">
+                    <!--
+                      Ảnh sản phẩm: KHÔNG tự chạy (data-bs-interval="false") vì khách cần
+                      thời gian xem chi tiết; chuyển ảnh bằng mũi tên hoặc dải thumbnail.
+                    -->
+                    <div th:if="${images.size() > 1}" id="productGallery" class="carousel slide"
+                         data-bs-interval="false" aria-label="Ảnh sản phẩm">
                         <div class="carousel-inner rounded-3">
                             <div class="carousel-item" th:each="image, iter : ${images}"
                                  th:classappend="${iter.first} ? 'active' : ''">
                                 <img class="pdp-main-image" width="800" height="800"
                                      th:src="${image.imageUrl}"
-                                     th:alt="|Ảnh ${product.name} – hình ${iter.count}|">
+                                     th:alt="|Ảnh ${product.name} – hình ${iter.count}|"
+                                     data-pdp-slide>
                             </div>
 
                             <!-- Mũi tên đặt trong carousel-inner để căn giữa đúng phần ảnh (không tính dải thumbnail) -->
@@ -71,10 +77,10 @@
                     </div>
 
                     <img th:if="${images.size() == 1}" class="pdp-main-image" width="800" height="800"
-                         th:src="${images[0].imageUrl}" th:alt="|Ảnh ${product.name}|">
+                         th:src="${images[0].imageUrl}" th:alt="|Ảnh ${product.name}|" data-pdp-single>
 
                     <img th:if="${images.isEmpty()}" class="pdp-main-image" width="800" height="800"
-                         th:src="@{/images/no-image.svg}" th:alt="|Chưa có ảnh cho ${product.name}|">
+                         th:src="@{/images/no-image.svg}" th:alt="|Chưa có ảnh cho ${product.name}|" data-pdp-single>
                 </div>
 
                 <!-- Dải cam kết ngắn dưới ảnh -->
@@ -141,8 +147,10 @@
                                            th:disabled="${!variant.inStock}"
                                            th:attr="data-stock=${variant.stockQuantity},
                                                     data-price=${variant.price},
-                                                    data-original-price=${variant.discounted ? variant.originalPrice : null}">
-                                    <label class="btn btn-outline-primary variant-option"
+                                                    data-original-price=${variant.discounted ? variant.originalPrice : null},
+                                                    data-image=${variant.imageUrl},
+                                                    data-image-alt=${'Ảnh ' + product.name + ' – phiên bản màu ' + variant.color}">
+                                    <label class="btn variant-chip variant-option"
                                            th:for="|variant-${variant.id}|"
                                            th:classappend="${!variant.inStock} ? 'is-out' : ''">
                                         <span class="variant-name" th:text="${variant.color}">Màu</span>
@@ -178,7 +186,7 @@
                                         </div>
                                         <p class="mb-0 small">
                                             <i class="bi bi-box-seam" aria-hidden="true"></i>
-                                            <span class="pdp-stock-text" data-pdp-stock-text>
+                                            <span class="pdp-stock-text" data-pdp-stock-text role="status" aria-live="polite">
                                                 <th:block th:each="variant : ${variants}"
                                                           th:if="${variant.id == detail.defaultVariantId}"
                                                           th:text="|Còn ${variant.stockQuantity} sản phẩm|">Còn 0 sản phẩm</th:block>
@@ -401,7 +409,7 @@
                         <div class="pdp-rating-score" th:text="${reviewSummary.averageLabel}">5.0/5</div>
                         <div>
                             <div class="text-warning" aria-hidden="true">
-                                <i class="bi" th:each="star : ${#numbers.sequence(1, 5)}"
+                                <i class="bi" aria-hidden="true" th:each="star : ${#numbers.sequence(1, 5)}"
                                    th:classappend="${star <= reviewSummary.filledStars} ? 'bi-star-fill' : 'bi-star'"></i>
                             </div>
                             <div class="small text-muted" th:text="${reviewSummary.summaryLabel}">Chưa có đánh giá</div>
@@ -461,7 +469,7 @@
                                 <div>
                                     <span class="fw-semibold" th:text="${review.user.fullName}">Tên khách hàng</span>
                                     <span class="text-warning ms-2" aria-hidden="true">
-                                        <i class="bi" th:each="star : ${#numbers.sequence(1, 5)}"
+                                        <i class="bi" aria-hidden="true" th:each="star : ${#numbers.sequence(1, 5)}"
                                            th:classappend="${star <= review.rating} ? 'bi-star-fill' : 'bi-star'"></i>
                                     </span>
                                     <span class="visually-hidden" th:text="|${review.rating} trên 5 sao|">5 trên 5 sao</span>

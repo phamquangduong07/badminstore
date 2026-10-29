@@ -214,7 +214,7 @@ class GhnShippingServiceTest {
     void pushOrder_requiresConfirmedStatus() {
         Order order = order(OrderStatus.PENDING);
         stubOrder(order);
-        when(ghnClient.isAvailable()).thenReturn(true);
+        when(ghnClient.isShippingAvailable()).thenReturn(true);
 
         assertThatThrownBy(() -> ghnShippingService.pushOrder(ORDER_ID))
                 .isInstanceOf(BusinessException.class)
@@ -222,11 +222,24 @@ class GhnShippingServiceTest {
     }
 
     @Test
+    @DisplayName("Chưa khai báo shopId/kho lấy hàng ⇒ báo rõ thiếu cấu hình thay vì gọi GHN")
+    void pushOrder_requiresShippingConfiguration() {
+        Order order = order(OrderStatus.CONFIRMED);
+        stubOrder(order);
+        when(ghnClient.isShippingAvailable()).thenReturn(false);
+
+        assertThatThrownBy(() -> ghnShippingService.pushOrder(ORDER_ID))
+                .isInstanceOf(BusinessException.class)
+                .hasMessageContaining("Chưa cấu hình đủ GHN");
+        verify(ghnClient, never()).createOrder(any());
+    }
+
+    @Test
     @DisplayName("Đơn thiếu mã Quận/Huyện của GHN (khách nhập địa chỉ tay) thì GHN không nhận")
     void pushOrder_requiresGhnDistrictCodes() {
         Order order = order(OrderStatus.CONFIRMED);
         stubOrder(order);
-        when(ghnClient.isAvailable()).thenReturn(true);
+        when(ghnClient.isShippingAvailable()).thenReturn(true);
 
         assertThatThrownBy(() -> ghnShippingService.pushOrder(ORDER_ID))
                 .isInstanceOf(BusinessException.class)
@@ -247,7 +260,7 @@ class GhnShippingServiceTest {
         payment.setAmount(order.getTotalAmount());
         order.setPayment(payment);
         stubOrder(order);
-        when(ghnClient.isAvailable()).thenReturn(true);
+        when(ghnClient.isShippingAvailable()).thenReturn(true);
         when(ghnClient.createOrder(any(GhnCreateOrderRequest.class)))
                 .thenReturn(new GhnOrderResult("GHN777666", 34500, null, null, null));
 
@@ -278,7 +291,7 @@ class GhnShippingServiceTest {
         Order order = order(OrderStatus.CONFIRMED);
         order.setGhnOrderCode("GHN999888");
         stubOrder(order);
-        when(ghnClient.isAvailable()).thenReturn(true);
+        when(ghnClient.isShippingAvailable()).thenReturn(true);
 
         assertThatThrownBy(() -> ghnShippingService.pushOrder(ORDER_ID))
                 .isInstanceOf(BusinessException.class)

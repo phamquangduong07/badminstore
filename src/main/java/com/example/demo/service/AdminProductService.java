@@ -178,16 +178,20 @@ public class AdminProductService {
         variant.setProduct(requireProduct(productId));
         requireFreeSku(variant);
         requireFreeCombination(variant, false);
+        // Chỉ lưu file sau khi mọi kiểm tra hợp lệ để tránh file rác khi form sai.
+        applyVariantImage(variant, form, null);
         return productVariantRepository.save(variant);
     }
 
     @Transactional
     public ProductVariant updateVariant(Integer productId, Integer variantId, VariantForm form) {
         ProductVariant variant = requireVariant(productId, variantId);
+        String oldImageUrl = variant.getImageUrl();
         variant.setSku(normalizeCode(form.getSku()));
         applyVariantForm(variant, form);
         requireFreeSku(variant);
         requireFreeCombination(variant, true);
+        applyVariantImage(variant, form, oldImageUrl);
         return productVariantRepository.save(variant);
     }
 
@@ -212,7 +216,9 @@ public class AdminProductService {
             throw new BusinessException("Biến thể " + variant.getSku()
                     + " đã có trong đơn hàng nên không thể xoá. Hãy chuyển sang trạng thái \"Ngừng bán\".");
         }
+        String imageUrl = variant.getImageUrl();
         productVariantRepository.delete(variant);
+        deleteVariantImageIfUnused(imageUrl, variantId);
     }
 
     // ==================== CẬP NHẬT GIÁ HÀNG LOẠT ====================
@@ -441,11 +447,46 @@ public class AdminProductService {
         variant.setColor(color);
         variant.setWeightClass(weightClass);
         variant.setGripSize(gripSize);
-        variant.setImageUrl(trimToNull(form.getImageUrl()));
         variant.setPrice(price);
         variant.setOriginalPrice(originalPrice);
         variant.setStockQuantity(form.getStockQuantity());
         variant.setStatus(form.getStatus() == null ? VariantStatus.ACTIVE : form.getStatus());
+    }
+
+    /**
+     * Gán ảnh cho biến thể theo thứ tự ưu tiên:
+     * 1. file mới tải lên (lưu qua FileStorageService, đổi tên UUID);
+     * 2. đường dẫn ảnh nhập tay (giữ tương thích dữ liệu seed);
+     * 3. nếu admin tích "gỡ ảnh" thì để trống.
+     * Khi ảnh thay đổi, file upload cũ được xoá để không rác thư mục uploads.
+     */
+    private void applyVariantImage(ProductVariant variant, VariantForm form, String oldImageUrl) {
+        String imageUrl = trimToNull(form.getImageUrl());
+        if (form.getImageFile() != null && !form.getImageFile().isEmpty()) {
+            imageUrl = fileStorageService.storeImage(form.getImageFile());
+        } else if (form.isRemoveImage()) {
+            imageUrl = null;
+        }
+        variant.setImageUrl(imageUrl);
+        if (oldImageUrl != null && !oldImageUrl.equals(imageUrl)) {
+            deleteVariantImageIfUnused(oldImageUrl, variant.getId());
+        }
+    }
+
+    /**
+     * Xoá file upload của biến thể, nhưng chỉ khi không còn ảnh sản phẩm / biến thể khác dùng cùng URL.
+     * Admin có thể nhập tay URL của một ảnh đã upload cho biến thể; nếu xoá thẳng file thì
+     * bộ ảnh sản phẩm cũng mất ảnh theo.
+     */
+    private void deleteVariantImageIfUnused(String imageUrl, Integer variantId) {
+        if (imageUrl == null) {
+            return;
+        }
+        if (productImageRepository.existsByImageUrl(imageUrl)
+                || productVariantRepository.existsByImageUrlAndIdNot(imageUrl, variantId)) {
+            return;
+        }
+        fileStorageService.deleteIfUploaded(imageUrl);
     }
 
     private void requireFreeSku(ProductVariant variant) {

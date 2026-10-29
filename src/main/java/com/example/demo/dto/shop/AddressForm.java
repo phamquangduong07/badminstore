@@ -43,9 +43,10 @@ public class AddressForm {
     private boolean defaultAddress;
 
     /**
-     * Mã địa chỉ do GHN cấp (chỉ có khi khách chọn từ dropdown GHN ở sổ địa chỉ).
-     * Dùng để tính phí vận chuyển và đẩy đơn sang GHN; server luôn kiểm tra lại mã này
-     * trước khi lưu nên khách không thể sửa mã để ăn phí ship rẻ hơn.
+     * Mã địa chỉ do GHN cấp: Tỉnh/Huyện/Xã trên form được chọn trực tiếp từ dữ liệu GHN nên
+     * 3 mã này BẮT BUỘC khi GHN đang dùng được ({@code AddressController} kiểm tra trước khi lưu).
+     * Dùng để tính phí vận chuyển và đẩy đơn sang GHN; server luôn kiểm tra lại mã (tồn tại thật)
+     * và tên địa danh (khớp mã) nên khách không thể sửa mã để ăn phí ship rẻ hơn.
      */
     private Integer provinceId;
 

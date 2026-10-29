@@ -11,35 +11,36 @@
 <th:block layout:fragment="content">
 
     <div class="page-head">
-        <h1 class="page-title"><i class="bi bi-graph-up-arrow"></i> Tổng quan bán hàng</h1>
+        <h1 class="page-title"><i class="bi bi-graph-up-arrow" aria-hidden="true"></i> Tổng quan bán hàng</h1>
         <a class="btn btn-sm btn-primary" th:href="@{/admin/don-hang(status='PENDING')}">
-            <i class="bi bi-inbox"></i> Xử lý đơn chờ xác nhận
+            <i class="bi bi-inbox" aria-hidden="true"></i> Xử lý đơn chờ xác nhận
         </a>
     </div>
 
     <!-- ===== Thẻ số liệu ===== -->
+    <!-- Điện thoại: 1 cột (col-12) để nhãn/số tiền không phải xuống dòng quá nhiều; từ sm trở lên: 2 cột -->
     <div class="row g-3 mb-4">
-        <div class="col-6 col-xl-3">
+        <div class="col-12 col-sm-6 col-xl-3">
             <div class="stat-card">
-                <span class="stat-icon bg-warning-subtle text-warning"><i class="bi bi-hourglass-split"></i></span>
+                <span class="stat-icon bg-warning-subtle text-warning"><i class="bi bi-hourglass-split" aria-hidden="true"></i></span>
                 <div>
                     <div class="stat-label">Đơn chờ xác nhận</div>
                     <div class="stat-value text-warning" th:text="${stats.pendingOrders}">0</div>
                 </div>
             </div>
         </div>
-        <div class="col-6 col-xl-3">
+        <div class="col-12 col-sm-6 col-xl-3">
             <div class="stat-card">
-                <span class="stat-icon bg-primary-subtle text-primary"><i class="bi bi-receipt"></i></span>
+                <span class="stat-icon bg-primary-subtle text-primary"><i class="bi bi-receipt" aria-hidden="true"></i></span>
                 <div>
                     <div class="stat-label">Đơn tạo hôm nay</div>
                     <div class="stat-value" th:text="${stats.todayOrders}">0</div>
                 </div>
             </div>
         </div>
-        <div class="col-6 col-xl-3">
+        <div class="col-12 col-sm-6 col-xl-3">
             <div class="stat-card">
-                <span class="stat-icon bg-success-subtle text-success"><i class="bi bi-cash-coin"></i></span>
+                <span class="stat-icon bg-success-subtle text-success"><i class="bi bi-cash-coin" aria-hidden="true"></i></span>
                 <div>
                     <div class="stat-label">Doanh thu hôm nay</div>
                     <div class="stat-value text-success"
@@ -48,9 +49,9 @@
                 </div>
             </div>
         </div>
-        <div class="col-6 col-xl-3">
+        <div class="col-12 col-sm-6 col-xl-3">
             <div class="stat-card">
-                <span class="stat-icon bg-info-subtle text-info"><i class="bi bi-graph-up"></i></span>
+                <span class="stat-icon bg-info-subtle text-info"><i class="bi bi-graph-up" aria-hidden="true"></i></span>
                 <div>
                     <div class="stat-label">Doanh thu tháng này</div>
                     <div class="stat-value text-success"
@@ -70,11 +71,39 @@
         <div class="col-xl-8">
             <div class="card-soft h-100">
                 <div class="card-header">
-                    <i class="bi bi-bar-chart-line text-primary"></i> Doanh thu &amp; số đơn 14 ngày gần nhất
+                    <i class="bi bi-bar-chart-line text-primary" aria-hidden="true"></i> Doanh thu &amp; số đơn 14 ngày gần nhất
                 </div>
                 <div class="card-body">
                     <div class="chart-box">
-                        <canvas id="revenueChart" aria-label="Biểu đồ doanh thu 14 ngày"></canvas>
+                        <!-- role="img" + aria-label: trình đọc màn hình đọc được ý nghĩa biểu đồ;
+                             phần chữ bên trong là nội dung dự phòng khi JS/Chart.js không chạy -->
+                        <canvas id="revenueChart" role="img"
+                                aria-label="Biểu đồ cột doanh thu và đường số đơn trong 14 ngày gần nhất">
+                            Biểu đồ doanh thu 14 ngày gần nhất (cần JavaScript để hiển thị).
+                        </canvas>
+                    </div>
+                    <!-- Bảng số liệu ẩn: cùng dữ liệu với biểu đồ, dành cho trình đọc màn hình và khi tải lỗi.
+                         Bọc thêm 1 <div class="visually-hidden">: <table> không co theo width:1px (bảng
+                         tự rộng bằng nội dung) nên phải để hộp 1px của thẻ div cắt phần tràn, nếu không
+                         bảng sẽ kéo dài vùng cuộn ngang ở màn hình hẹp (đo được +33px tại 280px). -->
+                    <div class="visually-hidden">
+                        <table>
+                            <caption>Doanh thu và số đơn 14 ngày gần nhất</caption>
+                            <thead>
+                            <tr>
+                                <th scope="col">Ngày</th>
+                                <th scope="col">Doanh thu</th>
+                                <th scope="col">Số đơn</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr th:each="label, iter : ${stats.revenueLabels}">
+                                <th scope="row" th:text="${label}">01/01</th>
+                                <td th:insert="~{fragments/common :: money(${stats.revenueValues[iter.index]})}">0 ₫</td>
+                                <td th:text="${stats.orderCountValues[iter.index]}">0</td>
+                            </tr>
+                            </tbody>
+                        </table>
                     </div>
                 </div>
             </div>
@@ -82,11 +111,31 @@
         <div class="col-xl-4">
             <div class="card-soft h-100">
                 <div class="card-header">
-                    <i class="bi bi-pie-chart text-primary"></i> Đơn hàng theo trạng thái
+                    <i class="bi bi-pie-chart text-primary" aria-hidden="true"></i> Đơn hàng theo trạng thái
                 </div>
                 <div class="card-body">
                     <div class="chart-box">
-                        <canvas id="statusChart" aria-label="Biểu đồ trạng thái đơn hàng"></canvas>
+                        <canvas id="statusChart" role="img"
+                                aria-label="Biểu đồ tròn tỉ lệ đơn hàng theo từng trạng thái">
+                            Biểu đồ tỉ lệ đơn hàng theo trạng thái (cần JavaScript để hiển thị).
+                        </canvas>
+                    </div>
+                    <div class="visually-hidden">
+                        <table>
+                            <caption>Số đơn theo trạng thái</caption>
+                            <thead>
+                            <tr>
+                                <th scope="col">Trạng thái</th>
+                                <th scope="col">Số đơn</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr th:each="label, iter : ${stats.statusLabels}">
+                                <th scope="row" th:text="${label}">Chờ xác nhận</th>
+                                <td th:text="${stats.statusValues[iter.index]}">0</td>
+                            </tr>
+                            </tbody>
+                        </table>
                     </div>
                 </div>
             </div>
@@ -98,7 +147,7 @@
         <div class="col-xl-7">
             <div class="card-soft h-100">
                 <div class="card-header">
-                    <i class="bi bi-trophy text-primary"></i> Sản phẩm bán chạy
+                    <i class="bi bi-trophy text-primary" aria-hidden="true"></i> Sản phẩm bán chạy
                 </div>
                 <div class="table-responsive">
                     <table class="table table-hover align-middle mb-0">
@@ -116,12 +165,8 @@
                             <td class="text-end fw-semibold" th:insert="~{fragments/common :: money(${row.revenue})}">0 ₫</td>
                         </tr>
                         <tr th:if="${#lists.isEmpty(stats.topProducts)}">
-                            <td colspan="3">
-                                <div class="empty-state">
-                                    <i class="bi bi-trophy"></i>
-                                    <p>Chưa có sản phẩm nào được bán (đơn từ trạng thái “Đã xác nhận” trở lên).</p>
-                                </div>
-                            </td>
+                            <td colspan="3" class="p-0"
+                                th:insert="~{fragments/common :: emptyState('bi-trophy', 'Chưa có sản phẩm nào được bán (đơn từ trạng thái “Đã xác nhận” trở lên).')}"></td>
                         </tr>
                         </tbody>
                     </table>
@@ -131,7 +176,7 @@
         <div class="col-xl-5">
             <div class="card-soft h-100">
                 <div class="card-header">
-                    <i class="bi bi-exclamation-triangle text-warning"></i> Sắp hết hàng (tồn ≤ 5)
+                    <i class="bi bi-exclamation-triangle text-warning" aria-hidden="true"></i> Sắp hết hàng (tồn ≤ 5)
                 </div>
                 <div class="table-responsive">
                     <table class="table table-hover align-middle mb-0">
@@ -156,12 +201,8 @@
                             </td>
                         </tr>
                         <tr th:if="${#lists.isEmpty(stats.lowStockVariants)}">
-                            <td colspan="2">
-                                <div class="empty-state">
-                                    <i class="bi bi-check2-circle"></i>
-                                    <p>Tất cả biến thể đang bán đều còn trên 5 sản phẩm.</p>
-                                </div>
-                            </td>
+                            <td colspan="2" class="p-0"
+                                th:insert="~{fragments/common :: emptyState('bi-check2-circle', 'Tất cả biến thể đang bán đều còn trên 5 sản phẩm.')}"></td>
                         </tr>
                         </tbody>
                     </table>
@@ -190,66 +231,91 @@
         const accentColor = cssVar('--bad-accent', '#ffb703');
         const statusColors = [1, 2, 3, 4, 5, 6].map((index) => cssVar('--bad-chart-' + index, '#0f8a5f'));
 
-        new Chart(document.getElementById('revenueChart'), {
-            data: {
-                labels: revenueLabels,
-                datasets: [
-                    {
-                        type: 'bar',
-                        label: 'Doanh thu (₫)',
-                        data: revenueValues,
-                        backgroundColor: 'rgba(' + primaryRgb + ', .65)',
-                        borderRadius: 6,
-                        yAxisID: 'y'
-                    },
-                    {
-                        type: 'line',
-                        label: 'Số đơn',
-                        data: orderCounts,
-                        borderColor: accentColor,
-                        backgroundColor: accentColor,
-                        tension: .3,
-                        yAxisID: 'y1'
-                    }
-                ]
-            },
-            options: {
-                responsive: true,
-                maintainAspectRatio: false,
-                interaction: { mode: 'index', intersect: false },
-                scales: {
-                    y: {
-                        beginAtZero: true,
-                        position: 'left',
-                        ticks: { callback: (value) => Number(value).toLocaleString('vi-VN') + ' ₫' }
-                    },
-                    y1: {
-                        beginAtZero: true,
-                        position: 'right',
-                        grid: { drawOnChartArea: false },
-                        ticks: { precision: 0 }
+        /** Chart.js có thể không tải được (mất mạng / CDN bị chặn).
+            Khi đó ẩn canvas trống và hiện ghi chú; số liệu vẫn còn trong 2 bảng .visually-hidden phía trên. */
+        function chartFallback() {
+            document.querySelectorAll('.chart-box canvas').forEach((canvas) => {
+                canvas.classList.add('d-none');
+                const note = document.createElement('p');
+                note.className = 'text-muted small mb-0';
+                note.textContent = 'Không tải được thư viện biểu đồ. Số liệu chi tiết vẫn hiển thị trong bảng kèm theo.';
+                canvas.parentNode.appendChild(note);
+            });
+        }
+
+        if (!window.Chart) {
+            chartFallback();
+        } else {
+            new Chart(document.getElementById('revenueChart'), {
+                data: {
+                    labels: revenueLabels,
+                    datasets: [
+                        {
+                            type: 'bar',
+                            label: 'Doanh thu (₫)',
+                            data: revenueValues,
+                            backgroundColor: 'rgba(' + primaryRgb + ', .65)',
+                            borderRadius: 6,
+                            yAxisID: 'y'
+                        },
+                        {
+                            type: 'line',
+                            label: 'Số đơn',
+                            data: orderCounts,
+                            borderColor: accentColor,
+                            backgroundColor: accentColor,
+                            tension: .3,
+                            yAxisID: 'y1'
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    interaction: { mode: 'index', intersect: false },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            position: 'left',
+                            ticks: { callback: (value) => Number(value).toLocaleString('vi-VN') + ' ₫' }
+                        },
+                        y1: {
+                            beginAtZero: true,
+                            position: 'right',
+                            grid: { drawOnChartArea: false },
+                            ticks: { precision: 0 }
+                        }
                     }
                 }
-            }
-        });
+            });
 
-        new Chart(document.getElementById('statusChart'), {
-            type: 'doughnut',
-            data: {
-                labels: statusLabels,
-                datasets: [{
-                    data: statusValues,
-                    backgroundColor: statusColors,
-                    borderWidth: 0
-                }]
-            },
-            options: {
-                responsive: true,
-                maintainAspectRatio: false,
-                cutout: '62%',
-                plugins: { legend: { position: 'bottom' } }
-            }
-        });
+            new Chart(document.getElementById('statusChart'), {
+                type: 'doughnut',
+                data: {
+                    labels: statusLabels,
+                    datasets: [{
+                        data: statusValues,
+                        backgroundColor: statusColors,
+                        borderWidth: 0
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    cutout: '62%',
+                    plugins: {
+                        legend: {
+                            position: 'bottom',
+                            labels: {
+                                // Chấm màu của legend không cần quá to, chữ vẫn là màu mặc định đủ tương phản
+                                boxWidth: 12,
+                                boxHeight: 12
+                            }
+                        }
+                    }
+                }
+            });
+        }
     </script>
 </th:block>
 

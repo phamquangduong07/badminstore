@@ -45,10 +45,10 @@
                 <div class="offcanvas-body">
                     <ul class="navbar-nav">
                         <li class="nav-item">
-                            <a class="nav-link" th:href="@{/}"><i class="bi bi-house-door"></i> Trang chủ</a>
+                            <a class="nav-link" th:href="@{/}"><i class="bi bi-house-door" aria-hidden="true"></i> Trang chủ</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" th:href="@{/san-pham}"><i class="bi bi-grid"></i> Sản phẩm</a>
+                            <a class="nav-link" th:href="@{/san-pham}"><i class="bi bi-grid" aria-hidden="true"></i> Sản phẩm</a>
                         </li>
                     </ul>
 
@@ -85,7 +85,7 @@
                         <!-- Khách chưa đăng nhập -->
                         <li class="nav-item" sec:authorize="isAnonymous()">
                             <a class="nav-link" th:href="@{/dang-nhap}">
-                                <i class="bi bi-box-arrow-in-right"></i> Đăng nhập
+                                <i class="bi bi-box-arrow-in-right" aria-hidden="true"></i> Đăng nhập
                             </a>
                         </li>
                         <li class="nav-item" sec:authorize="isAnonymous()">
@@ -108,18 +108,23 @@
                                 </li>
                                 <li><hr class="dropdown-divider"></li>
                                 <li>
+                                    <a class="dropdown-item" th:href="@{/tai-khoan}">
+                                        <i class="bi bi-person-gear" aria-hidden="true"></i> Tài khoản của tôi
+                                    </a>
+                                </li>
+                                <li>
                                     <a class="dropdown-item" th:href="@{/don-hang}">
-                                        <i class="bi bi-receipt"></i> Đơn hàng của tôi
+                                        <i class="bi bi-receipt" aria-hidden="true"></i> Đơn hàng của tôi
                                     </a>
                                 </li>
                                 <li sec:authorize="!hasRole('ADMIN')">
                                     <a class="dropdown-item" th:href="@{/dia-chi}">
-                                        <i class="bi bi-geo-alt"></i> Sổ địa chỉ
+                                        <i class="bi bi-geo-alt" aria-hidden="true"></i> Sổ địa chỉ
                                     </a>
                                 </li>
                                 <li sec:authorize="hasRole('ADMIN')">
                                     <a class="dropdown-item fw-semibold text-primary" th:href="@{/admin}">
-                                        <i class="bi bi-speedometer2"></i> Vào khu quản trị
+                                        <i class="bi bi-speedometer2" aria-hidden="true"></i> Vào khu quản trị
                                     </a>
                                 </li>
                                 <li><hr class="dropdown-divider"></li>
@@ -128,7 +133,7 @@
                                     <form th:action="@{/dang-xuat}" method="post"
                                           data-confirm="Bạn chắc chắn muốn đăng xuất khỏi BadStore?">
                                         <button type="submit" class="dropdown-item text-danger">
-                                            <i class="bi bi-box-arrow-right"></i> Đăng xuất
+                                            <i class="bi bi-box-arrow-right" aria-hidden="true"></i> Đăng xuất
                                         </button>
                                     </form>
                                 </li>

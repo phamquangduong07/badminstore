@@ -11,11 +11,11 @@
 <th:block layout:fragment="content">
 
     <div class="page-head">
-        <h1 class="page-title"><i class="bi bi-ticket-perforated"></i> Quản lý voucher</h1>
+        <h1 class="page-title"><i class="bi bi-ticket-perforated" aria-hidden="true"></i> Quản lý voucher</h1>
         <div class="d-flex align-items-center gap-2">
             <span class="text-muted small" th:text="|Tổng ${vouchers.totalElements} voucher|">Tổng 0</span>
             <a class="btn btn-sm btn-primary" th:href="@{/admin/voucher/tao-moi}">
-                <i class="bi bi-plus-square"></i> Tạo voucher
+                <i class="bi bi-plus-square" aria-hidden="true"></i> Tạo voucher
             </a>
         </div>
     </div>
@@ -36,15 +36,15 @@
                        placeholder="Ví dụ: GIAM10">
             </div>
             <div class="col-lg-5 d-flex gap-2">
-                <button class="btn btn-primary" type="submit"><i class="bi bi-search"></i> Lọc</button>
+                <button class="btn btn-primary" type="submit"><i class="bi bi-search" aria-hidden="true"></i> Lọc</button>
                 <a class="btn btn-outline-secondary" th:href="@{/admin/voucher}">Xoá lọc</a>
             </div>
         </div>
     </form>
 
     <div class="card-soft">
-        <div class="table-responsive">
-            <table class="table table-hover align-middle mb-0">
+        <div class="table-responsive table-scroll">
+            <table class="table table-hover align-middle mb-0 table-sticky">
                 <thead>
                 <tr>
                     <th scope="col">Mã / Chương trình</th>
@@ -93,7 +93,7 @@
                             <a class="btn btn-sm btn-outline-primary"
                                th:href="@{/admin/voucher/{id}/sua(id=${voucher.id})}"
                                th:attr="aria-label=|Sửa voucher ${voucher.code}|" title="Sửa voucher">
-                                <i class="bi bi-pencil-square"></i>
+                                <i class="bi bi-pencil-square" aria-hidden="true"></i>
                                 <span class="d-none d-xl-inline">Sửa</span>
                             </a>
                             <form th:action="@{/admin/voucher/{id}/doi-trang-thai(id=${voucher.id})}"
@@ -107,7 +107,7 @@
                                         type="submit"
                                         th:attr="aria-label=|Đổi trạng thái voucher ${voucher.code}|"
                                         th:title="${voucher.status.name() == 'ACTIVE'} ? 'Ngừng áp dụng' : 'Bật áp dụng lại'">
-                                    <i class="bi"
+                                    <i class="bi" aria-hidden="true"
                                        th:classappend="${voucher.status.name() == 'ACTIVE'} ? 'bi-pause-circle' : 'bi-play-circle'"></i>
                                     <span class="d-none d-xl-inline"
                                           th:text="${voucher.status.name() == 'ACTIVE'} ? 'Ngừng' : 'Bật'">Đổi</span>
@@ -117,40 +117,19 @@
                     </td>
                 </tr>
                 <tr th:if="${vouchers.empty}">
-                    <td colspan="7">
-                        <div class="empty-state">
-                            <i class="bi bi-ticket-detailed"></i>
-                            <p>Không có voucher nào phù hợp bộ lọc.</p>
-                        </div>
-                    </td>
+                    <td colspan="7" class="p-0"
+                        th:insert="~{fragments/common :: emptyState('bi-ticket-detailed', 'Không có voucher nào phù hợp bộ lọc.')}"></td>
                 </tr>
                 </tbody>
             </table>
         </div>
     </div>
 
-    <nav th:if="${vouchers.totalPages > 1}" class="mt-3" aria-label="Phân trang voucher">
-        <ul class="pagination justify-content-center mb-1">
-            <li class="page-item" th:classappend="${vouchers.first} ? 'disabled'">
-                <a class="page-link" rel="prev"
-                   th:href="@{/admin/voucher(page=${vouchers.number}, status=${statusFilter}, keyword=${keyword})}">
-                    <i class="bi bi-chevron-left"></i> Trước
-                </a>
-            </li>
-            <li class="page-item" th:each="n : ${pageNumbers}" th:classappend="${n == vouchers.number} ? 'active'">
-                <a class="page-link" th:text="${n + 1}"
-                   th:href="@{/admin/voucher(page=${n + 1}, status=${statusFilter}, keyword=${keyword})}">1</a>
-            </li>
-            <li class="page-item" th:classappend="${vouchers.last} ? 'disabled'">
-                <a class="page-link" rel="next"
-                   th:href="@{/admin/voucher(page=${vouchers.number + 2}, status=${statusFilter}, keyword=${keyword})}">
-                    Sau <i class="bi bi-chevron-right"></i>
-                </a>
-            </li>
-        </ul>
-        <p class="text-center text-muted small mb-0"
-           th:text="|Trang ${vouchers.number + 1}/${vouchers.totalPages}|">Trang 1/1</p>
-    </nav>
+    <!-- Phân trang dùng chung – giữ nguyên bộ lọc (trạng thái, từ khoá) khi sang trang -->
+    <div th:replace="~{fragments/pagination :: pager(
+            page=${vouchers}, pageNumbers=${pageNumbers},
+            url='/admin/voucher', ariaLabel='Phân trang voucher', itemLabel='voucher',
+            query=|status=${statusFilter ?: ''}&keyword=${#uris.escapeQueryParam(keyword ?: '')}|)}"></div>
 
 </th:block>
 

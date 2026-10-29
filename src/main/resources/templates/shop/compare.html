@@ -20,7 +20,7 @@
 
     <div class="d-flex flex-wrap justify-content-between align-items-center gap-2 mb-3">
         <div>
-            <h1 class="h4 mb-0"><i class="bi bi-bar-chart-steps text-primary"></i> So sánh sản phẩm</h1>
+            <h1 class="page-title mb-0"><i class="bi bi-bar-chart-steps text-primary" aria-hidden="true"></i> So sánh sản phẩm</h1>
             <p class="text-muted small mb-0"
                th:text="|Chọn tối đa ${maxItems} sản phẩm để đặt cạnh nhau và so thông số. Đang có ${items.size()} sản phẩm.|">
                 Chọn tối đa 4 sản phẩm.
@@ -28,12 +28,12 @@
         </div>
         <div class="d-flex gap-2" th:if="${!items.isEmpty()}">
             <a class="btn btn-sm btn-outline-primary" th:href="@{/san-pham}">
-                <i class="bi bi-plus-lg"></i> Thêm sản phẩm khác
+                <i class="bi bi-plus-lg" aria-hidden="true"></i> Thêm sản phẩm khác
             </a>
             <form th:action="@{/so-sanh/xoa-het}" method="post"
                   data-confirm="Xoá toàn bộ danh sách so sánh?">
                 <button class="btn btn-sm btn-outline-danger" type="submit">
-                    <i class="bi bi-x-circle"></i> Xoá tất cả
+                    <i class="bi bi-x-circle" aria-hidden="true"></i> Xoá tất cả
                 </button>
             </form>
         </div>
@@ -42,14 +42,14 @@
     <!-- Trạng thái rỗng: hướng dẫn khách cách thêm sản phẩm -->
     <div class="card border-0 shadow-sm" th:if="${items.isEmpty()}">
         <div class="card-body text-center py-5">
-            <i class="bi bi-bar-chart-steps display-4 text-muted"></i>
+            <i class="bi bi-bar-chart-steps display-4 text-muted" aria-hidden="true"></i>
             <p class="mt-3 mb-2 fw-semibold">Danh sách so sánh đang trống</p>
             <p class="text-muted mb-3">
                 Vào trang sản phẩm và bấm <strong>“So sánh”</strong> ở mỗi mẫu vợt bạn quan tâm
                 (tối đa <span th:text="${maxItems}">4</span> mẫu).
             </p>
             <a class="btn btn-primary" th:href="@{/san-pham}">
-                <i class="bi bi-grid"></i> Xem danh sách vợt
+                <i class="bi bi-grid" aria-hidden="true"></i> Xem danh sách vợt
             </a>
         </div>
     </div>
@@ -143,13 +143,13 @@
                         <div class="d-flex flex-column gap-1 align-items-center">
                             <a class="btn btn-sm btn-primary"
                                th:href="@{/san-pham/{id}(id=${item.product.id})}">
-                                <i class="bi bi-eye"></i> Xem chi tiết
+                                <i class="bi bi-eye" aria-hidden="true"></i> Xem chi tiết
                             </a>
                             <form th:action="@{/so-sanh/xoa}" method="post"
                                   th:data-confirm="${'Bỏ ' + item.product.name + ' khỏi danh sách so sánh?'}">
                                 <input type="hidden" name="productId" th:value="${item.product.id}">
                                 <button class="btn btn-sm btn-outline-danger" type="submit">
-                                    <i class="bi bi-x-lg"></i> Bỏ
+                                    <i class="bi bi-x-lg" aria-hidden="true"></i> Bỏ
                                 </button>
                             </form>
                         </div>

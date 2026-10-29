@@ -10,6 +10,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.StringUtils;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -50,6 +51,7 @@ public class AddressController {
                          @RequestParam(name = "next", required = false) String next,
                          Model model,
                          RedirectAttributes redirectAttributes) {
+        rejectIncompleteGhnLocation(form, bindingResult);
         if (bindingResult.hasErrors()) {
             // Chưa ghi CSDL nên hiển thị lại form kèm lỗi, không cần redirect.
             model.addAttribute("addresses", addressService.list(currentUser.getUserId()));
@@ -85,13 +87,42 @@ public class AddressController {
     }
 
     /**
-     * Dữ liệu cho khối "Chọn địa chỉ theo GHN": danh sách tỉnh/thành + cờ bật/tắt.
-     * GHN chưa bật hoặc đang lỗi thì `ghnEnabled = false` ⇒ giao diện chỉ hiện ô nhập tay.
+     * Dữ liệu cho khối địa chỉ: danh sách Tỉnh/Thành của GHN + các cờ bật/tắt.
+     * `ghnReady` = GHN bật VÀ lấy được danh sách tỉnh/thành ⇒ form dùng dropdown Tỉnh–Huyện–Xã
+     * của GHN; ngược lại (GHN tắt hoặc API đang lỗi) khách nhập địa chỉ bằng tay để không bị
+     * chặn thêm địa chỉ/đặt hàng.
      */
     private void prepareGhnModel(Model model) {
-        model.addAttribute("ghnEnabled", ghnAddressService.isAvailable());
-        model.addAttribute("ghnMock", ghnAddressService.isMock());
         model.addAttribute("ghnProvinces", ghnAddressService.provinces());
+        model.addAttribute("ghnEnabled", ghnAddressService.isAvailable());
+        model.addAttribute("ghnReady", isGhnReady());
+        model.addAttribute("ghnShippingEnabled", ghnAddressService.isShippingAvailable());
+        model.addAttribute("ghnMock", ghnAddressService.isMock());
+    }
+
+    /** GHN bật và trả về được danh sách tỉnh/thành (dữ liệu ở server đã có cache nên gọi lại rất nhẹ). */
+    private boolean isGhnReady() {
+        return ghnAddressService.isAvailable() && !ghnAddressService.provinces().isEmpty();
+    }
+
+    /**
+     * Đang dùng được dữ liệu GHN thì địa chỉ phải chọn ĐỦ Tỉnh–Huyện–Xã từ dropdown GHN.
+     * Đây là lỗi của tầng form nên báo ngay cạnh ô chọn; mã còn được {@link AddressService} kiểm tra
+     * lại lần nữa (có tồn tại thật + khớp tên địa danh) trước khi ghi CSDL.
+     */
+    private void rejectIncompleteGhnLocation(AddressForm form, BindingResult bindingResult) {
+        if (!isGhnReady()) {
+            return;
+        }
+        if (form.getProvinceId() == null) {
+            bindingResult.rejectValue("provinceId", "ghn.province", "Vui lòng chọn tỉnh/thành phố.");
+        }
+        if (form.getDistrictId() == null) {
+            bindingResult.rejectValue("districtId", "ghn.district", "Vui lòng chọn quận/huyện.");
+        }
+        if (!StringUtils.hasText(form.getWardCode())) {
+            bindingResult.rejectValue("wardCode", "ghn.ward", "Vui lòng chọn phường/xã.");
+        }
     }
 
     private String safeNext(String next) {

@@ -1,0 +1,390 @@
+- generic [active] [ref=f162e1]:
+  - link "Bỏ qua tới nội dung chính" [ref=f162e2] [cursor=pointer]:
+    - /url: "#noi-dung-chinh"
+  - generic [ref=f162e4]:
+    - generic "Menu quản trị" [ref=f162e6]:
+      - navigation [ref=f162e8]:
+        - link "BadStore Trang quản trị" [ref=f162e9] [cursor=pointer]:
+          - /url: /admin
+          - generic [aria-hidden] [ref=f162e11]: 
+          - generic [ref=f162e12]:
+            - text: BadStore
+            - generic [ref=f162e13]: Trang quản trị
+        - paragraph [ref=f162e14]: Bán hàng
+        - list [ref=f162e15]:
+          - listitem [ref=f162e16]:
+            - link "Tổng quan" [ref=f162e17] [cursor=pointer]:
+              - /url: /admin
+              - generic [aria-hidden] [ref=f162e18]: 
+              - text: Tổng quan
+          - listitem [ref=f162e19]:
+            - link "Bán hàng tại quầy" [ref=f162e20] [cursor=pointer]:
+              - /url: /admin/ban-hang
+              - generic [aria-hidden] [ref=f162e21]: 
+              - text: Bán hàng tại quầy
+          - listitem [ref=f162e22]:
+            - link "Đơn hàng" [ref=f162e23] [cursor=pointer]:
+              - /url: /admin/don-hang
+              - generic [aria-hidden] [ref=f162e24]: 
+              - text: Đơn hàng
+        - paragraph [ref=f162e25]: Hàng hoá & khuyến mãi
+        - list [ref=f162e26]:
+          - listitem [ref=f162e27]:
+            - link "Sản phẩm & biến thể" [ref=f162e28] [cursor=pointer]:
+              - /url: /admin/san-pham
+              - generic [aria-hidden] [ref=f162e29]: 
+              - text: Sản phẩm & biến thể
+          - listitem [ref=f162e30]:
+            - link "Voucher" [ref=f162e31] [cursor=pointer]:
+              - /url: /admin/voucher
+              - generic [aria-hidden] [ref=f162e32]: 
+              - text: Voucher
+        - generic [ref=f162e33]:
+          - link "Xem cửa hàng" [ref=f162e34] [cursor=pointer]:
+            - /url: /
+            - generic [aria-hidden] [ref=f162e35]: 
+            - text: Xem cửa hàng
+          - paragraph [ref=f162e36]:
+            - generic [aria-hidden] [ref=f162e37]: 
+            - text: Đổi trạng thái đơn sẽ trừ/cộng kho ngay.
+    - main [ref=f162e38]:
+      - generic [ref=f162e39]:
+        - text: 
+        - generic [ref=f162e40]:
+          - generic [aria-hidden] [ref=f162e41]: 
+          - text: Khu quản trị BadStore
+        - generic [ref=f162e42]:
+          - link "Xem cửa hàng" [ref=f162e43] [cursor=pointer]:
+            - /url: /
+            - generic [aria-hidden] [ref=f162e44]: 
+            - text: Xem cửa hàng
+          - generic [ref=f162e45]:
+            - generic [aria-hidden] [ref=f162e46]: 
+            - generic [ref=f162e47]: admin@badstore.local
+          - button "Đăng xuất" [ref=f162e49] [cursor=pointer]:
+            - generic [aria-hidden] [ref=f162e50]: 
+            - text: Đăng xuất
+      - generic [ref=f162e51]:
+        - navigation "breadcrumb" [ref=f162e52]:
+          - list [ref=f162e53]:
+            - listitem [ref=f162e54]:
+              - link "Tổng quan" [ref=f162e55] [cursor=pointer]:
+                - /url: /admin
+            - listitem [ref=f162e56]: / Bán hàng tại quầy
+        - generic [ref=f162e57]:
+          - heading "Bán hàng tại quầy" [level=1] [ref=f162e58]:
+            - generic [aria-hidden] [ref=f162e59]: 
+            - text: Bán hàng tại quầy
+          - generic [ref=f162e60]:
+            - link "Tạo đơn giao hàng (điện thoại)" [ref=f162e61] [cursor=pointer]:
+              - /url: /admin/don-hang/tao-don
+              - generic [aria-hidden] [ref=f162e62]: 
+              - text: Tạo đơn giao hàng (điện thoại)
+            - link "Danh sách đơn" [ref=f162e63] [cursor=pointer]:
+              - /url: /admin/don-hang
+              - generic [aria-hidden] [ref=f162e64]: 
+              - text: Danh sách đơn
+        - generic [ref=f162e66]:
+          - generic [ref=f162e68]:
+            - generic [ref=f162e69]:
+              - generic [ref=f162e70]:
+                - generic [aria-hidden] [ref=f162e72]: 
+                - generic [ref=f162e73]: Tìm sản phẩm theo SKU hoặc tên
+                - searchbox "Tìm sản phẩm theo SKU hoặc tên" [ref=f162e74]
+                - button "Tìm" [ref=f162e75] [cursor=pointer]:
+                  - generic [aria-hidden] [ref=f162e76]: 
+                  - text: Tìm
+              - generic [ref=f162e77]: "Máy quét mã vạch: quét SKU rồi Enter là sản phẩm vào hoá đơn ngay. Chỉ hiện sản phẩm/biến thể đang bán, kèm tồn kho thực tế."
+            - generic [ref=f162e78]:
+              - generic [ref=f162e79]:
+                - button "sssss2232 2323 / 5U / G5 SKU SSFFF-323 123.123 ₫ Tồn 22323" [ref=f162e80] [cursor=pointer]:
+                  - generic [ref=f162e81]:
+                    - generic [ref=f162e82]: sssss2232
+                    - generic [ref=f162e83]: 2323 / 5U / G5
+                    - generic [ref=f162e84]: SKU SSFFF-323
+                  - generic [ref=f162e85]:
+                    - generic [ref=f162e86]: 123.123 ₫
+                    - generic [ref=f162e87]: Tồn 22323
+                - button "Vợt cầu lông Apacs Feather Weight 55 Trắng / 5U / G5 SKU AP-FW55-01 990.000 ₫ Tồn 15" [ref=f162e88] [cursor=pointer]:
+                  - generic [ref=f162e89]:
+                    - generic [ref=f162e90]: Vợt cầu lông Apacs Feather Weight 55
+                    - generic [ref=f162e91]: Trắng / 5U / G5
+                    - generic [ref=f162e92]: SKU AP-FW55-01
+                  - generic [ref=f162e93]:
+                    - generic [ref=f162e94]: 990.000 ₫
+                    - generic [ref=f162e95]: Tồn 15
+                - button "Vợt cầu lông Apacs Feather Weight 55 Hồng / 5U / G5 SKU AP-FW55-02 990.000 ₫ Tồn 7" [ref=f162e96] [cursor=pointer]:
+                  - generic [ref=f162e97]:
+                    - generic [ref=f162e98]: Vợt cầu lông Apacs Feather Weight 55
+                    - generic [ref=f162e99]: Hồng / 5U / G5
+                    - generic [ref=f162e100]: SKU AP-FW55-02
+                  - generic [ref=f162e101]:
+                    - generic [ref=f162e102]: 990.000 ₫
+                    - generic [ref=f162e103]: Tồn 7
+                - button "Vợt cầu lông Apacs Feather Weight 55 Đen / 4U / G5 SKU AP-FW55-03 990.000 ₫ Tồn 0" [ref=f162e104] [cursor=pointer]:
+                  - generic [ref=f162e105]:
+                    - generic [ref=f162e106]: Vợt cầu lông Apacs Feather Weight 55
+                    - generic [ref=f162e107]: Đen / 4U / G5
+                    - generic [ref=f162e108]: SKU AP-FW55-03
+                  - generic [ref=f162e109]:
+                    - generic [ref=f162e110]: 990.000 ₫
+                    - generic [ref=f162e111]: Tồn 0
+                - button "Vợt cầu lông Apacs Z-Ziggler 2 Đen vàng / 4U / G5 SKU AP-ZZIGGLER2-01 1.290.000 ₫ Tồn 13" [ref=f162e112] [cursor=pointer]:
+                  - generic [ref=f162e113]:
+                    - generic [ref=f162e114]: Vợt cầu lông Apacs Z-Ziggler 2
+                    - generic [ref=f162e115]: Đen vàng / 4U / G5
+                    - generic [ref=f162e116]: SKU AP-ZZIGGLER2-01
+                  - generic [ref=f162e117]:
+                    - generic [ref=f162e118]: 1.290.000 ₫
+                    - generic [ref=f162e119]: Tồn 13
+                - button "Vợt cầu lông Apacs Z-Ziggler 2 Trắng xanh / 3U / G5 SKU AP-ZZIGGLER2-02 1.290.000 ₫ Tồn 5" [ref=f162e120] [cursor=pointer]:
+                  - generic [ref=f162e121]:
+                    - generic [ref=f162e122]: Vợt cầu lông Apacs Z-Ziggler 2
+                    - generic [ref=f162e123]: Trắng xanh / 3U / G5
+                    - generic [ref=f162e124]: SKU AP-ZZIGGLER2-02
+                  - generic [ref=f162e125]:
+                    - generic [ref=f162e126]: 1.290.000 ₫
+                    - generic [ref=f162e127]: Tồn 5
+                - button "Vợt cầu lông Kumpoo Power Shot 9900 Vàng đen / 4U / G5 SKU KP-PS9900-01 1.890.000 ₫ Tồn 13" [ref=f162e128] [cursor=pointer]:
+                  - generic [ref=f162e129]:
+                    - generic [ref=f162e130]: Vợt cầu lông Kumpoo Power Shot 9900
+                    - generic [ref=f162e131]: Vàng đen / 4U / G5
+                    - generic [ref=f162e132]: SKU KP-PS9900-01
+                  - generic [ref=f162e133]:
+                    - generic [ref=f162e134]: 1.890.000 ₫
+                    - generic [ref=f162e135]: Tồn 13
+                - button "Vợt cầu lông Kumpoo Power Shot 9900 Đỏ đen / 3U / G5 SKU KP-PS9900-02 1.890.000 ₫ Tồn 5" [ref=f162e136] [cursor=pointer]:
+                  - generic [ref=f162e137]:
+                    - generic [ref=f162e138]: Vợt cầu lông Kumpoo Power Shot 9900
+                    - generic [ref=f162e139]: Đỏ đen / 3U / G5
+                    - generic [ref=f162e140]: SKU KP-PS9900-02
+                  - generic [ref=f162e141]:
+                    - generic [ref=f162e142]: 1.890.000 ₫
+                    - generic [ref=f162e143]: Tồn 5
+                - button "Vợt cầu lông Li-Ning Axforce 100 Đen đỏ / 4U / G5 SKU LN-AXF100-01 4.990.000 ₫ Tồn 7" [ref=f162e144] [cursor=pointer]:
+                  - generic [ref=f162e145]:
+                    - generic [ref=f162e146]: Vợt cầu lông Li-Ning Axforce 100
+                    - generic [ref=f162e147]: Đen đỏ / 4U / G5
+                    - generic [ref=f162e148]: SKU LN-AXF100-01
+                  - generic [ref=f162e149]:
+                    - generic [ref=f162e150]: 4.990.000 ₫
+                    - generic [ref=f162e151]: Tồn 7
+                - button "Vợt cầu lông Li-Ning Axforce 100 Đen vàng / 3U / G4 SKU LN-AXF100-02 5.090.000 ₫ Tồn 3" [ref=f162e152] [cursor=pointer]:
+                  - generic [ref=f162e153]:
+                    - generic [ref=f162e154]: Vợt cầu lông Li-Ning Axforce 100
+                    - generic [ref=f162e155]: Đen vàng / 3U / G4
+                    - generic [ref=f162e156]: SKU LN-AXF100-02
+                  - generic [ref=f162e157]:
+                    - generic [ref=f162e158]: 5.090.000 ₫
+                    - generic [ref=f162e159]: Tồn 3
+                - button "Vợt cầu lông Li-Ning Axforce 90 Tiger Đỏ / 4U / G5 SKU LN-AXF90T-01 3.590.000 ₫ Tồn 10" [ref=f162e160] [cursor=pointer]:
+                  - generic [ref=f162e161]:
+                    - generic [ref=f162e162]: Vợt cầu lông Li-Ning Axforce 90 Tiger
+                    - generic [ref=f162e163]: Đỏ / 4U / G5
+                    - generic [ref=f162e164]: SKU LN-AXF90T-01
+                  - generic [ref=f162e165]:
+                    - generic [ref=f162e166]: 3.590.000 ₫
+                    - generic [ref=f162e167]: Tồn 10
+                - button "Vợt cầu lông Li-Ning Axforce 90 Tiger Xanh rêu / 4U / G5 SKU LN-AXF90T-02 3.590.000 ₫ Tồn 7" [ref=f162e168] [cursor=pointer]:
+                  - generic [ref=f162e169]:
+                    - generic [ref=f162e170]: Vợt cầu lông Li-Ning Axforce 90 Tiger
+                    - generic [ref=f162e171]: Xanh rêu / 4U / G5
+                    - generic [ref=f162e172]: SKU LN-AXF90T-02
+                  - generic [ref=f162e173]:
+                    - generic [ref=f162e174]: 3.590.000 ₫
+                    - generic [ref=f162e175]: Tồn 7
+                - button "Vợt cầu lông Li-Ning Axforce 90 Tiger Đen / 3U / G5 SKU LN-AXF90T-03 3.590.000 ₫ Tồn 2" [ref=f162e176] [cursor=pointer]:
+                  - generic [ref=f162e177]:
+                    - generic [ref=f162e178]: Vợt cầu lông Li-Ning Axforce 90 Tiger
+                    - generic [ref=f162e179]: Đen / 3U / G5
+                    - generic [ref=f162e180]: SKU LN-AXF90T-03
+                  - generic [ref=f162e181]:
+                    - generic [ref=f162e182]: 3.590.000 ₫
+                    - generic [ref=f162e183]: Tồn 2
+                - button "Vợt cầu lông Li-Ning Halbertec 9000 Đen nhám / 4U / G5 SKU LN-HLBT9000-01 4.590.000 ₫ Tồn 5" [ref=f162e184] [cursor=pointer]:
+                  - generic [ref=f162e185]:
+                    - generic [ref=f162e186]: Vợt cầu lông Li-Ning Halbertec 9000
+                    - generic [ref=f162e187]: Đen nhám / 4U / G5
+                    - generic [ref=f162e188]: SKU LN-HLBT9000-01
+                  - generic [ref=f162e189]:
+                    - generic [ref=f162e190]: 4.590.000 ₫
+                    - generic [ref=f162e191]: Tồn 5
+                - button "Vợt cầu lông Li-Ning Halbertec 9000 Đen nhám / 3U / G5 SKU LN-HLBT9000-02 4.590.000 ₫ Tồn 3" [ref=f162e192] [cursor=pointer]:
+                  - generic [ref=f162e193]:
+                    - generic [ref=f162e194]: Vợt cầu lông Li-Ning Halbertec 9000
+                    - generic [ref=f162e195]: Đen nhám / 3U / G5
+                    - generic [ref=f162e196]: SKU LN-HLBT9000-02
+                  - generic [ref=f162e197]:
+                    - generic [ref=f162e198]: 4.590.000 ₫
+                    - generic [ref=f162e199]: Tồn 3
+                - button "Vợt cầu lông Li-Ning Windstorm 78 Xanh dương / 4U / G5 SKU LN-WS78-01 1.690.000 ₫ Tồn 15" [ref=f162e200] [cursor=pointer]:
+                  - generic [ref=f162e201]:
+                    - generic [ref=f162e202]: Vợt cầu lông Li-Ning Windstorm 78
+                    - generic [ref=f162e203]: Xanh dương / 4U / G5
+                    - generic [ref=f162e204]: SKU LN-WS78-01
+                  - generic [ref=f162e205]:
+                    - generic [ref=f162e206]: 1.690.000 ₫
+                    - generic [ref=f162e207]: Tồn 15
+                - button "Vợt cầu lông Li-Ning Windstorm 78 Trắng / 5U / G5 SKU LN-WS78-02 1.690.000 ₫ Tồn 8" [ref=f162e208] [cursor=pointer]:
+                  - generic [ref=f162e209]:
+                    - generic [ref=f162e210]: Vợt cầu lông Li-Ning Windstorm 78
+                    - generic [ref=f162e211]: Trắng / 5U / G5
+                    - generic [ref=f162e212]: SKU LN-WS78-02
+                  - generic [ref=f162e213]:
+                    - generic [ref=f162e214]: 1.690.000 ₫
+                    - generic [ref=f162e215]: Tồn 8
+                - button "Vợt cầu lông Mizuno Acrospeed 7 Xanh / 4U / G5 SKU MZ-AS7-01 2.590.000 ₫ Tồn 12" [ref=f162e216] [cursor=pointer]:
+                  - generic [ref=f162e217]:
+                    - generic [ref=f162e218]: Vợt cầu lông Mizuno Acrospeed 7
+                    - generic [ref=f162e219]: Xanh / 4U / G5
+                    - generic [ref=f162e220]: SKU MZ-AS7-01
+                  - generic [ref=f162e221]:
+                    - generic [ref=f162e222]: 2.590.000 ₫
+                    - generic [ref=f162e223]: Tồn 12
+                - button "Vợt cầu lông Mizuno Acrospeed 7 Đen / 4U / G5 SKU MZ-AS7-02 2.590.000 ₫ Tồn 4" [ref=f162e224] [cursor=pointer]:
+                  - generic [ref=f162e225]:
+                    - generic [ref=f162e226]: Vợt cầu lông Mizuno Acrospeed 7
+                    - generic [ref=f162e227]: Đen / 4U / G5
+                    - generic [ref=f162e228]: SKU MZ-AS7-02
+                  - generic [ref=f162e229]:
+                    - generic [ref=f162e230]: 2.590.000 ₫
+                    - generic [ref=f162e231]: Tồn 4
+                - button "Vợt cầu lông Mizuno Altius 01 Speed Bạc / 4U / G5 SKU MZ-ALT01S-01 2.190.000 ₫ Tồn 7" [ref=f162e232] [cursor=pointer]:
+                  - generic [ref=f162e233]:
+                    - generic [ref=f162e234]: Vợt cầu lông Mizuno Altius 01 Speed
+                    - generic [ref=f162e235]: Bạc / 4U / G5
+                    - generic [ref=f162e236]: SKU MZ-ALT01S-01
+                  - generic [ref=f162e237]:
+                    - generic [ref=f162e238]: 2.190.000 ₫
+                    - generic [ref=f162e239]: Tồn 7
+              - status [ref=f162e240]: Tìm thấy 20 sản phẩm. Dùng phím Tab để chọn sản phẩm cần bán.
+              - text: 
+          - generic [ref=f162e241]:
+            - generic [ref=f162e242]:
+              - generic [ref=f162e243]:
+                - generic [ref=f162e244]:
+                  - generic [aria-hidden] [ref=f162e245]: 
+                  - text: Hoá đơn tại quầy
+                - button "Xoá hết" [ref=f162e246] [cursor=pointer]:
+                  - generic [aria-hidden] [ref=f162e247]: 
+                  - text: Xoá hết
+              - generic [ref=f162e248]:
+                - status [ref=f162e249]
+                - paragraph [ref=f162e250]: Chưa có sản phẩm nào. Tìm ở khung bên trái rồi bấm vào sản phẩm để thêm vào hoá đơn.
+            - generic [ref=f162e251]:
+              - generic [ref=f162e252]:
+                - generic [aria-hidden] [ref=f162e253]: 
+                - text: Mã giảm giá (nếu khách có)
+              - generic [ref=f162e254]:
+                - generic [ref=f162e255]: Mã giảm giá
+                - textbox "Mã giảm giá" [ref=f162e256]:
+                  - /placeholder: "Ví dụ: BADSTORE10"
+            - generic [ref=f162e257]:
+              - generic [ref=f162e258]:
+                - generic [aria-hidden] [ref=f162e259]: 
+                - text: Khách hàng
+              - generic [ref=f162e260]:
+                - generic [ref=f162e261]:
+                  - generic [aria-hidden] [ref=f162e263]: 
+                  - generic [ref=f162e264]: Số điện thoại khách hàng
+                  - textbox "Số điện thoại khách hàng" [ref=f162e265]:
+                    - /placeholder: SĐT khách quen (bỏ trống = khách lẻ)
+                  - button "Tra khách" [ref=f162e266] [cursor=pointer]
+                - generic [ref=f162e267]:
+                  - generic [ref=f162e268]:
+                    - generic [ref=f162e269]: Tên khách trên phiếu
+                    - textbox "Tên khách trên phiếu" [ref=f162e270]:
+                      - /placeholder: Khách lẻ tại quầy
+                  - generic [ref=f162e271]:
+                    - generic [ref=f162e272]: SĐT trên phiếu
+                    - textbox "SĐT trên phiếu" [ref=f162e273]:
+                      - /placeholder: Để trống nếu khách không cho SĐT
+                  - generic [ref=f162e274]:
+                    - generic [ref=f162e275]: Ghi chú nội bộ
+                    - textbox "Ghi chú nội bộ" [ref=f162e276]:
+                      - /placeholder: "Ví dụ: khách quen, đã kiểm tra vợt, in hoá đơn…"
+            - generic [ref=f162e277]:
+              - generic [ref=f162e278]:
+                - generic [aria-hidden] [ref=f162e279]: 
+                - text: Thanh toán
+              - generic [ref=f162e280]:
+                - group "Phương thức thanh toán" [ref=f162e281]:
+                  - radio "Tiền mặt" [checked]
+                  - generic [ref=f162e282] [cursor=pointer]:
+                    - generic [aria-hidden] [ref=f162e283]: 
+                    - text: Tiền mặt
+                  - radio "Chuyển khoản"
+                  - generic [ref=f162e284] [cursor=pointer]:
+                    - generic [aria-hidden] [ref=f162e285]: 
+                    - text: Chuyển khoản
+                - generic [ref=f162e286]:
+                  - generic [ref=f162e287]: Tiền khách đưa (₫)
+                  - spinbutton "Tiền khách đưa (₫)" [ref=f162e288]
+                  - generic [ref=f162e289]:
+                    - button "Đúng tiền" [ref=f162e290] [cursor=pointer]
+                    - button "50.000" [ref=f162e291] [cursor=pointer]
+                    - button "100.000" [ref=f162e292] [cursor=pointer]
+                    - button "200.000" [ref=f162e293] [cursor=pointer]
+                    - button "500.000" [ref=f162e294] [cursor=pointer]
+                  - paragraph [ref=f162e295]:
+                    - text: "Tiền thừa trả khách:"
+                    - strong [ref=f162e296]: 0 ₫
+              - generic [ref=f162e297]:
+                - button "Thu tiền & in phiếu" [ref=f162e298] [cursor=pointer]:
+                  - generic [aria-hidden] [ref=f162e299]: 
+                  - text: Thu tiền & in phiếu
+                - paragraph [ref=f162e300]:
+                  - text: Hoá đơn được xác nhận và
+                  - strong [ref=f162e301]: trừ kho ngay
+                  - text: ; tiền mặt được ghi nhận đã thanh toán.
+            - generic [ref=f162e302]:
+              - generic [ref=f162e303]:
+                - generic [aria-hidden] [ref=f162e304]: 
+                - text: Hoá đơn gần đây
+              - list [ref=f162e305]:
+                - listitem [ref=f162e306]:
+                  - generic [ref=f162e307]:
+                    - text: BS261018001312731 · 18/10/2026 00:13
+                    - generic [ref=f162e308]: Đã xác nhận
+                  - generic [ref=f162e309]:
+                    - generic [ref=f162e310]: 4.320.000 ₫
+                    - link "In lại phiếu BS261018001312731" [ref=f162e311] [cursor=pointer]:
+                      - /url: /admin/ban-hang/phieu/330
+                      - generic [aria-hidden] [ref=f162e312]: 
+                - listitem [ref=f162e313]:
+                  - generic [ref=f162e314]:
+                    - text: BS261017004154058 · 17/10/2026 00:41
+                    - generic [ref=f162e315]: Đã xác nhận
+                  - generic [ref=f162e316]:
+                    - generic [ref=f162e317]: 3.570.000 ₫
+                    - link "In lại phiếu BS261017004154058" [ref=f162e318] [cursor=pointer]:
+                      - /url: /admin/ban-hang/phieu/307
+                      - generic [aria-hidden] [ref=f162e319]: 
+                - listitem [ref=f162e320]:
+                  - generic [ref=f162e321]:
+                    - text: BS261016072347765 · 16/10/2026 07:23
+                    - generic [ref=f162e322]: Đã xác nhận
+                  - generic [ref=f162e323]:
+                    - generic [ref=f162e324]: 10.560.000 ₫
+                    - link "In lại phiếu BS261016072347765" [ref=f162e325] [cursor=pointer]:
+                      - /url: /admin/ban-hang/phieu/177
+                      - generic [aria-hidden] [ref=f162e326]: 
+                - listitem [ref=f162e327]:
+                  - generic [ref=f162e328]:
+                    - text: BS261016013255070 · 16/10/2026 01:32
+                    - generic [ref=f162e329]: Đã xác nhận
+                  - generic [ref=f162e330]:
+                    - generic [ref=f162e331]: 2.920.000 ₫
+                    - link "In lại phiếu BS261016013255070" [ref=f162e332] [cursor=pointer]:
+                      - /url: /admin/ban-hang/phieu/102
+                      - generic [aria-hidden] [ref=f162e333]: 
+                - listitem [ref=f162e334]:
+                  - generic [ref=f162e335]:
+                    - text: BS261016011008437 · 16/10/2026 01:10
+                    - generic [ref=f162e336]: Giao thành công
+                  - generic [ref=f162e337]:
+                    - generic [ref=f162e338]: 5.780.000 ₫
+                    - link "In lại phiếu BS261016011008437" [ref=f162e339] [cursor=pointer]:
+                      - /url: /admin/ban-hang/phieu/69
+                      - generic [aria-hidden] [ref=f162e340]: 
+  - text: 

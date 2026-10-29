@@ -1,0 +1,175 @@
+- generic [active] [ref=f14e1]:
+  - link "Bỏ qua tới nội dung chính" [ref=f14e2] [cursor=pointer]:
+    - /url: "#noi-dung-chinh"
+  - main [ref=f14e5]:
+    - generic [ref=f14e6]:
+      - button "Mở menu quản trị" [ref=f14e7] [cursor=pointer]:
+        - generic [aria-hidden] [ref=f14e8]: 
+      - text: 
+      - generic [ref=f14e9]:
+        - text:  
+        - button "Đăng xuất" [ref=f14e11] [cursor=pointer]:
+          - generic [aria-hidden] [ref=f14e12]: 
+    - generic [ref=f14e13]:
+      - navigation "breadcrumb" [ref=f14e14]:
+        - list [ref=f14e15]:
+          - listitem [ref=f14e16]:
+            - link "Tổng quan" [ref=f14e17] [cursor=pointer]:
+              - /url: /admin
+          - listitem [ref=f14e18]: / Bán hàng tại quầy
+      - generic [ref=f14e19]:
+        - heading "Bán hàng tại quầy" [level=1] [ref=f14e20]:
+          - generic [aria-hidden] [ref=f14e21]: 
+          - text: Bán hàng tại quầy
+        - generic [ref=f14e22]:
+          - link "Tạo đơn giao hàng (điện thoại)" [ref=f14e23] [cursor=pointer]:
+            - /url: /admin/don-hang/tao-don
+            - generic [aria-hidden] [ref=f14e24]: 
+            - text: Tạo đơn giao hàng (điện thoại)
+          - link "Danh sách đơn" [ref=f14e25] [cursor=pointer]:
+            - /url: /admin/don-hang
+            - generic [aria-hidden] [ref=f14e26]: 
+            - text: Danh sách đơn
+      - generic [ref=f14e28]:
+        - generic [ref=f14e30]:
+          - generic [ref=f14e31]:
+            - generic [ref=f14e32]:
+              - generic [aria-hidden] [ref=f14e34]: 
+              - generic [ref=f14e35]: Tìm sản phẩm theo SKU hoặc tên
+              - searchbox "Tìm sản phẩm theo SKU hoặc tên" [ref=f14e36]
+              - button "Tìm" [ref=f14e37] [cursor=pointer]:
+                - generic [aria-hidden] [ref=f14e38]: 
+                - text: Tìm
+            - generic [ref=f14e39]: "Máy quét mã vạch: quét SKU rồi Enter là sản phẩm vào hoá đơn ngay. Chỉ hiện sản phẩm/biến thể đang bán, kèm tồn kho thực tế."
+          - generic:
+            - status [ref=f14e40]
+            - text: 
+        - generic [ref=f14e41]:
+          - generic [ref=f14e42]:
+            - generic [ref=f14e43]:
+              - generic [ref=f14e44]:
+                - generic [aria-hidden] [ref=f14e45]: 
+                - text: Hoá đơn tại quầy
+              - button "Xoá hết" [ref=f14e46] [cursor=pointer]:
+                - generic [aria-hidden] [ref=f14e47]: 
+                - text: Xoá hết
+            - generic [ref=f14e48]:
+              - status [ref=f14e49]
+              - paragraph [ref=f14e50]: Chưa có sản phẩm nào. Tìm ở khung bên trái rồi bấm vào sản phẩm để thêm vào hoá đơn.
+          - generic [ref=f14e51]:
+            - generic [ref=f14e52]:
+              - generic [aria-hidden] [ref=f14e53]: 
+              - text: Mã giảm giá (nếu khách có)
+            - generic [ref=f14e54]:
+              - generic [ref=f14e55]: Mã giảm giá
+              - textbox "Mã giảm giá" [ref=f14e56]:
+                - /placeholder: "Ví dụ: BADSTORE10"
+          - generic [ref=f14e57]:
+            - generic [ref=f14e58]:
+              - generic [aria-hidden] [ref=f14e59]: 
+              - text: Khách hàng
+            - generic [ref=f14e60]:
+              - generic [ref=f14e61]:
+                - generic [aria-hidden] [ref=f14e63]: 
+                - generic [ref=f14e64]: Số điện thoại khách hàng
+                - textbox "Số điện thoại khách hàng" [ref=f14e65]:
+                  - /placeholder: SĐT khách quen (bỏ trống = khách lẻ)
+                - button "Tra khách" [ref=f14e66] [cursor=pointer]
+              - generic [ref=f14e67]:
+                - generic [ref=f14e68]:
+                  - generic [ref=f14e69]: Tên khách trên phiếu
+                  - textbox "Tên khách trên phiếu" [ref=f14e70]:
+                    - /placeholder: Khách lẻ tại quầy
+                - generic [ref=f14e71]:
+                  - generic [ref=f14e72]: SĐT trên phiếu
+                  - textbox "SĐT trên phiếu" [ref=f14e73]:
+                    - /placeholder: Để trống nếu khách không cho SĐT
+                - generic [ref=f14e74]:
+                  - generic [ref=f14e75]: Ghi chú nội bộ
+                  - textbox "Ghi chú nội bộ" [ref=f14e76]:
+                    - /placeholder: "Ví dụ: khách quen, đã kiểm tra vợt, in hoá đơn…"
+          - generic [ref=f14e77]:
+            - generic [ref=f14e78]:
+              - generic [aria-hidden] [ref=f14e79]: 
+              - text: Thanh toán
+            - generic [ref=f14e80]:
+              - group "Phương thức thanh toán" [ref=f14e81]:
+                - radio "Tiền mặt" [checked]
+                - generic [ref=f14e82] [cursor=pointer]:
+                  - generic [aria-hidden] [ref=f14e83]: 
+                  - text: Tiền mặt
+                - radio "Chuyển khoản"
+                - generic [ref=f14e84] [cursor=pointer]:
+                  - generic [aria-hidden] [ref=f14e85]: 
+                  - text: Chuyển khoản
+              - generic [ref=f14e86]:
+                - generic [ref=f14e87]: Tiền khách đưa (₫)
+                - spinbutton "Tiền khách đưa (₫)" [ref=f14e88]
+                - generic [ref=f14e89]:
+                  - button "Đúng tiền" [ref=f14e90] [cursor=pointer]
+                  - button "50.000" [ref=f14e91] [cursor=pointer]
+                  - button "100.000" [ref=f14e92] [cursor=pointer]
+                  - button "200.000" [ref=f14e93] [cursor=pointer]
+                  - button "500.000" [ref=f14e94] [cursor=pointer]
+                - paragraph [ref=f14e95]:
+                  - text: "Tiền thừa trả khách:"
+                  - strong [ref=f14e96]: 0 ₫
+            - generic [ref=f14e97]:
+              - button "Thu tiền & in phiếu" [ref=f14e98] [cursor=pointer]:
+                - generic [aria-hidden] [ref=f14e99]: 
+                - text: Thu tiền & in phiếu
+              - paragraph [ref=f14e100]:
+                - text: Hoá đơn được xác nhận và
+                - strong [ref=f14e101]: trừ kho ngay
+                - text: ; tiền mặt được ghi nhận đã thanh toán.
+          - generic [ref=f14e102]:
+            - generic [ref=f14e103]:
+              - generic [aria-hidden] [ref=f14e104]: 
+              - text: Hoá đơn gần đây
+            - list [ref=f14e105]:
+              - listitem [ref=f14e106]:
+                - generic [ref=f14e107]:
+                  - text: BS261018001312731 · 18/10/2026 00:13
+                  - generic [ref=f14e108]: Đã xác nhận
+                - generic [ref=f14e109]:
+                  - generic [ref=f14e110]: 4.320.000 ₫
+                  - link "In lại phiếu BS261018001312731" [ref=f14e111] [cursor=pointer]:
+                    - /url: /admin/ban-hang/phieu/330
+                    - generic [aria-hidden] [ref=f14e112]: 
+              - listitem [ref=f14e113]:
+                - generic [ref=f14e114]:
+                  - text: BS261017004154058 · 17/10/2026 00:41
+                  - generic [ref=f14e115]: Đã xác nhận
+                - generic [ref=f14e116]:
+                  - generic [ref=f14e117]: 3.570.000 ₫
+                  - link "In lại phiếu BS261017004154058" [ref=f14e118] [cursor=pointer]:
+                    - /url: /admin/ban-hang/phieu/307
+                    - generic [aria-hidden] [ref=f14e119]: 
+              - listitem [ref=f14e120]:
+                - generic [ref=f14e121]:
+                  - text: BS261016072347765 · 16/10/2026 07:23
+                  - generic [ref=f14e122]: Đã xác nhận
+                - generic [ref=f14e123]:
+                  - generic [ref=f14e124]: 10.560.000 ₫
+                  - link "In lại phiếu BS261016072347765" [ref=f14e125] [cursor=pointer]:
+                    - /url: /admin/ban-hang/phieu/177
+                    - generic [aria-hidden] [ref=f14e126]: 
+              - listitem [ref=f14e127]:
+                - generic [ref=f14e128]:
+                  - text: BS261016013255070 · 16/10/2026 01:32
+                  - generic [ref=f14e129]: Đã xác nhận
+                - generic [ref=f14e130]:
+                  - generic [ref=f14e131]: 2.920.000 ₫
+                  - link "In lại phiếu BS261016013255070" [ref=f14e132] [cursor=pointer]:
+                    - /url: /admin/ban-hang/phieu/102
+                    - generic [aria-hidden] [ref=f14e133]: 
+              - listitem [ref=f14e134]:
+                - generic [ref=f14e135]:
+                  - text: BS261016011008437 · 16/10/2026 01:10
+                  - generic [ref=f14e136]: Giao thành công
+                - generic [ref=f14e137]:
+                  - generic [ref=f14e138]: 5.780.000 ₫
+                  - link "In lại phiếu BS261016011008437" [ref=f14e139] [cursor=pointer]:
+                    - /url: /admin/ban-hang/phieu/69
+                    - generic [aria-hidden] [ref=f14e140]: 
+  - text: 

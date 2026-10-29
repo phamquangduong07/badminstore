@@ -1,0 +1,109 @@
+- generic [active] [ref=f45e1]:
+  - link "Bỏ qua tới nội dung chính" [ref=f45e2] [cursor=pointer]:
+    - /url: "#noi-dung-chinh"
+  - main [ref=f45e5]:
+    - generic [ref=f45e6]:
+      - button "Mở menu quản trị" [ref=f45e7] [cursor=pointer]:
+        - generic [aria-hidden] [ref=f45e8]: 
+      - generic [ref=f45e9]:
+        - generic [aria-hidden] [ref=f45e10]: 
+        - text: Khu quản trị BadStore
+      - generic [ref=f45e11]:
+        - link "Xem cửa hàng" [ref=f45e12] [cursor=pointer]:
+          - /url: /
+          - generic [aria-hidden] [ref=f45e13]: 
+          - text: Xem cửa hàng
+        - text: 
+        - button "Đăng xuất" [ref=f45e15] [cursor=pointer]:
+          - generic [aria-hidden] [ref=f45e16]: 
+          - text: Đăng xuất
+    - generic [ref=f45e17]:
+      - navigation "breadcrumb" [ref=f45e18]:
+        - list [ref=f45e19]:
+          - listitem [ref=f45e20]:
+            - link "Tổng quan" [ref=f45e21] [cursor=pointer]:
+              - /url: /admin
+          - listitem [ref=f45e22]:
+            - text: /
+            - link "Voucher" [ref=f45e23] [cursor=pointer]:
+              - /url: /admin/voucher
+          - listitem [ref=f45e24]: / Tạo mới
+      - generic [ref=f45e25]:
+        - heading "Tạo voucher mới" [level=1] [ref=f45e26]:
+          - generic [aria-hidden] [ref=f45e27]: 
+        - link "Danh sách voucher" [ref=f45e29] [cursor=pointer]:
+          - /url: /admin/voucher
+          - generic [aria-hidden] [ref=f45e30]: 
+          - text: Danh sách voucher
+      - generic [ref=f45e32]:
+        - generic [ref=f45e33]:
+          - generic [ref=f45e34]:
+            - generic [ref=f45e35]:
+              - generic [aria-hidden] [ref=f45e36]: 
+              - text: Thông tin chương trình
+            - generic [ref=f45e37]:
+              - generic [ref=f45e38]:
+                - generic [ref=f45e39]: Mã giảm giá *
+                - textbox "Mã giảm giá *" [ref=f45e40]:
+                  - /placeholder: GIAM10
+                - generic [ref=f45e41]: Hệ thống tự viết hoa và bỏ khoảng trắng.
+              - generic [ref=f45e42]:
+                - generic [ref=f45e43]: Tên chương trình *
+                - textbox "Tên chương trình *" [ref=f45e44]:
+                  - /placeholder: Giảm 10% cuối mùa
+              - generic [ref=f45e45]:
+                - generic [ref=f45e46]: Mô tả hiển thị cho khách
+                - textbox "Mô tả hiển thị cho khách" [ref=f45e47]:
+                  - /placeholder: Áp dụng cho mọi vợt cầu lông, không áp dụng cùng voucher khác.
+          - generic [ref=f45e48]:
+            - generic [ref=f45e49]:
+              - generic [aria-hidden] [ref=f45e50]: 
+              - text: Giá trị giảm & điều kiện
+            - generic [ref=f45e51]:
+              - generic [ref=f45e52]:
+                - generic [ref=f45e53]: Kiểu giảm giá *
+                - combobox "Kiểu giảm giá *" [ref=f45e54]:
+                  - option "Giảm theo phần trăm" [selected]
+                  - option "Giảm số tiền cố định"
+              - generic [ref=f45e55]:
+                - generic [ref=f45e56]: Giá trị giảm *
+                - spinbutton "Giá trị giảm *" [ref=f45e57]
+                - generic [ref=f45e58]: "Kiểu phần trăm: 1–100. Kiểu số tiền: đơn vị VNĐ."
+              - generic [ref=f45e59]:
+                - generic [ref=f45e60]: Đơn hàng tối thiểu (₫) *
+                - spinbutton "Đơn hàng tối thiểu (₫) *" [ref=f45e61]: "0"
+              - generic [ref=f45e62]:
+                - generic [ref=f45e63]: Giảm tối đa (₫)
+                - spinbutton "Giảm tối đa (₫)" [ref=f45e64]
+        - generic [ref=f45e65]:
+          - generic [ref=f45e66]:
+            - generic [ref=f45e67]:
+              - generic [aria-hidden] [ref=f45e68]: 
+              - text: Số lượt & thời gian
+            - generic [ref=f45e69]:
+              - generic [ref=f45e70]:
+                - generic [ref=f45e71]: Số lượt phát hành *
+                - spinbutton "Số lượt phát hành *" [ref=f45e72]: "10"
+              - generic [ref=f45e73]:
+                - generic [ref=f45e74]: Trạng thái *
+                - combobox "Trạng thái *" [ref=f45e75]:
+                  - option "Đang áp dụng" [selected]
+                  - option "Ngừng áp dụng"
+              - generic [ref=f45e76]:
+                - generic [ref=f45e77]: Bắt đầu *
+                - textbox "Bắt đầu *" [ref=f45e78]: 2026-10-19T22:17
+              - generic [ref=f45e79]:
+                - generic [ref=f45e80]: Kết thúc *
+                - textbox "Kết thúc *" [ref=f45e81]: 2026-11-18T22:17
+            - generic [ref=f45e82]:
+              - button "Lưu voucher" [ref=f45e83] [cursor=pointer]:
+                - generic [aria-hidden] [ref=f45e84]: 
+                - text: Lưu voucher
+              - link "Huỷ" [ref=f45e85] [cursor=pointer]:
+                - /url: /admin/voucher
+          - generic [ref=f45e86]:
+            - generic [aria-hidden] [ref=f45e87]: 
+            - text: Voucher áp cho
+            - strong [ref=f45e88]: tổng hoá đơn
+            - text: ": khách phải đạt đơn tối thiểu, hệ thống tự cắt theo mức giảm tối đa và trừ số tiền giảm vào tổng thanh toán."
+  - text: 

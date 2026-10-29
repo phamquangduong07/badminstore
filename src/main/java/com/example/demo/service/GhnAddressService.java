@@ -33,13 +33,19 @@ public class GhnAddressService {
         return ghnClient.isEnabled();
     }
 
-    /** Đang dùng API thật hay dữ liệu giả (để hiện nhãn "dữ liệu demo"). */
+    /** Đang gọi API GHN thật hay dùng dữ liệu địa chỉ lưu sẵn (để hiện nhãn trên giao diện). */
     public boolean isMock() {
         return ghnClient.isMock();
     }
 
+    /** Tra cứu được Tỉnh–Huyện–Xã (chỉ cần token GHN). */
     public boolean isAvailable() {
-        return ghnClient.isAvailable();
+        return ghnClient.isAddressAvailable();
+    }
+
+    /** Tính được phí/tạo được vận đơn (cần thêm shopId + kho lấy hàng). */
+    public boolean isShippingAvailable() {
+        return ghnClient.isShippingAvailable();
     }
 
     /** Kho lấy hàng đã khai báo (hiện trên giao diện để khách biết hàng đi từ đâu). */
@@ -49,7 +55,7 @@ public class GhnAddressService {
 
     public List<GhnProvince> provinces() {
         try {
-            return ghnClient.isAvailable() ? ghnClient.provinces() : List.of();
+            return ghnClient.isAddressAvailable() ? ghnClient.provinces() : List.of();
         } catch (GhnApiException ex) {
             log.warn("Không lấy được tỉnh/thành GHN: {}", ex.getMessage());
             return List.of();
@@ -61,7 +67,7 @@ public class GhnAddressService {
             return List.of();
         }
         try {
-            return ghnClient.isAvailable() ? ghnClient.districts(provinceId) : List.of();
+            return ghnClient.isAddressAvailable() ? ghnClient.districts(provinceId) : List.of();
         } catch (GhnApiException ex) {
             log.warn("Không lấy được quận/huyện GHN: {}", ex.getMessage());
             return List.of();
@@ -73,7 +79,7 @@ public class GhnAddressService {
             return List.of();
         }
         try {
-            return ghnClient.isAvailable() ? ghnClient.wards(districtId) : List.of();
+            return ghnClient.isAddressAvailable() ? ghnClient.wards(districtId) : List.of();
         } catch (GhnApiException ex) {
             log.warn("Không lấy được phường/xã GHN: {}", ex.getMessage());
             return List.of();
@@ -92,7 +98,7 @@ public class GhnAddressService {
      * để nơi gọi tự dùng phí mặc định của shop.
      */
     public BigDecimal feeOrNull(Integer districtId, String wardCode, int weightGram) {
-        if (districtId == null || !ghnClient.isAvailable()) {
+        if (districtId == null || !ghnClient.isShippingAvailable()) {
             return null;
         }
         try {

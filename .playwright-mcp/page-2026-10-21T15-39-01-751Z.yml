@@ -1,0 +1,140 @@
+- generic [ref=f8e1]:
+  - link "Bỏ qua tới nội dung chính" [ref=f8e2] [cursor=pointer]:
+    - /url: "#noi-dung-chinh"
+  - banner [ref=f8e3]:
+    - navigation "Điều hướng chính" [ref=f8e4]:
+      - generic [ref=f8e5]:
+        - link "BadStore – về trang chủ" [ref=f8e6] [cursor=pointer]:
+          - /url: /
+          - generic [aria-hidden] [ref=f8e8]: 
+          - generic [ref=f8e9]: BadStore
+        - generic: 
+        - generic "Menu BadStore" [ref=f8e10]:
+          - generic [ref=f8e11]:
+            - list [ref=f8e12]:
+              - listitem [ref=f8e13]:
+                - link "Trang chủ" [ref=f8e14] [cursor=pointer]:
+                  - /url: /
+                  - generic [aria-hidden] [ref=f8e15]: 
+                  - text: Trang chủ
+              - listitem [ref=f8e16]:
+                - link "Sản phẩm" [ref=f8e17] [cursor=pointer]:
+                  - /url: /san-pham
+                  - generic [aria-hidden] [ref=f8e18]: 
+                  - text: Sản phẩm
+            - search [ref=f8e19]:
+              - generic [ref=f8e20]: Tìm sản phẩm theo tên
+              - generic [aria-hidden]: 
+              - searchbox "Tìm sản phẩm theo tên" [ref=f8e21]
+            - list [ref=f8e22]:
+              - listitem [ref=f8e23]:
+                - link "So sánh sản phẩm" [ref=f8e24] [cursor=pointer]:
+                  - /url: /so-sanh
+                  - generic [aria-hidden] [ref=f8e25]: 
+              - listitem [ref=f8e26]:
+                - link "Giỏ hàng" [ref=f8e27] [cursor=pointer]:
+                  - /url: /gio-hang
+                  - generic [aria-hidden] [ref=f8e28]: 
+              - listitem [ref=f8e29]:
+                - link "Đăng nhập" [ref=f8e30] [cursor=pointer]:
+                  - /url: /dang-nhap
+                  - generic [aria-hidden] [ref=f8e31]: 
+                  - text: Đăng nhập
+              - listitem [ref=f8e32]:
+                - link "Đăng ký" [ref=f8e33] [cursor=pointer]:
+                  - /url: /dang-ky
+  - main [ref=f8e34]:
+    - generic [ref=f8e37]:
+      - generic [ref=f8e39]:
+        - generic [ref=f8e40]:
+          - generic [ref=f8e41]:
+            - generic [aria-hidden] [ref=f8e42]: 
+            - text: BadStore
+          - paragraph [ref=f8e43]: Vợt cầu lông chính hãng cho mọi lối chơi
+          - paragraph [ref=f8e44]: Đăng nhập để theo dõi đơn hàng, lưu sổ địa chỉ nhận hàng và đánh giá sản phẩm đã mua.
+        - list [ref=f8e45]:
+          - listitem [ref=f8e46]:
+            - generic [aria-hidden] [ref=f8e48]: 
+            - generic [ref=f8e49]:
+              - generic [ref=f8e50]: Chính hãng, có bảo hành
+              - generic [ref=f8e51]: Thông tin hãng, mã sản phẩm và tình trạng kho hiển thị công khai.
+          - listitem [ref=f8e52]:
+            - generic [aria-hidden] [ref=f8e54]: 
+            - generic [ref=f8e55]:
+              - generic [ref=f8e56]: Thanh toán linh hoạt
+              - generic [ref=f8e57]: COD khi nhận hàng, chuyển khoản trước hoặc mua trực tiếp tại quầy.
+          - listitem [ref=f8e58]:
+            - generic [aria-hidden] [ref=f8e60]: 
+            - generic [ref=f8e61]:
+              - generic [ref=f8e62]: Đổi trả rõ ràng
+              - generic [ref=f8e63]: Đơn đã giao có thể yêu cầu hoàn trả 100% ngay trên website.
+      - generic [ref=f8e66]:
+        - generic [ref=f8e67]:
+          - generic [aria-hidden] [ref=f8e69]: 
+          - heading "Đăng nhập" [level=1] [ref=f8e70]
+          - paragraph [ref=f8e71]: Dùng email đã đăng ký để tiếp tục mua hàng.
+        - generic [ref=f8e72]:
+          - generic [ref=f8e73]:
+            - generic [ref=f8e74]: Email
+            - generic [ref=f8e75]:
+              - generic [aria-hidden] [ref=f8e77]: 
+              - textbox "Email" [active] [ref=f8e78]:
+                - /placeholder: email@vi-du.com
+          - generic [ref=f8e79]:
+            - generic [ref=f8e80]: Mật khẩu
+            - generic [ref=f8e81]:
+              - generic [aria-hidden] [ref=f8e83]: 
+              - textbox "Mật khẩu" [ref=f8e84]:
+                - /placeholder: Mật khẩu của bạn
+              - button "Hiện mật khẩu" [ref=f8e85] [cursor=pointer]:
+                - generic [aria-hidden] [ref=f8e86]: 
+          - button "Đăng nhập" [ref=f8e87] [cursor=pointer]:
+            - generic [aria-hidden] [ref=f8e88]: 
+            - text: Đăng nhập
+        - generic [ref=f8e89]:
+          - separator [ref=f8e90]
+          - generic [ref=f8e91]: hoặc
+          - separator [ref=f8e92]
+        - link "Tạo tài khoản mới" [ref=f8e93] [cursor=pointer]:
+          - /url: /dang-ky
+          - generic [aria-hidden] [ref=f8e94]: 
+          - text: Tạo tài khoản mới
+        - paragraph [ref=f8e95]:
+          - generic [aria-hidden] [ref=f8e96]: 
+          - text: Mật khẩu được mã hoá khi lưu, BadStore không đọc được mật khẩu của bạn.
+  - contentinfo [ref=f8e97]:
+    - generic [ref=f8e98]:
+      - generic [ref=f8e99]:
+        - generic [ref=f8e100]:
+          - heading "BadStore" [level=2] [ref=f8e101]:
+            - generic [aria-hidden] [ref=f8e103]: 
+          - paragraph [ref=f8e105]: Website bán vợt cầu lông – đồ án tốt nghiệp, sản phẩm mang tính minh hoạ.
+          - paragraph [ref=f8e106]: Dữ liệu sản phẩm, hình ảnh dùng cho mục đích học tập.
+        - generic [ref=f8e107]:
+          - generic [ref=f8e108]:
+            - generic [aria-hidden] [ref=f8e109]: 
+            - text: Liên hệ
+          - paragraph [ref=f8e110]: "Hotline: 1900 0000"
+          - paragraph [ref=f8e111]: "Email: cskh@badstore.local"
+          - paragraph [ref=f8e112]: "Địa chỉ: Số 1 Đại Cồ Việt, Bách Khoa, Hà Nội"
+          - paragraph [ref=f8e113]: "Giờ mở cửa: 8:00 – 21:30 hằng ngày"
+        - generic [ref=f8e114]:
+          - generic [ref=f8e115]:
+            - generic [aria-hidden] [ref=f8e116]: 
+            - text: Mua hàng & giao nhận
+          - list [ref=f8e117]:
+            - listitem [ref=f8e118]:
+              - link "Danh mục vợt cầu lông" [ref=f8e119] [cursor=pointer]:
+                - /url: /san-pham
+            - listitem [ref=f8e120]:
+              - link "So sánh sản phẩm" [ref=f8e121] [cursor=pointer]:
+                - /url: /so-sanh
+            - listitem [ref=f8e122]:
+              - link "Giỏ hàng của bạn" [ref=f8e123] [cursor=pointer]:
+                - /url: /gio-hang
+            - listitem [ref=f8e124]: Vận chuyển toàn quốc – tích hợp GHN khi cấu hình token.
+      - separator [ref=f8e125]
+      - generic [ref=f8e126]:
+        - generic [ref=f8e127]: © 2026 BadStore
+        - generic [ref=f8e128]: Đơn giá hiển thị bằng Việt Nam đồng (₫).
+  - text: 

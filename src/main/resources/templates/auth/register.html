@@ -31,8 +31,8 @@
                         </div>
 
                         <!-- Validate 2 lớp: HTML (required/minlength/pattern) + Bean Validation ở server -->
-                        <form class="auth-form" th:action="@{/dang-ky}" th:object="${registerRequest}" method="post"
-                              novalidate data-confirm="Tạo tài khoản với thông tin bạn vừa nhập?">
+                        <form th:action="@{/dang-ky}" th:object="${registerRequest}" method="post"
+                              data-confirm="Tạo tài khoản với thông tin bạn vừa nhập?">
                             <!-- Lỗi nghiệp vụ trả về từ Service (email trùng, mật khẩu xác nhận sai…).
                                  BẮT BUỘC đặt trong form có th:object thì #fields mới hoạt động. -->
                             <div class="alert alert-danger d-flex align-items-start gap-2" role="alert"
@@ -48,7 +48,7 @@
                                 <div class="col-12 col-md-6">
                                     <label class="form-label" for="fullName">Họ và tên <span class="text-danger">*</span></label>
                                     <input class="form-control" id="fullName" type="text" th:field="*{fullName}"
-                                           th:classappend="${#fields.hasErrors('fullName')} ? 'is-invalid'"
+                                           th:classappend="${#fields.hasErrors('fullName')} ? 'is-invalid'" th:aria-invalid="${#fields.hasErrors('fullName')}"
                                            autocomplete="name" placeholder="Nguyễn Văn A" required maxlength="100">
                                     <div class="invalid-feedback" th:if="${#fields.hasErrors('fullName')}"
                                          th:errors="*{fullName}">Vui lòng nhập họ tên</div>
@@ -56,7 +56,7 @@
                                 <div class="col-12 col-md-6">
                                     <label class="form-label" for="phone">Số điện thoại</label>
                                     <input class="form-control" id="phone" type="tel" th:field="*{phone}"
-                                           th:classappend="${#fields.hasErrors('phone')} ? 'is-invalid'"
+                                           th:classappend="${#fields.hasErrors('phone')} ? 'is-invalid'" th:aria-invalid="${#fields.hasErrors('phone')}"
                                            autocomplete="tel" placeholder="0912345678" maxlength="20" pattern="^(0|\+84)\d{8,10}$">
                                     <div class="form-text">Không bắt buộc – ví dụ: 0912345678</div>
                                     <div class="invalid-feedback" th:if="${#fields.hasErrors('phone')}"
@@ -70,7 +70,7 @@
                                 <div class="input-group">
                                     <span class="input-group-text"><i class="bi bi-envelope" aria-hidden="true"></i></span>
                                     <input class="form-control" id="email" type="email" th:field="*{email}"
-                                           th:classappend="${#fields.hasErrors('email')} ? 'is-invalid'"
+                                           th:classappend="${#fields.hasErrors('email')} ? 'is-invalid'" th:aria-invalid="${#fields.hasErrors('email')}"
                                            autocomplete="email" placeholder="email@vi-du.com" required maxlength="100">
                                     <div class="invalid-feedback" th:if="${#fields.hasErrors('email')}"
                                          th:errors="*{email}">Email không hợp lệ</div>
@@ -83,7 +83,7 @@
                                     <div class="input-group">
                                         <span class="input-group-text"><i class="bi bi-lock" aria-hidden="true"></i></span>
                                         <input class="form-control" id="password" type="password" th:field="*{password}"
-                                               th:classappend="${#fields.hasErrors('password')} ? 'is-invalid'"
+                                               th:classappend="${#fields.hasErrors('password')} ? 'is-invalid'" th:aria-invalid="${#fields.hasErrors('password')}"
                                                autocomplete="new-password" required minlength="6" maxlength="72">
                                         <button class="btn btn-outline-secondary" type="button"
                                                 data-toggle-password="#password"
@@ -101,7 +101,7 @@
                                         <span class="input-group-text"><i class="bi bi-lock-fill" aria-hidden="true"></i></span>
                                         <input class="form-control" id="confirmPassword" type="password"
                                                th:field="*{confirmPassword}"
-                                               th:classappend="${#fields.hasErrors('confirmPassword')} ? 'is-invalid'"
+                                               th:classappend="${#fields.hasErrors('confirmPassword')} ? 'is-invalid'" th:aria-invalid="${#fields.hasErrors('confirmPassword')}"
                                                autocomplete="new-password" required maxlength="72">
                                         <button class="btn btn-outline-secondary" type="button"
                                                 data-toggle-password="#confirmPassword"

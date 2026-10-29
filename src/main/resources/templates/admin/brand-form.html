@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="vi"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/admin}">
+<head>
+    <title th:text="${brandId == null} ? 'Thêm thương hiệu' : 'Sửa thương hiệu'">Thương hiệu</title>
+</head>
+<body>
+
+<th:block layout:fragment="content">
+
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a th:href="@{/admin}">Tổng quan</a></li>
+            <li class="breadcrumb-item"><a th:href="@{/admin/thuong-hieu}">Thương hiệu</a></li>
+            <li class="breadcrumb-item active" aria-current="page"
+                th:text="${brandId == null} ? 'Thêm mới' : 'Chỉnh sửa'">Thêm mới</li>
+        </ol>
+    </nav>
+
+    <div class="page-head">
+        <h1 class="page-title">
+            <i class="bi bi-tags" aria-hidden="true"></i>
+            <span th:text="${brandId == null} ? 'Thêm thương hiệu mới' : |Sửa thương hiệu #${brandId}|">Thương hiệu</span>
+        </h1>
+        <a class="btn btn-sm btn-outline-secondary" th:href="@{/admin/thuong-hieu}">
+            <i class="bi bi-arrow-left" aria-hidden="true"></i> Danh sách thương hiệu
+        </a>
+    </div>
+
+    <div class="alert alert-warning" th:if="${formError != null}" role="alert">
+        <i class="bi bi-exclamation-triangle" aria-hidden="true"></i> <span th:text="${formError}">Lý do lỗi</span>
+    </div>
+
+    <form th:action="${brandId == null} ? @{/admin/thuong-hieu} : @{/admin/thuong-hieu/{id}(id=${brandId})}"
+          th:object="${form}" method="post" enctype="multipart/form-data"
+          data-confirm="Lưu thông tin thương hiệu này?">
+        <div class="row g-3">
+            <div class="col-lg-7">
+                <div class="card-soft">
+                    <div class="card-header fw-semibold"><i class="bi bi-card-heading" aria-hidden="true"></i>
+                        Thông tin thương hiệu</div>
+                    <div class="card-body row g-3">
+                        <div class="col-12">
+                            <label class="form-label" for="name">Tên hãng <span class="text-danger">*</span></label>
+                            <input class="form-control" id="name" th:field="*{name}"
+                                   th:classappend="${#fields.hasErrors('name')} ? 'is-invalid'"
+                                   th:aria-invalid="${#fields.hasErrors('name')}"
+                                   maxlength="100" required placeholder="Yonex">
+                            <div class="invalid-feedback" th:if="${#fields.hasErrors('name')}" th:errors="*{name}">
+                                Tên hãng không hợp lệ
+                            </div>
+                            <div class="form-text">Tên không được trùng với một hãng khác đang hoạt động.</div>
+                        </div>
+                        <div class="col-12">
+                            <label class="form-label" for="description">Mô tả</label>
+                            <textarea class="form-control" id="description" th:field="*{description}"
+                                      th:classappend="${#fields.hasErrors('description')} ? 'is-invalid'"
+                                      th:aria-invalid="${#fields.hasErrors('description')}"
+                                      rows="3" maxlength="500"
+                                      placeholder="Xuất xứ, thế mạnh sản phẩm…"></textarea>
+                            <div class="invalid-feedback" th:if="${#fields.hasErrors('description')}"
+                                 th:errors="*{description}">Mô tả không hợp lệ</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-5">
+                <div class="card-soft">
+                    <div class="card-header fw-semibold"><i class="bi bi-image" aria-hidden="true"></i> Logo hãng</div>
+                    <div class="card-body">
+                        <div class="text-center mb-3" th:if="${currentLogo != null}">
+                            <img th:src="@{${currentLogo}}" th:alt="|Logo hiện tại của ${form.name}|"
+                                 class="img-preview border rounded bg-white p-2" loading="lazy">
+                            <div class="form-check d-inline-flex align-items-center gap-2 mt-2">
+                                <input class="form-check-input" type="checkbox" id="removeLogo"
+                                       th:field="*{removeLogo}">
+                                <label class="form-check-label small text-danger" for="removeLogo">Gỡ logo hiện tại</label>
+                            </div>
+                        </div>
+                        <div class="text-center text-muted small mb-3" th:if="${currentLogo == null}">
+                            <i class="bi bi-image fs-1 d-block" aria-hidden="true"></i>
+                            Hãng chưa có logo
+                        </div>
+
+                        <label class="form-label" for="logoFile">Tải logo mới (tuỳ chọn)</label>
+                        <input class="form-control" id="logoFile" name="logoFile" type="file"
+                               accept=".jpg,.jpeg,.png,.webp,.gif,.svg,image/*">
+                        <div class="form-text">
+                            JPG, PNG, WEBP, GIF hoặc SVG – tối đa 2 MB. Bỏ trống để giữ logo hiện tại.
+                        </div>
+                    </div>
+                    <div class="card-footer d-flex gap-2">
+                        <button class="btn btn-primary flex-grow-1" type="submit">
+                            <i class="bi bi-save" aria-hidden="true"></i> Lưu thương hiệu
+                        </button>
+                        <a class="btn btn-outline-secondary" th:href="@{/admin/thuong-hieu}">Huỷ</a>
+                    </div>
+                </div>
+
+                <div class="alert alert-info small mt-3">
+                    <i class="bi bi-info-circle" aria-hidden="true"></i>
+                    Xoá thương hiệu chỉ là <strong>xoá mềm</strong>: sản phẩm và đơn hàng cũ vẫn giữ dữ liệu.
+                    Hệ thống sẽ chặn xoá nếu vẫn còn sản phẩm đang dùng hãng này.
+                </div>
+            </div>
+        </div>
+    </form>
+
+</th:block>
+
+</body>
+</html>

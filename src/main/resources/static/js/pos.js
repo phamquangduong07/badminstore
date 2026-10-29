@@ -38,7 +38,10 @@
         cashPanel: document.querySelector('[data-pos-cash-panel]'),
         transferPanel: document.querySelector('[data-pos-transfer-panel]'),
         cashReceived: document.getElementById('posCashReceived'),
-        change: document.querySelector('[data-pos-change] strong')
+        change: document.querySelector('[data-pos-change] strong'),
+        resultsStatus: document.getElementById('posResultsStatus'),
+        linesStatus: document.getElementById('posLinesStatus'),
+        submit: document.getElementById('posSubmit')
     };
 
     var state = {
@@ -48,6 +51,10 @@
         total: 0
     };
     var priceTimer = null;
+    /* Nhãn (aria-label) của ô/nút cần giữ focus sau khi hoá đơn được vẽ lại.
+       Vì renderLines() tạo lại toàn bộ DOM, không lưu focus thì người dùng bàn phím
+       bấm "+" xong là mất chỗ đứng, phải Tab lại từ đầu. */
+    var focusAfterRender = null;
 
     // ------------------------------------------------------------------ tiện ích
 
@@ -77,6 +84,28 @@
             element.textContent = text;
         }
         return element;
+    }
+
+    /** Icon Bootstrap chỉ để trang trí ⇒ ẩn với trình đọc màn hình (nhãn nằm ở aria-label của nút). */
+    function icon(className) {
+        var element = el('i', 'bi ' + className);
+        element.setAttribute('aria-hidden', 'true');
+        return element;
+    }
+
+    /** Ghi vào vùng role="status" (ẩn trên màn hình) để trình đọc màn hình đọc thay đổi. */
+    function announce(target, text) {
+        if (target) {
+            target.textContent = text;
+        }
+    }
+
+    function announceLines() {
+        var count = state.lines.length;
+        var text = count === 0
+            ? 'Hoá đơn đang trống.'
+            : 'Hoá đơn có ' + count + ' dòng, tổng ' + money(state.total) + '.';
+        announce(refs.linesStatus, text);
     }
 
     /** Dự phòng khi SweetAlert2 không tải được: hiện danh sách lỗi bằng hộp Bootstrap
@@ -159,6 +188,9 @@
         if (refs.noResult) {
             refs.noResult.hidden = products.length > 0;
         }
+        announce(refs.resultsStatus, products.length === 0
+            ? 'Không tìm thấy sản phẩm nào phù hợp.'
+            : 'Tìm thấy ' + products.length + ' sản phẩm. Dùng phím Tab để chọn sản phẩm cần bán.');
         products.forEach(function (product) {
             var card = el('button', 'pos-result' + (product.stock > 0 ? '' : ' pos-result-out'));
             card.type = 'button';
@@ -214,6 +246,8 @@
         }
         renderLines();
         refreshPrice();
+        announce(refs.linesStatus, 'Đã thêm ' + (product.productName || product.sku) + ' vào hoá đơn. '
+            + state.lines.length + ' dòng.');
     }
 
     // ------------------------------------------------------------------ hoá đơn
@@ -248,7 +282,7 @@
             var minus = el('button', 'btn btn-sm btn-outline-secondary');
             minus.type = 'button';
             minus.setAttribute('aria-label', 'Giảm số lượng ' + line.sku);
-            minus.appendChild(el('i', 'bi bi-dash'));
+            minus.appendChild(icon('bi-dash'));
             var quantity = el('input', 'form-control form-control-sm text-center');
             quantity.type = 'number';
             quantity.min = '1';
@@ -257,12 +291,14 @@
             var plus = el('button', 'btn btn-sm btn-outline-secondary');
             plus.type = 'button';
             plus.setAttribute('aria-label', 'Tăng số lượng ' + line.sku);
-            plus.appendChild(el('i', 'bi bi-plus'));
+            plus.appendChild(icon('bi-plus'));
 
             minus.addEventListener('click', function () {
+                focusAfterRender = 'Giảm số lượng ' + line.sku;
                 changeQuantity(index, line.quantity - 1);
             });
             plus.addEventListener('click', function () {
+                focusAfterRender = 'Tăng số lượng ' + line.sku;
                 changeQuantity(index, line.quantity + 1);
             });
             quantity.addEventListener('input', function () {
@@ -278,6 +314,7 @@
             });
             quantity.addEventListener('change', function () {
                 var value = parseInt(quantity.value, 10);
+                focusAfterRender = 'Số lượng ' + line.sku;
                 changeQuantity(index, isNaN(value) ? 1 : value);
             });
             quantityBox.appendChild(minus);
@@ -291,11 +328,12 @@
             var remove = el('button', 'btn btn-sm btn-link text-danger');
             remove.type = 'button';
             remove.setAttribute('aria-label', 'Xoá dòng ' + line.sku);
-            remove.appendChild(el('i', 'bi bi-x-lg'));
+            remove.appendChild(icon('bi-x-lg'));
             remove.addEventListener('click', function () {
                 state.lines.splice(index, 1);
                 renderLines();
                 refreshPrice();
+                announce(refs.linesStatus, 'Đã xoá dòng ' + line.sku + '.');
             });
             row.appendChild(remove);
 
@@ -305,7 +343,6 @@
             skuInput.name = 'lines[' + index + '].sku';
             skuInput.value = line.sku;
             skuInput.setAttribute('data-pos-hidden', 'sku');
-            skuInput.value = line.sku;
             row.appendChild(skuInput);
 
             var hiddenQuantity = document.createElement('input');
@@ -319,6 +356,19 @@
         });
 
         renderTotals();
+        restoreFocus();
+    }
+
+    /** Trả focus về đúng ô/nút vừa thao tác sau khi hoá đơn được vẽ lại. */
+    function restoreFocus() {
+        if (!focusAfterRender || !refs.lines) {
+            return;
+        }
+        var target = refs.lines.querySelector('[aria-label="' + focusAfterRender.replace(/"/g, '\\"') + '"]');
+        focusAfterRender = null;
+        if (target) {
+            target.focus();
+        }
     }
 
     function changeQuantity(index, value) {
@@ -484,6 +534,27 @@
         }
     }
 
+    /** Bỏ toàn bộ hoá đơn đang lập (chỉ ở trình duyệt, chưa ghi gì vào CSDL). */
+    function clearInvoice() {
+        state.lines = [];
+        focusAfterRender = null;
+        renderLines();
+        refreshPrice();
+        announce(refs.linesStatus, 'Đã xoá toàn bộ hoá đơn.');
+    }
+
+    /** Khoá nút "Thu tiền" khi form đang gửi để tránh bấm đúp tạo 2 hoá đơn. */
+    function lockSubmit() {
+        if (!refs.submit || refs.submit.disabled) {
+            return;
+        }
+        refs.submit.disabled = true;
+        refs.submit.setAttribute('aria-busy', 'true');
+        refs.submit.dataset.originalHtml = refs.submit.innerHTML;
+        refs.submit.innerHTML = '<span class="spinner-border spinner-border-sm me-1" aria-hidden="true"></span>'
+            + ' Đang lưu hoá đơn…';
+    }
+
     // ------------------------------------------------------------------ gắn sự kiện
 
     if (refs.searchButton) {
@@ -504,9 +575,27 @@
     }
     if (refs.clear) {
         refs.clear.addEventListener('click', function () {
-            state.lines = [];
-            renderLines();
-            refreshPrice();
+            if (!state.lines.length) {
+                return;
+            }
+            if (!window.Swal) {
+                clearInvoice();
+                return;
+            }
+            Swal.fire({
+                icon: 'warning',
+                title: 'Xoá hoá đơn đang lập?',
+                text: 'Các dòng vừa thêm sẽ bị bỏ. Chưa có gì được lưu vào hệ thống nên không ảnh hưởng đơn cũ.',
+                showCancelButton: true,
+                confirmButtonText: 'Xoá hết',
+                cancelButtonText: 'Giữ lại',
+                confirmButtonColor: '#b0222f',
+                reverseButtons: true
+            }).then(function (result) {
+                if (result.isConfirmed) {
+                    clearInvoice();
+                }
+            });
         });
     }
     if (refs.voucher) {
@@ -589,6 +678,7 @@
         }
         if (!window.Swal) {
             form.dataset.confirmed = 'true';
+            lockSubmit();
             form.submit();
             return;
         }
@@ -599,10 +689,11 @@
             showCancelButton: true,
             confirmButtonText: 'Thu tiền & trừ kho',
             cancelButtonText: 'Xem lại',
-            confirmButtonColor: '#0f8a5f', // xanh brand (đồng bộ --bs-primary trong theme.css)
+            confirmButtonColor: '#0b6b4a', // trùng --bad-primary-dark: chữ trắng đạt 6.53:1
             reverseButtons: true
         }).then(function (result) {
             if (result.isConfirmed) {
+                lockSubmit();
                 form.dataset.confirmed = 'true';
                 form.submit();
             }

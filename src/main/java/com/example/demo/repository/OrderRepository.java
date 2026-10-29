@@ -3,6 +3,7 @@ package com.example.demo.repository;
 import com.example.demo.dto.admin.RevenueRow;
 import com.example.demo.dto.admin.StatusCountRow;
 import com.example.demo.dto.admin.TopProductRow;
+import com.example.demo.dto.admin.UserOrderStatRow;
 import com.example.demo.dto.shop.OrderSummaryView;
 import com.example.demo.entity.Order;
 import com.example.demo.enums.OrderStatus;
@@ -24,6 +25,9 @@ public interface OrderRepository extends JpaRepository<Order, Integer> {
     Optional<Order> findByIdAndUserId(Integer id, Integer userId);
 
     List<Order> findByUserIdOrderByCreatedAtDesc(Integer userId);
+
+    /** Số đơn của một khách (dùng cho trang tài khoản). */
+    long countByUserId(Integer userId);
 
     Page<Order> findByUserIdOrderByCreatedAtDesc(Integer userId, Pageable pageable);
 
@@ -124,6 +128,22 @@ public interface OrderRepository extends JpaRepository<Order, Integer> {
             group by o.orderStatus
             """)
     List<StatusCountRow> countByStatusGrouped();
+
+    /**
+     * Số đơn và tổng tiền đã mua của từng khách trong một trang quản lý người dùng.
+     * Chỉ cộng tiền các đơn DELIVERED (đơn huỷ/hoàn trả không tính vào "đã mua").
+     */
+    @Query("""
+            select new com.example.demo.dto.admin.UserOrderStatRow(
+                o.user.id,
+                count(o.id),
+                coalesce(sum(case when o.orderStatus = com.example.demo.enums.OrderStatus.DELIVERED
+                                  then o.totalAmount else 0 end), 0))
+            from Order o
+            where o.user.id in :userIds
+            group by o.user.id
+            """)
+    List<UserOrderStatRow> countOrdersByUserIds(@Param("userIds") Collection<Integer> userIds);
 
     /** Sản phẩm bán chạy: chỉ tính đơn đã xác nhận trở lên (bỏ đơn chờ, đơn huỷ, đơn hoàn trả). */
     @Query("""

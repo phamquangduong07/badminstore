@@ -2,6 +2,8 @@ package com.example.demo;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.Matchers.containsString;
+import static org.hamcrest.Matchers.hasItem;
+import static org.hamcrest.Matchers.not;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
@@ -52,8 +54,9 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 
 /**
- * Test tích hợp TÍCH HỢP GHN ở chế độ dữ liệu giả (app.ghn.mock=true) – đúng cách chạy demo khi
- * không có mạng/token thật:
+ * Test tích hợp TÍCH HỢP GHN ở chế độ ngoại tuyến (app.ghn.mock=true) – đúng cách chạy demo khi
+ * không có mạng/token thật: địa chỉ Tỉnh–Huyện–Xã là dữ liệu GHN lưu sẵn ĐẦY ĐỦ (mã thật),
+ * còn phí vận chuyển/vận đơn là số giả.
  * <ol>
  *   <li>API nội bộ /api/ghn/* trả Tỉnh–Huyện–Xã và phí vận chuyển cho giao diện;</li>
  *   <li>sổ địa chỉ lưu lại mã Tỉnh/Huyện/Xã của GHN (và BỎ mã sai để khách không đổi được phí ship);</li>
@@ -64,7 +67,7 @@ import org.springframework.test.web.servlet.MvcResult;
 @SpringBootTest(properties = {
         "app.ghn.enabled=true",
         "app.ghn.mock=true",
-        "app.ghn.from-district-id=1442",
+        "app.ghn.from-district-id=1489",
         "app.ghn.mock-status=delivered",
         "app.ghn.sync-enabled=false"
 })
@@ -194,7 +197,7 @@ class GhnIntegrationTest {
         return session;
     }
 
-    /** Thêm 1 địa chỉ giao hàng có mã GHN (201/1442/20308 – Quận Hoàn Kiếm, Phường Phúc Tân). */
+    /** Thêm 1 địa chỉ giao hàng có mã GHN thật (201/1489/1A0216 – Hà Nội, Quận Hoàn Kiếm, Phường Phúc Tân). */
     private void addGhnAddress(MockHttpSession session) throws Exception {
         mockMvc.perform(post("/dia-chi/them").with(csrf()).session(session)
                         .param("receiverName", "Khách GHN test")
@@ -205,8 +208,8 @@ class GhnIntegrationTest {
                         .param("addressDetail", "12 Hàng Bài")
                         .param("defaultAddress", "true")
                         .param("provinceId", "201")
-                        .param("districtId", "1442")
-                        .param("wardCode", "20308"))
+                        .param("districtId", "1489")
+                        .param("wardCode", "1A0216"))
                 .andExpect(status().is3xxRedirection())
                 .andExpect(flash().attribute("successMessage", containsString("Đã lưu địa chỉ")));
     }
@@ -243,22 +246,24 @@ class GhnIntegrationTest {
         mockMvc.perform(get("/api/ghn/tinh").session(session))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.enabled").value(true))
+                .andExpect(jsonPath("$.shippingEnabled").value(true))
                 .andExpect(jsonPath("$.mock").value(true))
-                .andExpect(jsonPath("$.items[0].id").value(201))
-                .andExpect(jsonPath("$.items[0].name").value("Hà Nội"));
+                // Dữ liệu GHN lưu sẵn là TOÀN BỘ (63 tỉnh/thành), không còn rút gọn vài tỉnh như trước
+                .andExpect(jsonPath("$.items.length()").value(63))
+                .andExpect(jsonPath("$.items[?(@.id == 201)].name").value(hasItem("Hà Nội")));
 
         mockMvc.perform(get("/api/ghn/huyen").session(session).param("provinceId", "201"))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.items[0].id").value(1442))
-                .andExpect(jsonPath("$.items[0].name").value("Quận Hoàn Kiếm"));
+                .andExpect(jsonPath("$.items.length()").value(30))
+                .andExpect(jsonPath("$.items[?(@.id == 1489)].name").value(hasItem("Quận Hoàn Kiếm")));
 
-        mockMvc.perform(get("/api/ghn/xa").session(session).param("districtId", "1442"))
+        mockMvc.perform(get("/api/ghn/xa").session(session).param("districtId", "1489"))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.items[0].id").value("20308"))
-                .andExpect(jsonPath("$.items[0].name").value("Phường Phúc Tân"));
+                .andExpect(jsonPath("$.items.length()").value(18))
+                .andExpect(jsonPath("$.items[?(@.name == 'Phường Phúc Tân')].id").value(hasItem("1A0216")));
 
         mockMvc.perform(get("/api/ghn/phi-ship").session(session)
-                        .param("districtId", "1442").param("wardCode", "20308").param("quantity", "2"))
+                        .param("districtId", "1489").param("wardCode", "1A0216").param("quantity", "2"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.enabled").value(true))
                 .andExpect(jsonPath("$.weightGram").value(1800))
@@ -275,8 +280,8 @@ class GhnIntegrationTest {
         UserAddress saved = addressRepository
                 .findFirstByUserIdAndDefaultAddressTrueAndDeletedFalse(customer.getId()).orElseThrow();
         assertThat(saved.getProvinceId()).isEqualTo(201);
-        assertThat(saved.getDistrictId()).isEqualTo(1442);
-        assertThat(saved.getWardCode()).isEqualTo("20308");
+        assertThat(saved.getDistrictId()).isEqualTo(1489);
+        assertThat(saved.getWardCode()).isEqualTo("1A0216");
 
         // Gửi mã bịa: server phải kiểm tra lại với dữ liệu GHN rồi bỏ đi, không lưu bừa.
         mockMvc.perform(post("/dia-chi/them").with(csrf()).session(session)
@@ -300,6 +305,87 @@ class GhnIntegrationTest {
         assertThat(bogus.getProvinceId()).isNull();
         assertThat(bogus.getDistrictId()).isNull();
         assertThat(bogus.getWardCode()).isNull();
+
+        // Mã GHN ĐÚNG nhưng tên địa danh khách sửa thành nơi khác ⇒ cũng phải bỏ mã (chống lệch tên–mã).
+        mockMvc.perform(post("/dia-chi/them").with(csrf()).session(session)
+                        .param("receiverName", "Khách GHN test")
+                        .param("receiverPhone", "0901234567")
+                        .param("provinceName", "Đà Nẵng")
+                        .param("districtName", "Quận Hải Châu")
+                        .param("wardName", "Phường Thạch Thang")
+                        .param("addressDetail", "88 Bạch Đằng")
+                        .param("provinceId", "201")
+                        .param("districtId", "1489")
+                        .param("wardCode", "1A0216"))
+                .andExpect(status().is3xxRedirection());
+
+        UserAddress mismatched = addressRepository
+                .findByUserIdAndDeletedFalseOrderByDefaultAddressDescCreatedAtDesc(customer.getId()).stream()
+                .filter(address -> "88 Bạch Đằng".equals(address.getAddressDetail()))
+                .findFirst().orElseThrow();
+        assertThat(mismatched.getProvinceName()).isEqualTo("Đà Nẵng");
+        assertThat(mismatched.getProvinceId()).isNull();
+        assertThat(mismatched.getDistrictId()).isNull();
+        assertThat(mismatched.getWardCode()).isNull();
+    }
+
+    @Test
+    @DisplayName("Sổ địa chỉ: địa chỉ lấy từ dropdown GHN (Tỉnh–Huyện–Xã), không còn ô nhập tay trùng lặp")
+    void addressBook_usesGhnDropdowns() throws Exception {
+        MockHttpSession session = loginSession(customer);
+
+        mockMvc.perform(get("/dia-chi").session(session))
+                .andExpect(status().isOk())
+                .andExpect(content().string(containsString("data-ghn-province")))
+                .andExpect(content().string(containsString("data-ghn-district")))
+                .andExpect(content().string(containsString("data-ghn-ward")))
+                .andExpect(content().string(containsString("data-ghn-ward-name")))
+                .andExpect(content().string(containsString(">Hà Nội</option>")))
+                // GHN đang dùng được nên 3 ô nhập tay (placeholder riêng của khối dự phòng) không render
+                .andExpect(content().string(not(containsString("Ví dụ: TP. Hồ Chí Minh"))));
+    }
+
+    @Test
+    @DisplayName("Sổ địa chỉ: GHN đang dùng được thì bắt buộc chọn đủ Tỉnh–Huyện–Xã, lỗi hiện cạnh ô chọn")
+    void addressBook_requiresFullGhnLocation() throws Exception {
+        MockHttpSession session = loginSession(customer);
+        int before = addressRepository
+                .findByUserIdAndDeletedFalseOrderByDefaultAddressDescCreatedAtDesc(customer.getId()).size();
+
+        mockMvc.perform(post("/dia-chi/them").with(csrf()).session(session)
+                        .param("receiverName", "Khách thiếu địa chỉ GHN")
+                        .param("receiverPhone", "0901234567")
+                        .param("provinceName", "Hà Nội")
+                        .param("districtName", "Quận Hoàn Kiếm")
+                        .param("wardName", "Phường Phúc Tân")
+                        .param("addressDetail", "1 Tràng Tiền"))
+                .andExpect(status().isOk())
+                .andExpect(content().string(containsString("Vui lòng chọn tỉnh/thành phố.")))
+                .andExpect(content().string(containsString("Vui lòng chọn quận/huyện.")))
+                .andExpect(content().string(containsString("Vui lòng chọn phường/xã.")));
+
+        assertThat(addressRepository
+                .findByUserIdAndDeletedFalseOrderByDefaultAddressDescCreatedAtDesc(customer.getId()))
+                .hasSize(before);
+
+        // Đã chọn đủ Tỉnh–Huyện–Xã nhưng thiếu số nhà: form giữ lại lựa chọn cho JavaScript khôi phục dropdown
+        mockMvc.perform(post("/dia-chi/them").with(csrf()).session(session)
+                        .param("receiverName", "Khách thiếu số nhà")
+                        .param("receiverPhone", "0901234567")
+                        .param("provinceName", "Hà Nội")
+                        .param("districtName", "Quận Hoàn Kiếm")
+                        .param("wardName", "Phường Phúc Tân")
+                        .param("provinceId", "201")
+                        .param("districtId", "1489")
+                        .param("wardCode", "1A0216"))
+                .andExpect(status().isOk())
+                .andExpect(content().string(containsString("Vui lòng nhập số nhà, tên đường.")))
+                .andExpect(content().string(containsString("data-ghn-district=\"1489\"")))
+                .andExpect(content().string(containsString("data-ghn-ward=\"1A0216\"")));
+
+        assertThat(addressRepository
+                .findByUserIdAndDeletedFalseOrderByDefaultAddressDescCreatedAtDesc(customer.getId()))
+                .hasSize(before);
     }
 
     @Test
@@ -315,8 +401,8 @@ class GhnIntegrationTest {
         assertThat(order.getShippingFee()).isEqualByComparingTo(BigDecimal.valueOf(GHN_FEE));
         assertThat(order.getTotalAmount()).isEqualByComparingTo("3004000");
         assertThat(order.getShippingProvinceId()).isEqualTo(201);
-        assertThat(order.getShippingDistrictId()).isEqualTo(1442);
-        assertThat(order.getShippingWardCode()).isEqualTo("20308");
+        assertThat(order.getShippingDistrictId()).isEqualTo(1489);
+        assertThat(order.getShippingWardCode()).isEqualTo("1A0216");
         // Đặt hàng chưa trừ kho – kho chỉ trừ khi xác nhận
         assertThat(order.isStockDeducted()).isFalse();
         assertThat(productVariantRepository.findById(variant.getId()).orElseThrow().getStockQuantity())

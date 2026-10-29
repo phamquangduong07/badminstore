@@ -1,0 +1,112 @@
+- generic [active] [ref=f178e1]:
+  - link "Bỏ qua tới nội dung chính" [ref=f178e2] [cursor=pointer]:
+    - /url: "#noi-dung-chinh"
+  - main [ref=f178e5]:
+    - generic [ref=f178e6]:
+      - button "Mở menu quản trị" [ref=f178e7] [cursor=pointer]:
+        - generic [aria-hidden] [ref=f178e8]: 
+      - text: 
+      - generic [ref=f178e9]:
+        - text:  
+        - button "Đăng xuất" [ref=f178e11] [cursor=pointer]:
+          - generic [aria-hidden] [ref=f178e12]: 
+    - generic [ref=f178e13]:
+      - navigation "breadcrumb" [ref=f178e14]:
+        - list [ref=f178e15]:
+          - listitem [ref=f178e16]:
+            - link "Tổng quan" [ref=f178e17] [cursor=pointer]:
+              - /url: /admin
+          - listitem [ref=f178e18]:
+            - text: /
+            - link "Đơn hàng" [ref=f178e19] [cursor=pointer]:
+              - /url: /admin/don-hang
+          - listitem [ref=f178e20]: / Tạo đơn thủ công
+      - generic [ref=f178e21]:
+        - heading "Tạo đơn thủ công" [level=1] [ref=f178e22]:
+          - generic [aria-hidden] [ref=f178e23]: 
+          - text: Tạo đơn thủ công
+        - link "Danh sách đơn" [ref=f178e24] [cursor=pointer]:
+          - /url: /admin/don-hang
+          - generic [aria-hidden] [ref=f178e25]: 
+          - text: Danh sách đơn
+      - generic [ref=f178e27]:
+        - generic [ref=f178e28]:
+          - generic [ref=f178e29]:
+            - generic [ref=f178e30]:
+              - generic [ref=f178e31]:
+                - generic [aria-hidden] [ref=f178e32]: 
+                - text: Sản phẩm bán cho khách
+              - button "Thêm dòng" [ref=f178e33] [cursor=pointer]:
+                - generic [aria-hidden] [ref=f178e34]: 
+                - text: Thêm dòng
+            - generic [ref=f178e35]:
+              - generic [ref=f178e37]:
+                - generic [ref=f178e38]:
+                  - generic [ref=f178e39]: SKU biến thể *
+                  - 'combobox "Nhập SKU, ví dụ: YX-AX100ZZ-01" [ref=f178e40]'
+                - generic [ref=f178e41]:
+                  - generic [ref=f178e42]: Số lượng
+                  - spinbutton [ref=f178e43]: "1"
+                - generic [ref=f178e44]:
+                  - button "Xoá dòng hàng" [disabled]:
+                    - generic [aria-hidden]: 
+              - paragraph [ref=f178e45]: "Mẹo: bấm vào ô SKU để chọn từ danh sách gợi ý (kèm tồn kho hiện tại). Nhập trùng SKU sẽ được cộng dồn thành một dòng."
+          - generic [ref=f178e46]:
+            - generic [ref=f178e47]:
+              - generic [aria-hidden] [ref=f178e48]: 
+              - text: Thanh toán & phí
+            - generic [ref=f178e49]:
+              - generic [ref=f178e50]:
+                - generic [ref=f178e51]: Phương thức thanh toán *
+                - combobox "Phương thức thanh toán *" [ref=f178e52]:
+                  - option "Tiền mặt tại quầy" [selected]
+                  - option "Thanh toán khi nhận hàng (COD)"
+                  - option "Chuyển khoản ngân hàng"
+              - generic [ref=f178e53]:
+                - generic [ref=f178e54]: Phí vận chuyển (₫)
+                - spinbutton "Phí vận chuyển (₫)" [ref=f178e55]: "0"
+                - generic [ref=f178e56]: Khách mua tại quầy thì để 0.
+              - generic [ref=f178e57]:
+                - generic [ref=f178e58]: Mã giảm giá (nếu có)
+                - textbox "Mã giảm giá (nếu có)" [ref=f178e59]:
+                  - /placeholder: "Ví dụ: GIAM10"
+              - generic [ref=f178e61]:
+                - checkbox "Xác nhận đơn ngay (trừ kho luôn)" [checked] [ref=f178e62]
+                - generic [ref=f178e63]: Xác nhận đơn ngay (trừ kho luôn)
+        - generic [ref=f178e64]:
+          - generic [ref=f178e65]:
+            - generic [ref=f178e66]:
+              - generic [aria-hidden] [ref=f178e67]: 
+              - text: Khách hàng & giao hàng
+            - generic [ref=f178e68]:
+              - generic [ref=f178e69]:
+                - generic [ref=f178e70]: Email khách hàng (bỏ trống = khách vãng lai)
+                - combobox "Email khách hàng (bỏ trống = khách vãng lai)" [ref=f178e71]
+              - generic [ref=f178e72]:
+                - generic [ref=f178e73]: Tên người nhận *
+                - textbox "Tên người nhận *" [ref=f178e74]
+                - generic [ref=f178e75]: Chọn email khách ở trên thì có thể bỏ trống để lấy theo tài khoản.
+              - generic [ref=f178e76]:
+                - generic [ref=f178e77]: Số điện thoại *
+                - textbox "Số điện thoại *" [ref=f178e78]
+              - generic [ref=f178e79]:
+                - generic [ref=f178e80]: Địa chỉ giao hàng *
+                - textbox "Địa chỉ giao hàng *" [ref=f178e81]
+              - generic [ref=f178e82]:
+                - generic [ref=f178e83]: Ghi chú nội bộ
+                - textbox "Ghi chú nội bộ" [ref=f178e84]:
+                  - /placeholder: "Ví dụ: khách quen, giao buổi chiều…"
+            - generic [ref=f178e85]:
+              - button "Tạo đơn" [ref=f178e86] [cursor=pointer]:
+                - generic [aria-hidden] [ref=f178e87]: 
+                - text: Tạo đơn
+              - link "Huỷ" [ref=f178e88] [cursor=pointer]:
+                - /url: /admin/don-hang
+          - generic [ref=f178e89]:
+            - generic [aria-hidden] [ref=f178e90]: 
+            - text: Đơn tạo ở đây có
+            - strong [ref=f178e91]: order_source = MANUAL
+            - text: và ghi nhận admin tạo đơn. Tiền mặt tại quầy được đánh dấu
+            - strong [ref=f178e92]: đã thanh toán
+            - text: ngay; COD/chuyển khoản thì chờ admin xác nhận ở trang chi tiết đơn.
+  - text: 

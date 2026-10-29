@@ -86,6 +86,7 @@ public class AdminOrderController {
         // Chỉ hiện các trạng thái mà máy trạng thái cho phép chuyển tới từ trạng thái hiện tại
         model.addAttribute("nextStatuses", detail.getOrder().getOrderStatus().nextStatuses());
         model.addAttribute("ghnEnabled", ghnAddressService.isAvailable());
+        model.addAttribute("ghnShippingEnabled", ghnAddressService.isShippingAvailable());
         model.addAttribute("ghnMock", ghnAddressService.isMock());
         model.addAttribute("ghnFeeEstimate", ghnShippingService.estimatedFee(detail.getOrder()));
         model.addAttribute("ghnWeightGram", ghnShippingService.weightOf(detail.getOrder()));

@@ -25,9 +25,22 @@
 .home-page .hero-swiper {
     --swiper-pagination-bullet-inactive-color: #fff;
     --swiper-pagination-bullet-inactive-opacity: .55;
-    --swiper-pagination-bullet-size: 10px;
-    --swiper-pagination-bullet-horizontal-gap: 6px;
+    /* WCAG 2.5.8 (Target Size Minimum, AA): mỗi chấm là một nút bấm thật (Swiper gán role="button").
+       Kích thước 12px + khe 8px ⇒ tâm hai chấm cách nhau 28px ≥ 24px, đạt chuẩn mà không cần
+       phóng to chấm tới mức lấn át banner. Từng để 10px/6px ⇒ cách nhau 16px, rớt chuẩn. */
+    --swiper-pagination-bullet-size: 12px;
+    --swiper-pagination-bullet-horizontal-gap: 8px;
     --swiper-pagination-bottom: 14px;
+}
+
+/* Điện thoại: banner thấp nên hàng nút CTA chạm vào dải chấm phân trang (đo ở 375px:
+   nút "So sánh sản phẩm" đè 33% lên chấm ⇒ vừa khó bấm vừa vướng WCAG 2.5.8).
+   Hạ dải chấm sát đáy banner hơn thay vì nới padding của slide — rule .hero-slide trong
+   theme.css đã bị media query mobile của chính nó ghi đè nên sửa padding ở đó vô hiệu. */
+@media (max-width: 767.98px) {
+    .home-page .hero-swiper {
+        --swiper-pagination-bottom: 6px;
+    }
 }
 
 /* Tiêu đề slide co giãn theo bề rộng màn hình: không tràn ở 375px, không thưa ở 1366px */
@@ -101,7 +114,7 @@
 .home-page .brand-tile:focus-visible {
     transform: translateY(-3px);
     box-shadow: var(--bad-card-shadow-hover);
-    color: var(--bs-primary);
+    color: var(--bad-primary-text);
 }
 
 /* Chữ cái đầu của hãng làm "logo" – không hotlink ảnh hãng bên ngoài */
@@ -114,7 +127,7 @@
     margin-bottom: .6rem;
     border-radius: 14px;
     background: var(--bs-primary-bg-subtle);
-    color: var(--bs-primary);
+    color: var(--bad-primary-text);
     font-size: 1.05rem;
     font-weight: 700;
 }

@@ -91,6 +91,9 @@ public interface ProductVariantRepository extends JpaRepository<ProductVariant, 
 
     boolean existsBySkuAndIdNot(String sku, Integer id);
 
+    /** Biến thể khác còn dùng cùng URL ảnh không – tránh xoá file mà biến thể khác vẫn trỏ tới. */
+    boolean existsByImageUrlAndIdNot(String imageUrl, Integer id);
+
     /** Khớp ràng buộc UQ_product_variant (product_id, color, weight_class, grip_size) để báo lỗi sớm. */
     boolean existsByProductIdAndColorAndWeightClassAndGripSize(Integer productId, String color, String weightClass,
                                                                String gripSize);

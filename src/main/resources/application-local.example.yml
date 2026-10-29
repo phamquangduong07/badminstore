@@ -1,9 +1,39 @@
-# Sao chép thành application-local.yml (đã .gitignore) và điền giá trị thật. KHÔNG commit file thật.
+# ==============================================================================
+# application-local.example.yml – FILE MẪU (được commit)
+#
+# Cách dùng: sao chép thành `src/main/resources/application-local.yml` rồi điền giá trị thật.
+#   • `application-local.yml` đã nằm trong .gitignore ⇒ KHÔNG commit (tránh lộ mật khẩu/token).
+#   • Ứng dụng tự nạp file này vì `spring.profiles.default=local` trong application.yml.
+#   • CHỈ khai báo phần cần GHI ĐÈ – mọi mặc định khác đã có sẵn trong application.yml.
+#   • Có thể bỏ qua file này và truyền biến môi trường thay thế (xem .env.example).
+# ==============================================================================
+
 spring:
   datasource:
-    username: sa
-    password: YOUR_PASSWORD
+    # url mặc định: jdbc:sqlserver://localhost:1433;databaseName=BadminStore;encrypt=true;trustServerCertificate=true
+    username: test
+    password: "123456"                   # tài khoản SQL Server của máy bạn (xem docs/HUONG_DAN_CHAY.md bước 2)
+
 app:
+  # Mật khẩu tài khoản quản trị tạo tự động ở lần khởi động đầu (bỏ trống ⇒ không tạo)
   admin:
-    email: admin@badstore.local
-    password: ChangeMe@123
+    password: "ChangeMe@123"
+
+  # ------------------------------- GHN (tuỳ chọn) -------------------------------
+  # Cách 1 – DEMO OFFLINE (khuyên dùng khi bảo vệ: không cần mạng/token)
+  #   enabled: true + mock: true ⇒ Tỉnh/Huyện/Xã là dữ liệu GHN lưu sẵn ĐẦY ĐỦ (63 tỉnh,
+  #   mã thật); chỉ phí ship và mã vận đơn là số giả.
+  # Cách 2 – GỌI API GHN TRỰC TIẾP: GHN_ENABLED=true GHN_MOCK=false GHN_TOKEN=...
+  #   → dropdown Tỉnh → Huyện → Xã lấy trực tiếp từ GHN (chỉ cần token).
+  #   Muốn tính phí/tạo vận đơn thật thì khai báo thêm GHN_SHOP_ID và GHN_FROM_DISTRICT_ID.
+  #   Token KHÔNG ghi vào file được commit: đặt qua biến môi trường hoặc file này.
+  #
+  # ghn:
+  #   enabled: true
+  #   mock: false
+  #   token: "dán-token-GHN-của-bạn"
+  #   shop-id: 123456                    # bắt buộc để tính phí/tạo vận đơn
+  #   from-district-id: 1489             # quận của kho lấy hàng (1489 = Quận Hoàn Kiếm, Hà Nội)
+  #   from-ward-code: "1A0216"           # phường của kho lấy hàng (1A0216 = Phường Phúc Tân)
+  #   mock-status: delivered             # picked | storing | delivering | delivered | returned
+  #   sync-enabled: false                # bật scheduler đồng bộ trạng thái vận đơn

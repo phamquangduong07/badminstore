@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="vi"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/admin}">
+<head>
+    <title>Quản lý người dùng</title>
+</head>
+<body>
+
+<th:block layout:fragment="content">
+
+    <div class="page-head">
+        <div>
+            <h1 class="page-title"><i class="bi bi-people" aria-hidden="true"></i> Quản lý người dùng</h1>
+            <p class="text-muted small mb-0">
+                Tài khoản khách hàng và quản trị viên. Khoá tài khoản thay vì xoá để giữ lịch sử đơn hàng.
+            </p>
+        </div>
+        <div class="d-flex align-items-center gap-2">
+            <span class="text-muted small" th:text="|${users.totalElements} tài khoản|">0 tài khoản</span>
+            <a class="btn btn-sm btn-primary" th:href="@{/admin/nguoi-dung/tao-moi}">
+                <i class="bi bi-person-plus" aria-hidden="true"></i> Thêm người dùng
+            </a>
+        </div>
+    </div>
+
+    <form class="card-soft mb-3" method="get" th:action="@{/admin/nguoi-dung}">
+        <div class="card-body row g-2 align-items-end">
+            <div class="col-sm-6 col-lg-2">
+                <label class="form-label small" for="role">Vai trò</label>
+                <select class="form-select" id="role" name="role">
+                    <option value="" th:selected="${roleFilter == null}">-- Tất cả --</option>
+                    <option th:each="item : ${roles}" th:value="${item.name()}"
+                            th:text="${item.label}" th:selected="${item == roleFilter}">Vai trò</option>
+                </select>
+            </div>
+            <div class="col-sm-6 col-lg-2">
+                <label class="form-label small" for="status">Trạng thái</label>
+                <select class="form-select" id="status" name="status">
+                    <option value="" th:selected="${statusFilter == null}">-- Tất cả --</option>
+                    <option th:each="item : ${statuses}" th:value="${item.name()}"
+                            th:text="${item.label}" th:selected="${item == statusFilter}">Trạng thái</option>
+                </select>
+            </div>
+            <div class="col-sm-6 col-lg-4">
+                <label class="form-label small" for="keyword">Tìm theo họ tên / email / số điện thoại</label>
+                <input class="form-control" id="keyword" name="keyword" th:value="${keyword}"
+                       placeholder="Ví dụ: nguyenvana@example.com">
+            </div>
+            <div class="col-lg-4 d-flex gap-2">
+                <button class="btn btn-primary" type="submit">
+                    <i class="bi bi-search" aria-hidden="true"></i> Lọc
+                </button>
+                <a class="btn btn-outline-secondary" th:href="@{/admin/nguoi-dung}">Xoá lọc</a>
+            </div>
+        </div>
+    </form>
+
+    <div class="card-soft">
+        <div class="table-responsive table-scroll">
+            <table class="table table-hover align-middle mb-0 table-sticky">
+                <thead>
+                <tr>
+                    <th scope="col">Người dùng</th>
+                    <th scope="col">Vai trò</th>
+                    <th scope="col">Trạng thái</th>
+                    <th scope="col" class="text-center">Đơn hàng</th>
+                    <th scope="col" class="text-end">Đã mua</th>
+                    <th scope="col">Ngày tạo</th>
+                    <th scope="col" class="text-end">Thao tác</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="row : ${users.content}">
+                    <td>
+                        <div class="d-flex align-items-center gap-2">
+                            <img th:if="${row.user.avatar != null}" th:src="@{${row.user.avatar}}"
+                                 th:alt="${'Ảnh đại diện của ' + row.user.fullName}"
+                                 class="user-avatar" loading="lazy">
+                            <span th:unless="${row.user.avatar != null}" class="user-avatar"
+                                  aria-hidden="true"
+                                  th:text="${#strings.toUpperCase(#strings.substring(row.user.fullName, 0, 1))}">A</span>
+                            <div>
+                                <div class="fw-semibold" th:text="${row.user.fullName}">Họ tên</div>
+                                <div class="small text-muted" th:text="${row.user.email}">email@example.com</div>
+                                <div class="small text-muted" th:if="${row.user.phone != null}"
+                                     th:text="${row.user.phone}">0912345678</div>
+                            </div>
+                        </div>
+                    </td>
+                    <td>
+                        <span class="badge"
+                              th:classappend="${row.user.role.name() == 'ADMIN'} ? 'text-bg-primary' : 'text-bg-secondary'"
+                              th:text="${row.user.role.label}">Khách hàng</span>
+                    </td>
+                    <td>
+                        <span class="status-pill"
+                              th:classappend="|status-${row.user.status.name()}|"
+                              th:text="${row.user.status.label}">Đang hoạt động</span>
+                    </td>
+                    <td class="text-center">
+                        <a th:if="${row.orderCount > 0}"
+                           th:href="@{/admin/don-hang(keyword=${row.user.email})}"
+                           th:attr="aria-label=|Xem ${row.orderCount} đơn hàng của ${row.user.fullName}|"
+                           th:text="${row.orderCount}">0</a>
+                        <span th:unless="${row.orderCount > 0}" class="text-muted">0</span>
+                    </td>
+                    <td class="text-end">
+                        <span th:insert="~{fragments/common :: moneyOr(${row.totalSpent}, '0 ₫')}">0 ₫</span>
+                    </td>
+                    <td class="small">
+                        <span th:insert="~{fragments/common :: dateTime(${row.user.createdAt})}">00/00/0000</span>
+                    </td>
+                    <td class="text-end">
+                        <div class="d-flex justify-content-end gap-1">
+                            <a class="btn btn-sm btn-outline-primary"
+                               th:href="@{/admin/nguoi-dung/{id}/sua(id=${row.user.id})}"
+                               th:attr="aria-label=|Sửa tài khoản ${row.user.email}|" title="Sửa tài khoản">
+                                <i class="bi bi-pencil-square" aria-hidden="true"></i>
+                                <span class="d-none d-xl-inline">Sửa</span>
+                            </a>
+
+                            <form th:if="${row.user.id != currentUserId}"
+                                  th:action="@{/admin/nguoi-dung/{id}/khoa(id=${row.user.id})}"
+                                  method="post" class="d-inline"
+                                  th:data-confirm="${row.user.status.name() == 'LOCKED'}
+                                          ? 'Mở khoá tài khoản ' + ${row.user.email} + '?'
+                                          : 'Khoá tài khoản ' + ${row.user.email} + '? Người dùng sẽ không đăng nhập được.'">
+                                <button class="btn btn-sm"
+                                        th:classappend="${row.user.status.name() == 'LOCKED'}
+                                                ? 'btn-outline-success' : 'btn-outline-danger'"
+                                        type="submit"
+                                        th:attr="aria-label=|${row.user.status.name() == 'LOCKED' ? 'Mở khoá' : 'Khoá'} tài khoản ${row.user.email}|"
+                                        th:title="${row.user.status.name() == 'LOCKED'} ? 'Mở khoá tài khoản' : 'Khoá tài khoản'">
+                                    <i class="bi" aria-hidden="true"
+                                       th:classappend="${row.user.status.name() == 'LOCKED'} ? 'bi-unlock' : 'bi-lock'"></i>
+                                    <span class="d-none d-xl-inline"
+                                          th:text="${row.user.status.name() == 'LOCKED'} ? 'Mở khoá' : 'Khoá'">Khoá</span>
+                                </button>
+                            </form>
+
+                            <button th:if="${row.user.id == currentUserId}" type="button" disabled
+                                    class="btn btn-sm btn-outline-secondary"
+                                    title="Không thể tự khoá tài khoản đang đăng nhập"
+                                    aria-label="Không thể tự khoá tài khoản đang đăng nhập">
+                                <i class="bi bi-lock" aria-hidden="true"></i>
+                            </button>
+                        </div>
+                    </td>
+                </tr>
+                <tr th:if="${users.empty}">
+                    <td colspan="7" class="p-0"
+                        th:insert="~{fragments/common :: emptyState('bi-people', 'Không có tài khoản nào phù hợp bộ lọc.')}"></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div th:replace="~{fragments/pagination :: pager(
+            page=${users}, pageNumbers=${pageNumbers},
+            url='/admin/nguoi-dung', ariaLabel='Phân trang người dùng', itemLabel='tài khoản',
+            query=|role=${roleFilter ?: ''}&status=${statusFilter ?: ''}&keyword=${#uris.escapeQueryParam(keyword ?: '')}|)}"></div>
+
+</th:block>
+
+</body>
+</html>

@@ -13,6 +13,9 @@ public interface UserAddressRepository extends JpaRepository<UserAddress, Intege
 
     List<UserAddress> findByUserIdAndDeletedFalseOrderByDefaultAddressDescCreatedAtDesc(Integer userId);
 
+    /** Số địa chỉ chưa xoá của một khách (dùng cho trang tài khoản). */
+    long countByUserIdAndDeletedFalse(Integer userId);
+
     Optional<UserAddress> findByIdAndUserIdAndDeletedFalse(Integer id, Integer userId);
 
     Optional<UserAddress> findFirstByUserIdAndDefaultAddressTrueAndDeletedFalse(Integer userId);

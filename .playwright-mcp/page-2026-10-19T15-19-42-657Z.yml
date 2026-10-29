@@ -1,0 +1,180 @@
+- generic [active] [ref=f156e1]:
+  - link "Bỏ qua tới nội dung chính" [ref=f156e2] [cursor=pointer]:
+    - /url: "#noi-dung-chinh"
+  - generic [ref=f156e4]:
+    - generic "Menu quản trị" [ref=f156e6]:
+      - navigation [ref=f156e8]:
+        - link "BadStore Trang quản trị" [ref=f156e9] [cursor=pointer]:
+          - /url: /admin
+          - generic [aria-hidden] [ref=f156e11]: 
+          - generic [ref=f156e12]:
+            - text: BadStore
+            - generic [ref=f156e13]: Trang quản trị
+        - paragraph [ref=f156e14]: Bán hàng
+        - list [ref=f156e15]:
+          - listitem [ref=f156e16]:
+            - link "Tổng quan" [ref=f156e17] [cursor=pointer]:
+              - /url: /admin
+              - generic [aria-hidden] [ref=f156e18]: 
+              - text: Tổng quan
+          - listitem [ref=f156e19]:
+            - link "Bán hàng tại quầy" [ref=f156e20] [cursor=pointer]:
+              - /url: /admin/ban-hang
+              - generic [aria-hidden] [ref=f156e21]: 
+              - text: Bán hàng tại quầy
+          - listitem [ref=f156e22]:
+            - link "Đơn hàng" [ref=f156e23] [cursor=pointer]:
+              - /url: /admin/don-hang
+              - generic [aria-hidden] [ref=f156e24]: 
+              - text: Đơn hàng
+        - paragraph [ref=f156e25]: Hàng hoá & khuyến mãi
+        - list [ref=f156e26]:
+          - listitem [ref=f156e27]:
+            - link "Sản phẩm & biến thể" [ref=f156e28] [cursor=pointer]:
+              - /url: /admin/san-pham
+              - generic [aria-hidden] [ref=f156e29]: 
+              - text: Sản phẩm & biến thể
+          - listitem [ref=f156e30]:
+            - link "Voucher" [ref=f156e31] [cursor=pointer]:
+              - /url: /admin/voucher
+              - generic [aria-hidden] [ref=f156e32]: 
+              - text: Voucher
+        - generic [ref=f156e33]:
+          - link "Xem cửa hàng" [ref=f156e34] [cursor=pointer]:
+            - /url: /
+            - generic [aria-hidden] [ref=f156e35]: 
+            - text: Xem cửa hàng
+          - paragraph [ref=f156e36]:
+            - generic [aria-hidden] [ref=f156e37]: 
+            - text: Đổi trạng thái đơn sẽ trừ/cộng kho ngay.
+    - main [ref=f156e38]:
+      - generic [ref=f156e39]:
+        - text: 
+        - generic [ref=f156e40]:
+          - generic [aria-hidden] [ref=f156e41]: 
+          - text: Khu quản trị BadStore
+        - generic [ref=f156e42]:
+          - link "Xem cửa hàng" [ref=f156e43] [cursor=pointer]:
+            - /url: /
+            - generic [aria-hidden] [ref=f156e44]: 
+            - text: Xem cửa hàng
+          - generic [ref=f156e45]:
+            - generic [aria-hidden] [ref=f156e46]: 
+            - generic [ref=f156e47]: admin@badstore.local
+          - button "Đăng xuất" [ref=f156e49] [cursor=pointer]:
+            - generic [aria-hidden] [ref=f156e50]: 
+            - text: Đăng xuất
+      - generic [ref=f156e51]:
+        - navigation "breadcrumb" [ref=f156e52]:
+          - list [ref=f156e53]:
+            - listitem [ref=f156e54]:
+              - link "Tổng quan" [ref=f156e55] [cursor=pointer]:
+                - /url: /admin
+            - listitem [ref=f156e56]:
+              - text: /
+              - link "Sản phẩm" [ref=f156e57] [cursor=pointer]:
+                - /url: /admin/san-pham
+            - listitem [ref=f156e58]: / Thêm mới
+        - generic [ref=f156e59]:
+          - heading "Thêm sản phẩm mới" [level=1] [ref=f156e60]:
+            - generic [aria-hidden] [ref=f156e61]: 
+          - link "Danh sách sản phẩm" [ref=f156e63] [cursor=pointer]:
+            - /url: /admin/san-pham
+            - generic [aria-hidden] [ref=f156e64]: 
+            - text: Danh sách sản phẩm
+        - generic [ref=f156e66]:
+          - generic [ref=f156e68]:
+            - generic [ref=f156e69]:
+              - generic [aria-hidden] [ref=f156e70]: 
+              - text: Thông tin chung
+            - generic [ref=f156e71]:
+              - generic [ref=f156e72]:
+                - generic [ref=f156e73]: Mã sản phẩm *
+                - textbox "Mã sản phẩm *" [ref=f156e74]:
+                  - /placeholder: YX-AX100ZZ
+                - generic [ref=f156e75]: Hệ thống tự viết hoa; mã dùng làm tiền tố SKU biến thể.
+              - generic [ref=f156e76]:
+                - generic [ref=f156e77]: Tên sản phẩm *
+                - textbox "Tên sản phẩm *" [ref=f156e78]:
+                  - /placeholder: Vợt cầu lông Yonex Astrox 100 ZZ
+              - generic [ref=f156e79]:
+                - generic [ref=f156e80]: Hãng sản xuất *
+                - combobox "Hãng sản xuất *" [ref=f156e81]:
+                  - option "-- Chọn hãng --" [selected]
+                  - option "Apacs"
+                  - option "Kumpoo"
+                  - option "Li-Ning"
+                  - option "Mizuno"
+                  - option "Victor"
+                  - option "Yonex"
+              - generic [ref=f156e82]:
+                - generic [ref=f156e83]: Loại (lối chơi) *
+                - combobox "Loại (lối chơi) *" [ref=f156e84]:
+                  - option "-- Chọn loại --" [selected]
+                  - option "Vợt phòng thủ"
+                  - option "Vợt tấn công"
+                  - option "Vợt toàn diện"
+              - generic [ref=f156e85]:
+                - generic [ref=f156e86]: Trạng thái *
+                - combobox "Trạng thái *" [ref=f156e87]:
+                  - option "Đang bán" [selected]
+                  - option "Bản nháp"
+                  - option "Đã ẩn"
+                - generic [ref=f156e88]:
+                  - text: Chỉ sản phẩm
+                  - emphasis [ref=f156e89]: Đang bán
+                  - text: mới hiện trên trang khách.
+              - generic [ref=f156e90]:
+                - generic [ref=f156e91]: Mô tả sản phẩm
+                - textbox "Mô tả sản phẩm" [ref=f156e92]:
+                  - /placeholder: Điểm nổi bật, công nghệ, phù hợp với lối chơi nào…
+          - generic [ref=f156e93]:
+            - generic [ref=f156e94]:
+              - generic [ref=f156e95]:
+                - generic [aria-hidden] [ref=f156e96]: 
+                - text: Thông số kỹ thuật
+              - generic [ref=f156e97]:
+                - generic [ref=f156e98]:
+                  - generic [ref=f156e99]: Chiều dài (mm)
+                  - spinbutton "Chiều dài (mm)" [ref=f156e100]
+                - generic [ref=f156e101]:
+                  - generic [ref=f156e102]: Điểm cân bằng (mm)
+                  - spinbutton "Điểm cân bằng (mm)" [ref=f156e103]
+                - generic [ref=f156e104]:
+                  - generic [ref=f156e105]: Kiểu cân bằng
+                  - combobox "Kiểu cân bằng" [ref=f156e106]:
+                    - option "-- Không rõ --" [selected]
+                    - option "Nặng đầu (tấn công)"
+                    - option "Cân bằng"
+                    - option "Nhẹ đầu (phòng thủ)"
+                - generic [ref=f156e107]:
+                  - generic [ref=f156e108]: Độ cứng thân vợt
+                  - combobox "Độ cứng thân vợt" [ref=f156e109]:
+                    - option "-- Không rõ --" [selected]
+                    - option "Mềm"
+                    - option "Trung bình"
+                    - option "Cứng"
+                    - option "Rất cứng"
+                - generic [ref=f156e110]:
+                  - generic [ref=f156e111]: Căng tối đa (kg)
+                  - spinbutton "Căng tối đa (kg)" [ref=f156e112]
+                - generic [ref=f156e113]:
+                  - generic [ref=f156e114]: Chất liệu khung
+                  - textbox "Chất liệu khung" [ref=f156e115]:
+                    - /placeholder: Graphite + Namd
+                - generic [ref=f156e116]:
+                  - generic [ref=f156e117]: Chất liệu thân vợt
+                  - textbox "Chất liệu thân vợt" [ref=f156e118]:
+                    - /placeholder: Graphite siêu bền
+              - generic [ref=f156e119]:
+                - button "Lưu sản phẩm" [ref=f156e120] [cursor=pointer]:
+                  - generic [aria-hidden] [ref=f156e121]: 
+                  - text: Lưu sản phẩm
+                - link "Huỷ" [ref=f156e122] [cursor=pointer]:
+                  - /url: /admin/san-pham
+            - generic [ref=f156e123]:
+              - generic [aria-hidden] [ref=f156e124]: 
+              - text: Giá bán và tồn kho nằm ở từng
+              - strong [ref=f156e125]: biến thể
+              - text: (màu × trọng lượng × cỡ cán). Sau khi lưu sản phẩm, hãy sang trang “Biến thể & ảnh” để bổ sung.
+  - text: 

@@ -1,5 +1,6 @@
 package com.example.demo.repository;
 
+import com.example.demo.dto.admin.CatalogUsageRow;
 import com.example.demo.dto.shop.ProductCardView;
 import com.example.demo.entity.Product;
 import com.example.demo.enums.ProductStatus;
@@ -116,6 +117,28 @@ public interface ProductRepository extends JpaRepository<Product, Integer> {
     List<Product> findByDeletedFalseOrderByCreatedAtDesc();
 
     long countByDeletedFalseAndStatus(ProductStatus status);
+
+    long countByBrandIdAndDeletedFalse(Integer brandId);
+
+    long countByCategoryIdAndDeletedFalse(Integer categoryId);
+
+    /** Số sản phẩm chưa xoá mềm theo từng hãng – một truy vấn cho cả trang quản lý hãng. */
+    @Query("""
+            select new com.example.demo.dto.admin.CatalogUsageRow(p.brand.id, count(p.id))
+            from Product p
+            where p.deleted = false
+            group by p.brand.id
+            """)
+    List<CatalogUsageRow> countActiveProductsByBrand();
+
+    /** Số sản phẩm chưa xoá mềm theo từng loại vợt – một truy vấn cho cả trang quản lý loại. */
+    @Query("""
+            select new com.example.demo.dto.admin.CatalogUsageRow(p.category.id, count(p.id))
+            from Product p
+            where p.deleted = false
+            group by p.category.id
+            """)
+    List<CatalogUsageRow> countActiveProductsByCategory();
 
     boolean existsByProductCode(String productCode);
 

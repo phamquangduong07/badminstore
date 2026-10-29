@@ -57,9 +57,9 @@ public class GhnShippingService {
     @Transactional
     public GhnOrderResult pushOrder(Integer orderId) {
         Order order = requireOrder(orderId);
-        if (!ghnClient.isAvailable()) {
-            throw new BusinessException("Tính năng GHN đang tắt nên chưa tạo được vận đơn. "
-                    + "Bật app.ghn.enabled (hoặc app.ghn.mock để demo) rồi thử lại.");
+        if (!ghnClient.isShippingAvailable()) {
+            throw new BusinessException("Chưa cấu hình đủ GHN để tạo vận đơn: cần bật GHN, có token, "
+                    + "shop-id và kho lấy hàng (from-district-id). Kiểm tra lại cấu hình app.ghn rồi thử lại.");
         }
         if (StringUtils.hasText(order.getGhnOrderCode())) {
             throw new BusinessException("Đơn " + order.getOrderCode() + " đã có vận đơn GHN "
@@ -174,7 +174,7 @@ public class GhnShippingService {
     /** Phí dự kiến GHN sẽ thu cho đơn này (null nếu GHN tắt hoặc đơn chưa có mã quận GHN). */
     @Transactional(readOnly = true)
     public BigDecimal estimatedFee(Order order) {
-        if (!ghnClient.isAvailable() || order.getShippingDistrictId() == null) {
+        if (!ghnClient.isShippingAvailable() || order.getShippingDistrictId() == null) {
             return null;
         }
         try {

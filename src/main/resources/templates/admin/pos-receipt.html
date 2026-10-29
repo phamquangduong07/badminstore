@@ -11,22 +11,22 @@
 <th:block layout:fragment="content">
 
     <div class="page-head d-print-none">
-        <h1 class="page-title"><i class="bi bi-receipt"></i> Phiếu bán hàng</h1>
+        <h1 class="page-title"><i class="bi bi-receipt" aria-hidden="true"></i> Phiếu bán hàng</h1>
         <div class="d-flex flex-wrap gap-2">
             <button class="btn btn-primary" type="button" data-print>
-                <i class="bi bi-printer"></i> In phiếu
+                <i class="bi bi-printer" aria-hidden="true"></i> In phiếu
             </button>
             <a class="btn btn-success" th:href="@{/admin/ban-hang}">
-                <i class="bi bi-plus-circle"></i> Bán tiếp
+                <i class="bi bi-plus-circle" aria-hidden="true"></i> Bán tiếp
             </a>
             <a class="btn btn-outline-secondary" th:href="@{'/admin/don-hang/' + ${detail.order.id}}">
-                <i class="bi bi-box-arrow-up-right"></i> Xem đơn trong hệ thống
+                <i class="bi bi-box-arrow-up-right" aria-hidden="true"></i> Xem đơn trong hệ thống
             </a>
         </div>
     </div>
 
     <div class="alert alert-success d-print-none" role="alert" th:if="${cashReceived != null}">
-        <i class="bi bi-check2-circle"></i>
+        <i class="bi bi-check2-circle" aria-hidden="true"></i>
         Khách đưa <strong th:insert="~{fragments/common :: money(${cashReceived})}">0 ₫</strong>
         – tiền thừa trả khách <strong th:insert="~{fragments/common :: money(${changeAmount})}">0 ₫</strong>.
     </div>

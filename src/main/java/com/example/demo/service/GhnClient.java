@@ -33,7 +33,8 @@ import org.springframework.web.client.RestClientException;
  *
  * Nguyên tắc an toàn cho demo:
  *  1. Mặc định TẮT: khi chưa có token, mọi chức năng GHN tự ẩn/ngưng, địa chỉ nhập tay như cũ.
- *  2. `app.ghn.mock: true` trả dữ liệu giả để demo offline (xem {@link GhnMockData}).
+ *  2. `app.ghn.mock: true` KHÔNG gọi mạng: địa chỉ lấy từ dữ liệu GHN lưu sẵn đầy đủ
+ *     (xem {@link GhnOfflineAddressData}), phí vận chuyển/vận đơn là số giả để demo (xem {@link GhnMockData}).
  *  3. Dữ liệu Tỉnh–Huyện–Xã và phí ship được CACHE trong bộ nhớ (mặc định 10 phút)
  *     để một trang không gọi GHN quá nhiều lần.
  *  4. Mọi lỗi mạng/GHN từ chối đều bọc thành {@link GhnApiException} với thông báo tiếng Việt.
@@ -81,16 +82,21 @@ public class GhnClient {
         return props.isMock();
     }
 
-    /** Bật + (mock hoặc đã có token & shopId) = dùng được. */
-    public boolean isAvailable() {
-        return props.isEnabled() && (props.isMock() || props.isConfigured());
+    /** Bật + (mock hoặc đã có token) = tra cứu được Tỉnh–Huyện–Xã. */
+    public boolean isAddressAvailable() {
+        return props.isEnabled() && (props.isMock() || props.isAddressConfigured());
+    }
+
+    /** Bật + có token + shopId + kho lấy hàng = tính phí/tạo vận đơn được. */
+    public boolean isShippingAvailable() {
+        return props.isEnabled() && (props.isMock() || props.isShippingConfigured());
     }
 
     /** Lấy danh sách Tỉnh/Thành phố. */
     public List<GhnProvince> provinces() {
         ensureAvailable("lấy danh sách tỉnh/thành phố");
         if (props.isMock()) {
-            return GhnMockData.provinces();
+            return GhnOfflineAddressData.provinces();
         }
         return cached("provinces", () -> {
             GhnResponse<List<GhnProvince>> res = restClient.get()
@@ -107,7 +113,7 @@ public class GhnClient {
     public List<GhnDistrict> districts(int provinceId) {
         ensureAvailable("lấy danh sách quận/huyện");
         if (props.isMock()) {
-            return GhnMockData.districts(provinceId);
+            return GhnOfflineAddressData.districts(provinceId);
         }
         return cached("districts:" + provinceId, () -> {
             GhnResponse<List<GhnDistrict>> res = restClient.get()
@@ -126,7 +132,7 @@ public class GhnClient {
     public List<GhnWard> wards(int districtId) {
         ensureAvailable("lấy danh sách phường/xã");
         if (props.isMock()) {
-            return GhnMockData.wards(districtId);
+            return GhnOfflineAddressData.wards(districtId);
         }
         return cached("wards:" + districtId, () -> {
             try {
@@ -274,16 +280,28 @@ public class GhnClient {
         if (!props.isEnabled()) {
             throw new GhnApiException("Tính năng GHN đang tắt (app.ghn.enabled = false).");
         }
-        if (!props.isMock() && !props.isConfigured()) {
+        if (!props.isMock() && !props.isAddressConfigured()) {
             throw new GhnApiException("Chưa cấu hình GHN để " + action
-                    + ": cần GHN_TOKEN và GHN_SHOP_ID (hoặc bật app.ghn.mock để demo offline).");
+                    + ": cần GHN_TOKEN (hoặc bật app.ghn.mock để demo offline).");
         }
     }
 
     private void ensureShippingConfig(String action) {
-        ensureAvailable(action);
-        if (!props.isMock() && props.getFromDistrictId() == null) {
-            throw new GhnApiException("Chưa khai báo kho lấy hàng (app.ghn.from-district-id) nên không thể " + action + ".");
+        if (!props.isEnabled()) {
+            throw new GhnApiException("Tính năng GHN đang tắt (app.ghn.enabled = false).");
+        }
+        if (props.isMock()) {
+            return;
+        }
+        if (!props.isAddressConfigured()) {
+            throw new GhnApiException("Chưa cấu hình token GHN (GHN_TOKEN) nên không thể " + action + ".");
+        }
+        if (props.getShopId() == null) {
+            throw new GhnApiException("Chưa khai báo shopId GHN (app.ghn.shop-id) nên không thể " + action + ".");
+        }
+        if (props.getFromDistrictId() == null) {
+            throw new GhnApiException("Chưa khai báo kho lấy hàng (app.ghn.from-district-id) nên không thể "
+                    + action + ".");
         }
     }
 

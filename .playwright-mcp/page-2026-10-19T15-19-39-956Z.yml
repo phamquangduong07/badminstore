@@ -1,0 +1,134 @@
+- generic [active] [ref=f152e1]:
+  - link "Bỏ qua tới nội dung chính" [ref=f152e2] [cursor=pointer]:
+    - /url: "#noi-dung-chinh"
+  - generic [ref=f152e4]:
+    - generic "Menu quản trị" [ref=f152e6]:
+      - navigation [ref=f152e8]:
+        - link "BadStore Trang quản trị" [ref=f152e9] [cursor=pointer]:
+          - /url: /admin
+          - generic [aria-hidden] [ref=f152e11]: 
+          - generic [ref=f152e12]:
+            - text: BadStore
+            - generic [ref=f152e13]: Trang quản trị
+        - paragraph [ref=f152e14]: Bán hàng
+        - list [ref=f152e15]:
+          - listitem [ref=f152e16]:
+            - link "Tổng quan" [ref=f152e17] [cursor=pointer]:
+              - /url: /admin
+              - generic [aria-hidden] [ref=f152e18]: 
+              - text: Tổng quan
+          - listitem [ref=f152e19]:
+            - link "Bán hàng tại quầy" [ref=f152e20] [cursor=pointer]:
+              - /url: /admin/ban-hang
+              - generic [aria-hidden] [ref=f152e21]: 
+              - text: Bán hàng tại quầy
+          - listitem [ref=f152e22]:
+            - link "Đơn hàng" [ref=f152e23] [cursor=pointer]:
+              - /url: /admin/don-hang
+              - generic [aria-hidden] [ref=f152e24]: 
+              - text: Đơn hàng
+        - paragraph [ref=f152e25]: Hàng hoá & khuyến mãi
+        - list [ref=f152e26]:
+          - listitem [ref=f152e27]:
+            - link "Sản phẩm & biến thể" [ref=f152e28] [cursor=pointer]:
+              - /url: /admin/san-pham
+              - generic [aria-hidden] [ref=f152e29]: 
+              - text: Sản phẩm & biến thể
+          - listitem [ref=f152e30]:
+            - link "Voucher" [ref=f152e31] [cursor=pointer]:
+              - /url: /admin/voucher
+              - generic [aria-hidden] [ref=f152e32]: 
+              - text: Voucher
+        - generic [ref=f152e33]:
+          - link "Xem cửa hàng" [ref=f152e34] [cursor=pointer]:
+            - /url: /
+            - generic [aria-hidden] [ref=f152e35]: 
+            - text: Xem cửa hàng
+          - paragraph [ref=f152e36]:
+            - generic [aria-hidden] [ref=f152e37]: 
+            - text: Đổi trạng thái đơn sẽ trừ/cộng kho ngay.
+    - main [ref=f152e38]:
+      - generic [ref=f152e39]:
+        - text: 
+        - generic [ref=f152e40]:
+          - generic [aria-hidden] [ref=f152e41]: 
+          - text: Khu quản trị BadStore
+        - generic [ref=f152e42]:
+          - link "Xem cửa hàng" [ref=f152e43] [cursor=pointer]:
+            - /url: /
+            - generic [aria-hidden] [ref=f152e44]: 
+            - text: Xem cửa hàng
+          - generic [ref=f152e45]:
+            - generic [aria-hidden] [ref=f152e46]: 
+            - generic [ref=f152e47]: admin@badstore.local
+          - button "Đăng xuất" [ref=f152e49] [cursor=pointer]:
+            - generic [aria-hidden] [ref=f152e50]: 
+            - text: Đăng xuất
+      - generic [ref=f152e51]:
+        - generic [ref=f152e52]:
+          - heading "Quản lý voucher" [level=1] [ref=f152e53]:
+            - generic [aria-hidden] [ref=f152e54]: 
+            - text: Quản lý voucher
+          - generic [ref=f152e55]:
+            - generic [ref=f152e56]: Tổng 1 voucher
+            - link "Tạo voucher" [ref=f152e57] [cursor=pointer]:
+              - /url: /admin/voucher/tao-moi
+              - generic [aria-hidden] [ref=f152e58]: 
+              - text: Tạo voucher
+        - generic [ref=f152e60]:
+          - generic [ref=f152e61]:
+            - generic [ref=f152e62]: Trạng thái
+            - combobox "Trạng thái" [ref=f152e63]:
+              - option "-- Tất cả --" [selected]
+              - option "Đang áp dụng"
+              - option "Ngừng áp dụng"
+          - generic [ref=f152e64]:
+            - generic [ref=f152e65]: Tìm theo mã / tên chương trình
+            - textbox "Tìm theo mã / tên chương trình" [ref=f152e66]:
+              - /placeholder: "Ví dụ: GIAM10"
+          - generic [ref=f152e67]:
+            - button "Lọc" [ref=f152e68] [cursor=pointer]:
+              - generic [aria-hidden] [ref=f152e69]: 
+              - text: Lọc
+            - link "Xoá lọc" [ref=f152e70] [cursor=pointer]:
+              - /url: /admin/voucher
+        - table [ref=f152e73]:
+          - rowgroup [ref=f152e74]:
+            - row [ref=f152e75]:
+              - columnheader "Mã / Chương trình" [ref=f152e76]
+              - columnheader "Giảm giá" [ref=f152e77]
+              - columnheader "Điều kiện" [ref=f152e78]
+              - columnheader "Lượt dùng" [ref=f152e79]
+              - columnheader "Thời gian áp dụng" [ref=f152e80]
+              - columnheader "Trạng thái" [ref=f152e81]
+              - columnheader "Thao tác" [ref=f152e82]
+          - rowgroup [ref=f152e83]:
+            - row [ref=f152e84]:
+              - cell "GIAM10 claude code free" [ref=f152e85]:
+                - generic [ref=f152e86]: GIAM10
+                - generic [ref=f152e87]: claude code free
+              - cell "Giảm 99.97% (tối đa 34.434 ₫)" [ref=f152e88]
+              - cell "Đơn từ 322 ₫ Tối đa 34.434 ₫" [ref=f152e89]:
+                - generic [ref=f152e90]:
+                  - text: Đơn từ
+                  - generic [ref=f152e91]: 322 ₫
+                - generic [ref=f152e92]:
+                  - text: Tối đa
+                  - generic [ref=f152e93]: 34.434 ₫
+              - cell "0/10" [ref=f152e94]
+              - cell "16/10/2026 01:35 → 15/11/2026 01:35" [ref=f152e95]:
+                - generic [ref=f152e96]: 16/10/2026 01:35
+                - generic [ref=f152e97]:
+                  - text: →
+                  - generic [ref=f152e98]: 15/11/2026 01:35
+              - cell "Đang áp dụng" [ref=f152e99]
+              - cell [ref=f152e101]:
+                - generic [ref=f152e102]:
+                  - link "Sửa voucher GIAM10" [ref=f152e103] [cursor=pointer]:
+                    - /url: /admin/voucher/83/sua
+                    - generic [aria-hidden] [ref=f152e104]: 
+                    - text: Sửa
+                  - button "Đổi trạng thái voucher GIAM10" [ref=f152e106] [cursor=pointer]:
+                    - generic [aria-hidden] [ref=f152e107]: 
+                    - text: Ngừng
+  - text: 

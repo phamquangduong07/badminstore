@@ -203,14 +203,45 @@ class GhnClientTest {
         GhnProperties disabled = new GhnProperties();
         GhnClient disabledClient = new GhnClient(disabled, RestClient.builder().build());
 
-        assertThat(disabledClient.isAvailable()).isFalse();
+        assertThat(disabledClient.isAddressAvailable()).isFalse();
+        assertThat(disabledClient.isShippingAvailable()).isFalse();
         assertThatThrownBy(disabledClient::provinces)
                 .isInstanceOf(GhnApiException.class)
                 .hasMessageContaining("đang tắt");
     }
 
     @Test
-    @DisplayName("Chế độ mock: dữ liệu THẬT của -GhnMockData- được dùng, không có request nào ra ngoài")
+    @DisplayName("Chỉ có token (chưa có shopId/kho) vẫn tra cứu được địa chỉ, nhưng không tính phí GHN")
+    void tokenOnly_enablesAddressLookupNotShipping() {
+        GhnProperties addressOnly = new GhnProperties();
+        addressOnly.setEnabled(true);
+        addressOnly.setMock(false);
+        addressOnly.setToken("token-test");
+        addressOnly.setBaseUrl("http://ghn.test");
+
+        RestClient.Builder builder = RestClient.builder().baseUrl("http://ghn.test");
+        MockRestServiceServer addressServer = MockRestServiceServer.bindTo(builder).build();
+        GhnClient addressClient = new GhnClient(addressOnly, builder.build());
+
+        assertThat(addressClient.isAddressAvailable()).isTrue();
+        assertThat(addressClient.isShippingAvailable()).isFalse();
+
+        addressServer.expect(requestTo("http://ghn.test/master-data/province"))
+                .andExpect(method(HttpMethod.GET))
+                .andRespond(withSuccess("""
+                        {"code":200,"message":"Success",
+                         "data":[{"ProvinceID":201,"ProvinceName":"Hà Nội"}]}
+                        """, MediaType.APPLICATION_JSON));
+
+        assertThat(addressClient.provinces()).hasSize(1);
+        assertThatThrownBy(() -> addressClient.fee(1454, "1A0808", 1500))
+                .isInstanceOf(GhnApiException.class)
+                .hasMessageContaining("shopId");
+        addressServer.verify();
+    }
+
+    @Test
+    @DisplayName("Chế độ ngoại tuyến: địa chỉ là dữ liệu GHN lưu sẵn ĐẦY ĐỦ (63 tỉnh), phí/vận đơn mới là số giả")
     void mockMode_servesBuiltInDataWithoutHttp() {
         GhnProperties mockProperties = new GhnProperties();
         mockProperties.setEnabled(true);
@@ -218,10 +249,16 @@ class GhnClientTest {
 
         GhnClient mockClient = new GhnClient(mockProperties, RestClient.builder().build());
 
-        assertThat(mockClient.isAvailable()).isTrue();
+        assertThat(mockClient.isAddressAvailable()).isTrue();
+        assertThat(mockClient.isShippingAvailable()).isTrue();
         assertThat(mockClient.isMock()).isTrue();
         assertThat(mockClient.provinces()).isNotEmpty();
         assertThat(mockClient.districts(mockClient.provinces().get(0).id())).isNotEmpty();
+        // Toàn bộ dữ liệu: 63 tỉnh/thành, Hà Nội 30 quận/huyện, Hoàn Kiếm 18 phường/xã (mã thật của GHN)
+        assertThat(mockClient.provinces()).hasSize(63);
+        assertThat(mockClient.districts(201)).hasSize(30);
+        assertThat(mockClient.wards(1489)).extracting(GhnWard::name).contains("Phường Phúc Tân");
+        assertThat(mockClient.wards(1489)).extracting(GhnWard::code).contains("1A0216");
         assertThat(mockClient.fee(1454, "1A0808", 1500).total()).isPositive();
         assertThat(mockClient.createOrder(new GhnCreateOrderRequest()).orderCode()).startsWith("GHNMOCK");
         assertThat(mockClient.orderDetail("GHNMOCK1").orderCode()).isEqualTo("GHNMOCK1");

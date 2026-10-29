@@ -21,30 +21,30 @@
 
     <div class="page-head">
         <h1 class="page-title">
-            <i class="bi bi-box-seam"></i>
+            <i class="bi bi-box-seam" aria-hidden="true"></i>
             <span th:text="${productId == null} ? 'Thêm sản phẩm mới' : |Sửa sản phẩm #${productId}|">Sản phẩm</span>
         </h1>
         <a class="btn btn-sm btn-outline-secondary" th:href="@{/admin/san-pham}">
-            <i class="bi bi-arrow-left"></i> Danh sách sản phẩm
+            <i class="bi bi-arrow-left" aria-hidden="true"></i> Danh sách sản phẩm
         </a>
     </div>
 
     <div class="alert alert-warning" th:if="${formError != null}" role="alert">
-        <i class="bi bi-exclamation-triangle"></i> <span th:text="${formError}">Lý do lỗi</span>
+        <i class="bi bi-exclamation-triangle" aria-hidden="true"></i> <span th:text="${formError}">Lý do lỗi</span>
     </div>
 
     <form th:action="${productId == null} ? @{/admin/san-pham} : @{/admin/san-pham/{id}(id=${productId})}"
-          th:object="${form}" method="post" novalidate
+          th:object="${form}" method="post"
           data-confirm="Lưu thông tin sản phẩm này?">
         <div class="row g-3">
             <div class="col-xl-7">
                 <div class="card-soft">
-                    <div class="card-header fw-semibold"><i class="bi bi-card-heading"></i> Thông tin chung</div>
+                    <div class="card-header fw-semibold"><i class="bi bi-card-heading" aria-hidden="true"></i> Thông tin chung</div>
                     <div class="card-body row g-3">
                         <div class="col-sm-5">
                             <label class="form-label" for="productCode">Mã sản phẩm <span class="text-danger">*</span></label>
                             <input class="form-control text-uppercase" id="productCode" th:field="*{productCode}"
-                                   th:classappend="${#fields.hasErrors('productCode')} ? 'is-invalid'"
+                                   th:classappend="${#fields.hasErrors('productCode')} ? 'is-invalid'" th:aria-invalid="${#fields.hasErrors('productCode')}"
                                    maxlength="30" required placeholder="YX-AX100ZZ">
                             <div class="invalid-feedback" th:if="${#fields.hasErrors('productCode')}"
                                  th:errors="*{productCode}">Mã không hợp lệ</div>
@@ -53,7 +53,7 @@
                         <div class="col-sm-7">
                             <label class="form-label" for="name">Tên sản phẩm <span class="text-danger">*</span></label>
                             <input class="form-control" id="name" th:field="*{name}"
-                                   th:classappend="${#fields.hasErrors('name')} ? 'is-invalid'"
+                                   th:classappend="${#fields.hasErrors('name')} ? 'is-invalid'" th:aria-invalid="${#fields.hasErrors('name')}"
                                    maxlength="200" required placeholder="Vợt cầu lông Yonex Astrox 100 ZZ">
                             <div class="invalid-feedback" th:if="${#fields.hasErrors('name')}"
                                  th:errors="*{name}">Tên không hợp lệ</div>
@@ -61,7 +61,7 @@
                         <div class="col-sm-6">
                             <label class="form-label" for="brandId">Hãng sản xuất <span class="text-danger">*</span></label>
                             <select class="form-select" id="brandId" th:field="*{brandId}"
-                                    th:classappend="${#fields.hasErrors('brandId')} ? 'is-invalid'" required>
+                                    th:classappend="${#fields.hasErrors('brandId')} ? 'is-invalid'" th:aria-invalid="${#fields.hasErrors('brandId')}" required>
                                 <option value="">-- Chọn hãng --</option>
                                 <option th:each="brand : ${brands}" th:value="${brand.id}" th:text="${brand.name}">Hãng</option>
                             </select>
@@ -71,7 +71,7 @@
                         <div class="col-sm-6">
                             <label class="form-label" for="categoryId">Loại (lối chơi) <span class="text-danger">*</span></label>
                             <select class="form-select" id="categoryId" th:field="*{categoryId}"
-                                    th:classappend="${#fields.hasErrors('categoryId')} ? 'is-invalid'" required>
+                                    th:classappend="${#fields.hasErrors('categoryId')} ? 'is-invalid'" th:aria-invalid="${#fields.hasErrors('categoryId')}" required>
                                 <option value="">-- Chọn loại --</option>
                                 <option th:each="category : ${categories}" th:value="${category.id}"
                                         th:text="${category.name}">Loại</option>
@@ -82,7 +82,7 @@
                         <div class="col-sm-6">
                             <label class="form-label" for="status">Trạng thái <span class="text-danger">*</span></label>
                             <select class="form-select" id="status" th:field="*{status}"
-                                    th:classappend="${#fields.hasErrors('status')} ? 'is-invalid'">
+                                    th:classappend="${#fields.hasErrors('status')} ? 'is-invalid'" th:aria-invalid="${#fields.hasErrors('status')}">
                                 <option th:each="item : ${statuses}" th:value="${item.name()}" th:text="${item.label}">
                                     Trạng thái
                                 </option>
@@ -94,7 +94,7 @@
                         <div class="col-12">
                             <label class="form-label" for="description">Mô tả sản phẩm</label>
                             <textarea class="form-control" id="description" th:field="*{description}" rows="5"
-                                      th:classappend="${#fields.hasErrors('description')} ? 'is-invalid'"
+                                      th:classappend="${#fields.hasErrors('description')} ? 'is-invalid'" th:aria-invalid="${#fields.hasErrors('description')}"
                                       maxlength="4000"
                                       placeholder="Điểm nổi bật, công nghệ, phù hợp với lối chơi nào…"></textarea>
                             <div class="invalid-feedback" th:if="${#fields.hasErrors('description')}"
@@ -106,12 +106,12 @@
 
             <div class="col-xl-5">
                 <div class="card-soft">
-                    <div class="card-header fw-semibold"><i class="bi bi-rulers"></i> Thông số kỹ thuật</div>
+                    <div class="card-header fw-semibold"><i class="bi bi-rulers" aria-hidden="true"></i> Thông số kỹ thuật</div>
                     <div class="card-body row g-3">
                         <div class="col-sm-6">
                             <label class="form-label" for="lengthMm">Chiều dài (mm)</label>
                             <input class="form-control" id="lengthMm" th:field="*{lengthMm}" type="number"
-                                   th:classappend="${#fields.hasErrors('lengthMm')} ? 'is-invalid'"
+                                   th:classappend="${#fields.hasErrors('lengthMm')} ? 'is-invalid'" th:aria-invalid="${#fields.hasErrors('lengthMm')}"
                                    min="1" max="1000" placeholder="675">
                             <div class="invalid-feedback" th:if="${#fields.hasErrors('lengthMm')}"
                                  th:errors="*{lengthMm}">Chiều dài không hợp lệ</div>
@@ -119,7 +119,7 @@
                         <div class="col-sm-6">
                             <label class="form-label" for="balancePointMm">Điểm cân bằng (mm)</label>
                             <input class="form-control" id="balancePointMm" th:field="*{balancePointMm}" type="number"
-                                   th:classappend="${#fields.hasErrors('balancePointMm')} ? 'is-invalid'"
+                                   th:classappend="${#fields.hasErrors('balancePointMm')} ? 'is-invalid'" th:aria-invalid="${#fields.hasErrors('balancePointMm')}"
                                    min="1" max="1000" placeholder="305">
                             <div class="invalid-feedback" th:if="${#fields.hasErrors('balancePointMm')}"
                                  th:errors="*{balancePointMm}">Điểm cân bằng không hợp lệ</div>
@@ -145,7 +145,7 @@
                         <div class="col-sm-6">
                             <label class="form-label" for="maxTensionKg">Căng tối đa (kg)</label>
                             <input class="form-control" id="maxTensionKg" th:field="*{maxTensionKg}" type="number"
-                                   th:classappend="${#fields.hasErrors('maxTensionKg')} ? 'is-invalid'"
+                                   th:classappend="${#fields.hasErrors('maxTensionKg')} ? 'is-invalid'" th:aria-invalid="${#fields.hasErrors('maxTensionKg')}"
                                    min="0" max="40" step="0.1" placeholder="28.0">
                             <div class="invalid-feedback" th:if="${#fields.hasErrors('maxTensionKg')}"
                                  th:errors="*{maxTensionKg}">Mức căng không hợp lệ</div>
@@ -163,14 +163,14 @@
                     </div>
                     <div class="card-footer d-flex gap-2">
                         <button class="btn btn-primary flex-grow-1" type="submit">
-                            <i class="bi bi-save"></i> Lưu sản phẩm
+                            <i class="bi bi-save" aria-hidden="true"></i> Lưu sản phẩm
                         </button>
                         <a class="btn btn-outline-secondary" th:href="@{/admin/san-pham}">Huỷ</a>
                     </div>
                 </div>
 
                 <div class="alert alert-info small mt-3">
-                    <i class="bi bi-info-circle"></i> Giá bán và tồn kho nằm ở từng <strong>biến thể</strong>
+                    <i class="bi bi-info-circle" aria-hidden="true"></i> Giá bán và tồn kho nằm ở từng <strong>biến thể</strong>
                     (màu × trọng lượng × cỡ cán). Sau khi lưu sản phẩm, hãy sang trang “Biến thể &amp; ảnh” để bổ sung.
                 </div>
             </div>

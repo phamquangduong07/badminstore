@@ -67,6 +67,7 @@ public class AddressApiController {
 
         Map<String, Object> result = new LinkedHashMap<>();
         result.put("enabled", ghnAddressService.isAvailable());
+        result.put("shippingEnabled", ghnAddressService.isShippingAvailable());
         result.put("mock", ghnAddressService.isMock());
         result.put("fee", fee);
         result.put("weightGram", weightGram);
@@ -84,6 +85,7 @@ public class AddressApiController {
     private Map<String, Object> payload(List<Map<String, Object>> items) {
         Map<String, Object> result = new LinkedHashMap<>();
         result.put("enabled", ghnAddressService.isAvailable());
+        result.put("shippingEnabled", ghnAddressService.isShippingAvailable());
         result.put("mock", ghnAddressService.isMock());
         result.put("items", items);
         return result;

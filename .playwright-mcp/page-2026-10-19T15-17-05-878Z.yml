@@ -1,0 +1,188 @@
+- generic [active] [ref=f49e1]:
+  - link "Bỏ qua tới nội dung chính" [ref=f49e2] [cursor=pointer]:
+    - /url: "#noi-dung-chinh"
+  - banner [ref=f49e3]:
+    - navigation "Điều hướng chính" [ref=f49e4]:
+      - generic [ref=f49e5]:
+        - link "BadStore – về trang chủ" [ref=f49e6] [cursor=pointer]:
+          - /url: /
+          - generic [aria-hidden] [ref=f49e8]: 
+          - generic [ref=f49e9]: BadStore
+        - generic: 
+        - generic "Menu BadStore" [ref=f49e10]:
+          - generic [ref=f49e11]:
+            - list [ref=f49e12]:
+              - listitem [ref=f49e13]:
+                - link "Trang chủ" [ref=f49e14] [cursor=pointer]:
+                  - /url: /
+                  - generic [aria-hidden] [ref=f49e15]: 
+                  - text: Trang chủ
+              - listitem [ref=f49e16]:
+                - link "Sản phẩm" [ref=f49e17] [cursor=pointer]:
+                  - /url: /san-pham
+                  - generic [aria-hidden] [ref=f49e18]: 
+                  - text: Sản phẩm
+            - search [ref=f49e19]:
+              - generic [ref=f49e20]: Tìm sản phẩm theo tên
+              - generic [aria-hidden]: 
+              - searchbox "Tìm sản phẩm theo tên" [ref=f49e21]
+            - list [ref=f49e22]:
+              - listitem [ref=f49e23]:
+                - link "So sánh sản phẩm" [ref=f49e24] [cursor=pointer]:
+                  - /url: /so-sanh
+                  - generic [aria-hidden] [ref=f49e25]: 
+              - listitem [ref=f49e26]:
+                - link "Giỏ hàng" [ref=f49e27] [cursor=pointer]:
+                  - /url: /gio-hang
+                  - generic [aria-hidden] [ref=f49e28]: 
+                  - generic [ref=f49e29]: "1"
+              - listitem [ref=f49e30]:
+                - button "Quản trị viên" [ref=f49e31] [cursor=pointer]:
+                  - generic [aria-hidden] [ref=f49e32]: 
+                - text:   
+  - main [ref=f49e34]:
+    - generic [ref=f49e35]:
+      - generic [ref=f49e36]:
+        - navigation "breadcrumb" [ref=f49e37]:
+          - list [ref=f49e38]:
+            - listitem [ref=f49e39]:
+              - link "Trang chủ" [ref=f49e40] [cursor=pointer]:
+                - /url: /
+            - listitem [ref=f49e41]:
+              - text: /
+              - link "Sản phẩm" [ref=f49e42] [cursor=pointer]:
+                - /url: /san-pham
+            - listitem [ref=f49e43]:
+              - text: /
+              - link "Apacs" [ref=f49e44] [cursor=pointer]:
+                - /url: /san-pham?brandId=6
+            - listitem [ref=f49e45]: / sssss2232
+        - generic [ref=f49e46]:
+          - generic [ref=f49e47]:
+            - generic "Ảnh sản phẩm" [ref=f49e49]:
+              - generic [ref=f49e50]:
+                - img "Ảnh sssss2232 – hình 1" [ref=f49e52]
+                - button "Ảnh trước" [ref=f49e53] [cursor=pointer]
+                - button "Ảnh sau" [ref=f49e56] [cursor=pointer]
+              - generic [ref=f49e59]:
+                - button "Xem ảnh 1 của sssss2232" [ref=f49e60] [cursor=pointer]:
+                  - img "Ảnh thu nhỏ 1 của sssss2232" [ref=f49e61]
+                - button "Xem ảnh 2 của sssss2232" [ref=f49e62] [cursor=pointer]:
+                  - img "Ảnh thu nhỏ 2 của sssss2232" [ref=f49e63]
+            - generic [ref=f49e64]:
+              - generic [ref=f49e65]:
+                - generic [aria-hidden] [ref=f49e66]: 
+                - text: Hàng chính hãng
+              - generic [ref=f49e67]:
+                - generic [aria-hidden] [ref=f49e68]: 
+                - text: Giao hàng toàn quốc
+              - generic [ref=f49e69]:
+                - generic [aria-hidden] [ref=f49e70]: 
+                - text: Hoàn trả 100% nếu lỗi
+          - generic [ref=f49e72]:
+            - generic [ref=f49e73]:
+              - link "Apacs" [ref=f49e74] [cursor=pointer]:
+                - /url: /san-pham?brandId=6
+              - link "Vợt tấn công" [ref=f49e75] [cursor=pointer]:
+                - /url: /san-pham?categoryId=1
+              - generic [ref=f49e76]: Đang giảm giá
+            - heading "sssss2232" [level=1] [ref=f49e77]
+            - paragraph [ref=f49e78]: "Mã sản phẩm: SSFFF"
+            - generic [ref=f49e79]:
+              - generic [ref=f49e80]: 123.123 ₫
+              - generic [ref=f49e81]: 1.231.231.231 ₫
+            - generic [ref=f49e82]:
+              - generic [ref=f49e83]:
+                - generic [aria-hidden] [ref=f49e84]: 
+                - text: Còn hàng
+              - generic [ref=f49e85]: 1 phiên bản (màu · trọng lượng · cỡ cán)
+            - generic [ref=f49e86]:
+              - group "Chọn phiên bản" [ref=f49e87]:
+                - generic [ref=f49e89]:
+                  - radio "2323 5U · G5 · 123.123 ₫" [checked]
+                  - generic [ref=f49e90] [cursor=pointer]:
+                    - generic [ref=f49e91]: "2323"
+                    - generic [ref=f49e92]: 5U · G5 · 123.123 ₫
+              - generic [ref=f49e93]:
+                - generic [ref=f49e94]: Số lượng
+                - generic [ref=f49e95]:
+                  - generic [ref=f49e96]:
+                    - button "Giảm số lượng" [ref=f49e97] [cursor=pointer]:
+                      - generic [aria-hidden] [ref=f49e98]: 
+                    - spinbutton "Số lượng sản phẩm" [ref=f49e99]: "1"
+                    - button "Tăng số lượng" [ref=f49e100] [cursor=pointer]:
+                      - generic [aria-hidden] [ref=f49e101]: 
+                  - paragraph [ref=f49e102]:
+                    - generic [aria-hidden] [ref=f49e103]: 
+                    - status [ref=f49e104]: Còn 22323 sản phẩm
+              - button "Thêm vào giỏ hàng" [ref=f49e106] [cursor=pointer]:
+                - generic [aria-hidden] [ref=f49e107]: 
+                - text: Thêm vào giỏ hàng
+            - button "Thêm vào so sánh" [ref=f49e110] [cursor=pointer]:
+              - generic [aria-hidden] [ref=f49e111]: 
+              - text: Thêm vào so sánh
+            - generic [ref=f49e112]:
+              - heading "Thông số nhanh" [level=2] [ref=f49e113]
+              - generic [ref=f49e114]:
+                - term [ref=f49e115]: Điểm cân bằng
+                - definition [ref=f49e116]: 44 mm
+                - term [ref=f49e117]: Kiểu cân bằng
+                - definition [ref=f49e118]: Nặng đầu (tấn công)
+                - term [ref=f49e119]: Độ cứng thân
+                - definition [ref=f49e120]: Trung bình
+                - term [ref=f49e121]: Mức căng tối đa
+                - definition [ref=f49e122]: 23.0 kg
+        - generic [ref=f49e123]:
+          - tablist [ref=f49e124]:
+            - tab "Mô tả" [selected] [ref=f49e125] [cursor=pointer]:
+              - generic [aria-hidden] [ref=f49e126]: 
+              - text: Mô tả
+            - tab "Thông số kỹ thuật" [ref=f49e127] [cursor=pointer]:
+              - generic [aria-hidden] [ref=f49e128]: 
+              - text: Thông số kỹ thuật
+            - tab "Đánh giá" [ref=f49e129] [cursor=pointer]:
+              - generic [aria-hidden] [ref=f49e130]: 
+              - text: Đánh giá
+          - generic [ref=f49e131]:
+            - tabpanel "Mô tả" [ref=f49e132]:
+              - generic [ref=f49e133]:
+                - generic [aria-hidden] [ref=f49e134]: 
+                - paragraph [ref=f49e135]: Sản phẩm này chưa có mô tả chi tiết. Bạn xem thông số kỹ thuật ở tab bên cạnh nhé.
+            - text:   
+      - generic: 
+  - contentinfo [ref=f49e136]:
+    - generic [ref=f49e137]:
+      - generic [ref=f49e138]:
+        - generic [ref=f49e139]:
+          - heading "BadStore" [level=2] [ref=f49e140]:
+            - generic [aria-hidden] [ref=f49e142]: 
+          - paragraph [ref=f49e144]: Website bán vợt cầu lông – đồ án tốt nghiệp, sản phẩm mang tính minh hoạ.
+          - paragraph [ref=f49e145]: Dữ liệu sản phẩm, hình ảnh dùng cho mục đích học tập.
+        - generic [ref=f49e146]:
+          - generic [ref=f49e147]:
+            - generic [aria-hidden] [ref=f49e148]: 
+            - text: Liên hệ
+          - paragraph [ref=f49e149]: "Hotline: 1900 0000"
+          - paragraph [ref=f49e150]: "Email: cskh@badstore.local"
+          - paragraph [ref=f49e151]: "Địa chỉ: Số 1 Đại Cồ Việt, Bách Khoa, Hà Nội"
+          - paragraph [ref=f49e152]: "Giờ mở cửa: 8:00 – 21:30 hằng ngày"
+        - generic [ref=f49e153]:
+          - generic [ref=f49e154]:
+            - generic [aria-hidden] [ref=f49e155]: 
+            - text: Mua hàng & giao nhận
+          - list [ref=f49e156]:
+            - listitem [ref=f49e157]:
+              - link "Danh mục vợt cầu lông" [ref=f49e158] [cursor=pointer]:
+                - /url: /san-pham
+            - listitem [ref=f49e159]:
+              - link "So sánh sản phẩm" [ref=f49e160] [cursor=pointer]:
+                - /url: /so-sanh
+            - listitem [ref=f49e161]:
+              - link "Giỏ hàng của bạn" [ref=f49e162] [cursor=pointer]:
+                - /url: /gio-hang
+            - listitem [ref=f49e163]: Vận chuyển toàn quốc – tích hợp GHN khi cấu hình token.
+      - separator [ref=f49e164]
+      - generic [ref=f49e165]:
+        - generic [ref=f49e166]: © 2026 BadStore
+        - generic [ref=f49e167]: Đơn giá hiển thị bằng Việt Nam đồng (₫).
+  - text: 

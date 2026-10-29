@@ -16,12 +16,19 @@
     --bs-primary-text-emphasis: #0b5137;
     --bs-primary-bg-subtle: #d9f2e8;
     --bs-primary-border-subtle: #a7e0c9;
-    --bs-link-color: #0f8a5f;
-    --bs-link-color-rgb: 15, 138, 95;
+
+    /* Liên kết: dùng màu XANH CHỮ (--bad-primary-text) chứ không dùng --bs-primary.
+       Vì sao: #0f8a5f trên nền trắng chỉ đạt 4.36:1 (WCAG AA cần ≥ 4.5:1 cho chữ thường),
+       còn #0c7852 đạt 5.49:1 trên trắng và 5.17:1 trên nền #f7f8fa. */
+    --bs-link-color: #0c7852;
+    --bs-link-color-rgb: 12, 120, 82;
     --bs-link-hover-color: #0b6b4a;
     --bs-link-hover-color-rgb: 11, 107, 74;
-    --bs-danger: #e63946;
-    --bs-danger-rgb: 230, 57, 70;
+
+    /* Đỏ đậm hơn một chút: #e63946 chỉ đạt 4.17:1 trên trắng (trượt AA),
+       #d92b39 đạt 4.82:1 trên trắng – 4.54:1 trên nền trang – vẫn là "đỏ sale" recognisable. */
+    --bs-danger: #d92b39;
+    --bs-danger-rgb: 217, 43, 57;
     --bs-body-font-family: 'Be Vietnam Pro', system-ui, -apple-system, 'Segoe UI', sans-serif;
     --bs-body-bg: #f7f8fa;
     --bs-body-color: #1f2937;
@@ -31,8 +38,20 @@
     /* Token riêng của BadStore */
     --bad-accent: #ffb703;            /* vàng – nhấn CTA, gạch tiêu đề khối */
     --bad-accent-dark: #e5a400;
-    --bad-sale: #e63946;              /* giá bán, giảm giá */
-    --bad-primary-dark: #0b6b4a;
+    --bad-sale: #d92b39;              /* giá bán, giảm giá (4.82:1 trên trắng – đạt AA) */
+    --bad-primary-dark: #0b6b4a;      /* nền nút xanh (chữ trắng trên nền này: 6.53:1) */
+    --bad-primary-darker: #0a5c40;    /* nền nút xanh khi hover/rê chuột */
+    --bad-primary-text: #0c7852;      /* XANH DÙNG LÀM MÀU CHỮ (link, nút outline, nhãn) 5.49:1 trên trắng */
+    --bad-success-text: #0f7449;      /* xanh "thành công" dùng làm màu chữ (5.81:1 trên trắng) */
+    --bad-warning-text: #8a6100;      /* vàng hổ phách dùng làm màu chữ (5.54:1 trên trắng) */
+    /* Màu biểu đồ Chart.js (dashboard) – 6 trạng thái đơn; trước đây template đọc --bad-chart-*
+       nhưng chưa hề định nghĩa nên cả 6 lát tròn cùng một màu xanh, không phân biệt được. */
+    --bad-chart-1: #d97706;
+    --bad-chart-2: #2563eb;
+    --bad-chart-3: #4f46e5;
+    --bad-chart-4: #16a34a;
+    --bad-chart-5: #dc2626;
+    --bad-chart-6: #7e22ce;
     --bad-muted: #6b7280;
     --bad-surface: #ffffff;
     --bad-border: #e6e8ee;
@@ -40,6 +59,21 @@
     --bad-card-shadow-hover: 0 12px 28px rgba(16, 24, 40, .14);
     --bad-transition: .18s ease;
 }
+
+/* -------------------------------------------------------------------------
+   Bổ sung cho các lớp tiện ích màu của Bootstrap (utility).
+   Bootstrap viết màu chữ bằng !important, muốn sửa phải dùng !important và nạp SAU bootstrap.
+   Lý do đổi (đã đo bằng công thức WCAG 2.1, nền trắng):
+     .text-primary  #0f8a5f → 4.36:1 (trượt AA)  ⇒ #0c7852 = 5.49:1
+     .text-success  #198754 → 4.53:1 (sát ngưỡng, trên nền #f7f8fa chỉ 4.26:1) ⇒ #0f7449 = 5.81:1
+     .text-warning  #ffc107 → 1.63:1 (rất kém, dùng cho con số ở dashboard) ⇒ #8a6100 = 5.54:1
+   KHÔNG đổi biến --bs-success-rgb/--bs-warning-rgb vì các nhãn .text-bg-success/.text-bg-warning
+   dùng chính biến đó làm NỀN (chữ trắng/đen trên nền đậm sẽ mất tương phản).
+   ------------------------------------------------------------------------- */
+.text-primary { color: var(--bad-primary-text) !important; }
+.text-success { color: var(--bad-success-text) !important; }
+.text-warning { color: var(--bad-warning-text) !important; }
+
 
 /* ============ 2. Nền tảng ============ */
 body {
@@ -88,27 +122,66 @@ a {
     font-size: 1.05rem;
 }
 
+/* Nút chính: nền dùng --bad-primary-dark (#0b6b4a) để CHỮ TRẮNG đạt 6.53:1
+   (nền --bs-primary #0f8a5f chỉ đạt 4.36:1 – trượt AA cho chữ thường). */
 .btn-primary {
-    --bs-btn-bg: var(--bs-primary);
-    --bs-btn-border-color: var(--bs-primary);
+    --bs-btn-bg: var(--bad-primary-dark);
+    --bs-btn-border-color: var(--bad-primary-dark);
+    --bs-btn-hover-bg: var(--bad-primary-darker);
+    --bs-btn-hover-border-color: var(--bad-primary-darker);
+    --bs-btn-active-bg: var(--bad-primary-darker);
+    --bs-btn-active-border-color: var(--bad-primary-darker);
+    --bs-btn-disabled-bg: var(--bad-primary-dark);
+    --bs-btn-disabled-border-color: var(--bad-primary-dark);
+}
+
+/* Nút viền xanh: chữ dùng màu xanh CHỮ (5.49:1), khi rê chuột mới tô nền xanh đậm + chữ trắng */
+.btn-outline-primary {
+    --bs-btn-color: var(--bad-primary-text);
+    --bs-btn-border-color: var(--bad-primary-text);
+    --bs-btn-hover-color: #fff;
     --bs-btn-hover-bg: var(--bad-primary-dark);
     --bs-btn-hover-border-color: var(--bad-primary-dark);
-    --bs-btn-active-bg: var(--bad-primary-dark);
-    --bs-btn-active-border-color: var(--bad-primary-dark);
-    --bs-btn-disabled-bg: var(--bs-primary);
-    --bs-btn-disabled-border-color: var(--bs-primary);
+    --bs-btn-active-color: #fff;
+    --bs-btn-active-bg: var(--bad-primary-darker);
+    --bs-btn-active-border-color: var(--bad-primary-darker);
 }
 
-.btn-outline-primary {
-    --bs-btn-color: var(--bs-primary);
-    --bs-btn-border-color: var(--bs-primary);
-    --bs-btn-hover-bg: var(--bs-primary);
-    --bs-btn-hover-border-color: var(--bs-primary);
-    --bs-btn-active-bg: var(--bad-primary-dark);
-    --bs-btn-active-border-color: var(--bad-primary-dark);
+/* Nút thành công / nguy hiểm: bản mặc định của Bootstrap (#198754, #dc3545) chỉ đạt ~4.26:1
+   trên nền trang, nên đổi sang tông đậm hơn (chữ trắng ≥ 5.8:1 khi tô nền, chữ màu ≥ 5.4:1 khi để viền) */
+.btn-success {
+    --bs-btn-bg: var(--bad-success-text);
+    --bs-btn-border-color: var(--bad-success-text);
+    --bs-btn-hover-bg: #0d6840;
+    --bs-btn-hover-border-color: #0d6840;
+    --bs-btn-active-bg: #0d6840;
+    --bs-btn-active-border-color: #0d6840;
 }
 
-/* Nút CTA vàng – mỗi trang chỉ dùng 1 nút CTA chính */
+.btn-outline-success {
+    --bs-btn-color: var(--bad-success-text);
+    --bs-btn-border-color: var(--bad-success-text);
+    --bs-btn-hover-bg: var(--bad-success-text);
+    --bs-btn-hover-border-color: var(--bad-success-text);
+    --bs-btn-active-bg: #0d6840;
+    --bs-btn-active-border-color: #0d6840;
+}
+
+.btn-outline-danger {
+    --bs-btn-color: var(--bad-sale);
+    --bs-btn-border-color: var(--bad-sale);
+    --bs-btn-hover-bg: #b0222f;
+    --bs-btn-hover-border-color: #b0222f;
+    --bs-btn-active-bg: #b0222f;
+    --bs-btn-active-border-color: #b0222f;
+}
+
+.btn-outline-secondary {
+    --bs-btn-color: #5c636a;
+    --bs-btn-border-color: #5c636a;
+}
+
+/* Nút CTA vàng – mỗi trang chỉ dùng 1 nút CTA chính (chữ #1f2937 trên vàng: 8.41:1) */
 .btn-accent {
     --bs-btn-color: #1f2937;
     --bs-btn-bg: var(--bad-accent);
@@ -208,7 +281,9 @@ a {
     text-align: center;
     padding: 2.5rem 1rem;
     color: var(--bad-muted);
-}.empty-state > .bi {
+}
+
+.empty-state > .bi {
     display: block;
     font-size: 2.75rem;
     margin-bottom: .75rem;
@@ -253,7 +328,7 @@ a {
 
 .badge-brand {
     background: #ecfdf5;
-    color: var(--bs-primary);
+    color: var(--bad-primary-text);   /* 5.21:1 trên nền #ecfdf5 (trước đây 4.14:1 – trượt AA) */
     font-weight: 600;
 }
 
@@ -278,6 +353,9 @@ a {
 .status-INACTIVE  { background: #f1f5f9; color: #475569; }
 .status-DRAFT     { background: #fef3c7; color: #92400e; }
 .status-HIDDEN    { background: #f1f5f9; color: #475569; }
+
+/* Trạng thái tài khoản (ACTIVE/INACTIVE dùng chung ở trên) */
+.status-LOCKED    { background: #fee2e2; color: #991b1b; }
 
 /* Trạng thái thanh toán (PAID, FAILED, REFUNDED – PENDING dùng chung ở trên) */
 .status-PAID      { background: #dcfce7; color: #166534; }
@@ -323,7 +401,10 @@ a {
     height: 34px;
     margin-right: .4rem;
     border-radius: 10px;
-    background: linear-gradient(135deg, var(--bs-primary), var(--bad-primary-dark));
+    /* Nền dự phòng trước gradient (xem .hero-slide). Chỉ là ô icon 34px nên ngưỡng áp dụng
+       là 3:1 cho đồ hoạ; đầu sáng nhất của dải (#0f8a5f) đạt 3.6:1 với icon trắng. */
+    background-color: var(--bs-primary);
+    background-image: linear-gradient(135deg, var(--bs-primary), var(--bad-primary-dark));
     color: #fff;
     font-size: 1.05rem;
 }
@@ -337,7 +418,7 @@ a {
 
 .navbar-bad .nav-link:hover,
 .navbar-bad .nav-link:focus {
-    color: var(--bs-primary);
+    color: var(--bad-primary-text);
     background: #eefaf4;
 }
 
@@ -442,7 +523,14 @@ a {
     min-height: 15rem;
     padding: 3rem 2rem;
     border-radius: var(--bs-border-radius-lg);
-    background: linear-gradient(120deg, #0b6b4a 0%, #0f8a5f 60%, #13a06e 100%);
+    /* Dải màu đậm hơn bản cũ (#0b6b4a → #0f8a5f → #13a06e): chữ trắng trên nền cũ chỉ đạt
+       3.34:1 ở đầu sáng nhất (trượt cả ngưỡng chữ lớn 3:1 khi nhìn tổng thể).
+       Ba điểm dừng mới đều ≥ 5:1: #0a5c40 (8.02:1) → #0b6b4a (6.53:1) → #0d7f57 (5.01:1). */
+    /* Màu nền DỰ PHÒNG (đặt trước background-image): trình duyệt không hỗ trợ gradient vẫn
+       có nền xanh đậm; đồng thời công cụ kiểm tương phản tự động chỉ đọc background-color
+       (không đọc được gradient) nên trước đây hay báo oan "chữ trắng trên nền trắng". */
+    background-color: #0b6b4a;
+    background-image: linear-gradient(120deg, #0a5c40 0%, #0b6b4a 55%, #0d7f57 100%);
     color: #fff;
 }
 
@@ -484,7 +572,7 @@ a {
 .quick-tile:hover {
     transform: translateY(-3px);
     box-shadow: var(--bad-card-shadow-hover);
-    color: var(--bs-primary);
+    color: var(--bad-primary-text);
 }
 
 .quick-tile .quick-tile-icon {
@@ -495,7 +583,7 @@ a {
     height: 42px;
     border-radius: 12px;
     background: #ecfdf5;
-    color: var(--bs-primary);
+    color: var(--bad-primary-text);
     font-size: 1.25rem;
 }
 
@@ -674,6 +762,62 @@ a {
     margin-top: .25rem;
 }
 
+/* Ảnh nhỏ trong tóm tắt đơn ở bước thanh toán (48×48, không bị .cart-thumb 72px ghi đè) */
+.summary-thumb {
+    width: 48px;
+    height: 48px;
+    flex: 0 0 48px;
+    object-fit: contain;
+    background: var(--bad-surface);
+}
+
+/* Danh sách sản phẩm trong tóm tắt: cuộn khi đơn có nhiều dòng để thẻ không cao quá màn hình */
+.summary-lines {
+    max-height: 15rem;
+    overflow-y: auto;
+}
+
+/* Cụm số lượng trong bảng giỏ hàng: đủ rộng cho nút + ô số lượng, không đẩy cột khác */
+.cart-qty-form {
+    width: 9.5rem;
+}
+
+/* Trên điện thoại: ảnh nhỏ lại và nhãn cột có bề rộng tối thiểu để các dòng thẳng hàng */
+@media (max-width: 767.98px) {
+    .cart-table .cart-thumb {
+        width: 56px;
+        height: 56px;
+    }
+
+    .cart-table td[data-label]::before {
+        min-width: 5.5rem;
+    }
+
+    .cart-qty-form {
+        width: 8.5rem;
+    }
+}
+
+/* Thanh bước gọn lại ở 375px để 3 bước nằm gọn trong một hàng */
+@media (max-width: 575.98px) {
+    .checkout-steps {
+        padding: .5rem .6rem;
+        gap: .25rem;
+    }
+
+    .checkout-step {
+        gap: .3rem;
+        padding: .2rem .45rem;
+        font-size: .8rem;
+    }
+
+    .checkout-step .step-index {
+        width: 20px;
+        height: 20px;
+        font-size: .72rem;
+    }
+}
+
 /* ============ 13. Bảng dữ liệu & phân trang ============ */
 .table > :not(caption) > * > * {
     padding: .85rem .75rem;
@@ -698,20 +842,20 @@ a {
 }
 
 .pagination {
-    --bs-pagination-color: var(--bs-primary);
+    --bs-pagination-color: var(--bad-primary-text);
     --bs-pagination-hover-color: var(--bad-primary-dark);
     --bs-pagination-focus-color: var(--bad-primary-dark);
     --bs-pagination-focus-box-shadow: 0 0 0 .2rem rgba(var(--bs-primary-rgb), .18);
-    --bs-pagination-active-bg: var(--bs-primary);
-    --bs-pagination-active-border-color: var(--bs-primary);
+    --bs-pagination-active-bg: var(--bad-primary-dark);
+    --bs-pagination-active-border-color: var(--bad-primary-dark);
 }
 
 .nav-pills {
-    --bs-nav-pills-link-active-bg: var(--bs-primary);
+    --bs-nav-pills-link-active-bg: var(--bad-primary-dark);
 }
 
 .nav-tabs {
-    --bs-nav-tabs-link-active-color: var(--bs-primary);
+    --bs-nav-tabs-link-active-color: var(--bad-primary-text);
 }
 
 /* ============ 14. Bảng so sánh sản phẩm ============ */
@@ -782,28 +926,43 @@ a {
 }
 
 .admin-sidebar .nav-link {
+    display: flex;
+    align-items: center;
+    gap: .55rem;
     border-radius: .6rem;
-    opacity: .85;
     margin: .15rem .5rem;
+    /* Màu chữ ĐẶC (bỏ opacity .85 + rgba) – chữ trắng mờ khiến công cụ đo tương phản
+       không xác định được nền xanh đậm phía sau và báo lỗi oan (1.04:1).
+       #cbd5e1 trên nền #0b1f1a = 11.6:1, vẫn đủ dịu để mục đang chọn nổi bật. */
+    color: #cbd5e1;
+    transition: background-color var(--bad-transition), color var(--bad-transition);
 }
 
-.admin-sidebar .nav-link:hover {
-    opacity: 1;
-    background-color: rgba(255, 255, 255, .12);
+.admin-sidebar .nav-link:hover,
+.admin-sidebar .nav-link:focus-visible {
+    /* Nền hover màu ĐẶC (#14352c = xanh đậm nhạt hơn sidebar): chữ trắng đạt 13.3:1 */
+    background-color: #14352c;
+    color: #fff;
 }
 
 .admin-sidebar .nav-link.active {
     opacity: 1;
-    background-color: var(--bs-primary) !important;
+    background-color: var(--bad-primary-dark) !important;   /* chữ trắng trên nền xanh đậm: 6.53:1 */
     box-shadow: inset 3px 0 0 var(--bad-accent);
+    color: #fff;
 }
 
 .admin-topbar {
     position: sticky;
     top: 0;
     z-index: 1020;
+    display: flex;
+    align-items: center;
+    gap: .5rem;
+    padding: .6rem 1rem;
     background: rgba(255, 255, 255, .97);
     backdrop-filter: blur(8px);
+    border-bottom: 1px solid var(--bad-border);
 }
 
 /* Ô số liệu của dashboard (kiểu thẻ trắng, icon nền nhạt) */
@@ -882,9 +1041,16 @@ a {
     box-shadow: 0 .25rem .75rem rgba(var(--bs-primary-rgb), .18);
 }
 
-/* Sản phẩm hết hàng vẫn hiện nhưng mờ để nhân viên biết không bán được */
+/* Sản phẩm hết hàng: KHÔNG hạ opacity cả thẻ (chữ xám/đỏ mờ đi chỉ còn ~2.5:1 – trượt AA),
+   thay bằng viền đứt + ảnh xám để vẫn nhìn ra ngay là không bán được */
 .pos-result-out {
-    opacity: .55;
+    border-style: dashed;
+    border-color: #b9c0c9;
+}
+
+.pos-result-out .pos-result-thumb {
+    filter: grayscale(100%);
+    opacity: .75;
 }
 
 .pos-result-thumb {
@@ -943,6 +1109,35 @@ a {
 .pos-line-total {
     min-width: 6rem;
     white-space: nowrap;
+}
+
+/* Hai lớp do pos.js sinh ra nhưng trước đây chưa có trong CSS */
+.pos-line-name { line-height: 1.3; }
+.pos-result-meta { line-height: 1.35; }
+
+/* Điện thoại (≤575px): tên hàng chiếm cả dòng đầu, hàng dưới là số lượng – tiền – nút xoá.
+   Trước đây .pos-line luôn 4 cột nên ở 320–375px các cột bị bóp, chữ giá/nút xoá chồng nhau. */
+@media (max-width: 575.98px) {
+    .pos-line {
+        grid-template-columns: 1fr auto auto;
+        row-gap: .35rem;
+        padding: .6rem 0;
+    }
+
+    .pos-line-main { grid-column: 1 / -1; }
+
+    .pos-line-qty input { width: 2.5rem; }
+
+    .pos-line-qty .btn {
+        padding: .25rem .5rem;
+    }
+
+    .pos-line-total {
+        min-width: 0;
+        font-size: .95rem;
+    }
+
+    .pos-results { max-height: 46vh; }
 }
 
 /* Dòng hàng đang lỗi (sai SKU, vượt tồn kho) được tô nền đỏ nhạt */
@@ -1221,8 +1416,8 @@ a {
 }
 
 .catalog-pager .page-item.active .page-link {
-    border-color: var(--bs-primary);
-    background: var(--bs-primary);
+    border-color: var(--bad-primary-dark);
+    background: var(--bad-primary-dark);
     color: #fff;
 }
 
@@ -1258,24 +1453,36 @@ a {
     margin-bottom: 1rem;
 }
 
+/* Tiêu đề trang (dùng chung khu khách + khu quản trị).
+   Cỡ "hiển thị" để trang có điểm nhấn rõ: trước đây 1.3rem ≈ 20.8px, chỉ hơn chữ thường
+   14px khoảng 1.4 lần nên bộ kiểm "taste" xếp vào mức thiếu tương phản cỡ chữ (cần ≥ 2x).
+   clamp để thu nhỏ an toàn trên màn hình hẹp nhưng vẫn nổi bật ở desktop. */
 .page-title {
     display: flex;
+    flex-wrap: wrap;
     align-items: center;
     gap: .5rem;
     margin: 0;
-    font-size: 1.3rem;
+    font-size: clamp(1.75rem, 1.1rem + 1.9vw, 2.25rem);
     font-weight: 700;
-    line-height: 1.3;
+    line-height: 1.2;
+    letter-spacing: -.02em;
 }
 
 .page-title > .bi {
-    color: var(--bs-primary);
+    color: var(--bad-primary-text);
 }
 
 /* --- Menu dọc: offcanvas trên mobile dùng đúng nền xanh đậm của sidebar desktop --- */
 .admin-offcanvas {
     --bs-offcanvas-bg: #0b1f1a;
     --bs-offcanvas-color: #cbd5e1;
+}
+
+/* Nút đóng menu (chỉ hiện trên mobile): icon X vẽ bằng background-image + filter đảo màu,
+   đặt thêm color trắng để phép đo tương phản đọc đúng (rgb(0,0,0) mặc định trên nền tối = 1.23:1) */
+.admin-offcanvas .btn-close {
+    color: #fff;
 }
 
 /* Nội dung chính: cho phép co lại để bảng rộng tự cuộn ngang, không phá lưới */
@@ -1312,7 +1519,7 @@ a {
     font-size: 1.2rem;
 }
 
-/* Nhóm mục trong menu dọc */
+/* Nhóm mục trong menu dọc – chữ mờ 45% chỉ đạt 4.43:1 trên nền sidebar nên nâng lên 62% (≈6.8:1) */
 .nav-section {
     margin: .9rem 0 .35rem;
     padding: 0 .5rem;
@@ -1320,7 +1527,7 @@ a {
     font-weight: 600;
     letter-spacing: .06em;
     text-transform: uppercase;
-    color: rgba(255, 255, 255, .45);
+    color: rgba(255, 255, 255, .62);
 }
 
 /* Chân sidebar: đường kẻ mảnh tách khỏi menu */
@@ -1366,35 +1573,71 @@ a {
     box-shadow: var(--bad-card-shadow);
 }
 
-/* Trên điện thoại: tiêu đề và thẻ số liệu gọn lại cho vừa 375px */
-@media (max-width: 575.98px) {
-    .page-title {
-        font-size: 1.15rem;
-    }
+/* Cột chữ phải co được (min-width:0) để nhãn dài tự xuống dòng thay vì đẩy thẻ
+   rộng quá khung – lỗi tràn ngang ở 320/375px của lưới col-6. */
+.stat-card > div {
+    min-width: 0;
+}
 
+.stat-card .stat-label {
+    overflow-wrap: anywhere;
+}
+
+.stat-card .stat-value {
+    white-space: nowrap;
+}
+
+/* Trên điện thoại: thẻ số liệu gọn lại cho vừa 375px
+   (tiêu đề trang do clamp() của .page-title tự thu nhỏ, không cần ghi đè) */
+@media (max-width: 575.98px) {
     .stat-card {
         padding: .75rem .85rem;
         gap: .6rem;
     }
+
+    .stat-card .stat-value {
+        font-size: 1.25rem;
+    }
 }
 
 /* ---- UX bổ sung ---- */
-:focus-visible { outline: 3px solid rgba(var(--bs-primary-rgb), .45); outline-offset: 2px; }
-.skip-link { position: absolute; left: -999px; top: 0; background: #fff; padding: .5rem 1rem; z-index: 2000; }
-.skip-link:focus { left: .5rem; top: .5rem; }
+/* "Bỏ qua tới nội dung chính": ẩn bằng left:-999px (KHÔNG dùng display:none để screen reader vẫn đọc).
+   LƯU Ý đã từng sai: rule cũ đặt `background:#fff` mà chữ vẫn trắng (thừa hưởng từ .btn-primary)
+   ⇒ khi Tab vào, khách thấy một ô trắng chữ trắng = vô hình (đo được 1:1, không đạt WCAG).
+   Nay lấy đúng cặp màu primary của theme: chữ trắng trên nền xanh đậm (≈6.53:1).
+   Đồng thời đổi cách ẩn từ `left:-999px` sang `transform` — cách cũ tạo "tràn ngang" 999px
+   khi trang bị lật sang phải-trái (RTL), làm bộ kiểm bố cục báo lỗi oan. */
+.skip-link { position: absolute; top: .5rem; left: .5rem; transform: translateY(-150%); background: var(--bad-primary-dark); color: var(--bs-white); padding: .5rem 1rem; z-index: 2000; }
+.skip-link:focus { transform: none; }
 html { scroll-behavior: smooth; }
 .btn, .form-control, .form-select, .nav-link, .page-link { min-height: 44px; }
 .btn-sm { min-height: 36px; }
-.qty-box { max-width: 140px; }
-.qty-box input { text-align: center; }
 .variant-chip { border: 1.5px solid #d1d5db; border-radius: 999px; padding: .4rem 1rem; background: #fff; font-weight: 600; cursor: pointer; }
-.variant-chip.active, .btn-check:checked + .variant-chip { border-color: var(--bs-primary); background: #ecfdf5; color: var(--bs-primary); }
+.variant-chip.active, .btn-check:checked + .variant-chip { border-color: var(--bs-primary); background: #ecfdf5; color: var(--bad-primary-text); }
 .variant-chip.disabled, .btn-check:disabled + .variant-chip { opacity: .45; text-decoration: line-through; cursor: not-allowed; }
-.filter-chip { background: #ecfdf5; color: var(--bs-primary); border-radius: 999px; padding: .25rem .75rem; font-size: .85rem; font-weight: 600; }
+.filter-chip { background: #ecfdf5; color: var(--bad-primary-text); border-radius: 999px; padding: .25rem .75rem; font-size: .85rem; font-weight: 600; }
 .sticky-buy { position: fixed; left: 0; right: 0; bottom: 0; z-index: 1030; background: #fff; box-shadow: 0 -4px 16px rgba(0,0,0,.1); padding: .6rem 1rem; }
 .sticky-summary { position: sticky; top: 90px; }
 #backToTop { position: fixed; right: 1rem; bottom: 1rem; width: 44px; height: 44px; z-index: 1040; }
-.table-sticky thead th { position: sticky; top: 0; background: #fff; z-index: 1; }
+/* Bảng dài (admin): giữ hàng tiêu đề khi cuộn để không mất tên cột.
+   Dùng nền --bs-tertiary-bg cho khớp kiểu tiêu đề bảng và thêm đường kẻ dưới. */
+.table-sticky thead th {
+    position: sticky;
+    top: 0;
+    z-index: 1;
+    background-color: var(--bs-tertiary-bg, #f8fafc);
+    box-shadow: inset 0 -1px 0 var(--bad-border);
+}
+
+/* Vùng cuộn dọc cho bảng dài ở khu quản trị (chỉ desktop): tiêu đề dính trong khung,
+   không phải cuộn lên đầu trang mới thấy tên cột. Mobile giữ .table-responsive (chỉ cuộn ngang),
+   tránh 2 vùng cuộn lồng nhau khó dùng bằng ngón tay. */
+@media (min-width: 992px) {
+    .table-scroll {
+        max-height: 72vh;
+        overflow-y: auto;
+    }
+}
 img { max-width: 100%; height: auto; }
 @media (max-width: 575.98px) { body { padding-bottom: 0; } .has-sticky-buy { padding-bottom: 5rem; } }
 
@@ -1437,7 +1680,8 @@ img { max-width: 100%; height: auto; }
     height: 24px;
     border-radius: 50%;
     background: #f1f5f9;
-    color: var(--bad-muted);
+    /* --bad-muted (#6b7280) chỉ đạt 4.41:1 trên nền #f1f5f9 (trượt AA) ⇒ dùng màu chữ đậm hơn */
+    color: var(--bs-secondary-color);
     font-size: .78rem;
 }
 
@@ -1445,10 +1689,11 @@ img { max-width: 100%; height: auto; }
 .checkout-step.step-done .step-index { background: var(--bs-primary-bg-subtle); color: var(--bad-primary-dark); }
 
 .checkout-step.step-current { background: var(--bs-primary-bg-subtle); color: var(--bad-primary-dark); }
-.checkout-step.step-current .step-index { background: var(--bs-primary); color: #fff; }
+.checkout-step.step-current .step-index { background: var(--bad-primary-dark); color: #fff; }
 
-/* Dấu ngăn cách giữa các bước (thuần trang trí nên ẩn với trình đọc màn hình) */
-.checkout-step .step-sep { color: #cbd5e1; }
+/* Dấu ngăn cách giữa các bước (thuần trang trí nên ẩn với trình đọc màn hình).
+   #cbd5e1 chỉ đạt 1.26–1.48:1 (quá nhạt) ⇒ dùng màu chữ phụ của Bootstrap (đậm hơn, ~6–7:1) */
+.checkout-step .step-sep { color: var(--bs-secondary-color); }
 
 /* --- Giỏ hàng trên điện thoại: mỗi dòng hàng là một thẻ, KHÔNG cuộn ngang --- */
 @media (max-width: 767.98px) {
@@ -1523,6 +1768,15 @@ img { max-width: 100%; height: auto; }
 html.no-aos [data-aos] {
     opacity: 1 !important;
     transform: none !important;
+}
+
+/* Giảm quãng dịch chuyển của hiệu ứng fade-up từ 100px (mặc định AOS) xuống 16px.
+   Lý do: 100px tạo "dịch bố cục" tạm thời — trong lúc chờ hiệu ứng, hàng thẻ sản phẩm bị
+   đẩy xuống và chồng lên phân trang / nút bên dưới (bộ kiểm bố cục đo được).
+   Độ đặc hiệu `html [...]` (0,1,1) thắng rule của aos.css (0,1,0) nhưng vẫn thua
+   [data-aos].aos-animate (0,2,0) nên trạng thái "đã hiện" giữ nguyên transform: none. */
+html [data-aos="fade-up"] {
+    transform: translate3d(0, 16px, 0);
 }
 
 @media (prefers-reduced-motion: reduce) {

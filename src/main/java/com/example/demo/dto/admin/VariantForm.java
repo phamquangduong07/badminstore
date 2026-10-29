@@ -10,6 +10,7 @@ import jakarta.validation.constraints.Size;
 import java.math.BigDecimal;
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.web.multipart.MultipartFile;
 
 /**
  * Form admin thêm/sửa biến thể (màu × trọng lượng × cỡ cán).
@@ -40,6 +41,15 @@ public class VariantForm {
     /** Ảnh riêng của biến thể (tuỳ chọn) – dùng cho giỏ hàng và snapshot đơn hàng. */
     @Size(max = 500, message = "Đường dẫn ảnh tối đa 500 ký tự.")
     private String imageUrl;
+
+    /**
+     * Ảnh mới tải lên cho biến thể (JPG, PNG, WEBP, GIF, SVG – tối đa 2 MB).
+     * Nếu có file, ảnh này được ưu tiên hơn {@link #imageUrl}; bỏ trống để giữ ảnh hiện tại.
+     */
+    private MultipartFile imageFile;
+
+    /** Khi sửa: tích để gỡ ảnh hiện tại (nếu không chọn ảnh mới). */
+    private boolean removeImage;
 
     @NotNull(message = "Vui lòng nhập giá bán.")
     @DecimalMin(value = "0", message = "Giá bán không được âm.")

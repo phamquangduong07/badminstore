@@ -143,10 +143,37 @@
     /* Ghi đè thuộc tính height trên thẻ <img> (chống nhảy layout) để tỉ lệ 1:1 quyết định chiều cao */
     height: auto;
     aspect-ratio: 1 / 1;
+    /* Kinh tế màn hình: trên màn hình rộng + thấp, ảnh vuông cỡ đầy cột (617px ở 1280px)
+       chiếm trọn màn hình đầu tiên nên khách phải cuộn mới thấy giá/nút mua.
+       Chặn ở 60vh (ngưỡng của bộ gate UI kit) và canh giữa phần dư; mobile không đổi
+       vì bề rộng cột luôn nhỏ hơn 60vh. */
+    max-width: min(100%, 60vh);
+    max-height: 60vh;
+    margin-inline: auto;
     object-fit: contain;
     background: var(--bs-white);
     border-radius: var(--bs-border-radius);
 }
+
+/* Nút chuyển ảnh (trước/sau) của Bootstrap mặc định là mũi tên TRẮNG trên nền trong suốt
+   ⇒ trên ảnh sản phẩm nền trắng thì gần như vô hình (bộ kiểm đo được 1:1, cần ≥3:1).
+   Đổi thành nút tròn nền đậm bán trong suốt. Độ đậm .72: khi trộn lên nền trắng, chữ/mũi tên
+   trắng đạt ≈7:1 (ở .55 chỉ được 3.96:1 – trượt ngưỡng chữ nhỏ 4.5:1 mà bộ kiểm bắt được). */
+.pdp #productGallery .carousel-control-prev,
+.pdp #productGallery .carousel-control-next {
+    width: 2.75rem;
+    height: 2.75rem;
+    top: 50%;
+    bottom: auto;
+    transform: translateY(-50%);
+    border: 0;
+    border-radius: 50%;
+    background-color: rgba(17, 24, 39, .72);
+    opacity: 1;
+}
+
+.pdp #productGallery .carousel-control-prev { left: .5rem; }
+.pdp #productGallery .carousel-control-next { right: .5rem; }
 
 /* Dải thumbnail dùng luôn carousel-indicators của Bootstrap nhưng đổi sang dạng lưới tĩnh dưới ảnh */
 .pdp .pdp-thumbs {
@@ -187,7 +214,7 @@
 .pdp .pdp-price { font-size: clamp(1.5rem, 4.2vw, 2rem); line-height: 1.15; }
 .pdp .pdp-price .price-old { font-size: 1rem; }
 
-.pdp .pdp-stock-text { font-weight: 600; color: var(--bs-primary); }
+.pdp .pdp-stock-text { font-weight: 600; color: var(--bad-primary-text); }
 .pdp .pdp-stock-text.is-low { color: var(--bad-sale); }
 .pdp .pdp-stock-text.is-out { color: var(--bad-muted); }
 
@@ -198,6 +225,8 @@
     gap: .5rem;
 }
 
+/* Ô chọn phiên bản: dùng chung .variant-chip trong theme.css (viền, màu khi chọn,
+   trạng thái hết hàng) rồi mở rộng thành khối 2 dòng cho trang chi tiết sản phẩm. */
 .pdp .variant-option {
     display: flex;
     flex-direction: column;
@@ -207,15 +236,41 @@
     line-height: 1.25;
     padding: .6rem .85rem;
     border-radius: var(--bs-border-radius);
+    white-space: normal;
+}
+
+.pdp .variant-option:hover {
+    border-color: var(--bs-primary);
+    background: #f8fffb;
+}
+
+/* Radio ẩn nhận focus bàn phím -> hiện viền focus trên nhãn (Bootstrap không tự làm
+   vì nhãn không còn class btn-outline-*) */
+.pdp .btn-check:focus-visible + .variant-option {
+    outline: 3px solid rgba(var(--bs-primary-rgb), .45);
+    outline-offset: 2px;
 }
 
 .pdp .variant-option .variant-name { font-weight: 600; }
-.pdp .variant-option .variant-meta { font-size: .8rem; font-weight: 500; opacity: .85; }
-.pdp .variant-option.is-out { opacity: .6; }
+/* Bỏ opacity .85: chữ mờ làm tương phản tụt còn 3.93:1 trên nền chip nhạt (trượt AA 4.5:1).
+   Màu --bad-primary-text nguyên bản đạt 5.2:1 nên chỉ cần giữ chữ đặc, không cần mờ thêm. */
+.pdp .variant-option .variant-meta { font-size: .8rem; font-weight: 500; }
+
+/* Hết hàng: mờ nhẹ + chữ "Hết hàng" thay vì gạch ngang cả khối 2 dòng */
+.pdp .variant-option.is-out,
+.pdp .btn-check:disabled + .variant-option {
+    opacity: .55;
+    text-decoration: none;
+    cursor: not-allowed;
+}
 
 .pdp .quantity-group { width: 9.5rem; }
 
 /* ---------- Khối tab: Mô tả – Thông số – Đánh giá ---------- */
+/* Neo cuộn cho khối tab: header dính (sticky) không che tiêu đề khi mở #danh-gia
+   sau khi khách gửi đánh giá xong */
+.pdp .pdp-tabs { scroll-margin-top: 90px; }
+
 .pdp .pdp-tabs-nav {
     flex-wrap: nowrap;
     overflow-x: auto;
@@ -235,10 +290,10 @@
     font-weight: 600;
 }
 
-.pdp .pdp-tabs-nav .nav-link:hover { color: var(--bs-primary); border-bottom-color: var(--bs-border-color); }
+.pdp .pdp-tabs-nav .nav-link:hover { color: var(--bad-primary-text); border-bottom-color: var(--bs-border-color); }
 
 .pdp .pdp-tabs-nav .nav-link.active {
-    color: var(--bs-primary);
+    color: var(--bad-primary-text);
     background: transparent;
     border-bottom-color: var(--bs-primary);
 }
@@ -257,7 +312,7 @@
     background: var(--bs-tertiary-bg);
 }
 
-.pdp .pdp-rating-score { font-size: 2rem; font-weight: 700; line-height: 1; color: var(--bs-primary); }
+.pdp .pdp-rating-score { font-size: 2rem; font-weight: 700; line-height: 1; color: var(--bad-primary-text); }
 
 .pdp .review-item { padding-bottom: .9rem; }
 .pdp .review-item + .review-item { margin-top: .9rem; padding-top: .9rem; border-top: 1px solid var(--bs-border-color); }

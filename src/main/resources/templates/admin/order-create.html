@@ -19,14 +19,14 @@
     </nav>
 
     <div class="page-head">
-        <h1 class="page-title"><i class="bi bi-plus-square"></i> Tạo đơn thủ công</h1>
+        <h1 class="page-title"><i class="bi bi-plus-square" aria-hidden="true"></i> Tạo đơn thủ công</h1>
         <a class="btn btn-sm btn-outline-secondary" th:href="@{/admin/don-hang}">
-            <i class="bi bi-arrow-left"></i> Danh sách đơn
+            <i class="bi bi-arrow-left" aria-hidden="true"></i> Danh sách đơn
         </a>
     </div>
 
     <div class="alert alert-warning" th:if="${formError != null}" role="alert">
-        <i class="bi bi-exclamation-triangle"></i>
+        <i class="bi bi-exclamation-triangle" aria-hidden="true"></i>
         <span th:text="${formError}">Lý do lỗi</span>
     </div>
 
@@ -38,9 +38,9 @@
             <div class="col-xl-7">
                 <div class="card-soft">
                     <div class="card-header fw-semibold d-flex justify-content-between align-items-center">
-                        <span><i class="bi bi-box-seam"></i> Sản phẩm bán cho khách</span>
+                        <span><i class="bi bi-box-seam" aria-hidden="true"></i> Sản phẩm bán cho khách</span>
                         <button class="btn btn-sm btn-outline-primary" type="button" data-manual-line-add>
-                            <i class="bi bi-plus-lg"></i> Thêm dòng
+                            <i class="bi bi-plus-lg" aria-hidden="true"></i> Thêm dòng
                         </button>
                     </div>
                     <div class="card-body">
@@ -54,23 +54,25 @@
 
                         <div data-manual-lines>
                             <div class="row g-2 mb-2 manual-line" th:each="line, iter : *{lines}">
-                                <div class="col-8 col-sm-9">
+                                <div class="col-12 col-sm-9">
                                     <label class="form-label small mb-0" th:if="${iter.first}">
                                         SKU biến thể <span class="text-danger">*</span>
                                     </label>
-                                    <input class="form-control" data-field="sku" list="skuOptions"
+                                    <!-- aria-label: các dòng thứ 2 trở đi không còn nhãn hiển thị,
+                                         trình đọc màn hình vẫn cần tên cho ô nhập (axe: label rule) -->
+                                    <input class="form-control" data-field="sku" list="skuOptions" aria-label="SKU biến thể"
                                            th:value="${line.sku}" placeholder="Nhập SKU, ví dụ: YX-AX100ZZ-01" required>
                                 </div>
-                                <div class="col-3 col-sm-2">
+                                <div class="col-7 col-sm-2">
                                     <label class="form-label small mb-0" th:if="${iter.first}">Số lượng</label>
                                     <input class="form-control" data-field="quantity" type="number" min="1" max="100"
-                                           th:value="${line.quantity}" required>
+                                           aria-label="Số lượng" th:value="${line.quantity}" required>
                                 </div>
-                                <div class="col-1 d-grid">
+                                <div class="col-5 col-sm-1 d-grid">
                                     <label class="form-label small mb-0 d-none d-sm-block" th:if="${iter.first}">&nbsp;</label>
                                     <button class="btn btn-outline-danger js-remove-line" type="button"
                                             aria-label="Xoá dòng hàng">
-                                        <i class="bi bi-x-lg"></i>
+                                        <i class="bi bi-x-lg" aria-hidden="true"></i>
                                     </button>
                                 </div>
                             </div>
@@ -84,7 +86,7 @@
                 </div>
 
                 <div class="card-soft mt-3">
-                    <div class="card-header fw-semibold"><i class="bi bi-cash-coin"></i> Thanh toán &amp; phí</div>
+                    <div class="card-header fw-semibold"><i class="bi bi-cash-coin" aria-hidden="true"></i> Thanh toán &amp; phí</div>
                     <div class="card-body row g-3">
                         <div class="col-sm-6">
                             <label class="form-label small" for="paymentMethod">Phương thức thanh toán
@@ -123,7 +125,7 @@
             <!-- ===== Khách & giao hàng ===== -->
             <div class="col-xl-5">
                 <div class="card-soft">
-                    <div class="card-header fw-semibold"><i class="bi bi-person"></i> Khách hàng &amp; giao hàng</div>
+                    <div class="card-header fw-semibold"><i class="bi bi-person" aria-hidden="true"></i> Khách hàng &amp; giao hàng</div>
                     <div class="card-body">
                         <datalist id="customerOptions">
                             <option th:each="account : ${customers}" th:value="${account.email}">
@@ -159,14 +161,14 @@
                     </div>
                     <div class="card-footer d-flex gap-2">
                         <button class="btn btn-primary flex-grow-1" type="submit">
-                            <i class="bi bi-check2-circle"></i> Tạo đơn
+                            <i class="bi bi-check2-circle" aria-hidden="true"></i> Tạo đơn
                         </button>
                         <a class="btn btn-outline-secondary" th:href="@{/admin/don-hang}">Huỷ</a>
                     </div>
                 </div>
 
                 <div class="alert alert-info small mt-3">
-                    <i class="bi bi-info-circle"></i> Đơn tạo ở đây có <strong>order_source = MANUAL</strong> và
+                    <i class="bi bi-info-circle" aria-hidden="true"></i> Đơn tạo ở đây có <strong>order_source = MANUAL</strong> và
                     ghi nhận admin tạo đơn. Tiền mặt tại quầy được đánh dấu <strong>đã thanh toán</strong> ngay;
                     COD/chuyển khoản thì chờ admin xác nhận ở trang chi tiết đơn.
                 </div>
@@ -174,18 +176,21 @@
         </div>
     </form>
 
-    <!-- Mẫu 1 dòng hàng để main.js nhân bản khi bấm "Thêm dòng" -->
+    <!-- Mẫu 1 dòng hàng để main.js nhân bản khi bấm "Thêm dòng".
+         Mỗi ô có aria-label vì dòng nhân bản không có nhãn hiển thị riêng. -->
     <template id="manual-line-template">
         <div class="row g-2 mb-2 manual-line">
-            <div class="col-8 col-sm-9">
-                <input class="form-control" data-field="sku" list="skuOptions" placeholder="Nhập SKU" required>
+            <div class="col-12 col-sm-9">
+                <input class="form-control" data-field="sku" list="skuOptions" aria-label="SKU biến thể"
+                       placeholder="Nhập SKU" required>
             </div>
-            <div class="col-3 col-sm-2">
-                <input class="form-control" data-field="quantity" type="number" min="1" max="100" value="1" required>
+            <div class="col-7 col-sm-2">
+                <input class="form-control" data-field="quantity" type="number" min="1" max="100" value="1"
+                       aria-label="Số lượng" required>
             </div>
-            <div class="col-1 d-grid">
+            <div class="col-5 col-sm-1 d-grid">
                 <button class="btn btn-outline-danger js-remove-line" type="button" aria-label="Xoá dòng hàng">
-                    <i class="bi bi-x-lg"></i>
+                    <i class="bi bi-x-lg" aria-hidden="true"></i>
                 </button>
             </div>
         </div>

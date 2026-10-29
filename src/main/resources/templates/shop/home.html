@@ -125,8 +125,12 @@
                 </a>
             </div>
 
-            <div class="row g-3 g-lg-4" th:if="${!featuredProducts.isEmpty()}">
-                <div class="col-6 col-md-4 col-lg-3" th:each="card : ${featuredProducts}" data-aos="fade-up">
+            <!--
+              AOS gắn ở cả hàng thay vì từng thẻ: 8 thẻ cùng một hiệu ứng sẽ tạo
+              nhiều phần tử ẩn phải quan sát, dễ giật khi cuộn trên máy yếu.
+            -->
+            <div class="row g-3 g-lg-4" th:if="${!featuredProducts.isEmpty()}" data-aos="fade-up">
+                <div class="col-6 col-md-4 col-lg-3" th:each="card : ${featuredProducts}">
                     <div th:replace="~{fragments/product-card :: card(${card})}"></div>
                 </div>
             </div>
@@ -150,47 +154,49 @@
             </div>
 
             <!--
-              brandId đánh đúng thứ tự 6 hãng trong docs/BadStore.sql và 2 file seed
-              (Yonex=1, Li-Ning=2, Victor=3, Mizuno=4, Kumpoo=5, Apacs=6) vì HomeController
-              chưa gắn danh sách hãng vào model – phạm vi việc này không sửa Java.
+              LƯU Ý: brandId đang hard-code đúng thứ tự seed trong docs/BadStore.sql
+              (Yonex=1, Li-Ning=2, Victor=3, Mizuno=4, Kumpoo=5, Apacs=6).
+              Đây là giới hạn đã biết: nếu thêm/đổi hãng trong CSDL thì các ô này sẽ
+              trỏ sai. Cách sửa đúng là HomeController truyền danh sách hãng vào model
+              (ngoài phạm vi Phase 2 – chỉ sửa template/CSS/JS).
             -->
-            <div class="row row-cols-2 row-cols-md-3 g-3">
-                <div class="col" data-aos="fade-up">
+            <div class="row row-cols-2 row-cols-md-3 g-3" data-aos="fade-up">
+                <div class="col">
                     <a class="brand-tile" th:href="@{/san-pham(brandId=1)}">
                         <span class="brand-tile-initial" aria-hidden="true">Y</span>
                         <span class="brand-tile-name">Yonex</span>
                         <span class="brand-tile-lines">Astrox · Arcsaber · Nanoflare</span>
                     </a>
                 </div>
-                <div class="col" data-aos="fade-up" data-aos-delay="50">
+                <div class="col">
                     <a class="brand-tile" th:href="@{/san-pham(brandId=2)}">
                         <span class="brand-tile-initial" aria-hidden="true">L</span>
                         <span class="brand-tile-name">Li-Ning</span>
                         <span class="brand-tile-lines">Axforce · Halbertec · Windstorm</span>
                     </a>
                 </div>
-                <div class="col" data-aos="fade-up" data-aos-delay="100">
+                <div class="col">
                     <a class="brand-tile" th:href="@{/san-pham(brandId=3)}">
                         <span class="brand-tile-initial" aria-hidden="true">V</span>
                         <span class="brand-tile-name">Victor</span>
                         <span class="brand-tile-lines">Thruster K · JetSpeed · Auraspeed</span>
                     </a>
                 </div>
-                <div class="col" data-aos="fade-up" data-aos-delay="150">
+                <div class="col">
                     <a class="brand-tile" th:href="@{/san-pham(brandId=4)}">
                         <span class="brand-tile-initial" aria-hidden="true">M</span>
                         <span class="brand-tile-name">Mizuno</span>
                         <span class="brand-tile-lines">Fortius · Altius</span>
                     </a>
                 </div>
-                <div class="col" data-aos="fade-up" data-aos-delay="200">
+                <div class="col">
                     <a class="brand-tile" th:href="@{/san-pham(brandId=5)}">
                         <span class="brand-tile-initial" aria-hidden="true">K</span>
                         <span class="brand-tile-name">Kumpoo</span>
                         <span class="brand-tile-lines">Power Shot</span>
                     </a>
                 </div>
-                <div class="col" data-aos="fade-up" data-aos-delay="250">
+                <div class="col">
                     <a class="brand-tile" th:href="@{/san-pham(brandId=6)}">
                         <span class="brand-tile-initial" aria-hidden="true">A</span>
                         <span class="brand-tile-name">Apacs</span>
@@ -203,8 +209,8 @@
         <!-- ===== 5. Chọn nhanh theo loại vợt (danh mục lấy từ CSDL) ===== -->
         <section id="chon-nhanh" aria-labelledby="tieu-de-chon-nhanh">
             <h2 class="h5 section-title" id="tieu-de-chon-nhanh">Chọn nhanh theo lối chơi</h2>
-            <div class="row g-3">
-                <div class="col-6 col-lg-3" th:each="category : ${categories}" data-aos="fade-up">
+            <div class="row g-3" data-aos="fade-up">
+                <div class="col-6 col-lg-3" th:each="category : ${categories}">
                     <a class="quick-tile" th:href="@{/san-pham(categoryId=${category.id})}">
                         <span class="quick-tile-icon mb-2">
                             <i class="bi"
@@ -218,7 +224,7 @@
                         <div class="small text-muted">Xem các mẫu vợt</div>
                     </a>
                 </div>
-                <div class="col-6 col-lg-3" data-aos="fade-up">
+                <div class="col-6 col-lg-3">
                     <a class="quick-tile" th:href="@{/san-pham}">
                         <span class="quick-tile-icon mb-2"><i class="bi bi-list-ul" aria-hidden="true"></i></span>
                         <div class="fw-semibold">Tất cả sản phẩm</div>

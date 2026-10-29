@@ -1,0 +1,100 @@
+- generic [active] [ref=f23e1]:
+  - link "Bỏ qua tới nội dung chính" [ref=f23e2] [cursor=pointer]:
+    - /url: "#noi-dung-chinh"
+  - banner [ref=f23e3]:
+    - navigation "Điều hướng chính" [ref=f23e4]:
+      - generic [ref=f23e5]:
+        - link "BadStore – về trang chủ" [ref=f23e6] [cursor=pointer]:
+          - /url: /
+          - generic [aria-hidden] [ref=f23e8]: 
+          - generic [ref=f23e9]: BadStore
+        - generic [ref=f23e10]:
+          - link "Giỏ hàng" [ref=f23e11] [cursor=pointer]:
+            - /url: /gio-hang
+            - generic [aria-hidden] [ref=f23e12]: 
+            - generic [ref=f23e13]: "1"
+          - button "Mở menu" [ref=f23e14] [cursor=pointer]
+  - main [ref=f23e16]:
+    - generic [ref=f23e18]:
+      - navigation "breadcrumb" [ref=f23e19]:
+        - list [ref=f23e20]:
+          - listitem [ref=f23e21]:
+            - link "Trang chủ" [ref=f23e22] [cursor=pointer]:
+              - /url: /
+          - listitem [ref=f23e23]: / Đơn hàng của tôi
+      - generic [ref=f23e24]:
+        - heading "Đơn hàng của tôi 1 đơn" [level=1] [ref=f23e25]:
+          - generic [aria-hidden] [ref=f23e26]: 
+          - text: Đơn hàng của tôi
+          - generic [ref=f23e27]: 1 đơn
+        - paragraph [ref=f23e28]: Theo dõi trạng thái và xem lại chi tiết từng đơn bạn đã đặt.
+      - article [ref=f23e30]:
+        - generic [ref=f23e31]:
+          - generic [ref=f23e32]:
+            - generic [ref=f23e33]:
+              - link "Đơn BS261016013255070" [ref=f23e34] [cursor=pointer]:
+                - /url: /don-hang/102
+              - generic [ref=f23e35]: Đã xác nhận
+            - generic [ref=f23e36]:
+              - generic [aria-hidden] [ref=f23e37]: 
+              - generic [ref=f23e38]: 16/10/2026 01:32
+          - generic [ref=f23e39]:
+            - generic [ref=f23e40]:
+              - generic [ref=f23e41]: Người nhận
+              - generic [ref=f23e42]: Dương
+            - generic [ref=f23e43]:
+              - generic [ref=f23e44]: Sản phẩm
+              - generic [ref=f23e45]: 1 sản phẩm · 1 dòng hàng
+            - generic [ref=f23e46]:
+              - generic [ref=f23e47]: Thanh toán
+              - generic [ref=f23e48]:
+                - generic [ref=f23e49]: Chuyển khoản ngân hàng
+                - generic [ref=f23e50]: Chờ thanh toán
+          - paragraph [ref=f23e51]:
+            - generic [ref=f23e52]:
+              - generic [aria-hidden] [ref=f23e53]: 
+              - text: Đơn đã được xác nhận và đang chờ bàn giao cho đơn vị vận chuyển.
+          - generic [ref=f23e54]:
+            - generic [ref=f23e55]:
+              - text: Tổng tiền
+              - generic [ref=f23e56]: 2.920.000 ₫
+            - link "Xem chi tiết" [ref=f23e57] [cursor=pointer]:
+              - /url: /don-hang/102
+              - text: Xem chi tiết
+              - generic [aria-hidden] [ref=f23e58]: 
+  - contentinfo [ref=f23e59]:
+    - generic [ref=f23e60]:
+      - generic [ref=f23e61]:
+        - generic [ref=f23e62]:
+          - heading "BadStore" [level=2] [ref=f23e63]:
+            - generic [aria-hidden] [ref=f23e65]: 
+          - paragraph [ref=f23e67]: Website bán vợt cầu lông – đồ án tốt nghiệp, sản phẩm mang tính minh hoạ.
+          - paragraph [ref=f23e68]: Dữ liệu sản phẩm, hình ảnh dùng cho mục đích học tập.
+        - generic [ref=f23e69]:
+          - generic [ref=f23e70]:
+            - generic [aria-hidden] [ref=f23e71]: 
+            - text: Liên hệ
+          - paragraph [ref=f23e72]: "Hotline: 1900 0000"
+          - paragraph [ref=f23e73]: "Email: cskh@badstore.local"
+          - paragraph [ref=f23e74]: "Địa chỉ: Số 1 Đại Cồ Việt, Bách Khoa, Hà Nội"
+          - paragraph [ref=f23e75]: "Giờ mở cửa: 8:00 – 21:30 hằng ngày"
+        - generic [ref=f23e76]:
+          - generic [ref=f23e77]:
+            - generic [aria-hidden] [ref=f23e78]: 
+            - text: Mua hàng & giao nhận
+          - list [ref=f23e79]:
+            - listitem [ref=f23e80]:
+              - link "Danh mục vợt cầu lông" [ref=f23e81] [cursor=pointer]:
+                - /url: /san-pham
+            - listitem [ref=f23e82]:
+              - link "So sánh sản phẩm" [ref=f23e83] [cursor=pointer]:
+                - /url: /so-sanh
+            - listitem [ref=f23e84]:
+              - link "Giỏ hàng của bạn" [ref=f23e85] [cursor=pointer]:
+                - /url: /gio-hang
+            - listitem [ref=f23e86]: Vận chuyển toàn quốc – tích hợp GHN khi cấu hình token.
+      - separator [ref=f23e87]
+      - generic [ref=f23e88]:
+        - generic [ref=f23e89]: © 2026 BadStore
+        - generic [ref=f23e90]: Đơn giá hiển thị bằng Việt Nam đồng (₫).
+  - text: 

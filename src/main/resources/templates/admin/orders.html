@@ -11,11 +11,11 @@
 <th:block layout:fragment="content">
 
     <div class="page-head">
-        <h1 class="page-title"><i class="bi bi-receipt"></i> Quản lý đơn hàng</h1>
+        <h1 class="page-title"><i class="bi bi-receipt" aria-hidden="true"></i> Quản lý đơn hàng</h1>
         <div class="d-flex align-items-center gap-2">
             <span class="text-muted small" th:text="|Tổng ${orders.totalElements} đơn phù hợp|">Tổng 0 đơn</span>
             <a class="btn btn-sm btn-primary" th:href="@{/admin/don-hang/tao-don}">
-                <i class="bi bi-plus-square"></i> Tạo đơn thủ công
+                <i class="bi bi-plus-square" aria-hidden="true"></i> Tạo đơn thủ công
             </a>
         </div>
     </div>
@@ -37,15 +37,15 @@
                        placeholder="Ví dụ: BS261016… hoặc 0987…">
             </div>
             <div class="col-lg-5 d-flex gap-2">
-                <button class="btn btn-primary" type="submit"><i class="bi bi-search"></i> Lọc</button>
+                <button class="btn btn-primary" type="submit"><i class="bi bi-search" aria-hidden="true"></i> Lọc</button>
                 <a class="btn btn-outline-secondary" th:href="@{/admin/don-hang}">Xoá lọc</a>
             </div>
         </div>
     </form>
 
     <div class="card-soft">
-        <div class="table-responsive">
-            <table class="table table-hover align-middle mb-0">
+        <div class="table-responsive table-scroll">
+            <table class="table table-hover align-middle mb-0 table-sticky">
                 <thead>
                 <tr>
                     <th scope="col">Mã đơn</th>
@@ -92,54 +92,32 @@
                                   data-confirm="Xác nhận đơn này và TRỪ KHO ngay?" class="d-inline">
                                 <button class="btn btn-sm btn-success" type="submit"
                                         th:attr="aria-label=|Xác nhận đơn ${row.orderCode}|" title="Xác nhận đơn (trừ kho)">
-                                    <i class="bi bi-check2-circle"></i>
+                                    <i class="bi bi-check2-circle" aria-hidden="true"></i>
                                     <span class="d-none d-xl-inline">Xác nhận</span>
                                 </button>
                             </form>
                             <a class="btn btn-sm btn-outline-primary" th:href="@{/admin/don-hang/{id}(id=${row.id})}"
                                th:attr="aria-label=|Xem chi tiết đơn ${row.orderCode}|" title="Chi tiết đơn">
-                                <i class="bi bi-eye"></i>
+                                <i class="bi bi-eye" aria-hidden="true"></i>
                                 <span class="d-none d-xl-inline">Chi tiết</span>
                             </a>
                         </div>
                     </td>
                 </tr>
                 <tr th:if="${orders.empty}">
-                    <td colspan="8">
-                        <div class="empty-state">
-                            <i class="bi bi-inbox"></i>
-                            <p>Không có đơn hàng nào phù hợp bộ lọc.</p>
-                        </div>
-                    </td>
+                    <td colspan="8" class="p-0"
+                        th:insert="~{fragments/common :: emptyState('bi-inbox', 'Không có đơn hàng nào phù hợp bộ lọc.')}"></td>
                 </tr>
                 </tbody>
             </table>
         </div>
     </div>
 
-    <!-- Phân trang giữ nguyên bộ lọc -->
-    <nav th:if="${orders.totalPages > 1}" class="mt-3" aria-label="Phân trang đơn hàng">
-        <ul class="pagination justify-content-center mb-1">
-            <li class="page-item" th:classappend="${orders.first} ? 'disabled'">
-                <a class="page-link" rel="prev"
-                   th:href="@{/admin/don-hang(page=${orders.number}, status=${statusFilter}, keyword=${keyword})}">
-                    <i class="bi bi-chevron-left"></i> Trước
-                </a>
-            </li>
-            <li class="page-item" th:each="n : ${pageNumbers}" th:classappend="${n == orders.number} ? 'active'">
-                <a class="page-link" th:text="${n + 1}"
-                   th:href="@{/admin/don-hang(page=${n + 1}, status=${statusFilter}, keyword=${keyword})}">1</a>
-            </li>
-            <li class="page-item" th:classappend="${orders.last} ? 'disabled'">
-                <a class="page-link" rel="next"
-                   th:href="@{/admin/don-hang(page=${orders.number + 2}, status=${statusFilter}, keyword=${keyword})}">
-                    Sau <i class="bi bi-chevron-right"></i>
-                </a>
-            </li>
-        </ul>
-        <p class="text-center text-muted small mb-0"
-           th:text="|Trang ${orders.number + 1}/${orders.totalPages}|">Trang 1/1</p>
-    </nav>
+    <!-- Phân trang dùng chung – giữ nguyên bộ lọc (trạng thái, từ khoá) khi sang trang -->
+    <div th:replace="~{fragments/pagination :: pager(
+            page=${orders}, pageNumbers=${pageNumbers},
+            url='/admin/don-hang', ariaLabel='Phân trang đơn hàng', itemLabel='đơn hàng',
+            query=|status=${statusFilter ?: ''}&keyword=${#uris.escapeQueryParam(keyword ?: '')}|)}"></div>
 
 </th:block>
 

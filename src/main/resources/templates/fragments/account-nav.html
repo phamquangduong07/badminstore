@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org">
+<body>
+
+<!--
+  Sidebar dùng chung cho khu vực tài khoản của khách (shop/account.html, shop/change-password.html).
+  Tham số: active = profile | password | orders | addresses (để tô đậm mục đang mở).
+  Cần model: user, orderCount, addressCount (AccountController chuẩn bị).
+-->
+<div th:fragment="accountSidebar(active)" class="account-sidebar">
+
+    <div class="card border-0 shadow-sm account-summary">
+        <div class="card-body text-center p-4">
+
+            <img th:if="${user.avatar != null}" th:src="@{${user.avatar}}"
+                 th:alt="${'Ảnh đại diện của ' + user.fullName}"
+                 class="account-avatar" loading="lazy">
+            <span th:unless="${user.avatar != null}" class="account-avatar" aria-hidden="true"
+                  th:text="${#strings.isEmpty(user.fullName) ? '?' : #strings.toUpperCase(#strings.substring(user.fullName, 0, 1))}">A</span>
+
+            <h2 class="h5 fw-bold mt-3 mb-1" th:text="${user.fullName}">Họ tên khách hàng</h2>
+            <p class="text-muted small mb-2 text-break" th:text="${user.email}">email@example.com</p>
+
+            <div class="d-flex flex-wrap justify-content-center gap-2">
+                <span class="badge"
+                      th:classappend="${user.role.name() == 'ADMIN'} ? 'text-bg-primary' : 'text-bg-secondary'"
+                      th:text="${user.role.label}">Khách hàng</span>
+                <span class="status-pill" th:classappend="|status-${user.status.name()}|"
+                      th:text="${user.status.label}">Đang hoạt động</span>
+            </div>
+
+            <div class="row g-2 mt-3 pt-3 border-top">
+                <div class="col-6">
+                    <a class="d-block text-decoration-none" th:href="@{/don-hang}"
+                       th:aria-label="|Xem ${orderCount} đơn hàng của tôi|">
+                        <span class="h5 d-block mb-0 text-primary" th:text="${orderCount}">0</span>
+                        <span class="small text-muted">Đơn hàng</span>
+                    </a>
+                </div>
+                <div class="col-6">
+                    <a class="d-block text-decoration-none" th:href="@{/dia-chi}"
+                       th:aria-label="|Xem ${addressCount} địa chỉ giao hàng|">
+                        <span class="h5 d-block mb-0 text-primary" th:text="${addressCount}">0</span>
+                        <span class="small text-muted">Địa chỉ</span>
+                    </a>
+                </div>
+            </div>
+
+            <p class="small text-muted mb-0 mt-3">
+                <i class="bi bi-calendar3" aria-hidden="true"></i> Thành viên từ
+                <span th:replace="~{fragments/common :: dateTime(${user.createdAt})}">00/00/0000</span>
+            </p>
+        </div>
+    </div>
+
+    <nav class="card border-0 shadow-sm mt-3 account-nav" aria-label="Menu tài khoản">
+        <div class="card-body p-2">
+            <div class="list-group list-group-flush">
+                <a class="list-group-item list-group-item-action d-flex align-items-center gap-2"
+                   th:classappend="${active == 'profile'} ? ' active'"
+                   th:aria-current="${active == 'profile'} ? 'page' : null"
+                   th:href="@{/tai-khoan}">
+                    <i class="bi bi-person-vcard" aria-hidden="true"></i> Thông tin tài khoản
+                </a>
+                <a class="list-group-item list-group-item-action d-flex align-items-center gap-2"
+                   th:classappend="${active == 'password'} ? ' active'"
+                   th:aria-current="${active == 'password'} ? 'page' : null"
+                   th:href="@{/tai-khoan/doi-mat-khau}">
+                    <i class="bi bi-key" aria-hidden="true"></i> Đổi mật khẩu
+                </a>
+                <a class="list-group-item list-group-item-action d-flex align-items-center gap-2"
+                   th:classappend="${active == 'orders'} ? ' active'"
+                   th:aria-current="${active == 'orders'} ? 'page' : null"
+                   th:href="@{/don-hang}">
+                    <i class="bi bi-receipt" aria-hidden="true"></i> Đơn hàng của tôi
+                </a>
+                <a class="list-group-item list-group-item-action d-flex align-items-center gap-2"
+                   th:classappend="${active == 'addresses'} ? ' active'"
+                   th:aria-current="${active == 'addresses'} ? 'page' : null"
+                   th:href="@{/dia-chi}">
+                    <i class="bi bi-geo-alt" aria-hidden="true"></i> Sổ địa chỉ
+                </a>
+            </div>
+        </div>
+    </nav>
+
+</div>
+
+</body>
+</html>

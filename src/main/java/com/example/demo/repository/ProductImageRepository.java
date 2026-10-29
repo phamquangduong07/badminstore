@@ -23,5 +23,8 @@ public interface ProductImageRepository extends JpaRepository<ProductImage, Inte
     /** Ảnh phải thuộc đúng sản phẩm đang thao tác – tránh admin sửa ảnh của sản phẩm khác qua URL. */
     Optional<ProductImage> findByIdAndProductId(Integer id, Integer productId);
 
+    /** Kiểm tra file upload còn được bộ ảnh sản phẩm dùng không, trước khi xoá file của biến thể. */
+    boolean existsByImageUrl(String imageUrl);
+
     void deleteByProductId(Integer productId);
 }

@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="vi"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/base}">
+<head>
+    <title>Tài khoản của tôi</title>
+</head>
+<body>
+
+<th:block layout:fragment="content">
+
+    <div class="account-page">
+
+        <!-- CSS nhóm trang tài khoản/đơn hàng: nạp sau theme.css, mọi rule scope trong .account-page -->
+        <link rel="stylesheet" th:href="@{/css/account-orders.css}">
+
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a th:href="@{/}">Trang chủ</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Tài khoản của tôi</li>
+            </ol>
+        </nav>
+
+        <div class="mb-3">
+            <h1 class="page-title mb-0">
+                <i class="bi bi-person-gear text-primary" aria-hidden="true"></i> Tài khoản của tôi
+            </h1>
+            <p class="text-muted small mb-0">Quản lý thông tin cá nhân và bảo mật tài khoản BadStore.</p>
+        </div>
+
+        <div class="row g-4">
+            <aside class="col-lg-4">
+                <div th:replace="~{fragments/account-nav :: accountSidebar('profile')}"></div>
+            </aside>
+
+            <div class="col-lg-8">
+                <div class="card border-0 shadow-sm">
+                    <div class="card-header bg-transparent fw-semibold">
+                        <i class="bi bi-person-lines-fill" aria-hidden="true"></i> Thông tin cá nhân
+                    </div>
+                    <div class="card-body">
+
+                        <div class="alert alert-warning" th:if="${formError != null}" role="alert">
+                            <i class="bi bi-exclamation-triangle" aria-hidden="true"></i>
+                            <span th:text="${formError}">Lý do lỗi</span>
+                        </div>
+
+                        <form th:action="@{/tai-khoan}" th:object="${form}" method="post"
+                              data-confirm="Lưu thay đổi thông tin tài khoản?">
+                            <div class="row g-3">
+                                <div class="col-12">
+                                    <label class="form-label" for="fullName">
+                                        Họ và tên <span class="text-danger">*</span>
+                                    </label>
+                                    <input class="form-control" id="fullName" th:field="*{fullName}"
+                                           th:classappend="${#fields.hasErrors('fullName')} ? 'is-invalid'"
+                                           th:aria-invalid="${#fields.hasErrors('fullName')}"
+                                           maxlength="100" required placeholder="Nguyễn Văn A"
+                                           autocomplete="name">
+                                    <div class="invalid-feedback" th:if="${#fields.hasErrors('fullName')}"
+                                         th:errors="*{fullName}">Họ tên không hợp lệ</div>
+                                </div>
+
+                                <div class="col-md-7">
+                                    <label class="form-label" for="email">
+                                        Email đăng nhập <span class="text-danger">*</span>
+                                    </label>
+                                    <input class="form-control" id="email" type="email" th:field="*{email}"
+                                           th:classappend="${#fields.hasErrors('email')} ? 'is-invalid'"
+                                           th:aria-invalid="${#fields.hasErrors('email')}"
+                                           maxlength="100" required placeholder="khachhang@example.com"
+                                           autocomplete="email">
+                                    <div class="invalid-feedback" th:if="${#fields.hasErrors('email')}"
+                                         th:errors="*{email}">Email không hợp lệ</div>
+                                    <div class="form-text">
+                                        Email là tên đăng nhập. Sau khi đổi, hãy dùng email mới cho lần đăng nhập kế tiếp.
+                                    </div>
+                                </div>
+
+                                <div class="col-md-5">
+                                    <label class="form-label" for="phone">Số điện thoại</label>
+                                    <input class="form-control" id="phone" type="tel" th:field="*{phone}"
+                                           th:classappend="${#fields.hasErrors('phone')} ? 'is-invalid'"
+                                           th:aria-invalid="${#fields.hasErrors('phone')}"
+                                           maxlength="20" placeholder="0912345678"
+                                           autocomplete="tel">
+                                    <div class="invalid-feedback" th:if="${#fields.hasErrors('phone')}"
+                                         th:errors="*{phone}">Số điện thoại không hợp lệ</div>
+                                    <div class="form-text">Dùng để liên hệ khi giao hàng.</div>
+                                </div>
+                            </div>
+
+                            <div class="d-flex flex-wrap gap-2 mt-4">
+                                <button class="btn btn-primary" type="submit">
+                                    <i class="bi bi-save" aria-hidden="true"></i> Lưu thay đổi
+                                </button>
+                                <a class="btn btn-outline-secondary" th:href="@{/tai-khoan}">Hoàn tác</a>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+                <div class="card border-0 shadow-sm mt-3">
+                    <div class="card-body d-flex flex-wrap justify-content-between align-items-center gap-3">
+                        <div>
+                            <div class="fw-semibold">
+                                <i class="bi bi-shield-lock text-primary" aria-hidden="true"></i> Mật khẩu đăng nhập
+                            </div>
+                            <p class="small text-muted mb-0">
+                                Nên đổi mật khẩu định kỳ và không dùng lại mật khẩu của trang web khác.
+                            </p>
+                        </div>
+                        <a class="btn btn-outline-primary" th:href="@{/tai-khoan/doi-mat-khau}">
+                            <i class="bi bi-key" aria-hidden="true"></i> Đổi mật khẩu
+                        </a>
+                    </div>
+                </div>
+
+                <div class="card border-0 shadow-sm mt-3">
+                    <div class="card-body">
+                        <div class="fw-semibold mb-2">
+                            <i class="bi bi-lightning-charge text-primary" aria-hidden="true"></i> Truy cập nhanh
+                        </div>
+                        <div class="row g-2">
+                            <div class="col-sm-6">
+                                <a class="btn btn-outline-secondary w-100 text-start" th:href="@{/don-hang}">
+                                    <i class="bi bi-receipt" aria-hidden="true"></i>
+                                    Đơn hàng của tôi
+                                    <span class="badge text-bg-light ms-1" th:text="${orderCount}">0</span>
+                                </a>
+                            </div>
+                            <div class="col-sm-6">
+                                <a class="btn btn-outline-secondary w-100 text-start" th:href="@{/dia-chi}">
+                                    <i class="bi bi-geo-alt" aria-hidden="true"></i>
+                                    Sổ địa chỉ
+                                    <span class="badge text-bg-light ms-1" th:text="${addressCount}">0</span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</th:block>
+
+</body>
+</html>

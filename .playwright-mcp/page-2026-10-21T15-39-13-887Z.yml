@@ -1,0 +1,139 @@
+- generic [active] [ref=f10e1]:
+  - link "Bỏ qua tới nội dung chính" [ref=f10e2] [cursor=pointer]:
+    - /url: "#noi-dung-chinh"
+  - banner [ref=f10e3]:
+    - navigation "Điều hướng chính" [ref=f10e4]:
+      - generic [ref=f10e5]:
+        - link "BadStore – về trang chủ" [ref=f10e6] [cursor=pointer]:
+          - /url: /
+          - generic [aria-hidden] [ref=f10e8]: 
+          - generic [ref=f10e9]: BadStore
+        - generic: 
+        - generic "Menu BadStore" [ref=f10e10]:
+          - generic [ref=f10e11]:
+            - list [ref=f10e12]:
+              - listitem [ref=f10e13]:
+                - link "Trang chủ" [ref=f10e14] [cursor=pointer]:
+                  - /url: /
+                  - generic [aria-hidden] [ref=f10e15]: 
+                  - text: Trang chủ
+              - listitem [ref=f10e16]:
+                - link "Sản phẩm" [ref=f10e17] [cursor=pointer]:
+                  - /url: /san-pham
+                  - generic [aria-hidden] [ref=f10e18]: 
+                  - text: Sản phẩm
+            - search [ref=f10e19]:
+              - generic [ref=f10e20]: Tìm sản phẩm theo tên
+              - generic [aria-hidden]: 
+              - searchbox "Tìm sản phẩm theo tên" [ref=f10e21]
+            - list [ref=f10e22]:
+              - listitem [ref=f10e23]:
+                - link "So sánh sản phẩm" [ref=f10e24] [cursor=pointer]:
+                  - /url: /so-sanh
+                  - generic [aria-hidden] [ref=f10e25]: 
+              - listitem [ref=f10e26]:
+                - link "Giỏ hàng" [ref=f10e27] [cursor=pointer]:
+                  - /url: /gio-hang
+                  - generic [aria-hidden] [ref=f10e28]: 
+                  - generic [ref=f10e29]: "8"
+              - listitem [ref=f10e30]:
+                - button "Quản trị viên" [ref=f10e31] [cursor=pointer]:
+                  - generic [aria-hidden] [ref=f10e32]: 
+                - text:    
+  - main [ref=f10e34]:
+    - generic [ref=f10e35]:
+      - navigation "breadcrumb" [ref=f10e36]:
+        - list [ref=f10e37]:
+          - listitem [ref=f10e38]:
+            - link "Trang chủ" [ref=f10e39] [cursor=pointer]:
+              - /url: /
+          - listitem [ref=f10e40]: / Sổ địa chỉ
+      - heading "Sổ địa chỉ giao hàng" [level=1] [ref=f10e41]:
+        - generic [aria-hidden] [ref=f10e42]: 
+        - text: Sổ địa chỉ giao hàng
+      - generic [ref=f10e43]:
+        - generic [ref=f10e44]:
+          - generic [ref=f10e47]:
+            - generic [ref=f10e48]:
+              - generic [ref=f10e49]:
+                - generic [aria-hidden] [ref=f10e50]: 
+                - text: Dương · 0971330284
+                - generic [ref=f10e51]:
+                  - generic [aria-hidden] [ref=f10e52]: 
+                  - text: Mặc định
+              - generic [ref=f10e53]:
+                - generic [aria-hidden] [ref=f10e54]: 
+                - text: sdsđ, Phượng Dực, sd, sfd
+            - button "Xoá địa chỉ của Dương" [ref=f10e57] [cursor=pointer]:
+              - generic [aria-hidden] [ref=f10e58]: 
+          - paragraph [ref=f10e59]: Mỗi tài khoản lưu được tối đa 5 địa chỉ giao hàng.
+        - generic [ref=f10e61]:
+          - generic [ref=f10e62]:
+            - generic [aria-hidden] [ref=f10e63]: 
+            - text: Thêm địa chỉ mới
+          - generic [ref=f10e65]:
+            - generic [ref=f10e66]:
+              - generic [ref=f10e67]: Tên người nhận *
+              - textbox "Tên người nhận *" [ref=f10e68]
+            - generic [ref=f10e69]:
+              - generic [ref=f10e70]: Số điện thoại *
+              - textbox "Số điện thoại *" [ref=f10e71]
+            - generic [ref=f10e72]:
+              - generic [ref=f10e73]: Tỉnh / thành phố *
+              - textbox "Tỉnh / thành phố *" [ref=f10e74]:
+                - /placeholder: "Ví dụ: TP. Hồ Chí Minh"
+            - generic [ref=f10e75]:
+              - generic [ref=f10e76]:
+                - generic [ref=f10e77]: Quận / huyện *
+                - textbox "Quận / huyện *" [ref=f10e78]:
+                  - /placeholder: "Ví dụ: Quận 1"
+              - generic [ref=f10e79]:
+                - generic [ref=f10e80]: Phường / xã *
+                - textbox "Phường / xã *" [ref=f10e81]:
+                  - /placeholder: "Ví dụ: Phường Bến Thành"
+            - generic [ref=f10e82]:
+              - generic [ref=f10e83]: Số nhà, tên đường *
+              - textbox "Số nhà, tên đường *" [ref=f10e84]:
+                - /placeholder: "Ví dụ: 123 Nguyễn Trãi"
+            - generic [ref=f10e85]:
+              - checkbox "Đặt làm địa chỉ mặc định" [ref=f10e86]
+              - generic [ref=f10e87]: Đặt làm địa chỉ mặc định
+            - button "Lưu địa chỉ" [ref=f10e88] [cursor=pointer]:
+              - generic [aria-hidden] [ref=f10e89]: 
+              - text: Lưu địa chỉ
+  - contentinfo [ref=f10e90]:
+    - generic [ref=f10e91]:
+      - generic [ref=f10e92]:
+        - generic [ref=f10e93]:
+          - heading "BadStore" [level=2] [ref=f10e94]:
+            - generic [aria-hidden] [ref=f10e96]: 
+          - paragraph [ref=f10e98]: Website bán vợt cầu lông – đồ án tốt nghiệp, sản phẩm mang tính minh hoạ.
+          - paragraph [ref=f10e99]: Dữ liệu sản phẩm, hình ảnh dùng cho mục đích học tập.
+        - generic [ref=f10e100]:
+          - generic [ref=f10e101]:
+            - generic [aria-hidden] [ref=f10e102]: 
+            - text: Liên hệ
+          - paragraph [ref=f10e103]: "Hotline: 1900 0000"
+          - paragraph [ref=f10e104]: "Email: cskh@badstore.local"
+          - paragraph [ref=f10e105]: "Địa chỉ: Số 1 Đại Cồ Việt, Bách Khoa, Hà Nội"
+          - paragraph [ref=f10e106]: "Giờ mở cửa: 8:00 – 21:30 hằng ngày"
+        - generic [ref=f10e107]:
+          - generic [ref=f10e108]:
+            - generic [aria-hidden] [ref=f10e109]: 
+            - text: Mua hàng & giao nhận
+          - list [ref=f10e110]:
+            - listitem [ref=f10e111]:
+              - link "Danh mục vợt cầu lông" [ref=f10e112] [cursor=pointer]:
+                - /url: /san-pham
+            - listitem [ref=f10e113]:
+              - link "So sánh sản phẩm" [ref=f10e114] [cursor=pointer]:
+                - /url: /so-sanh
+            - listitem [ref=f10e115]:
+              - link "Giỏ hàng của bạn" [ref=f10e116] [cursor=pointer]:
+                - /url: /gio-hang
+            - listitem [ref=f10e117]: Vận chuyển toàn quốc – tích hợp GHN khi cấu hình token.
+      - separator [ref=f10e118]
+      - generic [ref=f10e119]:
+        - generic [ref=f10e120]: © 2026 BadStore
+        - generic [ref=f10e121]: Đơn giá hiển thị bằng Việt Nam đồng (₫).
+  - text: 

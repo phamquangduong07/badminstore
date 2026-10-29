@@ -1,0 +1,131 @@
+- generic [active] [ref=f140e1]:
+  - link "Bỏ qua tới nội dung chính" [ref=f140e2] [cursor=pointer]:
+    - /url: "#noi-dung-chinh"
+  - main [ref=f140e5]:
+    - generic [ref=f140e6]:
+      - button "Mở menu quản trị" [ref=f140e7] [cursor=pointer]:
+        - generic [aria-hidden] [ref=f140e8]: 
+      - generic [ref=f140e9]:
+        - generic [aria-hidden] [ref=f140e10]: 
+        - text: Khu quản trị BadStore
+      - generic [ref=f140e11]:
+        - link "Xem cửa hàng" [ref=f140e12] [cursor=pointer]:
+          - /url: /
+          - generic [aria-hidden] [ref=f140e13]: 
+          - text: Xem cửa hàng
+        - text: 
+        - button "Đăng xuất" [ref=f140e15] [cursor=pointer]:
+          - generic [aria-hidden] [ref=f140e16]: 
+          - text: Đăng xuất
+    - generic [ref=f140e17]:
+      - navigation "breadcrumb" [ref=f140e18]:
+        - list [ref=f140e19]:
+          - listitem [ref=f140e20]:
+            - link "Tổng quan" [ref=f140e21] [cursor=pointer]:
+              - /url: /admin
+          - listitem [ref=f140e22]:
+            - text: /
+            - link "Sản phẩm" [ref=f140e23] [cursor=pointer]:
+              - /url: /admin/san-pham
+          - listitem [ref=f140e24]: / Biến thể & ảnh
+      - generic [ref=f140e25]:
+        - generic [ref=f140e26]:
+          - heading "sssss2232" [level=1] [ref=f140e27]
+          - paragraph [ref=f140e28]: "Mã: SSFFF – Apacs / Vợt tấn công"
+        - generic [ref=f140e29]:
+          - link "Sửa thông tin chung" [ref=f140e30] [cursor=pointer]:
+            - /url: /admin/san-pham/1849/sua
+            - generic [aria-hidden] [ref=f140e31]: 
+            - text: Sửa thông tin chung
+          - link "Thêm biến thể" [ref=f140e32] [cursor=pointer]:
+            - /url: /admin/san-pham/1849/bien-the/tao-moi
+            - generic [aria-hidden] [ref=f140e33]: 
+            - text: Thêm biến thể
+      - generic [ref=f140e34]:
+        - generic [ref=f140e35]:
+          - generic [aria-hidden] [ref=f140e36]: 
+          - text: Biến thể (giá bán & tồn kho) – 1 biến thể
+        - generic [ref=f140e37]:
+          - generic [ref=f140e38]:
+            - generic [ref=f140e39]: Kiểu cập nhật giá
+            - combobox "Kiểu cập nhật giá" [ref=f140e40]:
+              - option "Giảm giá theo %" [selected]
+              - option "Bỏ giảm giá (giá bán = giá gạch ngang)"
+          - generic [ref=f140e41]:
+            - generic [ref=f140e42]: Giảm giá (%)
+            - spinbutton "Giảm giá (%)" [ref=f140e43]: "10"
+          - button "Cập nhật giá đã tích" [ref=f140e45] [cursor=pointer]:
+            - generic [aria-hidden] [ref=f140e46]: 
+            - text: Cập nhật giá đã tích
+          - generic [ref=f140e47]: "Giảm giá: giá gạch ngang = giá đang bán. Bỏ giảm giá: trả về giá gạch ngang cũ."
+        - table [ref=f140e49]:
+          - rowgroup [ref=f140e50]:
+            - row [ref=f140e51]:
+              - columnheader [ref=f140e52]:
+                - checkbox "Chọn tất cả biến thể để cập nhật giá" [ref=f140e53]
+              - columnheader "SKU" [ref=f140e54]
+              - columnheader "Màu sắc" [ref=f140e55]
+              - columnheader "Trọng lượng" [ref=f140e56]
+              - columnheader "Cỡ cán" [ref=f140e57]
+              - columnheader "Giá bán" [ref=f140e58]
+              - columnheader "Giá gạch ngang" [ref=f140e59]
+              - columnheader "Tồn kho" [ref=f140e60]
+              - columnheader "Trạng thái" [ref=f140e61]
+              - columnheader "Thao tác" [ref=f140e62]
+          - rowgroup [ref=f140e63]:
+            - row [ref=f140e64]:
+              - cell [ref=f140e65]:
+                - checkbox "Chọn biến thể SSFFF-323" [ref=f140e66]
+              - cell "SSFFF-323" [ref=f140e67]
+              - cell "2323" [ref=f140e68]
+              - cell "5U" [ref=f140e69]
+              - cell "G5" [ref=f140e70]
+              - cell "123.123 ₫" [ref=f140e71]
+              - cell "1.231.231.231 ₫" [ref=f140e72]
+              - cell "22323" [ref=f140e74]
+              - cell "Đang bán" [ref=f140e76]
+              - cell [ref=f140e78]:
+                - generic [ref=f140e79]:
+                  - link "Sửa" [ref=f140e80] [cursor=pointer]:
+                    - /url: /admin/san-pham/1849/bien-the/3584/sua
+                    - generic [aria-hidden] [ref=f140e81]: 
+                    - text: Sửa
+                  - button "Ngừng" [ref=f140e83] [cursor=pointer]
+                  - button "Xoá biến thể SSFFF-323" [ref=f140e85] [cursor=pointer]:
+                    - generic [aria-hidden] [ref=f140e86]: 
+      - generic [ref=f140e87]:
+        - generic [ref=f140e88]:
+          - generic [aria-hidden] [ref=f140e89]: 
+          - text: Bộ ảnh sản phẩm – 2 ảnh
+        - generic [ref=f140e91]:
+          - generic [ref=f140e93]:
+            - img "Ảnh sản phẩm sssss2232" [ref=f140e94]
+            - generic [ref=f140e95]:
+              - generic [ref=f140e96]:
+                - generic [aria-hidden] [ref=f140e97]: 
+                - text: Ảnh chính
+              - button "Gỡ" [ref=f140e100] [cursor=pointer]:
+                - generic [aria-hidden] [ref=f140e101]: 
+                - text: Gỡ
+          - generic [ref=f140e103]:
+            - img "Ảnh sản phẩm sssss2232" [ref=f140e104]
+            - generic [ref=f140e106]:
+              - button "Ảnh chính" [ref=f140e108] [cursor=pointer]:
+                - generic [aria-hidden] [ref=f140e109]: 
+                - text: Ảnh chính
+              - button "Gỡ" [ref=f140e111] [cursor=pointer]:
+                - generic [aria-hidden] [ref=f140e112]: 
+                - text: Gỡ
+        - generic [ref=f140e114]:
+          - generic [ref=f140e115]:
+            - generic [ref=f140e116]: Chọn ảnh (JPG, PNG, WEBP, GIF, SVG – tối đa 2 MB)
+            - button "Chọn ảnh (JPG, PNG, WEBP, GIF, SVG – tối đa 2 MB)" [ref=f140e117] [cursor=pointer]
+          - generic [ref=f140e118]:
+            - generic [ref=f140e119]:
+              - checkbox "Đặt làm ảnh chính" [ref=f140e120]
+              - generic [ref=f140e121]: Đặt làm ảnh chính
+            - generic [ref=f140e122]: Ảnh đầu tiên luôn được đặt làm ảnh chính.
+          - button "Tải ảnh lên" [ref=f140e124] [cursor=pointer]:
+            - generic [aria-hidden] [ref=f140e125]: 
+            - text: Tải ảnh lên
+  - text: 

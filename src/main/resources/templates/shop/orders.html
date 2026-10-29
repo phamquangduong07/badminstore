@@ -27,7 +27,7 @@
 
         <!-- Tiêu đề + số đơn để khách biết mình đang có bao nhiêu đơn -->
         <div class="d-flex flex-wrap justify-content-between align-items-center gap-2 mb-3">
-            <h1 class="h4 mb-0">
+            <h1 class="page-title mb-0">
                 <i class="bi bi-receipt text-primary" aria-hidden="true"></i> Đơn hàng của tôi
                 <span class="badge badge-soft-primary rounded-pill ms-1" th:if="${!orders.empty}"
                       th:text="|${orders.totalElements} đơn|">0 đơn</span>
@@ -133,28 +133,11 @@
                 </div>
             </article>
 
-            <!-- Phân trang danh sách đơn -->
-            <nav th:if="${orders.totalPages > 1}" aria-label="Phân trang đơn hàng" class="mt-4">
-                <ul class="pagination justify-content-center mb-1">
-                    <li class="page-item" th:classappend="${orders.first} ? 'disabled'">
-                        <a class="page-link" rel="prev" th:href="@{/don-hang(page=${orders.number})}">
-                            <i class="bi bi-chevron-left" aria-hidden="true"></i> Trước
-                        </a>
-                    </li>
-                    <li class="page-item" th:each="n : ${pageNumbers}" th:classappend="${n == orders.number} ? 'active'">
-                        <a class="page-link" th:text="${n + 1}" th:href="@{/don-hang(page=${n + 1})}">1</a>
-                    </li>
-                    <li class="page-item" th:classappend="${orders.last} ? 'disabled'">
-                        <a class="page-link" rel="next" th:href="@{/don-hang(page=${orders.number + 2})}">
-                            Sau <i class="bi bi-chevron-right" aria-hidden="true"></i>
-                        </a>
-                    </li>
-                </ul>
-                <p class="text-center text-muted small mb-0"
-                   th:text="|Trang ${orders.number + 1}/${orders.totalPages} – ${orders.totalElements} đơn hàng|">
-                    Trang 1/1
-                </p>
-            </nav>
+            <!-- Phân trang dùng chung (danh sách đơn không có bộ lọc) -->
+            <div th:replace="~{fragments/pagination :: pager(
+                    page=${orders}, pageNumbers=${pageNumbers},
+                    url='/don-hang', ariaLabel='Phân trang đơn hàng', itemLabel='đơn hàng',
+                    query='')}"></div>
         </div>
     </div>
 

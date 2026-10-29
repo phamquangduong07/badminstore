@@ -8,13 +8,31 @@
   Dùng th:insert (không dùng th:replace) khi cần giữ class/style của thẻ bao ngoài.
 -->
 
-<!-- Tiền VND. Giá null = sản phẩm chưa có biến thể đang bán ⇒ hiện "Liên hệ". -->
+<!-- Tiền VND. Giá null = sản phẩm chưa có biến thể đang bán ⇒ hiện "Liên hệ" (dùng cho GIÁ). -->
 <span th:fragment="money(value)"
       th:text="${value != null} ? |${#numbers.formatInteger(value, 0, 'POINT')} ₫| : 'Liên hệ'">0 ₫</span>
 
-<!-- Ngày giờ. -->
+<!--
+  Tiền VND nhưng tự chọn chữ thay thế khi null – dùng cho các con số KHÔNG phải giá bán
+  (tổng tiền đơn, doanh thu, phí ship…): "Liên hệ" ở đó là vô nghĩa.
+  Ví dụ: th:insert="~{fragments/common :: moneyOr(${row.totalAmount}, '—')}"
+-->
+<span th:fragment="moneyOr(value, fallback)"
+      th:text="${value != null} ? |${#numbers.formatInteger(value, 0, 'POINT')} ₫| : ${fallback}">0 ₫</span>
+
+<!-- Ngày giờ. Chưa có dữ liệu (null) ⇒ hiện "—" để người dùng biết ô đó đang trống, không phải lỗi hiển thị. -->
 <span th:fragment="dateTime(value)"
-      th:text="${value != null} ? ${#temporals.format(value, 'dd/MM/yyyy HH:mm')} : ''"></span>
+      th:text="${value != null} ? ${#temporals.format(value, 'dd/MM/yyyy HH:mm')} : '—'">00/00/0000 00:00</span>
+
+<!--
+  Trạng thái rỗng cho bảng/danh sách: thống nhất icon mờ + 1 câu tiếng Việt, không lặp markup mỗi bảng.
+  Ví dụ: <tr><td colspan="7" th:replace="~{fragments/common :: emptyState('bi-box', 'Không có sản phẩm nào phù hợp bộ lọc.')}"></td></tr>
+  (dùng th:replace trong <td> để không lồng 2 thẻ div)
+-->
+<div th:fragment="emptyState(icon, message)" class="empty-state">
+    <i class="bi" th:classappend="${icon}" aria-hidden="true"></i>
+    <p th:text="${message}">Chưa có dữ liệu</p>
+</div>
 
 </body>
 </html>

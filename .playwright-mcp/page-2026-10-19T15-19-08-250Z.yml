@@ -1,0 +1,124 @@
+- generic [active] [ref=f106e1]:
+  - link "Bỏ qua tới nội dung chính" [ref=f106e2] [cursor=pointer]:
+    - /url: "#noi-dung-chinh"
+  - main [ref=f106e5]:
+    - generic [ref=f106e6]:
+      - button "Mở menu quản trị" [ref=f106e7] [cursor=pointer]:
+        - generic [aria-hidden] [ref=f106e8]: 
+      - text: 
+      - generic [ref=f106e9]:
+        - text:  
+        - button "Đăng xuất" [ref=f106e11] [cursor=pointer]:
+          - generic [aria-hidden] [ref=f106e12]: 
+    - generic [ref=f106e13]:
+      - navigation "breadcrumb" [ref=f106e14]:
+        - list [ref=f106e15]:
+          - listitem [ref=f106e16]:
+            - link "Tổng quan" [ref=f106e17] [cursor=pointer]:
+              - /url: /admin
+          - listitem [ref=f106e18]:
+            - text: /
+            - link "Sản phẩm" [ref=f106e19] [cursor=pointer]:
+              - /url: /admin/san-pham
+          - listitem [ref=f106e20]: / Biến thể & ảnh
+      - generic [ref=f106e21]:
+        - generic [ref=f106e22]:
+          - heading "sssss2232" [level=1] [ref=f106e23]
+          - paragraph [ref=f106e24]: "Mã: SSFFF – Apacs / Vợt tấn công"
+        - generic [ref=f106e25]:
+          - link "Sửa thông tin chung" [ref=f106e26] [cursor=pointer]:
+            - /url: /admin/san-pham/1849/sua
+            - generic [aria-hidden] [ref=f106e27]: 
+            - text: Sửa thông tin chung
+          - link "Thêm biến thể" [ref=f106e28] [cursor=pointer]:
+            - /url: /admin/san-pham/1849/bien-the/tao-moi
+            - generic [aria-hidden] [ref=f106e29]: 
+            - text: Thêm biến thể
+      - generic [ref=f106e30]:
+        - generic [ref=f106e31]:
+          - generic [aria-hidden] [ref=f106e32]: 
+          - text: Biến thể (giá bán & tồn kho) – 1 biến thể
+        - generic [ref=f106e33]:
+          - generic [ref=f106e34]:
+            - generic [ref=f106e35]: Kiểu cập nhật giá
+            - combobox "Kiểu cập nhật giá" [ref=f106e36]:
+              - option "Giảm giá theo %" [selected]
+              - option "Bỏ giảm giá (giá bán = giá gạch ngang)"
+          - generic [ref=f106e37]:
+            - generic [ref=f106e38]: Giảm giá (%)
+            - spinbutton "Giảm giá (%)" [ref=f106e39]: "10"
+          - button "Cập nhật giá đã tích" [ref=f106e41] [cursor=pointer]:
+            - generic [aria-hidden] [ref=f106e42]: 
+            - text: Cập nhật giá đã tích
+          - generic [ref=f106e43]: "Giảm giá: giá gạch ngang = giá đang bán. Bỏ giảm giá: trả về giá gạch ngang cũ."
+        - table [ref=f106e45]:
+          - rowgroup [ref=f106e46]:
+            - row [ref=f106e47]:
+              - columnheader [ref=f106e48]:
+                - checkbox "Chọn tất cả biến thể để cập nhật giá" [ref=f106e49]
+              - columnheader "SKU" [ref=f106e50]
+              - columnheader "Màu sắc" [ref=f106e51]
+              - columnheader "Trọng lượng" [ref=f106e52]
+              - columnheader "Cỡ cán" [ref=f106e53]
+              - columnheader "Giá bán" [ref=f106e54]
+              - columnheader "Giá gạch ngang" [ref=f106e55]
+              - columnheader "Tồn kho" [ref=f106e56]
+              - columnheader "Trạng thái" [ref=f106e57]
+              - columnheader "Thao tác" [ref=f106e58]
+          - rowgroup [ref=f106e59]:
+            - row [ref=f106e60]:
+              - cell [ref=f106e61]:
+                - checkbox "Chọn biến thể SSFFF-323" [ref=f106e62]
+              - cell "SSFFF-323" [ref=f106e63]
+              - cell "2323" [ref=f106e64]
+              - cell "5U" [ref=f106e65]
+              - cell "G5" [ref=f106e66]
+              - cell "123.123 ₫" [ref=f106e67]
+              - cell "1.231.231.231 ₫" [ref=f106e68]
+              - cell "22323" [ref=f106e70]
+              - cell "Đang bán" [ref=f106e72]
+              - cell [ref=f106e74]:
+                - generic [ref=f106e75]:
+                  - link "Sửa" [ref=f106e76] [cursor=pointer]:
+                    - /url: /admin/san-pham/1849/bien-the/3584/sua
+                    - generic [aria-hidden] [ref=f106e77]: 
+                    - text: Sửa
+                  - button "Ngừng" [ref=f106e79] [cursor=pointer]
+                  - button "Xoá biến thể SSFFF-323" [ref=f106e81] [cursor=pointer]:
+                    - generic [aria-hidden] [ref=f106e82]: 
+      - generic [ref=f106e83]:
+        - generic [ref=f106e84]:
+          - generic [aria-hidden] [ref=f106e85]: 
+          - text: Bộ ảnh sản phẩm – 2 ảnh
+        - generic [ref=f106e87]:
+          - generic [ref=f106e89]:
+            - img "Ảnh sản phẩm sssss2232" [ref=f106e90]
+            - generic [ref=f106e91]:
+              - generic [ref=f106e92]:
+                - generic [aria-hidden] [ref=f106e93]: 
+                - text: Ảnh chính
+              - button "Gỡ" [ref=f106e96] [cursor=pointer]:
+                - generic [aria-hidden] [ref=f106e97]: 
+                - text: Gỡ
+          - generic [ref=f106e99]:
+            - img "Ảnh sản phẩm sssss2232" [ref=f106e100]
+            - generic [ref=f106e102]:
+              - button "Ảnh chính" [ref=f106e104] [cursor=pointer]:
+                - generic [aria-hidden] [ref=f106e105]: 
+                - text: Ảnh chính
+              - button "Gỡ" [ref=f106e107] [cursor=pointer]:
+                - generic [aria-hidden] [ref=f106e108]: 
+                - text: Gỡ
+        - generic [ref=f106e110]:
+          - generic [ref=f106e111]:
+            - generic [ref=f106e112]: Chọn ảnh (JPG, PNG, WEBP, GIF, SVG – tối đa 2 MB)
+            - button "Chọn ảnh (JPG, PNG, WEBP, GIF, SVG – tối đa 2 MB)" [ref=f106e113] [cursor=pointer]
+          - generic [ref=f106e114]:
+            - generic [ref=f106e115]:
+              - checkbox "Đặt làm ảnh chính" [ref=f106e116]
+              - generic [ref=f106e117]: Đặt làm ảnh chính
+            - generic [ref=f106e118]: Ảnh đầu tiên luôn được đặt làm ảnh chính.
+          - button "Tải ảnh lên" [ref=f106e120] [cursor=pointer]:
+            - generic [aria-hidden] [ref=f106e121]: 
+            - text: Tải ảnh lên
+  - text: 

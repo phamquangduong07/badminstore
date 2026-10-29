@@ -1,0 +1,174 @@
+- generic [active] [ref=f189e1]:
+  - link "Bỏ qua tới nội dung chính" [ref=f189e2] [cursor=pointer]:
+    - /url: "#noi-dung-chinh"
+  - banner [ref=f189e3]:
+    - navigation "Điều hướng chính" [ref=f189e4]:
+      - generic [ref=f189e5]:
+        - link "BadStore – về trang chủ" [ref=f189e6] [cursor=pointer]:
+          - /url: /
+          - generic [aria-hidden] [ref=f189e8]: 
+          - generic [ref=f189e9]: BadStore
+        - generic: 
+        - generic "Menu BadStore" [ref=f189e10]:
+          - generic [ref=f189e11]:
+            - list [ref=f189e12]:
+              - listitem [ref=f189e13]:
+                - link "Trang chủ" [ref=f189e14] [cursor=pointer]:
+                  - /url: /
+                  - generic [aria-hidden] [ref=f189e15]: 
+                  - text: Trang chủ
+              - listitem [ref=f189e16]:
+                - link "Sản phẩm" [ref=f189e17] [cursor=pointer]:
+                  - /url: /san-pham
+                  - generic [aria-hidden] [ref=f189e18]: 
+                  - text: Sản phẩm
+            - search [ref=f189e19]:
+              - generic [ref=f189e20]: Tìm sản phẩm theo tên
+              - generic [aria-hidden]: 
+              - searchbox "Tìm sản phẩm theo tên" [ref=f189e21]
+            - list [ref=f189e22]:
+              - listitem [ref=f189e23]:
+                - link "So sánh sản phẩm" [ref=f189e24] [cursor=pointer]:
+                  - /url: /so-sanh
+                  - generic [aria-hidden] [ref=f189e25]: 
+              - listitem [ref=f189e26]:
+                - link "Giỏ hàng" [ref=f189e27] [cursor=pointer]:
+                  - /url: /gio-hang
+                  - generic [aria-hidden] [ref=f189e28]: 
+                  - generic [ref=f189e29]: "1"
+              - listitem [ref=f189e30]:
+                - button "Quản trị viên" [ref=f189e31] [cursor=pointer]:
+                  - generic [aria-hidden] [ref=f189e32]: 
+                - text:   
+  - main [ref=f189e34]:
+    - generic [ref=f189e35]:
+      - navigation "breadcrumb" [ref=f189e36]:
+        - list [ref=f189e37]:
+          - listitem [ref=f189e38]:
+            - link "Trang chủ" [ref=f189e39] [cursor=pointer]:
+              - /url: /
+          - listitem [ref=f189e40]: / Giỏ hàng
+      - heading "Giỏ hàng của bạn" [level=1] [ref=f189e41]:
+        - generic [aria-hidden] [ref=f189e42]: 
+        - text: Giỏ hàng của bạn
+      - list "Các bước mua hàng" [ref=f189e43]:
+        - listitem [ref=f189e44]:
+          - generic [ref=f189e45]: "1"
+          - text: Giỏ hàng
+        - listitem [ref=f189e46]:
+          - generic [ref=f189e47]: "2"
+          - text: Thanh toán
+          - generic [aria-hidden] [ref=f189e48]: ›
+        - listitem [ref=f189e49]:
+          - generic [ref=f189e50]: "3"
+          - text: Hoàn tất
+      - generic [ref=f189e51]:
+        - generic [ref=f189e52]:
+          - table [ref=f189e55]:
+            - caption [ref=f189e56]: Giá bán và tồn kho được kiểm tra lại ngay tại thời điểm bạn đặt hàng.
+            - rowgroup [ref=f189e57]:
+              - row [ref=f189e58]:
+                - columnheader "Sản phẩm" [ref=f189e59]
+                - columnheader "Đơn giá" [ref=f189e60]
+                - columnheader "Số lượng" [ref=f189e61]
+                - columnheader "Thành tiền" [ref=f189e62]
+                - columnheader "Thao tác" [ref=f189e63]
+            - rowgroup [ref=f189e65]:
+              - row [ref=f189e66]:
+                - cell "Ảnh Vợt cầu lông Yonex Astrox 100 ZZ Vợt cầu lông Yonex Astrox 100 ZZ Đỏ đô · 3U · G5 · SKU YX-AX100ZZ-02 Còn 6" [ref=f189e67]:
+                  - generic [ref=f189e68]:
+                    - img "Ảnh Vợt cầu lông Yonex Astrox 100 ZZ" [ref=f189e69]
+                    - generic [ref=f189e70]:
+                      - link "Vợt cầu lông Yonex Astrox 100 ZZ" [ref=f189e71] [cursor=pointer]:
+                        - /url: /san-pham/124
+                      - generic [ref=f189e72]: Đỏ đô · 3U · G5 · SKU YX-AX100ZZ-02
+                      - generic [ref=f189e73]: Còn 6
+                - cell "519.000 ₫ 5.190.000 ₫" [ref=f189e74]:
+                  - generic [ref=f189e75]: 519.000 ₫
+                  - generic [ref=f189e76]: 5.190.000 ₫
+                - cell [ref=f189e77]:
+                  - generic [ref=f189e78]:
+                    - generic [ref=f189e79]:
+                      - button "Giảm số lượng" [ref=f189e80] [cursor=pointer]: −
+                      - spinbutton "Số lượng sản phẩm" [ref=f189e81]: "1"
+                      - button "Tăng số lượng" [ref=f189e82] [cursor=pointer]: +
+                    - button "Cập nhật" [ref=f189e83] [cursor=pointer]:
+                      - generic [aria-hidden] [ref=f189e84]: 
+                      - text: Cập nhật
+                - cell "519.000 ₫" [ref=f189e85]
+                - cell [ref=f189e87]:
+                  - button "Xoá Vợt cầu lông Yonex Astrox 100 ZZ khỏi giỏ hàng" [ref=f189e89] [cursor=pointer]:
+                    - generic [aria-hidden] [ref=f189e90]: 
+          - generic [ref=f189e91]:
+            - link "Tiếp tục mua sắm" [ref=f189e92] [cursor=pointer]:
+              - /url: /san-pham
+              - generic [aria-hidden] [ref=f189e93]: 
+              - text: Tiếp tục mua sắm
+            - button "Xoá tất cả" [ref=f189e95] [cursor=pointer]:
+              - generic [aria-hidden] [ref=f189e96]: 
+              - text: Xoá tất cả
+        - generic [ref=f189e97]:
+          - generic [ref=f189e98]:
+            - generic [ref=f189e99]: Tóm tắt giỏ hàng
+            - generic [ref=f189e100]:
+              - generic [ref=f189e101]:
+                - term [ref=f189e102]: Số sản phẩm
+                - definition [ref=f189e103]: "1"
+                - term [ref=f189e104]: Tạm tính
+                - definition [ref=f189e105]: 519.000 ₫
+                - term [ref=f189e106]: Giảm giá voucher
+                - definition [ref=f189e107]: áp dụng ở bước thanh toán
+                - term [ref=f189e108]: Phí vận chuyển
+                - definition [ref=f189e109]: tính ở bước thanh toán
+              - separator [ref=f189e110]
+              - generic [ref=f189e111]:
+                - generic [ref=f189e112]: Tổng tiền hàng
+                - generic [ref=f189e113]: 519.000 ₫
+              - paragraph [ref=f189e114]: Chưa gồm phí vận chuyển và giảm giá – số tiền chính xác hiện ở bước thanh toán.
+              - link "Tiến hành đặt hàng" [ref=f189e115] [cursor=pointer]:
+                - /url: /thanh-toan
+                - generic [aria-hidden] [ref=f189e116]: 
+                - text: Tiến hành đặt hàng
+          - generic [ref=f189e118]:
+            - generic [ref=f189e119]:
+              - generic [aria-hidden] [ref=f189e120]: 
+              - text: Hàng chính hãng, bảo hành theo hãng.
+            - generic [ref=f189e121]:
+              - generic [aria-hidden] [ref=f189e122]: 
+              - text: Kiểm tra hàng trước khi thanh toán.
+  - contentinfo [ref=f189e123]:
+    - generic [ref=f189e124]:
+      - generic [ref=f189e125]:
+        - generic [ref=f189e126]:
+          - heading "BadStore" [level=2] [ref=f189e127]:
+            - generic [aria-hidden] [ref=f189e129]: 
+          - paragraph [ref=f189e131]: Website bán vợt cầu lông – đồ án tốt nghiệp, sản phẩm mang tính minh hoạ.
+          - paragraph [ref=f189e132]: Dữ liệu sản phẩm, hình ảnh dùng cho mục đích học tập.
+        - generic [ref=f189e133]:
+          - generic [ref=f189e134]:
+            - generic [aria-hidden] [ref=f189e135]: 
+            - text: Liên hệ
+          - paragraph [ref=f189e136]: "Hotline: 1900 0000"
+          - paragraph [ref=f189e137]: "Email: cskh@badstore.local"
+          - paragraph [ref=f189e138]: "Địa chỉ: Số 1 Đại Cồ Việt, Bách Khoa, Hà Nội"
+          - paragraph [ref=f189e139]: "Giờ mở cửa: 8:00 – 21:30 hằng ngày"
+        - generic [ref=f189e140]:
+          - generic [ref=f189e141]:
+            - generic [aria-hidden] [ref=f189e142]: 
+            - text: Mua hàng & giao nhận
+          - list [ref=f189e143]:
+            - listitem [ref=f189e144]:
+              - link "Danh mục vợt cầu lông" [ref=f189e145] [cursor=pointer]:
+                - /url: /san-pham
+            - listitem [ref=f189e146]:
+              - link "So sánh sản phẩm" [ref=f189e147] [cursor=pointer]:
+                - /url: /so-sanh
+            - listitem [ref=f189e148]:
+              - link "Giỏ hàng của bạn" [ref=f189e149] [cursor=pointer]:
+                - /url: /gio-hang
+            - listitem [ref=f189e150]: Vận chuyển toàn quốc – tích hợp GHN khi cấu hình token.
+      - separator [ref=f189e151]
+      - generic [ref=f189e152]:
+        - generic [ref=f189e153]: © 2026 BadStore
+        - generic [ref=f189e154]: Đơn giá hiển thị bằng Việt Nam đồng (₫).
+  - text: 

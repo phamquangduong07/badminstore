@@ -4,28 +4,15 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
     <title layout:title-pattern="$CONTENT_TITLE | $LAYOUT_TITLE">BadStore – Vợt cầu lông chính hãng</title>
 
-    <link rel="icon" type="image/svg+xml" th:href="@{/images/favicon.svg}">
+    <!-- charset, viewport, favicon, font Be Vietnam Pro, Bootstrap 5, Bootstrap Icons, theme.css -->
+    <th:block th:replace="~{fragments/head-common :: commonHead}"></th:block>
 
-    <!-- Font Be Vietnam Pro (UI_GUIDE: hiển thị tiếng Việt rõ, đẹp) -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link rel="stylesheet"
-          href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700&display=swap">
-
-    <!-- Bootstrap 5 (lưới + tiện ích responsive) -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
-    <!-- Bootstrap Icons -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
-    <!-- Swiper – slider banner -->
+    <!-- Swiper – slider banner (chỉ trang khách dùng) -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css">
     <!-- AOS – hiệu ứng xuất hiện khi cuộn trang -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css">
-    <!-- CSS dự án: LUÔN nạp sau Bootstrap (theme.css ghi đè biến --bs-* và thêm thành phần riêng) -->
-    <link rel="stylesheet" th:href="@{/css/theme.css}">
 </head>
 <body class="d-flex flex-column min-vh-100">
 
@@ -58,7 +45,7 @@
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <!-- main.js: toast flash, xác nhận ghi CSDL, Swiper, GHN… (hành vi riêng của dự án) -->
 <script th:src="@{/js/main.js}" defer></script>
-<!-- app.js: hành vi UX dùng chung (data-confirm, chống bấm đúp, data-qty, nút lên đầu trang, AOS) -->
+<!-- app.js: khoá nút chống bấm đúp, window.toast(), nút lên đầu trang, dự phòng khi AOS lỗi -->
 <script th:src="@{/js/app.js}" defer></script>
 <!-- Chart.js / script riêng của từng trang nạp qua layout:fragment="scripts" -->
 <th:block layout:fragment="scripts"></th:block>

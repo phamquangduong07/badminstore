@@ -134,13 +134,13 @@
                                 <label class="form-label small mb-1" for="minPrice">Từ (₫)</label>
                                 <input class="form-control form-control-sm" type="number" id="minPrice"
                                        th:field="*{minPrice}" min="0" step="50000" placeholder="0"
-                                       th:classappend="${#fields.hasErrors('minPrice')} ? 'is-invalid'">
+                                       th:classappend="${#fields.hasErrors('minPrice')} ? 'is-invalid'" th:aria-invalid="${#fields.hasErrors('minPrice')}">
                             </div>
                             <div class="col-6">
                                 <label class="form-label small mb-1" for="maxPrice">Đến (₫)</label>
                                 <input class="form-control form-control-sm" type="number" id="maxPrice"
                                        th:field="*{maxPrice}" min="0" step="50000" placeholder="Không giới hạn"
-                                       th:classappend="${#fields.hasErrors('maxPrice')} ? 'is-invalid'">
+                                       th:classappend="${#fields.hasErrors('maxPrice')} ? 'is-invalid'" th:aria-invalid="${#fields.hasErrors('maxPrice')}">
                             </div>
                         </div>
                         <div class="text-danger small mt-1"
@@ -240,7 +240,11 @@
                     </div>
                 </div>
 
-                <div th:replace="~{fragments/pagination :: productPager(${page}, ${pageNumbers}, ${filter})}"></div>
+                <!-- Phân trang dùng chung – giữ nguyên toàn bộ bộ lọc khi sang trang -->
+                <div th:replace="~{fragments/pagination :: pager(
+                        page=${page}, pageNumbers=${pageNumbers},
+                        url='/san-pham', ariaLabel='Phân trang danh sách sản phẩm', itemLabel='sản phẩm',
+                        query=|keyword=${#uris.escapeQueryParam(filter.keyword ?: '')}&brandId=${filter.brandId ?: ''}&categoryId=${filter.categoryId ?: ''}&minPrice=${filter.minPrice ?: ''}&maxPrice=${filter.maxPrice ?: ''}&sort=${filter.sort ?: ''}|)}"></div>
             </div>
         </div>
     </th:block>

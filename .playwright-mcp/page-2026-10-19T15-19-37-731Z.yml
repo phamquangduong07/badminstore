@@ -1,0 +1,268 @@
+- generic [active] [ref=f149e1]:
+  - link "Bỏ qua tới nội dung chính" [ref=f149e2] [cursor=pointer]:
+    - /url: "#noi-dung-chinh"
+  - generic [ref=f149e4]:
+    - generic "Menu quản trị" [ref=f149e6]:
+      - navigation [ref=f149e8]:
+        - link "BadStore Trang quản trị" [ref=f149e9] [cursor=pointer]:
+          - /url: /admin
+          - generic [aria-hidden] [ref=f149e11]: 
+          - generic [ref=f149e12]:
+            - text: BadStore
+            - generic [ref=f149e13]: Trang quản trị
+        - paragraph [ref=f149e14]: Bán hàng
+        - list [ref=f149e15]:
+          - listitem [ref=f149e16]:
+            - link "Tổng quan" [ref=f149e17] [cursor=pointer]:
+              - /url: /admin
+              - generic [aria-hidden] [ref=f149e18]: 
+              - text: Tổng quan
+          - listitem [ref=f149e19]:
+            - link "Bán hàng tại quầy" [ref=f149e20] [cursor=pointer]:
+              - /url: /admin/ban-hang
+              - generic [aria-hidden] [ref=f149e21]: 
+              - text: Bán hàng tại quầy
+          - listitem [ref=f149e22]:
+            - link "Đơn hàng" [ref=f149e23] [cursor=pointer]:
+              - /url: /admin/don-hang
+              - generic [aria-hidden] [ref=f149e24]: 
+              - text: Đơn hàng
+        - paragraph [ref=f149e25]: Hàng hoá & khuyến mãi
+        - list [ref=f149e26]:
+          - listitem [ref=f149e27]:
+            - link "Sản phẩm & biến thể" [ref=f149e28] [cursor=pointer]:
+              - /url: /admin/san-pham
+              - generic [aria-hidden] [ref=f149e29]: 
+              - text: Sản phẩm & biến thể
+          - listitem [ref=f149e30]:
+            - link "Voucher" [ref=f149e31] [cursor=pointer]:
+              - /url: /admin/voucher
+              - generic [aria-hidden] [ref=f149e32]: 
+              - text: Voucher
+        - generic [ref=f149e33]:
+          - link "Xem cửa hàng" [ref=f149e34] [cursor=pointer]:
+            - /url: /
+            - generic [aria-hidden] [ref=f149e35]: 
+            - text: Xem cửa hàng
+          - paragraph [ref=f149e36]:
+            - generic [aria-hidden] [ref=f149e37]: 
+            - text: Đổi trạng thái đơn sẽ trừ/cộng kho ngay.
+    - main [ref=f149e38]:
+      - generic [ref=f149e39]:
+        - text: 
+        - generic [ref=f149e40]:
+          - generic [aria-hidden] [ref=f149e41]: 
+          - text: Khu quản trị BadStore
+        - generic [ref=f149e42]:
+          - link "Xem cửa hàng" [ref=f149e43] [cursor=pointer]:
+            - /url: /
+            - generic [aria-hidden] [ref=f149e44]: 
+            - text: Xem cửa hàng
+          - generic [ref=f149e45]:
+            - generic [aria-hidden] [ref=f149e46]: 
+            - generic [ref=f149e47]: admin@badstore.local
+          - button "Đăng xuất" [ref=f149e49] [cursor=pointer]:
+            - generic [aria-hidden] [ref=f149e50]: 
+            - text: Đăng xuất
+      - generic [ref=f149e51]:
+        - generic [ref=f149e52]:
+          - heading "Tổng quan bán hàng" [level=1] [ref=f149e53]:
+            - generic [aria-hidden] [ref=f149e54]: 
+            - text: Tổng quan bán hàng
+          - link "Xử lý đơn chờ xác nhận" [ref=f149e55] [cursor=pointer]:
+            - /url: /admin/don-hang?status=PENDING
+            - generic [aria-hidden] [ref=f149e56]: 
+            - text: Xử lý đơn chờ xác nhận
+        - generic [ref=f149e57]:
+          - generic [ref=f149e59]:
+            - generic [aria-hidden] [ref=f149e61]: 
+            - generic [ref=f149e62]:
+              - generic [ref=f149e63]: Đơn chờ xác nhận
+              - generic [ref=f149e64]: "0"
+          - generic [ref=f149e66]:
+            - generic [aria-hidden] [ref=f149e68]: 
+            - generic [ref=f149e69]:
+              - generic [ref=f149e70]: Đơn tạo hôm nay
+              - generic [ref=f149e71]: "0"
+          - generic [ref=f149e73]:
+            - generic [aria-hidden] [ref=f149e75]: 
+            - generic [ref=f149e76]:
+              - generic [ref=f149e77]: Doanh thu hôm nay
+              - generic [ref=f149e78]: 0 ₫
+              - generic [ref=f149e79]: Chỉ tính đơn đã giao thành công
+          - generic [ref=f149e81]:
+            - generic [aria-hidden] [ref=f149e83]: 
+            - generic [ref=f149e84]:
+              - generic [ref=f149e85]: Doanh thu tháng này
+              - generic [ref=f149e86]: 5.780.000 ₫
+              - generic [ref=f149e87]: 9 khách hàng · 21 sản phẩm · 49 biến thể đang bán
+        - generic [ref=f149e88]:
+          - generic [ref=f149e90]:
+            - generic [ref=f149e91]:
+              - generic [aria-hidden] [ref=f149e92]: 
+              - text: Doanh thu & số đơn 14 ngày gần nhất
+            - generic [ref=f149e93]:
+              - img "Biểu đồ cột doanh thu và đường số đơn trong 14 ngày gần nhất" [ref=f149e95]: Biểu đồ doanh thu 14 ngày gần nhất (cần JavaScript để hiển thị).
+              - table [ref=f149e96]:
+                - caption [ref=f149e97]: Doanh thu và số đơn 14 ngày gần nhất
+                - rowgroup [ref=f149e98]:
+                  - row [ref=f149e99]:
+                    - columnheader "Ngày" [ref=f149e100]
+                    - columnheader "Doanh thu" [ref=f149e101]
+                    - columnheader "Số đơn" [ref=f149e102]
+                - rowgroup [ref=f149e103]:
+                  - row [ref=f149e104]:
+                    - rowheader "06/10" [ref=f149e105]
+                    - cell "0 ₫" [ref=f149e106]
+                    - cell "0" [ref=f149e107]
+                  - row [ref=f149e108]:
+                    - rowheader "07/10" [ref=f149e109]
+                    - cell "0 ₫" [ref=f149e110]
+                    - cell "0" [ref=f149e111]
+                  - row [ref=f149e112]:
+                    - rowheader "08/10" [ref=f149e113]
+                    - cell "0 ₫" [ref=f149e114]
+                    - cell "0" [ref=f149e115]
+                  - row [ref=f149e116]:
+                    - rowheader "09/10" [ref=f149e117]
+                    - cell "0 ₫" [ref=f149e118]
+                    - cell "0" [ref=f149e119]
+                  - row [ref=f149e120]:
+                    - rowheader "10/10" [ref=f149e121]
+                    - cell "0 ₫" [ref=f149e122]
+                    - cell "0" [ref=f149e123]
+                  - row [ref=f149e124]:
+                    - rowheader "11/10" [ref=f149e125]
+                    - cell "0 ₫" [ref=f149e126]
+                    - cell "0" [ref=f149e127]
+                  - row [ref=f149e128]:
+                    - rowheader "12/10" [ref=f149e129]
+                    - cell "0 ₫" [ref=f149e130]
+                    - cell "1" [ref=f149e131]
+                  - row [ref=f149e132]:
+                    - rowheader "13/10" [ref=f149e133]
+                    - cell "0 ₫" [ref=f149e134]
+                    - cell "0" [ref=f149e135]
+                  - row [ref=f149e136]:
+                    - rowheader "14/10" [ref=f149e137]
+                    - cell "0 ₫" [ref=f149e138]
+                    - cell "0" [ref=f149e139]
+                  - row [ref=f149e140]:
+                    - rowheader "15/10" [ref=f149e141]
+                    - cell "0 ₫" [ref=f149e142]
+                    - cell "0" [ref=f149e143]
+                  - row [ref=f149e144]:
+                    - rowheader "16/10" [ref=f149e145]
+                    - cell "5.780.000 ₫" [ref=f149e146]
+                    - cell "3" [ref=f149e147]
+                  - row [ref=f149e148]:
+                    - rowheader "17/10" [ref=f149e149]
+                    - cell "0 ₫" [ref=f149e150]
+                    - cell "1" [ref=f149e151]
+                  - row [ref=f149e152]:
+                    - rowheader "18/10" [ref=f149e153]
+                    - cell "0 ₫" [ref=f149e154]
+                    - cell "1" [ref=f149e155]
+                  - row [ref=f149e156]:
+                    - rowheader "19/10" [ref=f149e157]
+                    - cell "0 ₫" [ref=f149e158]
+                    - cell "0" [ref=f149e159]
+          - generic [ref=f149e161]:
+            - generic [ref=f149e162]:
+              - generic [aria-hidden] [ref=f149e163]: 
+              - text: Đơn hàng theo trạng thái
+            - generic [ref=f149e164]:
+              - img "Biểu đồ tròn tỉ lệ đơn hàng theo từng trạng thái" [ref=f149e166]: Biểu đồ tỉ lệ đơn hàng theo trạng thái (cần JavaScript để hiển thị).
+              - table [ref=f149e167]:
+                - caption [ref=f149e168]: Số đơn theo trạng thái
+                - rowgroup [ref=f149e169]:
+                  - row [ref=f149e170]:
+                    - columnheader "Trạng thái" [ref=f149e171]
+                    - columnheader "Số đơn" [ref=f149e172]
+                - rowgroup [ref=f149e173]:
+                  - row [ref=f149e174]:
+                    - rowheader "Chờ xác nhận" [ref=f149e175]
+                    - cell "0" [ref=f149e176]
+                  - row [ref=f149e177]:
+                    - rowheader "Đã xác nhận" [ref=f149e178]
+                    - cell "5" [ref=f149e179]
+                  - row [ref=f149e180]:
+                    - rowheader "Đang giao hàng" [ref=f149e181]
+                    - cell "0" [ref=f149e182]
+                  - row [ref=f149e183]:
+                    - rowheader "Giao thành công" [ref=f149e184]
+                    - cell "1" [ref=f149e185]
+                  - row [ref=f149e186]:
+                    - rowheader "Đã huỷ" [ref=f149e187]
+                    - cell "1" [ref=f149e188]
+                  - row [ref=f149e189]:
+                    - rowheader "Đã hoàn trả" [ref=f149e190]
+                    - cell "0" [ref=f149e191]
+        - generic [ref=f149e192]:
+          - generic [ref=f149e194]:
+            - generic [ref=f149e195]:
+              - generic [aria-hidden] [ref=f149e196]: 
+              - text: Sản phẩm bán chạy
+            - table [ref=f149e198]:
+              - rowgroup [ref=f149e199]:
+                - row [ref=f149e200]:
+                  - columnheader "Sản phẩm" [ref=f149e201]
+                  - columnheader "Đã bán" [ref=f149e202]
+                  - columnheader "Doanh thu" [ref=f149e203]
+              - rowgroup [ref=f149e204]:
+                - row [ref=f149e205]:
+                  - cell "Vợt cầu lông Apacs Feather Weight 55" [ref=f149e206]
+                  - cell "3" [ref=f149e207]
+                  - cell "2.970.000 ₫" [ref=f149e208]
+                - row [ref=f149e209]:
+                  - cell "Vợt cầu lông Apacs Z-Ziggler 2" [ref=f149e210]
+                  - cell "2" [ref=f149e211]
+                  - cell "2.580.000 ₫" [ref=f149e212]
+                - row [ref=f149e213]:
+                  - cell "Vot Yonex Test" [ref=f149e214]
+                  - cell "2" [ref=f149e215]
+                  - cell "3.000.000 ₫" [ref=f149e216]
+                - row [ref=f149e217]:
+                  - cell "Vợt cầu lông Yonex Astrox 88D Pro" [ref=f149e218]
+                  - cell "2" [ref=f149e219]
+                  - cell "8.580.000 ₫" [ref=f149e220]
+                - row [ref=f149e221]:
+                  - cell "Vợt cầu lông chạy thử giỏ hàng" [ref=f149e222]
+                  - cell "1" [ref=f149e223]
+                  - cell "1.490.000 ₫" [ref=f149e224]
+          - generic [ref=f149e226]:
+            - generic [ref=f149e227]:
+              - generic [aria-hidden] [ref=f149e228]: 
+              - text: Sắp hết hàng (tồn ≤ 5)
+            - table [ref=f149e230]:
+              - rowgroup [ref=f149e231]:
+                - row [ref=f149e232]:
+                  - columnheader "Biến thể" [ref=f149e233]
+                  - columnheader "Tồn kho" [ref=f149e234]
+              - rowgroup [ref=f149e235]:
+                - row [ref=f149e236]:
+                  - cell "Vợt cầu lông Yonex Astrox 88D Pro YX-AX88DP-02 · Đen · 3U · G5" [ref=f149e237]:
+                    - generic [ref=f149e238]: Vợt cầu lông Yonex Astrox 88D Pro
+                    - generic [ref=f149e239]: YX-AX88DP-02 · Đen · 3U · G5
+                  - cell "0" [ref=f149e240]
+                - row [ref=f149e242]:
+                  - cell "Vợt cầu lông Yonex Astrox 88D Pro YX-AX88DP-03 · Đồng · 4U · G5" [ref=f149e243]:
+                    - generic [ref=f149e244]: Vợt cầu lông Yonex Astrox 88D Pro
+                    - generic [ref=f149e245]: YX-AX88DP-03 · Đồng · 4U · G5
+                  - cell "0" [ref=f149e246]
+                - row [ref=f149e248]:
+                  - cell "Vợt cầu lông Yonex Arcsaber 11 Pro YX-ARC11P-02 · Bạc · 3U · G5" [ref=f149e249]:
+                    - generic [ref=f149e250]: Vợt cầu lông Yonex Arcsaber 11 Pro
+                    - generic [ref=f149e251]: YX-ARC11P-02 · Bạc · 3U · G5
+                  - cell "0" [ref=f149e252]
+                - row [ref=f149e254]:
+                  - cell "Vợt cầu lông Victor Thruster Ryuga II VC-TKRYUGA2-01 · Đen kim tuyến · 4U · G5" [ref=f149e255]:
+                    - generic [ref=f149e256]: Vợt cầu lông Victor Thruster Ryuga II
+                    - generic [ref=f149e257]: VC-TKRYUGA2-01 · Đen kim tuyến · 4U · G5
+                  - cell "0" [ref=f149e258]
+                - row [ref=f149e260]:
+                  - cell "Vợt cầu lông Victor Thruster Ryuga II VC-TKRYUGA2-02 · Đỏ · 3U · G5" [ref=f149e261]:
+                    - generic [ref=f149e262]: Vợt cầu lông Victor Thruster Ryuga II
+                    - generic [ref=f149e263]: VC-TKRYUGA2-02 · Đỏ · 3U · G5
+                  - cell "0" [ref=f149e264]
+  - text: 

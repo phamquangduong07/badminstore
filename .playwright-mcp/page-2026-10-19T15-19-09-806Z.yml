@@ -1,0 +1,405 @@
+- generic [active] [ref=f108e1]:
+  - link "Bỏ qua tới nội dung chính" [ref=f108e2] [cursor=pointer]:
+    - /url: "#noi-dung-chinh"
+  - banner [ref=f108e3]:
+    - navigation "Điều hướng chính" [ref=f108e4]:
+      - generic [ref=f108e5]:
+        - link "BadStore – về trang chủ" [ref=f108e6] [cursor=pointer]:
+          - /url: /
+          - generic [aria-hidden] [ref=f108e8]: 
+          - generic [ref=f108e9]: BadStore
+        - generic [ref=f108e10]:
+          - link "Giỏ hàng" [ref=f108e11] [cursor=pointer]:
+            - /url: /gio-hang
+            - generic [aria-hidden] [ref=f108e12]: 
+            - generic [ref=f108e13]: "1"
+          - button "Mở menu" [ref=f108e14] [cursor=pointer]
+  - main [ref=f108e16]:
+    - generic [ref=f108e17]:
+      - navigation "breadcrumb" [ref=f108e18]:
+        - list [ref=f108e19]:
+          - listitem [ref=f108e20]:
+            - link "Trang chủ" [ref=f108e21] [cursor=pointer]:
+              - /url: /
+          - listitem [ref=f108e22]: / Vợt cầu lông
+      - generic [ref=f108e23]:
+        - heading "Vợt cầu lông chính hãng" [level=1] [ref=f108e24]
+        - paragraph [ref=f108e25]: Lọc theo hãng, lối chơi và ngân sách. Giá hiển thị là giá thấp nhất của từng mẫu đang bán.
+      - generic [ref=f108e26]:
+        - complementary [ref=f108e27]:
+          - button "Bộ lọc sản phẩm" [ref=f108e28] [cursor=pointer]:
+            - generic [aria-hidden] [ref=f108e29]: 
+            - text: Bộ lọc sản phẩm
+          - text:  
+        - generic [ref=f108e30]:
+          - generic [ref=f108e31]:
+            - generic [ref=f108e32]: 21 sản phẩm phù hợp
+            - generic [ref=f108e34]:
+              - generic [ref=f108e35]: Sắp xếp
+              - combobox "Sắp xếp danh sách sản phẩm" [ref=f108e36]:
+                - option "Mới nhất" [selected]
+                - option "Tên A → Z"
+                - option "Tên Z → A"
+                - option "Giá thấp → cao"
+                - option "Giá cao → thấp"
+          - generic [ref=f108e37]:
+            - article [ref=f108e39]:
+              - link "Xem chi tiết vợt sssss2232" [ref=f108e40] [cursor=pointer]:
+                - /url: /san-pham/1849
+                - img "Ảnh vợt cầu lông sssss2232" [ref=f108e41]
+              - generic [ref=f108e42]: Giảm giá
+              - generic [ref=f108e43]:
+                - generic [ref=f108e44]:
+                  - generic [ref=f108e45]: Apacs
+                  - generic [ref=f108e46]: Vợt tấn công
+                - heading [level=3] [ref=f108e47]:
+                  - link "sssss2232" [ref=f108e48] [cursor=pointer]:
+                    - /url: /san-pham/1849
+                - generic [ref=f108e49]:
+                  - generic [ref=f108e50]:
+                    - generic [ref=f108e51]: 123.123 ₫
+                    - generic [ref=f108e52]: 1.231.231.231 ₫
+                  - generic [ref=f108e53]: Còn hàng
+                  - generic [ref=f108e55]:
+                    - link "Chọn phiên bản và thêm sssss2232 vào giỏ" [ref=f108e56] [cursor=pointer]:
+                      - /url: /san-pham/1849
+                      - generic [aria-hidden] [ref=f108e57]: 
+                      - text: Chọn phiên bản
+                    - button "So sánh" [ref=f108e59] [cursor=pointer]:
+                      - generic [aria-hidden] [ref=f108e60]: 
+                      - text: So sánh
+            - article [ref=f108e62]:
+              - link "Xem chi tiết vợt Vợt cầu lông Yonex Astrox 100 ZZ" [ref=f108e63] [cursor=pointer]:
+                - /url: /san-pham/124
+                - img "Ảnh vợt cầu lông Vợt cầu lông Yonex Astrox 100 ZZ" [ref=f108e64]
+              - generic [ref=f108e65]: Giảm giá
+              - generic [ref=f108e66]:
+                - generic [ref=f108e67]:
+                  - generic [ref=f108e68]: Yonex
+                  - generic [ref=f108e69]: Vợt tấn công
+                - heading [level=3] [ref=f108e70]:
+                  - link "Vợt cầu lông Yonex Astrox 100 ZZ" [ref=f108e71] [cursor=pointer]:
+                    - /url: /san-pham/124
+                - generic [ref=f108e72]:
+                  - generic [ref=f108e73]:
+                    - generic [ref=f108e74]: 519.000 ₫
+                    - generic [ref=f108e75]: 5.190.000 ₫
+                  - generic [ref=f108e76]:
+                    - generic [ref=f108e77]: Còn hàng
+                    - generic [ref=f108e78]: 2 phiên bản
+                  - generic [ref=f108e79]:
+                    - link "Chọn phiên bản và thêm Vợt cầu lông Yonex Astrox 100 ZZ vào giỏ" [ref=f108e80] [cursor=pointer]:
+                      - /url: /san-pham/124
+                      - generic [aria-hidden] [ref=f108e81]: 
+                      - text: Chọn phiên bản
+                    - button "So sánh" [ref=f108e83] [cursor=pointer]:
+                      - generic [aria-hidden] [ref=f108e84]: 
+                      - text: So sánh
+            - article [ref=f108e86]:
+              - link "Xem chi tiết vợt Vợt cầu lông Yonex Astrox 88D Pro" [ref=f108e87] [cursor=pointer]:
+                - /url: /san-pham/125
+                - img "Ảnh vợt cầu lông Vợt cầu lông Yonex Astrox 88D Pro" [ref=f108e88]
+              - generic [ref=f108e89]:
+                - generic [ref=f108e90]:
+                  - generic [ref=f108e91]: Yonex
+                  - generic [ref=f108e92]: Vợt tấn công
+                - heading [level=3] [ref=f108e93]:
+                  - link "Vợt cầu lông Yonex Astrox 88D Pro" [ref=f108e94] [cursor=pointer]:
+                    - /url: /san-pham/125
+                - generic [ref=f108e95]:
+                  - generic [ref=f108e96]: 4.290.000 ₫
+                  - generic [ref=f108e98]:
+                    - generic [ref=f108e99]: Còn hàng
+                    - generic [ref=f108e100]: 3 phiên bản
+                  - generic [ref=f108e101]:
+                    - link "Chọn phiên bản và thêm Vợt cầu lông Yonex Astrox 88D Pro vào giỏ" [ref=f108e102] [cursor=pointer]:
+                      - /url: /san-pham/125
+                      - generic [aria-hidden] [ref=f108e103]: 
+                      - text: Chọn phiên bản
+                    - button "So sánh" [ref=f108e105] [cursor=pointer]:
+                      - generic [aria-hidden] [ref=f108e106]: 
+                      - text: So sánh
+            - article [ref=f108e108]:
+              - link "Xem chi tiết vợt Vợt cầu lông Yonex Nanoflare 800" [ref=f108e109] [cursor=pointer]:
+                - /url: /san-pham/126
+                - img "Ảnh vợt cầu lông Vợt cầu lông Yonex Nanoflare 800" [ref=f108e110]
+              - generic [ref=f108e111]: Giảm giá
+              - generic [ref=f108e112]:
+                - generic [ref=f108e113]:
+                  - generic [ref=f108e114]: Yonex
+                  - generic [ref=f108e115]: Vợt phòng thủ
+                - heading [level=3] [ref=f108e116]:
+                  - link "Vợt cầu lông Yonex Nanoflare 800" [ref=f108e117] [cursor=pointer]:
+                    - /url: /san-pham/126
+                - generic [ref=f108e118]:
+                  - generic [ref=f108e119]:
+                    - generic [ref=f108e120]: 3.990.000 ₫
+                    - generic [ref=f108e121]: 4.190.000 ₫
+                  - generic [ref=f108e122]:
+                    - generic [ref=f108e123]: Còn hàng
+                    - generic [ref=f108e124]: 3 phiên bản
+                  - generic [ref=f108e125]:
+                    - link "Chọn phiên bản và thêm Vợt cầu lông Yonex Nanoflare 800 vào giỏ" [ref=f108e126] [cursor=pointer]:
+                      - /url: /san-pham/126
+                      - generic [aria-hidden] [ref=f108e127]: 
+                      - text: Chọn phiên bản
+                    - button "So sánh" [ref=f108e129] [cursor=pointer]:
+                      - generic [aria-hidden] [ref=f108e130]: 
+                      - text: So sánh
+            - article [ref=f108e132]:
+              - link "Xem chi tiết vợt Vợt cầu lông Yonex Arcsaber 11 Pro" [ref=f108e133] [cursor=pointer]:
+                - /url: /san-pham/127
+                - img "Ảnh vợt cầu lông Vợt cầu lông Yonex Arcsaber 11 Pro" [ref=f108e134]
+              - generic [ref=f108e135]:
+                - generic [ref=f108e136]:
+                  - generic [ref=f108e137]: Yonex
+                  - generic [ref=f108e138]: Vợt toàn diện
+                - heading [level=3] [ref=f108e139]:
+                  - link "Vợt cầu lông Yonex Arcsaber 11 Pro" [ref=f108e140] [cursor=pointer]:
+                    - /url: /san-pham/127
+                - generic [ref=f108e141]:
+                  - generic [ref=f108e142]: 4.190.000 ₫
+                  - generic [ref=f108e144]:
+                    - generic [ref=f108e145]: Còn hàng
+                    - generic [ref=f108e146]: 2 phiên bản
+                  - generic [ref=f108e147]:
+                    - link "Chọn phiên bản và thêm Vợt cầu lông Yonex Arcsaber 11 Pro vào giỏ" [ref=f108e148] [cursor=pointer]:
+                      - /url: /san-pham/127
+                      - generic [aria-hidden] [ref=f108e149]: 
+                      - text: Chọn phiên bản
+                    - button "So sánh" [ref=f108e151] [cursor=pointer]:
+                      - generic [aria-hidden] [ref=f108e152]: 
+                      - text: So sánh
+            - article [ref=f108e154]:
+              - link "Xem chi tiết vợt Vợt cầu lông Li-Ning Halbertec 9000" [ref=f108e155] [cursor=pointer]:
+                - /url: /san-pham/128
+                - img "Ảnh vợt cầu lông Vợt cầu lông Li-Ning Halbertec 9000" [ref=f108e156]
+              - generic [ref=f108e157]: Giảm giá
+              - generic [ref=f108e158]:
+                - generic [ref=f108e159]:
+                  - generic [ref=f108e160]: Li-Ning
+                  - generic [ref=f108e161]: Vợt tấn công
+                - heading [level=3] [ref=f108e162]:
+                  - link "Vợt cầu lông Li-Ning Halbertec 9000" [ref=f108e163] [cursor=pointer]:
+                    - /url: /san-pham/128
+                - generic [ref=f108e164]:
+                  - generic [ref=f108e165]:
+                    - generic [ref=f108e166]: 4.590.000 ₫
+                    - generic [ref=f108e167]: 4.990.000 ₫
+                  - generic [ref=f108e168]:
+                    - generic [ref=f108e169]: Còn hàng
+                    - generic [ref=f108e170]: 2 phiên bản
+                  - generic [ref=f108e171]:
+                    - link "Chọn phiên bản và thêm Vợt cầu lông Li-Ning Halbertec 9000 vào giỏ" [ref=f108e172] [cursor=pointer]:
+                      - /url: /san-pham/128
+                      - generic [aria-hidden] [ref=f108e173]: 
+                      - text: Chọn phiên bản
+                    - button "So sánh" [ref=f108e175] [cursor=pointer]:
+                      - generic [aria-hidden] [ref=f108e176]: 
+                      - text: So sánh
+            - article [ref=f108e178]:
+              - link "Xem chi tiết vợt Vợt cầu lông Li-Ning Axforce 90 Tiger" [ref=f108e179] [cursor=pointer]:
+                - /url: /san-pham/129
+                - img "Ảnh vợt cầu lông Vợt cầu lông Li-Ning Axforce 90 Tiger" [ref=f108e180]
+              - generic [ref=f108e181]:
+                - generic [ref=f108e182]:
+                  - generic [ref=f108e183]: Li-Ning
+                  - generic [ref=f108e184]: Vợt tấn công
+                - heading [level=3] [ref=f108e185]:
+                  - link "Vợt cầu lông Li-Ning Axforce 90 Tiger" [ref=f108e186] [cursor=pointer]:
+                    - /url: /san-pham/129
+                - generic [ref=f108e187]:
+                  - generic [ref=f108e188]: 3.590.000 ₫
+                  - generic [ref=f108e190]:
+                    - generic [ref=f108e191]: Còn hàng
+                    - generic [ref=f108e192]: 3 phiên bản
+                  - generic [ref=f108e193]:
+                    - link "Chọn phiên bản và thêm Vợt cầu lông Li-Ning Axforce 90 Tiger vào giỏ" [ref=f108e194] [cursor=pointer]:
+                      - /url: /san-pham/129
+                      - generic [aria-hidden] [ref=f108e195]: 
+                      - text: Chọn phiên bản
+                    - button "So sánh" [ref=f108e197] [cursor=pointer]:
+                      - generic [aria-hidden] [ref=f108e198]: 
+                      - text: So sánh
+            - article [ref=f108e200]:
+              - link "Xem chi tiết vợt Vợt cầu lông Li-Ning Windstorm 78" [ref=f108e201] [cursor=pointer]:
+                - /url: /san-pham/130
+                - img "Ảnh vợt cầu lông Vợt cầu lông Li-Ning Windstorm 78" [ref=f108e202]
+              - generic [ref=f108e203]: Giảm giá
+              - generic [ref=f108e204]:
+                - generic [ref=f108e205]:
+                  - generic [ref=f108e206]: Li-Ning
+                  - generic [ref=f108e207]: Vợt phòng thủ
+                - heading [level=3] [ref=f108e208]:
+                  - link "Vợt cầu lông Li-Ning Windstorm 78" [ref=f108e209] [cursor=pointer]:
+                    - /url: /san-pham/130
+                - generic [ref=f108e210]:
+                  - generic [ref=f108e211]:
+                    - generic [ref=f108e212]: 1.690.000 ₫
+                    - generic [ref=f108e213]: 1.890.000 ₫
+                  - generic [ref=f108e214]:
+                    - generic [ref=f108e215]: Còn hàng
+                    - generic [ref=f108e216]: 2 phiên bản
+                  - generic [ref=f108e217]:
+                    - link "Chọn phiên bản và thêm Vợt cầu lông Li-Ning Windstorm 78 vào giỏ" [ref=f108e218] [cursor=pointer]:
+                      - /url: /san-pham/130
+                      - generic [aria-hidden] [ref=f108e219]: 
+                      - text: Chọn phiên bản
+                    - button "So sánh" [ref=f108e221] [cursor=pointer]:
+                      - generic [aria-hidden] [ref=f108e222]: 
+                      - text: So sánh
+            - article [ref=f108e224]:
+              - link "Xem chi tiết vợt Vợt cầu lông Victor Thruster Ryuga II" [ref=f108e225] [cursor=pointer]:
+                - /url: /san-pham/131
+                - img "Ảnh vợt cầu lông Vợt cầu lông Victor Thruster Ryuga II" [ref=f108e226]
+              - generic [ref=f108e227]:
+                - generic [ref=f108e228]:
+                  - generic [ref=f108e229]: Victor
+                  - generic [ref=f108e230]: Vợt tấn công
+                - heading [level=3] [ref=f108e231]:
+                  - link "Vợt cầu lông Victor Thruster Ryuga II" [ref=f108e232] [cursor=pointer]:
+                    - /url: /san-pham/131
+                - generic [ref=f108e233]:
+                  - generic [ref=f108e234]: 4.350.000 ₫
+                  - generic [ref=f108e236]:
+                    - generic [ref=f108e237]: Hết hàng
+                    - generic [ref=f108e238]: 2 phiên bản
+                  - generic [ref=f108e239]:
+                    - link "Chọn phiên bản và thêm Vợt cầu lông Victor Thruster Ryuga II vào giỏ" [ref=f108e240] [cursor=pointer]:
+                      - /url: /san-pham/131
+                      - generic [aria-hidden] [ref=f108e241]: 
+                      - text: Chọn phiên bản
+                    - button "So sánh" [ref=f108e243] [cursor=pointer]:
+                      - generic [aria-hidden] [ref=f108e244]: 
+                      - text: So sánh
+            - article [ref=f108e246]:
+              - link "Xem chi tiết vợt Vợt cầu lông Victor Auraspeed 90K II" [ref=f108e247] [cursor=pointer]:
+                - /url: /san-pham/132
+                - img "Ảnh vợt cầu lông Vợt cầu lông Victor Auraspeed 90K II" [ref=f108e248]
+              - generic [ref=f108e249]: Giảm giá
+              - generic [ref=f108e250]:
+                - generic [ref=f108e251]:
+                  - generic [ref=f108e252]: Victor
+                  - generic [ref=f108e253]: Vợt toàn diện
+                - heading [level=3] [ref=f108e254]:
+                  - link "Vợt cầu lông Victor Auraspeed 90K II" [ref=f108e255] [cursor=pointer]:
+                    - /url: /san-pham/132
+                - generic [ref=f108e256]:
+                  - generic [ref=f108e257]:
+                    - generic [ref=f108e258]: 3.890.000 ₫
+                    - generic [ref=f108e259]: 4.150.000 ₫
+                  - generic [ref=f108e260]:
+                    - generic [ref=f108e261]: Còn hàng
+                    - generic [ref=f108e262]: 3 phiên bản
+                  - generic [ref=f108e263]:
+                    - link "Chọn phiên bản và thêm Vợt cầu lông Victor Auraspeed 90K II vào giỏ" [ref=f108e264] [cursor=pointer]:
+                      - /url: /san-pham/132
+                      - generic [aria-hidden] [ref=f108e265]: 
+                      - text: Chọn phiên bản
+                    - button "So sánh" [ref=f108e267] [cursor=pointer]:
+                      - generic [aria-hidden] [ref=f108e268]: 
+                      - text: So sánh
+            - article [ref=f108e270]:
+              - link "Xem chi tiết vợt Vợt cầu lông Victor JetSpeed 12 SE" [ref=f108e271] [cursor=pointer]:
+                - /url: /san-pham/133
+                - img "Ảnh vợt cầu lông Vợt cầu lông Victor JetSpeed 12 SE" [ref=f108e272]
+              - generic [ref=f108e273]:
+                - generic [ref=f108e274]:
+                  - generic [ref=f108e275]: Victor
+                  - generic [ref=f108e276]: Vợt toàn diện
+                - heading [level=3] [ref=f108e277]:
+                  - link "Vợt cầu lông Victor JetSpeed 12 SE" [ref=f108e278] [cursor=pointer]:
+                    - /url: /san-pham/133
+                - generic [ref=f108e279]:
+                  - generic [ref=f108e280]: 2.890.000 ₫
+                  - generic [ref=f108e282]:
+                    - generic [ref=f108e283]: Còn hàng
+                    - generic [ref=f108e284]: 2 phiên bản
+                  - generic [ref=f108e285]:
+                    - link "Chọn phiên bản và thêm Vợt cầu lông Victor JetSpeed 12 SE vào giỏ" [ref=f108e286] [cursor=pointer]:
+                      - /url: /san-pham/133
+                      - generic [aria-hidden] [ref=f108e287]: 
+                      - text: Chọn phiên bản
+                    - button "So sánh" [ref=f108e289] [cursor=pointer]:
+                      - generic [aria-hidden] [ref=f108e290]: 
+                      - text: So sánh
+            - article [ref=f108e292]:
+              - link "Xem chi tiết vợt Vợt cầu lông Mizuno Acrospeed 7" [ref=f108e293] [cursor=pointer]:
+                - /url: /san-pham/134
+                - img "Ảnh vợt cầu lông Vợt cầu lông Mizuno Acrospeed 7" [ref=f108e294]
+              - generic [ref=f108e295]: Giảm giá
+              - generic [ref=f108e296]:
+                - generic [ref=f108e297]:
+                  - generic [ref=f108e298]: Mizuno
+                  - generic [ref=f108e299]: Vợt toàn diện
+                - heading [level=3] [ref=f108e300]:
+                  - link "Vợt cầu lông Mizuno Acrospeed 7" [ref=f108e301] [cursor=pointer]:
+                    - /url: /san-pham/134
+                - generic [ref=f108e302]:
+                  - generic [ref=f108e303]:
+                    - generic [ref=f108e304]: 2.590.000 ₫
+                    - generic [ref=f108e305]: 2.890.000 ₫
+                  - generic [ref=f108e306]:
+                    - generic [ref=f108e307]: Còn hàng
+                    - generic [ref=f108e308]: 2 phiên bản
+                  - generic [ref=f108e309]:
+                    - link "Chọn phiên bản và thêm Vợt cầu lông Mizuno Acrospeed 7 vào giỏ" [ref=f108e310] [cursor=pointer]:
+                      - /url: /san-pham/134
+                      - generic [aria-hidden] [ref=f108e311]: 
+                      - text: Chọn phiên bản
+                    - button "So sánh" [ref=f108e313] [cursor=pointer]:
+                      - generic [aria-hidden] [ref=f108e314]: 
+                      - text: So sánh
+          - navigation "Phân trang danh sách sản phẩm" [ref=f108e315]:
+            - list [ref=f108e316]:
+              - listitem [ref=f108e317]:
+                - link [disabled]:
+                  - /url: /san-pham?keyword=&brandId=&categoryId=&minPrice=&maxPrice=&sort=NEWEST&page=0
+                  - generic [aria-hidden]: 
+              - listitem [ref=f108e318]:
+                - link "1" [ref=f108e319] [cursor=pointer]:
+                  - /url: /san-pham?keyword=&brandId=&categoryId=&minPrice=&maxPrice=&sort=NEWEST&page=1
+              - listitem [ref=f108e320]:
+                - link "2" [ref=f108e321] [cursor=pointer]:
+                  - /url: /san-pham?keyword=&brandId=&categoryId=&minPrice=&maxPrice=&sort=NEWEST&page=2
+              - listitem [ref=f108e322]:
+                - link [ref=f108e323] [cursor=pointer]:
+                  - /url: /san-pham?keyword=&brandId=&categoryId=&minPrice=&maxPrice=&sort=NEWEST&page=2
+                  - generic [aria-hidden] [ref=f108e324]: 
+            - paragraph [ref=f108e325]: Trang 1/2 – 21 sản phẩm
+  - contentinfo [ref=f108e326]:
+    - generic [ref=f108e327]:
+      - generic [ref=f108e328]:
+        - generic [ref=f108e329]:
+          - heading "BadStore" [level=2] [ref=f108e330]:
+            - generic [aria-hidden] [ref=f108e332]: 
+          - paragraph [ref=f108e334]: Website bán vợt cầu lông – đồ án tốt nghiệp, sản phẩm mang tính minh hoạ.
+          - paragraph [ref=f108e335]: Dữ liệu sản phẩm, hình ảnh dùng cho mục đích học tập.
+        - generic [ref=f108e336]:
+          - generic [ref=f108e337]:
+            - generic [aria-hidden] [ref=f108e338]: 
+            - text: Liên hệ
+          - paragraph [ref=f108e339]: "Hotline: 1900 0000"
+          - paragraph [ref=f108e340]: "Email: cskh@badstore.local"
+          - paragraph [ref=f108e341]: "Địa chỉ: Số 1 Đại Cồ Việt, Bách Khoa, Hà Nội"
+          - paragraph [ref=f108e342]: "Giờ mở cửa: 8:00 – 21:30 hằng ngày"
+        - generic [ref=f108e343]:
+          - generic [ref=f108e344]:
+            - generic [aria-hidden] [ref=f108e345]: 
+            - text: Mua hàng & giao nhận
+          - list [ref=f108e346]:
+            - listitem [ref=f108e347]:
+              - link "Danh mục vợt cầu lông" [ref=f108e348] [cursor=pointer]:
+                - /url: /san-pham
+            - listitem [ref=f108e349]:
+              - link "So sánh sản phẩm" [ref=f108e350] [cursor=pointer]:
+                - /url: /so-sanh
+            - listitem [ref=f108e351]:
+              - link "Giỏ hàng của bạn" [ref=f108e352] [cursor=pointer]:
+                - /url: /gio-hang
+            - listitem [ref=f108e353]: Vận chuyển toàn quốc – tích hợp GHN khi cấu hình token.
+      - separator [ref=f108e354]
+      - generic [ref=f108e355]:
+        - generic [ref=f108e356]: © 2026 BadStore
+        - generic [ref=f108e357]: Đơn giá hiển thị bằng Việt Nam đồng (₫).
+  - text: 

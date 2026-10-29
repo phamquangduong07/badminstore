@@ -1,6 +1,6 @@
 /* BadStore – JavaScript dùng chung
    Nhiệm vụ: (1) toast thông báo flash bằng SweetAlert2, (2) hộp thoại xác nhận TRƯỚC mọi thao tác ghi CSDL,
-   (3) khởi tạo AOS (hiệu ứng cuộn) và Swiper (slider banner). */
+   (3) khởi tạo AOS (hiệu ứng cuộn) và Swiper (slider banner), (4) bộ chọn số lượng (+/−). */
 (function () {
     'use strict';
 
@@ -52,7 +52,7 @@
             showCancelButton: true,
             confirmButtonText: 'Đồng ý',
             cancelButtonText: 'Huỷ bỏ',
-            confirmButtonColor: '#0f8a5f', // xanh brand (đồng bộ --bs-primary trong theme.css)
+            confirmButtonColor: '#0b6b4a', // trùng --bs-primary trong theme.css (chữ trắng 6.53:1)
             cancelButtonColor: '#6c757d',
             reverseButtons: true
         });
@@ -77,7 +77,9 @@
     function initConfirmations() {
         document.querySelectorAll('form[data-confirm]').forEach(function (form) {
             form.addEventListener('submit', function (event) {
-                if (form.dataset.confirmed === 'true' || !window.Swal) {
+                // app.js (nạp sau) đánh dấu '1', main.js đánh dấu 'true' ⇒ chỉ cần kiểm tra truthy
+                // để không hiện hộp thoại xác nhận lần thứ hai khi cả hai script cùng nạp.
+                if (form.dataset.confirmed || !window.Swal) {
                     return;
                 }
                 event.preventDefault();
@@ -106,7 +108,7 @@
         });
     }
 
-    /** Nút +/- cạnh ô số lượng (trang giỏ hàng) – luôn kẹp trong khoảng min/max của ô. */
+    /** Nút +/- cạnh ô số lượng (giỏ hàng, trang chi tiết sản phẩm) – luôn kẹp trong khoảng min/max của ô. */
     function initQuantitySteppers() {
         document.querySelectorAll('.js-quantity').forEach(function (group) {
             var input = group.querySelector('input[type="number"]');
@@ -144,13 +146,25 @@
         });
     }
 
-    function initSwiper() {        if (!window.Swiper) {
+    function initSwiper() {
+        if (!window.Swiper) {
             return;
         }
+        // Người bật "giảm chuyển động": tắt tự chạy, chỉ đổi slide khi người dùng bấm
+        var reduceMotion = window.matchMedia
+            && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
         document.querySelectorAll('.js-swiper').forEach(function (element) {
             new Swiper(element, {
                 loop: true,
-                autoplay: { delay: 4500, disableOnInteraction: false },
+                // Dừng tự chạy khi rê chuột / focus bàn phím vào slider
+                autoplay: reduceMotion ? false : { delay: 4500, disableOnInteraction: false, pauseOnMouseEnter: true },
+                keyboard: { enabled: true },
+                a11y: {
+                    enabled: true,
+                    prevSlideMessage: 'Banner trước',
+                    nextSlideMessage: 'Banner sau',
+                    paginationBulletMessage: 'Tới banner {{index}}'
+                },
                 pagination: {
                     el: element.querySelector('.swiper-pagination'),
                     clickable: true
@@ -250,8 +264,9 @@
     }
 
     /**
-     * Khối chọn nhanh địa chỉ theo GHN (sổ địa chỉ): chọn Tỉnh ⇒ nạp Quận ⇒ nạp Phường.
-     * Mỗi lần chọn, ô nhập tay tương ứng được điền luôn tên địa danh và mã GHN được lưu vào ô ẩn.
+     * Sổ địa chỉ: 3 ô Tỉnh → Huyện → Xã lấy trực tiếp từ API GHN.
+     * Mỗi lần chọn, tên địa danh được điền vào ô ẩn đi kèm mã GHN; server vẫn kiểm tra lại
+     * mã (tồn tại thật) và tên (khớp mã) trước khi lưu nên khách không sửa được để ăn phí ship rẻ.
      */
     function initGhnAddressPicker() {
         var picker = document.querySelector('[data-ghn-picker]');
@@ -261,13 +276,16 @@
         var provinceSelect = picker.querySelector('[data-ghn-province]');
         var districtSelect = picker.querySelector('[data-ghn-district]');
         var wardSelect = picker.querySelector('[data-ghn-ward]');
+        var provinceName = picker.querySelector('[data-ghn-province-name]');
+        var districtName = picker.querySelector('[data-ghn-district-name]');
+        var wardName = picker.querySelector('[data-ghn-ward-name]');
         var feeLabel = picker.querySelector('[data-ghn-fee]');
-        var hiddenProvince = document.getElementById('provinceId');
-        var hiddenDistrict = document.getElementById('districtId');
-        var hiddenWard = document.getElementById('wardCode');
-        var inputProvince = document.getElementById('provinceName');
-        var inputDistrict = document.getElementById('districtName');
-        var inputWard = document.getElementById('wardName');
+        var wardHint = picker.querySelector('[data-ghn-ward-hint]');
+        // Lựa chọn cũ do server render lại sau khi form báo lỗi (Quận/Xã nạp lại bằng AJAX nên phải khôi phục).
+        var restoreDistrict = picker.getAttribute('data-ghn-district') || '';
+        var restoreWard = picker.getAttribute('data-ghn-ward') || '';
+        // Shop chưa khai báo kho lấy hàng ⇒ vẫn chọn được địa chỉ GHN, chỉ không tạm tính được phí.
+        var shippingEnabled = picker.getAttribute('data-ghn-shipping') !== 'false';
 
         function setOptions(select, items, placeholder) {
             if (!select) {
@@ -291,13 +309,36 @@
             return option ? (option.getAttribute('data-name') || '') : '';
         }
 
+        /** Ghi tên địa danh của ô đang chọn vào ô ẩn để gửi kèm mã GHN. */
+        function fillName(input, select) {
+            if (input) {
+                input.value = selectedName(select);
+            }
+        }
+
+        function clearName(input) {
+            if (input) {
+                input.value = '';
+            }
+        }
+
         function setFee(text) {
             if (feeLabel) {
                 feeLabel.textContent = text;
             }
         }
 
+        /** Quận/huyện mà GHN không trả phường/xã nào (vài quận đặc biệt) – báo để khách đổi quận khác. */
+        function setWardHint(visible) {
+            if (wardHint) {
+                wardHint.classList.toggle('d-none', !visible);
+            }
+        }
+
         function refreshFee() {
+            if (!shippingEnabled) {
+                return;
+            }
             var districtId = districtSelect ? districtSelect.value : '';
             if (!districtId) {
                 setFee('--');
@@ -314,90 +355,115 @@
                 });
         }
 
+        function resetWard() {
+            setOptions(wardSelect, [], '-- Chọn phường/xã --');
+            setWardHint(false);
+            clearName(wardName);
+            setFee('--');
+        }
+
         function resetDistrictAndWard() {
             setOptions(districtSelect, [], '-- Chọn quận/huyện --');
-            setOptions(wardSelect, [], '-- Chọn phường/xã --');
-            if (inputDistrict) {
-                inputDistrict.value = '';
+            clearName(districtName);
+            resetWard();
+        }
+
+        /** Tìm option theo giá trị (dùng khi khôi phục lựa chọn sau khi form báo lỗi). */
+        function optionByValue(select, value) {
+            if (!select || value == null) {
+                return null;
             }
-            if (inputWard) {
-                inputWard.value = '';
+            return Array.prototype.find.call(select.options, function (option) {
+                return option.value === String(value);
+            }) || null;
+        }
+
+        /** Nạp quận/huyện của tỉnh đã chọn; trả về Promise để nơi gọi nạp tiếp phường/xã. */
+        function loadDistricts(provinceId) {
+            if (!districtSelect || !provinceId) {
+                return Promise.resolve();
             }
-            if (hiddenDistrict) {
-                hiddenDistrict.value = '';
+            districtSelect.innerHTML = '<option value="">Đang tải…</option>';
+            districtSelect.disabled = true;
+            return fetchJson('/api/ghn/huyen?provinceId=' + encodeURIComponent(provinceId))
+                .then(function (data) {
+                    setOptions(districtSelect, data.items || [], '-- Chọn quận/huyện --');
+                })
+                .catch(function () {
+                    setOptions(districtSelect, [], '-- Chọn quận/huyện --');
+                });
+        }
+
+        /** Nạp phường/xã của quận đã chọn. */
+        function loadWards(districtId) {
+            if (!wardSelect || !districtId) {
+                return Promise.resolve();
             }
-            if (hiddenWard) {
-                hiddenWard.value = '';
+            wardSelect.innerHTML = '<option value="">Đang tải…</option>';
+            wardSelect.disabled = true;
+            return fetchJson('/api/ghn/xa?districtId=' + encodeURIComponent(districtId))
+                .then(function (data) {
+                    var items = data.items || [];
+                    setOptions(wardSelect, items, '-- Chọn phường/xã --');
+                    setWardHint(items.length === 0);
+                })
+                .catch(function () {
+                    setOptions(wardSelect, [], '-- Chọn phường/xã --');
+                    setWardHint(false);
+                });
+        }
+
+        /** Form hiển thị lại sau khi báo lỗi: khôi phục đúng Tỉnh → Huyện → Xã khách đã chọn. */
+        function restoreSelection() {
+            if (!restoreDistrict || !provinceSelect || !provinceSelect.value) {
+                refreshFee();
+                return;
             }
-            setFee('--');
+            loadDistricts(provinceSelect.value).then(function () {
+                if (!optionByValue(districtSelect, restoreDistrict)) {
+                    return;
+                }
+                districtSelect.value = restoreDistrict;
+                fillName(districtName, districtSelect);
+                refreshFee();
+                if (!restoreWard) {
+                    return;
+                }
+                return loadWards(restoreDistrict).then(function () {
+                    if (optionByValue(wardSelect, restoreWard)) {
+                        wardSelect.value = restoreWard;
+                        fillName(wardName, wardSelect);
+                    }
+                    refreshFee();
+                });
+            });
         }
 
         if (provinceSelect) {
             provinceSelect.addEventListener('change', function () {
-                if (inputProvince) {
-                    inputProvince.value = selectedName(provinceSelect);
-                }
-                if (hiddenProvince) {
-                    hiddenProvince.value = provinceSelect.value;
-                }
+                fillName(provinceName, provinceSelect);
                 resetDistrictAndWard();
-                if (!provinceSelect.value) {
-                    return;
-                }
-                districtSelect.innerHTML = '<option value="">Đang tải…</option>';
-                districtSelect.disabled = true;
-                fetchJson('/api/ghn/huyen?provinceId=' + encodeURIComponent(provinceSelect.value))
-                    .then(function (data) {
-                        setOptions(districtSelect, data.items || [], '-- Chọn quận/huyện --');
-                    })
-                    .catch(function () {
-                        setOptions(districtSelect, [], '-- Chọn quận/huyện --');
-                    });
+                loadDistricts(provinceSelect.value);
             });
         }
 
         if (districtSelect) {
             districtSelect.addEventListener('change', function () {
-                if (inputDistrict) {
-                    inputDistrict.value = selectedName(districtSelect);
-                }
-                if (hiddenDistrict) {
-                    hiddenDistrict.value = districtSelect.value;
-                }
-                if (inputWard) {
-                    inputWard.value = '';
-                }
-                if (hiddenWard) {
-                    hiddenWard.value = '';
-                }
-                setOptions(wardSelect, [], '-- Chọn phường/xã --');
+                fillName(districtName, districtSelect);
+                resetWard();
+                loadWards(districtSelect.value);
                 refreshFee();
-                if (!districtSelect.value) {
-                    return;
-                }
-                wardSelect.innerHTML = '<option value="">Đang tải…</option>';
-                wardSelect.disabled = true;
-                fetchJson('/api/ghn/xa?districtId=' + encodeURIComponent(districtSelect.value))
-                    .then(function (data) {
-                        setOptions(wardSelect, data.items || [], '-- Chọn phường/xã --');
-                    })
-                    .catch(function () {
-                        setOptions(wardSelect, [], '-- Chọn phường/xã --');
-                    });
             });
         }
 
         if (wardSelect) {
             wardSelect.addEventListener('change', function () {
-                if (inputWard) {
-                    inputWard.value = selectedName(wardSelect);
-                }
-                if (hiddenWard) {
-                    hiddenWard.value = wardSelect.value;
-                }
+                fillName(wardName, wardSelect);
                 refreshFee();
             });
         }
+
+        restoreSelection();
     }
 
     /**
@@ -417,6 +483,7 @@
         var feeLabel = panel.querySelector('[data-shipping-fee]');
         var totalLabel = panel.querySelector('[data-order-total]');
         var sourceBadge = panel.querySelector('[data-shipping-source]');
+        var shippingEnabled = panel.getAttribute('data-ghn-shipping') !== 'false';
 
         function applyFee(fee, fromGhn) {
             if (freeShipping) {
@@ -434,6 +501,10 @@
         }
 
         function refresh() {
+            if (!shippingEnabled) {
+                applyFee(defaultFee, false);
+                return;
+            }
             var checked = document.querySelector('input[name="addressId"]:checked');
             var districtId = checked ? (checked.getAttribute('data-district-id') || '') : '';
             var wardCode = checked ? (checked.getAttribute('data-ward-code') || '') : '';

@@ -1,0 +1,80 @@
+- generic [active] [ref=f128e1]:
+  - link "Bỏ qua tới nội dung chính" [ref=f128e2] [cursor=pointer]:
+    - /url: "#noi-dung-chinh"
+  - banner [ref=f128e3]:
+    - navigation "Điều hướng chính" [ref=f128e4]:
+      - generic [ref=f128e5]:
+        - link "BadStore – về trang chủ" [ref=f128e6] [cursor=pointer]:
+          - /url: /
+          - generic [aria-hidden] [ref=f128e8]: 
+          - generic [ref=f128e9]: BadStore
+        - generic [ref=f128e10]:
+          - link "Giỏ hàng" [ref=f128e11] [cursor=pointer]:
+            - /url: /gio-hang
+            - generic [aria-hidden] [ref=f128e12]: 
+            - generic [ref=f128e13]: "1"
+          - button "Mở menu" [ref=f128e14] [cursor=pointer]
+  - main [ref=f128e16]:
+    - generic [ref=f128e17]:
+      - navigation "breadcrumb" [ref=f128e18]:
+        - list [ref=f128e19]:
+          - listitem [ref=f128e20]:
+            - link "Trang chủ" [ref=f128e21] [cursor=pointer]:
+              - /url: /
+          - listitem [ref=f128e22]:
+            - text: /
+            - link "Sản phẩm" [ref=f128e23] [cursor=pointer]:
+              - /url: /san-pham
+          - listitem [ref=f128e24]: / So sánh
+      - generic [ref=f128e26]:
+        - heading "So sánh sản phẩm" [level=1] [ref=f128e27]:
+          - generic [aria-hidden] [ref=f128e28]: 
+          - text: So sánh sản phẩm
+        - paragraph [ref=f128e29]: Chọn tối đa 4 sản phẩm để đặt cạnh nhau và so thông số. Đang có 0 sản phẩm.
+      - generic [ref=f128e31]:
+        - generic [aria-hidden] [ref=f128e32]: 
+        - paragraph [ref=f128e33]: Danh sách so sánh đang trống
+        - paragraph [ref=f128e34]:
+          - text: Vào trang sản phẩm và bấm
+          - strong [ref=f128e35]: “So sánh”
+          - text: ở mỗi mẫu vợt bạn quan tâm (tối đa 4 mẫu).
+        - link "Xem danh sách vợt" [ref=f128e36] [cursor=pointer]:
+          - /url: /san-pham
+          - generic [aria-hidden] [ref=f128e37]: 
+          - text: Xem danh sách vợt
+  - contentinfo [ref=f128e38]:
+    - generic [ref=f128e39]:
+      - generic [ref=f128e40]:
+        - generic [ref=f128e41]:
+          - heading "BadStore" [level=2] [ref=f128e42]:
+            - generic [aria-hidden] [ref=f128e44]: 
+          - paragraph [ref=f128e46]: Website bán vợt cầu lông – đồ án tốt nghiệp, sản phẩm mang tính minh hoạ.
+          - paragraph [ref=f128e47]: Dữ liệu sản phẩm, hình ảnh dùng cho mục đích học tập.
+        - generic [ref=f128e48]:
+          - generic [ref=f128e49]:
+            - generic [aria-hidden] [ref=f128e50]: 
+            - text: Liên hệ
+          - paragraph [ref=f128e51]: "Hotline: 1900 0000"
+          - paragraph [ref=f128e52]: "Email: cskh@badstore.local"
+          - paragraph [ref=f128e53]: "Địa chỉ: Số 1 Đại Cồ Việt, Bách Khoa, Hà Nội"
+          - paragraph [ref=f128e54]: "Giờ mở cửa: 8:00 – 21:30 hằng ngày"
+        - generic [ref=f128e55]:
+          - generic [ref=f128e56]:
+            - generic [aria-hidden] [ref=f128e57]: 
+            - text: Mua hàng & giao nhận
+          - list [ref=f128e58]:
+            - listitem [ref=f128e59]:
+              - link "Danh mục vợt cầu lông" [ref=f128e60] [cursor=pointer]:
+                - /url: /san-pham
+            - listitem [ref=f128e61]:
+              - link "So sánh sản phẩm" [ref=f128e62] [cursor=pointer]:
+                - /url: /so-sanh
+            - listitem [ref=f128e63]:
+              - link "Giỏ hàng của bạn" [ref=f128e64] [cursor=pointer]:
+                - /url: /gio-hang
+            - listitem [ref=f128e65]: Vận chuyển toàn quốc – tích hợp GHN khi cấu hình token.
+      - separator [ref=f128e66]
+      - generic [ref=f128e67]:
+        - generic [ref=f128e68]: © 2026 BadStore
+        - generic [ref=f128e69]: Đơn giá hiển thị bằng Việt Nam đồng (₫).
+  - text: 

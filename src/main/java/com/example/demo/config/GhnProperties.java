@@ -25,16 +25,23 @@ public class GhnProperties {
     /** Bật/tắt toàn bộ tích hợp GHN. */
     private boolean enabled = false;
 
-    /** Chạy bằng dữ liệu giả (demo offline, thi không cần mạng). */
+    /**
+     * KHÔNG gọi mạng: địa chỉ Tỉnh–Huyện–Xã lấy từ dữ liệu GHN lưu sẵn (đầy đủ 63 tỉnh/thành,
+     * xem {@link com.example.demo.service.GhnOfflineAddressData}), còn phí vận chuyển/vận đơn là số giả.
+     */
     private boolean mock = false;
 
     /** Trạng thái GHN mà chế độ mock trả về khi đồng bộ (để demo ánh xạ trạng thái). */
     private String mockStatus = "delivering";
 
-    /** Địa chỉ API: dev = dev-online-gateway.ghn.vn, thật = online-gateway.ghn.vn. */
-    private String baseUrl = "https://dev-online-gateway.ghn.vn/shiip/public-api";
+    /**
+     * Địa chỉ API GHN. Mặc định là môi trường THẬT (online-gateway) vì token GHN cấp cho shop
+     * chỉ dùng được ở đây; khi cần thử nghiệm có thể đổi sang dev-online-gateway qua GHN_BASE_URL.
+     */
+    private String baseUrl = "https://online-gateway.ghn.vn/shiip/public-api";
 
-    private String token = "d444f10b-b72d-11f0-83e1-6217795c23da";
+    /** Token GHN – KHÔNG hard-code trong repo: đặt qua biến môi trường GHN_TOKEN (hoặc application-local.yml). */
+    private String token;
 
     /** ShopId lấy từ tài khoản GHN (bắt buộc khi tạo vận đơn/tính phí). */
     private Integer shopId;
@@ -71,8 +78,19 @@ public class GhnProperties {
     private boolean syncEnabled = false;
     private long syncDelayMs = 600000;
 
-    /** Đã đủ điều kiện gọi API thật chưa (bật + có token + có shopId). */
-    public boolean isConfigured() {
-        return enabled && StringUtils.hasText(token) && shopId != null;
+    /**
+     * Đủ điều kiện tra cứu Tỉnh–Huyện–Xã: chỉ cần bật GHN + có token.
+     * Nhờ vậy shop mới tạo tài khoản GHN (chưa khai báo kho/shopId) vẫn dùng được dropdown địa chỉ.
+     */
+    public boolean isAddressConfigured() {
+        return enabled && StringUtils.hasText(token);
+    }
+
+    /**
+     * Đủ điều kiện tính phí/tạo vận đơn: cần thêm shopId và quận kho lấy hàng.
+     * Thiếu 2 thông tin này thì địa chỉ vẫn chọn theo GHN, nhưng phí ship dùng mức mặc định của shop.
+     */
+    public boolean isShippingConfigured() {
+        return isAddressConfigured() && shopId != null && fromDistrictId != null;
     }
 }

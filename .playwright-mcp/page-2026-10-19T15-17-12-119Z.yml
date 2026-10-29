@@ -1,0 +1,134 @@
+- generic [active] [ref=f58e1]:
+  - link "Bỏ qua tới nội dung chính" [ref=f58e2] [cursor=pointer]:
+    - /url: "#noi-dung-chinh"
+  - generic [ref=f58e4]:
+    - generic "Menu quản trị" [ref=f58e6]:
+      - navigation [ref=f58e8]:
+        - link "BadStore Trang quản trị" [ref=f58e9] [cursor=pointer]:
+          - /url: /admin
+          - generic [aria-hidden] [ref=f58e11]: 
+          - generic [ref=f58e12]:
+            - text: BadStore
+            - generic [ref=f58e13]: Trang quản trị
+        - paragraph [ref=f58e14]: Bán hàng
+        - list [ref=f58e15]:
+          - listitem [ref=f58e16]:
+            - link "Tổng quan" [ref=f58e17] [cursor=pointer]:
+              - /url: /admin
+              - generic [aria-hidden] [ref=f58e18]: 
+              - text: Tổng quan
+          - listitem [ref=f58e19]:
+            - link "Bán hàng tại quầy" [ref=f58e20] [cursor=pointer]:
+              - /url: /admin/ban-hang
+              - generic [aria-hidden] [ref=f58e21]: 
+              - text: Bán hàng tại quầy
+          - listitem [ref=f58e22]:
+            - link "Đơn hàng" [ref=f58e23] [cursor=pointer]:
+              - /url: /admin/don-hang
+              - generic [aria-hidden] [ref=f58e24]: 
+              - text: Đơn hàng
+        - paragraph [ref=f58e25]: Hàng hoá & khuyến mãi
+        - list [ref=f58e26]:
+          - listitem [ref=f58e27]:
+            - link "Sản phẩm & biến thể" [ref=f58e28] [cursor=pointer]:
+              - /url: /admin/san-pham
+              - generic [aria-hidden] [ref=f58e29]: 
+              - text: Sản phẩm & biến thể
+          - listitem [ref=f58e30]:
+            - link "Voucher" [ref=f58e31] [cursor=pointer]:
+              - /url: /admin/voucher
+              - generic [aria-hidden] [ref=f58e32]: 
+              - text: Voucher
+        - generic [ref=f58e33]:
+          - link "Xem cửa hàng" [ref=f58e34] [cursor=pointer]:
+            - /url: /
+            - generic [aria-hidden] [ref=f58e35]: 
+            - text: Xem cửa hàng
+          - paragraph [ref=f58e36]:
+            - generic [aria-hidden] [ref=f58e37]: 
+            - text: Đổi trạng thái đơn sẽ trừ/cộng kho ngay.
+    - main [ref=f58e38]:
+      - generic [ref=f58e39]:
+        - text: 
+        - generic [ref=f58e40]:
+          - generic [aria-hidden] [ref=f58e41]: 
+          - text: Khu quản trị BadStore
+        - generic [ref=f58e42]:
+          - link "Xem cửa hàng" [ref=f58e43] [cursor=pointer]:
+            - /url: /
+            - generic [aria-hidden] [ref=f58e44]: 
+            - text: Xem cửa hàng
+          - generic [ref=f58e45]:
+            - generic [aria-hidden] [ref=f58e46]: 
+            - generic [ref=f58e47]: admin@badstore.local
+          - button "Đăng xuất" [ref=f58e49] [cursor=pointer]:
+            - generic [aria-hidden] [ref=f58e50]: 
+            - text: Đăng xuất
+      - generic [ref=f58e51]:
+        - generic [ref=f58e52]:
+          - heading "Quản lý voucher" [level=1] [ref=f58e53]:
+            - generic [aria-hidden] [ref=f58e54]: 
+            - text: Quản lý voucher
+          - generic [ref=f58e55]:
+            - generic [ref=f58e56]: Tổng 1 voucher
+            - link "Tạo voucher" [ref=f58e57] [cursor=pointer]:
+              - /url: /admin/voucher/tao-moi
+              - generic [aria-hidden] [ref=f58e58]: 
+              - text: Tạo voucher
+        - generic [ref=f58e60]:
+          - generic [ref=f58e61]:
+            - generic [ref=f58e62]: Trạng thái
+            - combobox "Trạng thái" [ref=f58e63]:
+              - option "-- Tất cả --" [selected]
+              - option "Đang áp dụng"
+              - option "Ngừng áp dụng"
+          - generic [ref=f58e64]:
+            - generic [ref=f58e65]: Tìm theo mã / tên chương trình
+            - textbox "Tìm theo mã / tên chương trình" [ref=f58e66]:
+              - /placeholder: "Ví dụ: GIAM10"
+          - generic [ref=f58e67]:
+            - button "Lọc" [ref=f58e68] [cursor=pointer]:
+              - generic [aria-hidden] [ref=f58e69]: 
+              - text: Lọc
+            - link "Xoá lọc" [ref=f58e70] [cursor=pointer]:
+              - /url: /admin/voucher
+        - table [ref=f58e73]:
+          - rowgroup [ref=f58e74]:
+            - row [ref=f58e75]:
+              - columnheader "Mã / Chương trình" [ref=f58e76]
+              - columnheader "Giảm giá" [ref=f58e77]
+              - columnheader "Điều kiện" [ref=f58e78]
+              - columnheader "Lượt dùng" [ref=f58e79]
+              - columnheader "Thời gian áp dụng" [ref=f58e80]
+              - columnheader "Trạng thái" [ref=f58e81]
+              - columnheader "Thao tác" [ref=f58e82]
+          - rowgroup [ref=f58e83]:
+            - row [ref=f58e84]:
+              - cell "GIAM10 claude code free" [ref=f58e85]:
+                - generic [ref=f58e86]: GIAM10
+                - generic [ref=f58e87]: claude code free
+              - cell "Giảm 99.97% (tối đa 34.434 ₫)" [ref=f58e88]
+              - cell "Đơn từ 322 ₫ Tối đa 34.434 ₫" [ref=f58e89]:
+                - generic [ref=f58e90]:
+                  - text: Đơn từ
+                  - generic [ref=f58e91]: 322 ₫
+                - generic [ref=f58e92]:
+                  - text: Tối đa
+                  - generic [ref=f58e93]: 34.434 ₫
+              - cell "0/10" [ref=f58e94]
+              - cell "16/10/2026 01:35 → 15/11/2026 01:35" [ref=f58e95]:
+                - generic [ref=f58e96]: 16/10/2026 01:35
+                - generic [ref=f58e97]:
+                  - text: →
+                  - generic [ref=f58e98]: 15/11/2026 01:35
+              - cell "Đang áp dụng" [ref=f58e99]
+              - cell [ref=f58e101]:
+                - generic [ref=f58e102]:
+                  - link "Sửa voucher GIAM10" [ref=f58e103] [cursor=pointer]:
+                    - /url: /admin/voucher/83/sua
+                    - generic [aria-hidden] [ref=f58e104]: 
+                    - text: Sửa
+                  - button "Đổi trạng thái voucher GIAM10" [ref=f58e106] [cursor=pointer]:
+                    - generic [aria-hidden] [ref=f58e107]: 
+                    - text: Ngừng
+  - text: 

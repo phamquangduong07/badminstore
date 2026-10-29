@@ -1,0 +1,318 @@
+- generic [active] [ref=f159e1]:
+  - link "Bỏ qua tới nội dung chính" [ref=f159e2] [cursor=pointer]:
+    - /url: "#noi-dung-chinh"
+  - banner [ref=f159e3]:
+    - navigation "Điều hướng chính" [ref=f159e4]:
+      - generic [ref=f159e5]:
+        - link "BadStore – về trang chủ" [ref=f159e6] [cursor=pointer]:
+          - /url: /
+          - generic [aria-hidden] [ref=f159e8]: 
+          - generic [ref=f159e9]: BadStore
+        - generic: 
+        - generic "Menu BadStore" [ref=f159e10]:
+          - generic [ref=f159e11]:
+            - list [ref=f159e12]:
+              - listitem [ref=f159e13]:
+                - link "Trang chủ" [ref=f159e14] [cursor=pointer]:
+                  - /url: /
+                  - generic [aria-hidden] [ref=f159e15]: 
+                  - text: Trang chủ
+              - listitem [ref=f159e16]:
+                - link "Sản phẩm" [ref=f159e17] [cursor=pointer]:
+                  - /url: /san-pham
+                  - generic [aria-hidden] [ref=f159e18]: 
+                  - text: Sản phẩm
+            - search [ref=f159e19]:
+              - generic [ref=f159e20]: Tìm sản phẩm theo tên
+              - generic [aria-hidden]: 
+              - searchbox "Tìm sản phẩm theo tên" [ref=f159e21]
+            - list [ref=f159e22]:
+              - listitem [ref=f159e23]:
+                - link "So sánh sản phẩm" [ref=f159e24] [cursor=pointer]:
+                  - /url: /so-sanh
+                  - generic [aria-hidden] [ref=f159e25]: 
+              - listitem [ref=f159e26]:
+                - link "Giỏ hàng" [ref=f159e27] [cursor=pointer]:
+                  - /url: /gio-hang
+                  - generic [aria-hidden] [ref=f159e28]: 
+                  - generic [ref=f159e29]: "1"
+              - listitem [ref=f159e30]:
+                - button "Quản trị viên" [ref=f159e31] [cursor=pointer]:
+                  - generic [aria-hidden] [ref=f159e32]: 
+                - text:   
+  - main [ref=f159e34]:
+    - generic [ref=f159e36]:
+      - generic [ref=f159e37]:
+        - generic [ref=f159e38]:
+          - group "1 / 3" [ref=f159e39]:
+            - generic [ref=f159e40]:
+              - generic [ref=f159e41]: Vợt chính hãng 100%
+              - heading "Vợt cầu lông cho mọi lối chơi" [level=1] [ref=f159e42]
+              - paragraph [ref=f159e43]: Yonex · Li-Ning · Victor · Mizuno · Kumpoo · Apacs – 21 mẫu vợt đang bán, bảo hành theo hãng và giao hàng toàn quốc.
+              - generic [ref=f159e44]:
+                - link "Xem danh mục vợt" [ref=f159e45] [cursor=pointer]:
+                  - /url: /san-pham
+                  - generic [aria-hidden] [ref=f159e46]: 
+                  - text: Xem danh mục vợt
+                - link "So sánh sản phẩm" [ref=f159e47] [cursor=pointer]:
+                  - /url: /so-sanh
+                  - generic [aria-hidden] [ref=f159e48]: 
+                  - text: So sánh sản phẩm
+          - group "2 / 3" [ref=f159e49]:
+            - generic [ref=f159e50]:
+              - generic [ref=f159e51]: Tư vấn miễn phí
+              - heading "Tư vấn theo lối chơi" [level=2] [ref=f159e52]
+              - paragraph [ref=f159e53]: Tấn công, phòng thủ hay toàn diện? Xem thông số kỹ thuật và so sánh trực tiếp giữa các mẫu vợt.
+              - generic [ref=f159e54]:
+                - link "Tìm vợt phù hợp" [ref=f159e55] [cursor=pointer]:
+                  - /url: /san-pham
+                  - generic [aria-hidden] [ref=f159e56]: 
+                  - text: Tìm vợt phù hợp
+                - link "Chọn theo lối chơi" [ref=f159e57] [cursor=pointer]:
+                  - /url: "#chon-nhanh"
+                  - generic [aria-hidden] [ref=f159e58]: 
+                  - text: Chọn theo lối chơi
+          - group "3 / 3" [ref=f159e59]:
+            - generic [ref=f159e60]:
+              - generic [ref=f159e61]: Đổi trả minh bạch
+              - heading "Mua an tâm, đổi trả 100%" [level=2] [ref=f159e62]
+              - paragraph [ref=f159e63]: Đơn đã giao có thể yêu cầu hoàn trả 100% giá trị ngay trên trang đơn hàng của bạn. Phí giao hàng 30.000 ₫, miễn phí cho đơn từ 5.000.000 ₫.
+              - generic [ref=f159e64]:
+                - link "Chọn vợt ngay" [ref=f159e65] [cursor=pointer]:
+                  - /url: /san-pham
+                  - generic [aria-hidden] [ref=f159e66]: 
+                  - text: Chọn vợt ngay
+                - link "Giỏ hàng của bạn" [ref=f159e67] [cursor=pointer]:
+                  - /url: /gio-hang
+                  - generic [aria-hidden] [ref=f159e68]: 
+                  - text: Giỏ hàng của bạn
+        - generic [ref=f159e69]:
+          - button "Tới banner 1" [ref=f159e70] [cursor=pointer]
+          - button "Tới banner 2" [ref=f159e71] [cursor=pointer]
+          - button "Tới banner 3" [ref=f159e72] [cursor=pointer]
+      - list "Cam kết của BadStore" [ref=f159e73]:
+        - listitem [ref=f159e74]:
+          - generic [aria-hidden] [ref=f159e76]: 
+          - generic [ref=f159e77]:
+            - generic [ref=f159e78]: Chính hãng 100%
+            - generic [ref=f159e79]: Bảo hành theo hãng, mã sản phẩm ghi rõ trên từng cây vợt.
+        - listitem [ref=f159e80]:
+          - generic [aria-hidden] [ref=f159e82]: 
+          - generic [ref=f159e83]:
+            - generic [ref=f159e84]: Giao nhanh toàn quốc
+            - generic [ref=f159e85]: Phí 30.000 ₫, miễn phí cho đơn từ 5.000.000 ₫.
+        - listitem [ref=f159e86]:
+          - generic [aria-hidden] [ref=f159e88]: 
+          - generic [ref=f159e89]:
+            - generic [ref=f159e90]: Đổi trả 100%
+            - generic [ref=f159e91]: Đơn đã giao có thể yêu cầu hoàn trả ngay trong trang đơn hàng.
+      - region [ref=f159e92]:
+        - generic [ref=f159e93]:
+          - heading "Vợt mới về 21 sản phẩm đang bán" [level=2] [ref=f159e94]:
+            - text: Vợt mới về
+            - generic [ref=f159e95]: 21 sản phẩm đang bán
+          - link "Xem tất cả" [ref=f159e96] [cursor=pointer]:
+            - /url: /san-pham
+            - text: Xem tất cả
+            - generic [aria-hidden] [ref=f159e97]: 
+        - generic [ref=f159e98]:
+          - article [ref=f159e100]:
+            - link "Xem chi tiết vợt sssss2232" [ref=f159e101] [cursor=pointer]:
+              - /url: /san-pham/1849
+              - img "Ảnh vợt cầu lông sssss2232" [ref=f159e102]
+            - generic [ref=f159e103]: Giảm giá
+            - generic [ref=f159e104]:
+              - generic [ref=f159e105]:
+                - generic [ref=f159e106]: Apacs
+                - generic [ref=f159e107]: Vợt tấn công
+              - heading [level=3] [ref=f159e108]:
+                - link "sssss2232" [ref=f159e109] [cursor=pointer]:
+                  - /url: /san-pham/1849
+              - generic [ref=f159e110]:
+                - generic [ref=f159e111]:
+                  - generic [ref=f159e112]: 123.123 ₫
+                  - generic [ref=f159e113]: 1.231.231.231 ₫
+                - generic [ref=f159e114]: Còn hàng
+                - generic [ref=f159e116]:
+                  - link "Chọn phiên bản và thêm sssss2232 vào giỏ" [ref=f159e117] [cursor=pointer]:
+                    - /url: /san-pham/1849
+                    - generic [aria-hidden] [ref=f159e118]: 
+                    - text: Chọn phiên bản
+                  - button "So sánh" [ref=f159e120] [cursor=pointer]:
+                    - generic [aria-hidden] [ref=f159e121]: 
+                    - text: So sánh
+          - article [ref=f159e123]:
+            - link "Xem chi tiết vợt Vợt cầu lông Yonex Astrox 100 ZZ" [ref=f159e124] [cursor=pointer]:
+              - /url: /san-pham/124
+              - img "Ảnh vợt cầu lông Vợt cầu lông Yonex Astrox 100 ZZ" [ref=f159e125]
+            - generic [ref=f159e126]: Giảm giá
+            - generic [ref=f159e127]:
+              - generic [ref=f159e128]:
+                - generic [ref=f159e129]: Yonex
+                - generic [ref=f159e130]: Vợt tấn công
+              - heading [level=3] [ref=f159e131]:
+                - link "Vợt cầu lông Yonex Astrox 100 ZZ" [ref=f159e132] [cursor=pointer]:
+                  - /url: /san-pham/124
+              - generic [ref=f159e133]:
+                - generic [ref=f159e134]:
+                  - generic [ref=f159e135]: 519.000 ₫
+                  - generic [ref=f159e136]: 5.190.000 ₫
+                - generic [ref=f159e137]:
+                  - generic [ref=f159e138]: Còn hàng
+                  - generic [ref=f159e139]: 2 phiên bản
+                - generic [ref=f159e140]:
+                  - link "Chọn phiên bản và thêm Vợt cầu lông Yonex Astrox 100 ZZ vào giỏ" [ref=f159e141] [cursor=pointer]:
+                    - /url: /san-pham/124
+                    - generic [aria-hidden] [ref=f159e142]: 
+                    - text: Chọn phiên bản
+                  - button "So sánh" [ref=f159e144] [cursor=pointer]:
+                    - generic [aria-hidden] [ref=f159e145]: 
+                    - text: So sánh
+          - article [ref=f159e147]:
+            - link "Xem chi tiết vợt Vợt cầu lông Yonex Astrox 88D Pro" [ref=f159e148] [cursor=pointer]:
+              - /url: /san-pham/125
+              - img "Ảnh vợt cầu lông Vợt cầu lông Yonex Astrox 88D Pro" [ref=f159e149]
+            - generic [ref=f159e150]:
+              - generic [ref=f159e151]:
+                - generic [ref=f159e152]: Yonex
+                - generic [ref=f159e153]: Vợt tấn công
+              - heading [level=3] [ref=f159e154]:
+                - link "Vợt cầu lông Yonex Astrox 88D Pro" [ref=f159e155] [cursor=pointer]:
+                  - /url: /san-pham/125
+              - generic [ref=f159e156]:
+                - generic [ref=f159e157]: 4.290.000 ₫
+                - generic [ref=f159e159]:
+                  - generic [ref=f159e160]: Còn hàng
+                  - generic [ref=f159e161]: 3 phiên bản
+                - generic [ref=f159e162]:
+                  - link "Chọn phiên bản và thêm Vợt cầu lông Yonex Astrox 88D Pro vào giỏ" [ref=f159e163] [cursor=pointer]:
+                    - /url: /san-pham/125
+                    - generic [aria-hidden] [ref=f159e164]: 
+                    - text: Chọn phiên bản
+                  - button "So sánh" [ref=f159e166] [cursor=pointer]:
+                    - generic [aria-hidden] [ref=f159e167]: 
+                    - text: So sánh
+          - article [ref=f159e169]:
+            - link "Xem chi tiết vợt Vợt cầu lông Yonex Nanoflare 800" [ref=f159e170] [cursor=pointer]:
+              - /url: /san-pham/126
+              - img "Ảnh vợt cầu lông Vợt cầu lông Yonex Nanoflare 800" [ref=f159e171]
+            - generic [ref=f159e172]: Giảm giá
+            - generic [ref=f159e173]:
+              - generic [ref=f159e174]:
+                - generic [ref=f159e175]: Yonex
+                - generic [ref=f159e176]: Vợt phòng thủ
+              - heading [level=3] [ref=f159e177]:
+                - link "Vợt cầu lông Yonex Nanoflare 800" [ref=f159e178] [cursor=pointer]:
+                  - /url: /san-pham/126
+              - generic [ref=f159e179]:
+                - generic [ref=f159e180]:
+                  - generic [ref=f159e181]: 3.990.000 ₫
+                  - generic [ref=f159e182]: 4.190.000 ₫
+                - generic [ref=f159e183]:
+                  - generic [ref=f159e184]: Còn hàng
+                  - generic [ref=f159e185]: 3 phiên bản
+                - generic [ref=f159e186]:
+                  - link "Chọn phiên bản và thêm Vợt cầu lông Yonex Nanoflare 800 vào giỏ" [ref=f159e187] [cursor=pointer]:
+                    - /url: /san-pham/126
+                    - generic [aria-hidden] [ref=f159e188]: 
+                    - text: Chọn phiên bản
+                  - button "So sánh" [ref=f159e190] [cursor=pointer]:
+                    - generic [aria-hidden] [ref=f159e191]: 
+                    - text: So sánh
+      - region [ref=f159e192]:
+        - generic [ref=f159e193]:
+          - heading "Theo hãng" [level=2] [ref=f159e194]
+          - link "Tất cả sản phẩm" [ref=f159e195] [cursor=pointer]:
+            - /url: /san-pham
+            - text: Tất cả sản phẩm
+            - generic [aria-hidden] [ref=f159e196]: 
+        - generic [ref=f159e197]:
+          - link "Yonex Astrox · Arcsaber · Nanoflare" [ref=f159e199] [cursor=pointer]:
+            - /url: /san-pham?brandId=1
+            - generic [aria-hidden] [ref=f159e200]: "Y"
+            - generic [ref=f159e201]: Yonex
+            - generic [ref=f159e202]: Astrox · Arcsaber · Nanoflare
+          - link "Li-Ning Axforce · Halbertec · Windstorm" [ref=f159e204] [cursor=pointer]:
+            - /url: /san-pham?brandId=2
+            - generic [aria-hidden] [ref=f159e205]: L
+            - generic [ref=f159e206]: Li-Ning
+            - generic [ref=f159e207]: Axforce · Halbertec · Windstorm
+          - link "Victor Thruster K · JetSpeed · Auraspeed" [ref=f159e209] [cursor=pointer]:
+            - /url: /san-pham?brandId=3
+            - generic [aria-hidden] [ref=f159e210]: V
+            - generic [ref=f159e211]: Victor
+            - generic [ref=f159e212]: Thruster K · JetSpeed · Auraspeed
+          - link "Mizuno Fortius · Altius" [ref=f159e214] [cursor=pointer]:
+            - /url: /san-pham?brandId=4
+            - generic [aria-hidden] [ref=f159e215]: M
+            - generic [ref=f159e216]: Mizuno
+            - generic [ref=f159e217]: Fortius · Altius
+          - link "Kumpoo Power Shot" [ref=f159e219] [cursor=pointer]:
+            - /url: /san-pham?brandId=5
+            - generic [aria-hidden] [ref=f159e220]: K
+            - generic [ref=f159e221]: Kumpoo
+            - generic [ref=f159e222]: Power Shot
+          - link "Apacs Ziggler · Feather Weight" [ref=f159e224] [cursor=pointer]:
+            - /url: /san-pham?brandId=6
+            - generic [aria-hidden] [ref=f159e225]: A
+            - generic [ref=f159e226]: Apacs
+            - generic [ref=f159e227]: Ziggler · Feather Weight
+      - region [ref=f159e228]:
+        - heading "Chọn nhanh theo lối chơi" [level=2] [ref=f159e229]
+        - generic [ref=f159e230]:
+          - link "Vợt phòng thủ Xem các mẫu vợt" [ref=f159e232] [cursor=pointer]:
+            - /url: /san-pham?categoryId=2
+            - generic [aria-hidden] [ref=f159e234]: 
+            - generic [ref=f159e235]: Vợt phòng thủ
+            - generic [ref=f159e236]: Xem các mẫu vợt
+          - link "Vợt tấn công Xem các mẫu vợt" [ref=f159e238] [cursor=pointer]:
+            - /url: /san-pham?categoryId=1
+            - generic [aria-hidden] [ref=f159e240]: 
+            - generic [ref=f159e241]: Vợt tấn công
+            - generic [ref=f159e242]: Xem các mẫu vợt
+          - link "Vợt toàn diện Xem các mẫu vợt" [ref=f159e244] [cursor=pointer]:
+            - /url: /san-pham?categoryId=3
+            - generic [aria-hidden] [ref=f159e246]: 
+            - generic [ref=f159e247]: Vợt toàn diện
+            - generic [ref=f159e248]: Xem các mẫu vợt
+          - link "Tất cả sản phẩm Lọc theo hãng và khoảng giá" [ref=f159e250] [cursor=pointer]:
+            - /url: /san-pham
+            - generic [aria-hidden] [ref=f159e252]: 
+            - generic [ref=f159e253]: Tất cả sản phẩm
+            - generic [ref=f159e254]: Lọc theo hãng và khoảng giá
+  - contentinfo [ref=f159e255]:
+    - generic [ref=f159e256]:
+      - generic [ref=f159e257]:
+        - generic [ref=f159e258]:
+          - heading "BadStore" [level=2] [ref=f159e259]:
+            - generic [aria-hidden] [ref=f159e261]: 
+          - paragraph [ref=f159e263]: Website bán vợt cầu lông – đồ án tốt nghiệp, sản phẩm mang tính minh hoạ.
+          - paragraph [ref=f159e264]: Dữ liệu sản phẩm, hình ảnh dùng cho mục đích học tập.
+        - generic [ref=f159e265]:
+          - generic [ref=f159e266]:
+            - generic [aria-hidden] [ref=f159e267]: 
+            - text: Liên hệ
+          - paragraph [ref=f159e268]: "Hotline: 1900 0000"
+          - paragraph [ref=f159e269]: "Email: cskh@badstore.local"
+          - paragraph [ref=f159e270]: "Địa chỉ: Số 1 Đại Cồ Việt, Bách Khoa, Hà Nội"
+          - paragraph [ref=f159e271]: "Giờ mở cửa: 8:00 – 21:30 hằng ngày"
+        - generic [ref=f159e272]:
+          - generic [ref=f159e273]:
+            - generic [aria-hidden] [ref=f159e274]: 
+            - text: Mua hàng & giao nhận
+          - list [ref=f159e275]:
+            - listitem [ref=f159e276]:
+              - link "Danh mục vợt cầu lông" [ref=f159e277] [cursor=pointer]:
+                - /url: /san-pham
+            - listitem [ref=f159e278]:
+              - link "So sánh sản phẩm" [ref=f159e279] [cursor=pointer]:
+                - /url: /so-sanh
+            - listitem [ref=f159e280]:
+              - link "Giỏ hàng của bạn" [ref=f159e281] [cursor=pointer]:
+                - /url: /gio-hang
+            - listitem [ref=f159e282]: Vận chuyển toàn quốc – tích hợp GHN khi cấu hình token.
+      - separator [ref=f159e283]
+      - generic [ref=f159e284]:
+        - generic [ref=f159e285]: © 2026 BadStore
+        - generic [ref=f159e286]: Đơn giá hiển thị bằng Việt Nam đồng (₫).
+  - text: 

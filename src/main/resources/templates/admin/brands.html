@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="vi"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/admin}">
+<head>
+    <title>Quản lý thương hiệu</title>
+</head>
+<body>
+
+<th:block layout:fragment="content">
+
+    <div class="page-head">
+        <div>
+            <h1 class="page-title"><i class="bi bi-tags" aria-hidden="true"></i> Quản lý thương hiệu</h1>
+            <p class="text-muted small mb-0">Hãng sản xuất dùng khi tạo sản phẩm và làm bộ lọc trên trang khách.</p>
+        </div>
+        <div class="d-flex align-items-center gap-2">
+            <span class="text-muted small" th:text="|${brands.size()} thương hiệu|">0 thương hiệu</span>
+            <a class="btn btn-sm btn-primary" th:href="@{/admin/thuong-hieu/tao-moi}">
+                <i class="bi bi-plus-square" aria-hidden="true"></i> Thêm thương hiệu
+            </a>
+        </div>
+    </div>
+
+    <form class="card-soft mb-3" method="get" th:action="@{/admin/thuong-hieu}">
+        <div class="card-body row g-2 align-items-end">
+            <div class="col-sm-8 col-lg-5">
+                <label class="form-label small" for="keyword">Tìm theo tên / mô tả</label>
+                <input class="form-control" id="keyword" name="keyword" th:value="${keyword}"
+                       placeholder="Ví dụ: Yonex">
+            </div>
+            <div class="col-lg-4 d-flex gap-2">
+                <button class="btn btn-primary" type="submit">
+                    <i class="bi bi-search" aria-hidden="true"></i> Tìm
+                </button>
+                <a class="btn btn-outline-secondary" th:href="@{/admin/thuong-hieu}">Xoá lọc</a>
+            </div>
+        </div>
+    </form>
+
+    <div class="card-soft">
+        <div class="table-responsive table-scroll">
+            <table class="table table-hover align-middle mb-0 table-sticky">
+                <thead>
+                <tr>
+                    <th scope="col" class="col-thumb">Logo</th>
+                    <th scope="col">Tên / Mô tả</th>
+                    <th scope="col" class="text-center">Sản phẩm đang dùng</th>
+                    <th scope="col">Cập nhật</th>
+                    <th scope="col" class="text-end">Thao tác</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="row : ${brands}">
+                    <td>
+                        <img th:if="${row.brand.logo != null}" th:src="@{${row.brand.logo}}"
+                             th:alt="${'Logo ' + row.brand.name}" class="admin-thumb border" loading="lazy">
+                        <span th:unless="${row.brand.logo != null}" class="admin-thumb-empty" aria-hidden="true">
+                            <i class="bi bi-tag" aria-hidden="true"></i>
+                        </span>
+                    </td>
+                    <td>
+                        <div class="fw-semibold" th:text="${row.brand.name}">Tên hãng</div>
+                        <div class="small text-muted" th:if="${row.brand.description != null}"
+                             th:text="${row.brand.description}">Mô tả</div>
+                    </td>
+                    <td class="text-center">
+                        <a th:if="${row.productCount > 0}"
+                           th:href="@{/admin/san-pham(brandId=${row.brand.id})}"
+                           th:attr="aria-label=|Xem ${row.productCount} sản phẩm của ${row.brand.name}|"
+                           th:text="${row.productCount}">0</a>
+                        <span th:unless="${row.productCount > 0}" class="text-muted">0</span>
+                    </td>
+                    <td class="small">
+                        <span th:insert="~{fragments/common :: dateTime(${row.brand.updatedAt})}">00/00/0000</span>
+                    </td>
+                    <td class="text-end">
+                        <div class="d-flex justify-content-end gap-1">
+                            <a class="btn btn-sm btn-outline-primary"
+                               th:href="@{/admin/thuong-hieu/{id}/sua(id=${row.brand.id})}"
+                               th:attr="aria-label=|Sửa hãng ${row.brand.name}|" title="Sửa hãng">
+                                <i class="bi bi-pencil-square" aria-hidden="true"></i>
+                                <span class="d-none d-xl-inline">Sửa</span>
+                            </a>
+                            <form th:action="@{/admin/thuong-hieu/{id}/xoa(id=${row.brand.id})}"
+                                  method="post" class="d-inline"
+                                  th:data-confirm="${'Xoá hãng ' + row.brand.name + '? Chỉ xoá được khi chưa có sản phẩm nào dùng hãng này.'}">
+                                <button class="btn btn-sm btn-outline-danger" type="submit"
+                                        th:attr="aria-label=|Xoá hãng ${row.brand.name}|" title="Xoá hãng">
+                                    <i class="bi bi-trash3" aria-hidden="true"></i>
+                                </button>
+                            </form>
+                        </div>
+                    </td>
+                </tr>
+                <tr th:if="${brands.isEmpty()}">
+                    <td colspan="5" class="p-0"
+                        th:insert="~{fragments/common :: emptyState('bi-tags', 'Chưa có thương hiệu nào. Hãy thêm hãng để dùng khi tạo sản phẩm.')}"></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+</th:block>
+
+</body>
+</html>

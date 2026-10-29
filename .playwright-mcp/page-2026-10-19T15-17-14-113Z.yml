@@ -1,0 +1,166 @@
+- generic [active] [ref=f61e1]:
+  - link "Bỏ qua tới nội dung chính" [ref=f61e2] [cursor=pointer]:
+    - /url: "#noi-dung-chinh"
+  - generic [ref=f61e4]:
+    - generic "Menu quản trị" [ref=f61e6]:
+      - navigation [ref=f61e8]:
+        - link "BadStore Trang quản trị" [ref=f61e9] [cursor=pointer]:
+          - /url: /admin
+          - generic [aria-hidden] [ref=f61e11]: 
+          - generic [ref=f61e12]:
+            - text: BadStore
+            - generic [ref=f61e13]: Trang quản trị
+        - paragraph [ref=f61e14]: Bán hàng
+        - list [ref=f61e15]:
+          - listitem [ref=f61e16]:
+            - link "Tổng quan" [ref=f61e17] [cursor=pointer]:
+              - /url: /admin
+              - generic [aria-hidden] [ref=f61e18]: 
+              - text: Tổng quan
+          - listitem [ref=f61e19]:
+            - link "Bán hàng tại quầy" [ref=f61e20] [cursor=pointer]:
+              - /url: /admin/ban-hang
+              - generic [aria-hidden] [ref=f61e21]: 
+              - text: Bán hàng tại quầy
+          - listitem [ref=f61e22]:
+            - link "Đơn hàng" [ref=f61e23] [cursor=pointer]:
+              - /url: /admin/don-hang
+              - generic [aria-hidden] [ref=f61e24]: 
+              - text: Đơn hàng
+        - paragraph [ref=f61e25]: Hàng hoá & khuyến mãi
+        - list [ref=f61e26]:
+          - listitem [ref=f61e27]:
+            - link "Sản phẩm & biến thể" [ref=f61e28] [cursor=pointer]:
+              - /url: /admin/san-pham
+              - generic [aria-hidden] [ref=f61e29]: 
+              - text: Sản phẩm & biến thể
+          - listitem [ref=f61e30]:
+            - link "Voucher" [ref=f61e31] [cursor=pointer]:
+              - /url: /admin/voucher
+              - generic [aria-hidden] [ref=f61e32]: 
+              - text: Voucher
+        - generic [ref=f61e33]:
+          - link "Xem cửa hàng" [ref=f61e34] [cursor=pointer]:
+            - /url: /
+            - generic [aria-hidden] [ref=f61e35]: 
+            - text: Xem cửa hàng
+          - paragraph [ref=f61e36]:
+            - generic [aria-hidden] [ref=f61e37]: 
+            - text: Đổi trạng thái đơn sẽ trừ/cộng kho ngay.
+    - main [ref=f61e38]:
+      - generic [ref=f61e39]:
+        - text: 
+        - generic [ref=f61e40]:
+          - generic [aria-hidden] [ref=f61e41]: 
+          - text: Khu quản trị BadStore
+        - generic [ref=f61e42]:
+          - link "Xem cửa hàng" [ref=f61e43] [cursor=pointer]:
+            - /url: /
+            - generic [aria-hidden] [ref=f61e44]: 
+            - text: Xem cửa hàng
+          - generic [ref=f61e45]:
+            - generic [aria-hidden] [ref=f61e46]: 
+            - generic [ref=f61e47]: admin@badstore.local
+          - button "Đăng xuất" [ref=f61e49] [cursor=pointer]:
+            - generic [aria-hidden] [ref=f61e50]: 
+            - text: Đăng xuất
+      - generic [ref=f61e51]:
+        - navigation "breadcrumb" [ref=f61e52]:
+          - list [ref=f61e53]:
+            - listitem [ref=f61e54]:
+              - link "Tổng quan" [ref=f61e55] [cursor=pointer]:
+                - /url: /admin
+            - listitem [ref=f61e56]:
+              - text: /
+              - link "Đơn hàng" [ref=f61e57] [cursor=pointer]:
+                - /url: /admin/don-hang
+            - listitem [ref=f61e58]: / Tạo đơn thủ công
+        - generic [ref=f61e59]:
+          - heading "Tạo đơn thủ công" [level=1] [ref=f61e60]:
+            - generic [aria-hidden] [ref=f61e61]: 
+            - text: Tạo đơn thủ công
+          - link "Danh sách đơn" [ref=f61e62] [cursor=pointer]:
+            - /url: /admin/don-hang
+            - generic [aria-hidden] [ref=f61e63]: 
+            - text: Danh sách đơn
+        - generic [ref=f61e65]:
+          - generic [ref=f61e66]:
+            - generic [ref=f61e67]:
+              - generic [ref=f61e68]:
+                - generic [ref=f61e69]:
+                  - generic [aria-hidden] [ref=f61e70]: 
+                  - text: Sản phẩm bán cho khách
+                - button "Thêm dòng" [ref=f61e71] [cursor=pointer]:
+                  - generic [aria-hidden] [ref=f61e72]: 
+                  - text: Thêm dòng
+              - generic [ref=f61e73]:
+                - generic [ref=f61e75]:
+                  - generic [ref=f61e76]:
+                    - generic [ref=f61e77]: SKU biến thể *
+                    - 'combobox "Nhập SKU, ví dụ: YX-AX100ZZ-01" [ref=f61e78]'
+                  - generic [ref=f61e79]:
+                    - generic [ref=f61e80]: Số lượng
+                    - spinbutton [ref=f61e81]: "1"
+                  - generic [ref=f61e82]:
+                    - button "Xoá dòng hàng" [disabled]:
+                      - generic [aria-hidden]: 
+                - paragraph [ref=f61e84]: "Mẹo: bấm vào ô SKU để chọn từ danh sách gợi ý (kèm tồn kho hiện tại). Nhập trùng SKU sẽ được cộng dồn thành một dòng."
+            - generic [ref=f61e85]:
+              - generic [ref=f61e86]:
+                - generic [aria-hidden] [ref=f61e87]: 
+                - text: Thanh toán & phí
+              - generic [ref=f61e88]:
+                - generic [ref=f61e89]:
+                  - generic [ref=f61e90]: Phương thức thanh toán *
+                  - combobox "Phương thức thanh toán *" [ref=f61e91]:
+                    - option "Tiền mặt tại quầy" [selected]
+                    - option "Thanh toán khi nhận hàng (COD)"
+                    - option "Chuyển khoản ngân hàng"
+                - generic [ref=f61e92]:
+                  - generic [ref=f61e93]: Phí vận chuyển (₫)
+                  - spinbutton "Phí vận chuyển (₫)" [ref=f61e94]: "0"
+                  - generic [ref=f61e95]: Khách mua tại quầy thì để 0.
+                - generic [ref=f61e96]:
+                  - generic [ref=f61e97]: Mã giảm giá (nếu có)
+                  - textbox "Mã giảm giá (nếu có)" [ref=f61e98]:
+                    - /placeholder: "Ví dụ: GIAM10"
+                - generic [ref=f61e100]:
+                  - checkbox "Xác nhận đơn ngay (trừ kho luôn)" [checked] [ref=f61e101]
+                  - generic [ref=f61e102]: Xác nhận đơn ngay (trừ kho luôn)
+          - generic [ref=f61e103]:
+            - generic [ref=f61e104]:
+              - generic [ref=f61e105]:
+                - generic [aria-hidden] [ref=f61e106]: 
+                - text: Khách hàng & giao hàng
+              - generic [ref=f61e107]:
+                - generic [ref=f61e108]:
+                  - generic [ref=f61e109]: Email khách hàng (bỏ trống = khách vãng lai)
+                  - combobox "Email khách hàng (bỏ trống = khách vãng lai)" [ref=f61e110]
+                - generic [ref=f61e111]:
+                  - generic [ref=f61e112]: Tên người nhận *
+                  - textbox "Tên người nhận *" [ref=f61e113]
+                  - generic [ref=f61e114]: Chọn email khách ở trên thì có thể bỏ trống để lấy theo tài khoản.
+                - generic [ref=f61e115]:
+                  - generic [ref=f61e116]: Số điện thoại *
+                  - textbox "Số điện thoại *" [ref=f61e117]
+                - generic [ref=f61e118]:
+                  - generic [ref=f61e119]: Địa chỉ giao hàng *
+                  - textbox "Địa chỉ giao hàng *" [ref=f61e120]
+                - generic [ref=f61e121]:
+                  - generic [ref=f61e122]: Ghi chú nội bộ
+                  - textbox "Ghi chú nội bộ" [ref=f61e123]:
+                    - /placeholder: "Ví dụ: khách quen, giao buổi chiều…"
+              - generic [ref=f61e124]:
+                - button "Tạo đơn" [ref=f61e125] [cursor=pointer]:
+                  - generic [aria-hidden] [ref=f61e126]: 
+                  - text: Tạo đơn
+                - link "Huỷ" [ref=f61e127] [cursor=pointer]:
+                  - /url: /admin/don-hang
+            - generic [ref=f61e128]:
+              - generic [aria-hidden] [ref=f61e129]: 
+              - text: Đơn tạo ở đây có
+              - strong [ref=f61e130]: order_source = MANUAL
+              - text: và ghi nhận admin tạo đơn. Tiền mặt tại quầy được đánh dấu
+              - strong [ref=f61e131]: đã thanh toán
+              - text: ngay; COD/chuyển khoản thì chờ admin xác nhận ở trang chi tiết đơn.
+  - text: 

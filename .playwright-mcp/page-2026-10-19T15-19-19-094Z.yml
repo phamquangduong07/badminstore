@@ -1,0 +1,126 @@
+- generic [active] [ref=f122e1]:
+  - link "Bỏ qua tới nội dung chính" [ref=f122e2] [cursor=pointer]:
+    - /url: "#noi-dung-chinh"
+  - main [ref=f122e5]:
+    - generic [ref=f122e6]:
+      - button "Mở menu quản trị" [ref=f122e7] [cursor=pointer]:
+        - generic [aria-hidden] [ref=f122e8]: 
+      - text: 
+      - generic [ref=f122e9]:
+        - text:  
+        - button "Đăng xuất" [ref=f122e11] [cursor=pointer]:
+          - generic [aria-hidden] [ref=f122e12]: 
+    - generic [ref=f122e13]:
+      - navigation "breadcrumb" [ref=f122e14]:
+        - list [ref=f122e15]:
+          - listitem [ref=f122e16]:
+            - link "Tổng quan" [ref=f122e17] [cursor=pointer]:
+              - /url: /admin
+          - listitem [ref=f122e18]:
+            - text: /
+            - link "Sản phẩm" [ref=f122e19] [cursor=pointer]:
+              - /url: /admin/san-pham
+          - listitem [ref=f122e20]: / Thêm mới
+      - generic [ref=f122e21]:
+        - heading "Thêm sản phẩm mới" [level=1] [ref=f122e22]:
+          - generic [aria-hidden] [ref=f122e23]: 
+        - link "Danh sách sản phẩm" [ref=f122e25] [cursor=pointer]:
+          - /url: /admin/san-pham
+          - generic [aria-hidden] [ref=f122e26]: 
+          - text: Danh sách sản phẩm
+      - generic [ref=f122e28]:
+        - generic [ref=f122e30]:
+          - generic [ref=f122e31]:
+            - generic [aria-hidden] [ref=f122e32]: 
+            - text: Thông tin chung
+          - generic [ref=f122e33]:
+            - generic [ref=f122e34]:
+              - generic [ref=f122e35]: Mã sản phẩm *
+              - textbox "Mã sản phẩm *" [ref=f122e36]:
+                - /placeholder: YX-AX100ZZ
+              - generic [ref=f122e37]: Hệ thống tự viết hoa; mã dùng làm tiền tố SKU biến thể.
+            - generic [ref=f122e38]:
+              - generic [ref=f122e39]: Tên sản phẩm *
+              - textbox "Tên sản phẩm *" [ref=f122e40]:
+                - /placeholder: Vợt cầu lông Yonex Astrox 100 ZZ
+            - generic [ref=f122e41]:
+              - generic [ref=f122e42]: Hãng sản xuất *
+              - combobox "Hãng sản xuất *" [ref=f122e43]:
+                - option "-- Chọn hãng --" [selected]
+                - option "Apacs"
+                - option "Kumpoo"
+                - option "Li-Ning"
+                - option "Mizuno"
+                - option "Victor"
+                - option "Yonex"
+            - generic [ref=f122e44]:
+              - generic [ref=f122e45]: Loại (lối chơi) *
+              - combobox "Loại (lối chơi) *" [ref=f122e46]:
+                - option "-- Chọn loại --" [selected]
+                - option "Vợt phòng thủ"
+                - option "Vợt tấn công"
+                - option "Vợt toàn diện"
+            - generic [ref=f122e47]:
+              - generic [ref=f122e48]: Trạng thái *
+              - combobox "Trạng thái *" [ref=f122e49]:
+                - option "Đang bán" [selected]
+                - option "Bản nháp"
+                - option "Đã ẩn"
+              - generic [ref=f122e50]:
+                - text: Chỉ sản phẩm
+                - emphasis [ref=f122e51]: Đang bán
+                - text: mới hiện trên trang khách.
+            - generic [ref=f122e52]:
+              - generic [ref=f122e53]: Mô tả sản phẩm
+              - textbox "Mô tả sản phẩm" [ref=f122e54]:
+                - /placeholder: Điểm nổi bật, công nghệ, phù hợp với lối chơi nào…
+        - generic [ref=f122e55]:
+          - generic [ref=f122e56]:
+            - generic [ref=f122e57]:
+              - generic [aria-hidden] [ref=f122e58]: 
+              - text: Thông số kỹ thuật
+            - generic [ref=f122e59]:
+              - generic [ref=f122e60]:
+                - generic [ref=f122e61]: Chiều dài (mm)
+                - spinbutton "Chiều dài (mm)" [ref=f122e62]
+              - generic [ref=f122e63]:
+                - generic [ref=f122e64]: Điểm cân bằng (mm)
+                - spinbutton "Điểm cân bằng (mm)" [ref=f122e65]
+              - generic [ref=f122e66]:
+                - generic [ref=f122e67]: Kiểu cân bằng
+                - combobox "Kiểu cân bằng" [ref=f122e68]:
+                  - option "-- Không rõ --" [selected]
+                  - option "Nặng đầu (tấn công)"
+                  - option "Cân bằng"
+                  - option "Nhẹ đầu (phòng thủ)"
+              - generic [ref=f122e69]:
+                - generic [ref=f122e70]: Độ cứng thân vợt
+                - combobox "Độ cứng thân vợt" [ref=f122e71]:
+                  - option "-- Không rõ --" [selected]
+                  - option "Mềm"
+                  - option "Trung bình"
+                  - option "Cứng"
+                  - option "Rất cứng"
+              - generic [ref=f122e72]:
+                - generic [ref=f122e73]: Căng tối đa (kg)
+                - spinbutton "Căng tối đa (kg)" [ref=f122e74]
+              - generic [ref=f122e75]:
+                - generic [ref=f122e76]: Chất liệu khung
+                - textbox "Chất liệu khung" [ref=f122e77]:
+                  - /placeholder: Graphite + Namd
+              - generic [ref=f122e78]:
+                - generic [ref=f122e79]: Chất liệu thân vợt
+                - textbox "Chất liệu thân vợt" [ref=f122e80]:
+                  - /placeholder: Graphite siêu bền
+            - generic [ref=f122e81]:
+              - button "Lưu sản phẩm" [ref=f122e82] [cursor=pointer]:
+                - generic [aria-hidden] [ref=f122e83]: 
+                - text: Lưu sản phẩm
+              - link "Huỷ" [ref=f122e84] [cursor=pointer]:
+                - /url: /admin/san-pham
+          - generic [ref=f122e85]:
+            - generic [aria-hidden] [ref=f122e86]: 
+            - text: Giá bán và tồn kho nằm ở từng
+            - strong [ref=f122e87]: biến thể
+            - text: (màu × trọng lượng × cỡ cán). Sau khi lưu sản phẩm, hãy sang trang “Biến thể & ảnh” để bổ sung.
+  - text: 

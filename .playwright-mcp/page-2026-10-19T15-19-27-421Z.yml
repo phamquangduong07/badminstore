@@ -1,0 +1,192 @@
+- generic [active] [ref=f134e1]:
+  - link "Bỏ qua tới nội dung chính" [ref=f134e2] [cursor=pointer]:
+    - /url: "#noi-dung-chinh"
+  - main [ref=f134e5]:
+    - generic [ref=f134e6]:
+      - button "Mở menu quản trị" [ref=f134e7] [cursor=pointer]:
+        - generic [aria-hidden] [ref=f134e8]: 
+      - generic [ref=f134e9]:
+        - generic [aria-hidden] [ref=f134e10]: 
+        - text: Khu quản trị BadStore
+      - generic [ref=f134e11]:
+        - link "Xem cửa hàng" [ref=f134e12] [cursor=pointer]:
+          - /url: /
+          - generic [aria-hidden] [ref=f134e13]: 
+          - text: Xem cửa hàng
+        - text: 
+        - button "Đăng xuất" [ref=f134e15] [cursor=pointer]:
+          - generic [aria-hidden] [ref=f134e16]: 
+          - text: Đăng xuất
+    - generic [ref=f134e17]:
+      - generic [ref=f134e18]:
+        - heading "Quản lý đơn hàng" [level=1] [ref=f134e19]:
+          - generic [aria-hidden] [ref=f134e20]: 
+          - text: Quản lý đơn hàng
+        - generic [ref=f134e21]:
+          - generic [ref=f134e22]: Tổng 7 đơn phù hợp
+          - link "Tạo đơn thủ công" [ref=f134e23] [cursor=pointer]:
+            - /url: /admin/don-hang/tao-don
+            - generic [aria-hidden] [ref=f134e24]: 
+            - text: Tạo đơn thủ công
+      - generic [ref=f134e26]:
+        - generic [ref=f134e27]:
+          - generic [ref=f134e28]: Trạng thái
+          - combobox "Trạng thái" [ref=f134e29]:
+            - option "-- Tất cả --" [selected]
+            - option "Chờ xác nhận"
+            - option "Đã xác nhận"
+            - option "Đang giao hàng"
+            - option "Giao thành công"
+            - option "Đã huỷ"
+            - option "Đã hoàn trả"
+        - generic [ref=f134e30]:
+          - generic [ref=f134e31]: Mã đơn / SĐT / email khách
+          - textbox "Mã đơn / SĐT / email khách" [ref=f134e32]:
+            - /placeholder: "Ví dụ: BS261016… hoặc 0987…"
+        - generic [ref=f134e33]:
+          - button "Lọc" [ref=f134e34] [cursor=pointer]:
+            - generic [aria-hidden] [ref=f134e35]: 
+            - text: Lọc
+          - link "Xoá lọc" [ref=f134e36] [cursor=pointer]:
+            - /url: /admin/don-hang
+      - table [ref=f134e39]:
+        - rowgroup [ref=f134e40]:
+          - row [ref=f134e41]:
+            - columnheader "Mã đơn" [ref=f134e42]
+            - columnheader "Khách" [ref=f134e43]
+            - columnheader "Ngày đặt" [ref=f134e44]
+            - columnheader "SL" [ref=f134e45]
+            - columnheader "Tổng tiền" [ref=f134e46]
+            - columnheader "Trạng thái" [ref=f134e47]
+            - columnheader "Thanh toán" [ref=f134e48]
+            - columnheader "Thao tác" [ref=f134e49]
+        - rowgroup [ref=f134e50]:
+          - row [ref=f134e51]:
+            - cell [ref=f134e52]:
+              - link "BS261018001312731" [ref=f134e53] [cursor=pointer]:
+                - /url: /admin/don-hang/330
+            - cell "truongthihan0610@gmail.com Dương" [ref=f134e54]:
+              - generic [ref=f134e55]: truongthihan0610@gmail.com
+              - generic [ref=f134e56]: Dương
+            - cell "18/10/2026 00:13" [ref=f134e57]
+            - cell "1" [ref=f134e58]
+            - cell "4.320.000 ₫" [ref=f134e59]
+            - cell "Đã xác nhận" [ref=f134e60]
+            - cell "Chuyển khoản ngân hàng Đã thanh toán" [ref=f134e62]:
+              - generic [ref=f134e63]: Chuyển khoản ngân hàng
+              - generic [ref=f134e64]: Đã thanh toán
+            - cell [ref=f134e65]:
+              - link "Xem chi tiết đơn BS261018001312731" [ref=f134e67] [cursor=pointer]:
+                - /url: /admin/don-hang/330
+                - generic [aria-hidden] [ref=f134e68]: 
+          - row [ref=f134e69]:
+            - cell "BS261017004154058 Tạo thủ công" [ref=f134e70]:
+              - link "BS261017004154058" [ref=f134e71] [cursor=pointer]:
+                - /url: /admin/don-hang/307
+              - generic [ref=f134e72]: Tạo thủ công
+            - cell "phamquangduong07@gmail.com test" [ref=f134e74]:
+              - generic [ref=f134e75]: phamquangduong07@gmail.com
+              - generic [ref=f134e76]: test
+            - cell "17/10/2026 00:41" [ref=f134e77]
+            - cell "3" [ref=f134e78]
+            - cell "3.570.000 ₫" [ref=f134e79]
+            - cell "Đã xác nhận" [ref=f134e80]
+            - cell "Chuyển khoản ngân hàng Chờ thanh toán" [ref=f134e82]:
+              - generic [ref=f134e83]: Chuyển khoản ngân hàng
+              - generic [ref=f134e84]: Chờ thanh toán
+            - cell [ref=f134e85]:
+              - link "Xem chi tiết đơn BS261017004154058" [ref=f134e87] [cursor=pointer]:
+                - /url: /admin/don-hang/307
+                - generic [aria-hidden] [ref=f134e88]: 
+          - row [ref=f134e89]:
+            - cell "BS261016072347765 Tạo thủ công" [ref=f134e90]:
+              - link "BS261016072347765" [ref=f134e91] [cursor=pointer]:
+                - /url: /admin/don-hang/177
+              - generic [ref=f134e92]: Tạo thủ công
+            - cell "phamquangduong07@gmail.com test" [ref=f134e94]:
+              - generic [ref=f134e95]: phamquangduong07@gmail.com
+              - generic [ref=f134e96]: test
+            - cell "16/10/2026 07:23" [ref=f134e97]
+            - cell "4" [ref=f134e98]
+            - cell "10.560.000 ₫" [ref=f134e99]
+            - cell "Đã xác nhận" [ref=f134e100]
+            - cell "Tiền mặt tại quầy Đã thanh toán" [ref=f134e102]:
+              - generic [ref=f134e103]: Tiền mặt tại quầy
+              - generic [ref=f134e104]: Đã thanh toán
+            - cell [ref=f134e105]:
+              - link "Xem chi tiết đơn BS261016072347765" [ref=f134e107] [cursor=pointer]:
+                - /url: /admin/don-hang/177
+                - generic [aria-hidden] [ref=f134e108]: 
+          - row [ref=f134e109]:
+            - cell [ref=f134e110]:
+              - link "BS261016013255070" [ref=f134e111] [cursor=pointer]:
+                - /url: /admin/don-hang/102
+            - cell "admin@badstore.local Dương" [ref=f134e112]:
+              - generic [ref=f134e113]: admin@badstore.local
+              - generic [ref=f134e114]: Dương
+            - cell "16/10/2026 01:32" [ref=f134e115]
+            - cell "1" [ref=f134e116]
+            - cell "2.920.000 ₫" [ref=f134e117]
+            - cell "Đã xác nhận" [ref=f134e118]
+            - cell "Chuyển khoản ngân hàng Chờ thanh toán" [ref=f134e120]:
+              - generic [ref=f134e121]: Chuyển khoản ngân hàng
+              - generic [ref=f134e122]: Chờ thanh toán
+            - cell [ref=f134e123]:
+              - link "Xem chi tiết đơn BS261016013255070" [ref=f134e125] [cursor=pointer]:
+                - /url: /admin/don-hang/102
+                - generic [aria-hidden] [ref=f134e126]: 
+          - row [ref=f134e127]:
+            - cell [ref=f134e128]:
+              - link "BS261016011008437" [ref=f134e129] [cursor=pointer]:
+                - /url: /admin/don-hang/69
+            - cell "truongthihan0610@gmail.com Dương" [ref=f134e130]:
+              - generic [ref=f134e131]: truongthihan0610@gmail.com
+              - generic [ref=f134e132]: Dương
+            - cell "16/10/2026 01:10" [ref=f134e133]
+            - cell "2" [ref=f134e134]
+            - cell "5.780.000 ₫" [ref=f134e135]
+            - cell "Giao thành công" [ref=f134e136]
+            - cell "Thanh toán khi nhận hàng (COD) Đã thanh toán" [ref=f134e138]:
+              - generic [ref=f134e139]: Thanh toán khi nhận hàng (COD)
+              - generic [ref=f134e140]: Đã thanh toán
+            - cell [ref=f134e141]:
+              - link "Xem chi tiết đơn BS261016011008437" [ref=f134e143] [cursor=pointer]:
+                - /url: /admin/don-hang/69
+                - generic [aria-hidden] [ref=f134e144]: 
+          - row [ref=f134e145]:
+            - cell [ref=f134e146]:
+              - link "BS261016001045817" [ref=f134e147] [cursor=pointer]:
+                - /url: /admin/don-hang/14
+            - cell "smoke.510708@example.com Khach Smoke" [ref=f134e148]:
+              - generic [ref=f134e149]: smoke.510708@example.com
+              - generic [ref=f134e150]: Khach Smoke
+            - cell "16/10/2026 00:10" [ref=f134e151]
+            - cell "2" [ref=f134e152]
+            - cell "9.380.000 ₫" [ref=f134e153]
+            - cell "Đã huỷ" [ref=f134e154]
+            - cell "Thanh toán khi nhận hàng (COD) Chờ thanh toán" [ref=f134e156]:
+              - generic [ref=f134e157]: Thanh toán khi nhận hàng (COD)
+              - generic [ref=f134e158]: Chờ thanh toán
+            - cell [ref=f134e159]:
+              - link "Xem chi tiết đơn BS261016001045817" [ref=f134e161] [cursor=pointer]:
+                - /url: /admin/don-hang/14
+                - generic [aria-hidden] [ref=f134e162]: 
+          - row [ref=f134e163]:
+            - cell [ref=f134e164]:
+              - link "TEST-ORD-001" [ref=f134e165] [cursor=pointer]:
+                - /url: /admin/don-hang/1
+            - cell "smoke.test@example.com Test User Smoke" [ref=f134e166]:
+              - generic [ref=f134e167]: smoke.test@example.com
+              - generic [ref=f134e168]: Test User Smoke
+            - cell "12/10/2026 23:49" [ref=f134e169]
+            - cell "2" [ref=f134e170]
+            - cell "3.030.000 ₫" [ref=f134e171]
+            - cell "Đã xác nhận" [ref=f134e172]
+            - cell "Thanh toán khi nhận hàng (COD) Chờ thanh toán" [ref=f134e174]:
+              - generic [ref=f134e175]: Thanh toán khi nhận hàng (COD)
+              - generic [ref=f134e176]: Chờ thanh toán
+            - cell [ref=f134e177]:
+              - link "Xem chi tiết đơn TEST-ORD-001" [ref=f134e179] [cursor=pointer]:
+                - /url: /admin/don-hang/1
+                - generic [aria-hidden] [ref=f134e180]: 
+  - text: 

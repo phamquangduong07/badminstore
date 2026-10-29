@@ -1,11 +1,14 @@
 package com.example.demo.service;
 
+import com.example.demo.dto.ghn.GhnDistrict;
+import com.example.demo.dto.ghn.GhnProvince;
 import com.example.demo.dto.shop.AddressForm;
 import com.example.demo.entity.UserAddress;
 import com.example.demo.exception.BusinessException;
 import com.example.demo.repository.UserAddressRepository;
 import com.example.demo.repository.UserRepository;
 import java.util.List;
+import java.util.Locale;
 import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -113,8 +116,12 @@ public class AddressService {
      * Lưu mã Tỉnh–Huyện–Xã của GHN kèm theo địa chỉ (nếu khách chọn từ dropdown).
      *
      * Khách gửi mã từ trình duyệt nên KHÔNG tin ngay: mã phải tồn tại thật trong dữ liệu GHN
-     * mới được lưu (dữ liệu này đã có cache ở server). Mã sai/lạ ⇒ bỏ qua, địa chỉ vẫn dùng được
-     * và phí ship rơi về mức phí mặc định của shop.
+     * (dữ liệu này đã có cache ở server) VÀ tên địa danh khách nhập phải khớp với tên của mã đó.
+     * Nhờ vậy khách không thể chọn địa chỉ Hà Nội rồi sửa tên thành nơi khác để ăn phí ship rẻ hơn.
+     * Mã sai/lệch tên ⇒ bỏ qua, địa chỉ vẫn dùng được và phí ship rơi về mức mặc định của shop.
+     *
+     * Khi mã hợp lệ, tên địa danh được ghi lại theo đúng tên GHN trả về để dữ liệu sạch và
+     * khớp với vận đơn GHN sau này.
      */
     private void applyGhnCodes(UserAddress address, AddressForm form) {
         address.setProvinceId(null);
@@ -125,21 +132,54 @@ public class AddressService {
                 || form.getProvinceId() == null || form.getDistrictId() == null) {
             return;
         }
-        boolean provinceOk = ghnAddressService.provinces().stream()
-                .anyMatch(province -> province.id() == form.getProvinceId());
-        boolean districtOk = ghnAddressService.districts(form.getProvinceId()).stream()
-                .anyMatch(district -> district.id() == form.getDistrictId());
-        if (!provinceOk || !districtOk) {
+
+        GhnProvince province = ghnAddressService.provinces().stream()
+                .filter(item -> item.id() == form.getProvinceId())
+                .findFirst()
+                .orElse(null);
+        if (province == null || !samePlaceName(province.name(), form.getProvinceName())) {
             return;
         }
-        address.setProvinceId(form.getProvinceId());
-        address.setDistrictId(form.getDistrictId());
+
+        GhnDistrict district = ghnAddressService.districts(province.id()).stream()
+                .filter(item -> item.id() == form.getDistrictId())
+                .findFirst()
+                .orElse(null);
+        if (district == null || !samePlaceName(district.name(), form.getDistrictName())) {
+            return;
+        }
+
+        address.setProvinceId(province.id());
+        address.setProvinceName(province.name());
+        address.setDistrictId(district.id());
+        address.setDistrictName(district.name());
 
         String wardCode = trimToNull(form.getWardCode());
-        if (wardCode != null && ghnAddressService.wards(form.getDistrictId()).stream()
-                .anyMatch(ward -> ward.code().equals(wardCode))) {
-            address.setWardCode(wardCode);
+        if (wardCode == null) {
+            return;
         }
+        ghnAddressService.wards(district.id()).stream()
+                .filter(ward -> ward.code().equals(wardCode) && samePlaceName(ward.name(), form.getWardName()))
+                .findFirst()
+                .ifPresent(ward -> {
+                    address.setWardCode(ward.code());
+                    address.setWardName(ward.name());
+                });
+    }
+
+    /** So khớp tên địa danh khách nhập với tên GHN, bỏ qua tiền tố hành chính (TP., Quận, Phường…). */
+    private boolean samePlaceName(String officialName, String typedName) {
+        String official = normalizePlaceName(officialName);
+        return !official.isEmpty() && official.equals(normalizePlaceName(typedName));
+    }
+
+    private String normalizePlaceName(String value) {
+        if (value == null) {
+            return "";
+        }
+        String normalized = value.trim().toLowerCase(Locale.ROOT).replaceAll("\\s+", " ");
+        return normalized.replaceFirst(
+                "^(tp\\.?|t\\.p\\.|thành phố|tỉnh|quận|huyện|thị xã|thị trấn|phường|xã)\\s+", "");
     }
 
     private String trimToNull(String value) {

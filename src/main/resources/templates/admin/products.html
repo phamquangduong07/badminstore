@@ -11,11 +11,11 @@
 <th:block layout:fragment="content">
 
     <div class="page-head">
-        <h1 class="page-title"><i class="bi bi-box-seam"></i> Quản lý sản phẩm</h1>
+        <h1 class="page-title"><i class="bi bi-box-seam" aria-hidden="true"></i> Quản lý sản phẩm</h1>
         <div class="d-flex align-items-center gap-2">
             <span class="text-muted small" th:text="|Tổng ${products.totalElements} sản phẩm phù hợp|">Tổng 0</span>
             <a class="btn btn-sm btn-primary" th:href="@{/admin/san-pham/tao-moi}">
-                <i class="bi bi-plus-square"></i> Thêm sản phẩm
+                <i class="bi bi-plus-square" aria-hidden="true"></i> Thêm sản phẩm
             </a>
         </div>
     </div>
@@ -52,15 +52,15 @@
                 </select>
             </div>
             <div class="col-lg-3 d-flex gap-2">
-                <button class="btn btn-primary" type="submit"><i class="bi bi-search"></i> Lọc</button>
+                <button class="btn btn-primary" type="submit"><i class="bi bi-search" aria-hidden="true"></i> Lọc</button>
                 <a class="btn btn-outline-secondary" th:href="@{/admin/san-pham}">Xoá lọc</a>
             </div>
         </div>
     </form>
 
     <div class="card-soft">
-        <div class="table-responsive">
-            <table class="table table-hover align-middle mb-0">
+        <div class="table-responsive table-scroll">
+            <table class="table table-hover align-middle mb-0 table-sticky">
                 <thead>
                 <tr>
                     <th scope="col">Ảnh</th>
@@ -78,7 +78,7 @@
                         <img th:if="${row.thumbnailUrl != null}" th:src="@{${row.thumbnailUrl}}"
                              th:alt="${'Ảnh ' + row.product.name}" class="admin-thumb border" loading="lazy">
                         <span th:unless="${row.thumbnailUrl != null}" class="admin-thumb-empty" aria-hidden="true">
-                            <i class="bi bi-image"></i>
+                            <i class="bi bi-image" aria-hidden="true"></i>
                         </span>
                     </td>
                     <td>
@@ -104,12 +104,12 @@
                             <a class="btn btn-sm btn-outline-primary"
                                th:href="@{/admin/san-pham/{id}/sua(id=${row.product.id})}"
                                th:attr="aria-label=|Sửa ${row.product.name}|" title="Sửa thông tin sản phẩm">
-                                <i class="bi bi-pencil-square"></i>
+                                <i class="bi bi-pencil-square" aria-hidden="true"></i>
                             </a>
                             <a class="btn btn-sm btn-outline-dark"
                                th:href="@{/admin/san-pham/{id}/bien-the(id=${row.product.id})}"
                                th:attr="aria-label=|Biến thể và ảnh của ${row.product.name}|" title="Biến thể &amp; ảnh">
-                                <i class="bi bi-boxes"></i>
+                                <i class="bi bi-boxes" aria-hidden="true"></i>
                             </a>
                             <form th:action="@{/admin/san-pham/{id}/doi-trang-thai(id=${row.product.id})}"
                                   method="post" class="d-inline"
@@ -122,7 +122,7 @@
                                         type="submit"
                                         th:attr="aria-label=|Đổi trạng thái ${row.product.name}|"
                                         th:title="${row.product.status.name() == 'ACTIVE'} ? 'Ẩn khỏi trang khách' : 'Cho hiển thị lại'">
-                                    <i class="bi"
+                                    <i class="bi" aria-hidden="true"
                                        th:classappend="${row.product.status.name() == 'ACTIVE'} ? 'bi-eye-slash' : 'bi-eye'"></i>
                                 </button>
                             </form>
@@ -131,50 +131,26 @@
                                   th:data-confirm="${'Xoá sản phẩm ' + row.product.name + '? Sản phẩm sẽ biến mất khỏi cửa hàng (đơn hàng cũ vẫn giữ nguyên).'}">
                                 <button class="btn btn-sm btn-outline-danger" type="submit"
                                         th:attr="aria-label=|Xoá ${row.product.name}|" title="Xoá sản phẩm">
-                                    <i class="bi bi-trash3"></i>
+                                    <i class="bi bi-trash3" aria-hidden="true"></i>
                                 </button>
                             </form>
                         </div>
                     </td>
                 </tr>
                 <tr th:if="${products.empty}">
-                    <td colspan="7">
-                        <div class="empty-state">
-                            <i class="bi bi-box"></i>
-                            <p>Không có sản phẩm nào phù hợp bộ lọc.</p>
-                        </div>
-                    </td>
+                    <td colspan="7" class="p-0"
+                        th:insert="~{fragments/common :: emptyState('bi-box', 'Không có sản phẩm nào phù hợp bộ lọc.')}"></td>
                 </tr>
                 </tbody>
             </table>
         </div>
     </div>
 
-    <nav th:if="${products.totalPages > 1}" class="mt-3" aria-label="Phân trang sản phẩm">
-        <ul class="pagination justify-content-center mb-1">
-            <li class="page-item" th:classappend="${products.first} ? 'disabled'">
-                <a class="page-link" rel="prev"
-                   th:href="@{/admin/san-pham(page=${products.number}, keyword=${keyword}, brandId=${brandFilter},
-                             categoryId=${categoryFilter}, status=${statusFilter})}">
-                    <i class="bi bi-chevron-left"></i> Trước
-                </a>
-            </li>
-            <li class="page-item" th:each="n : ${pageNumbers}" th:classappend="${n == products.number} ? 'active'">
-                <a class="page-link" th:text="${n + 1}"
-                   th:href="@{/admin/san-pham(page=${n + 1}, keyword=${keyword}, brandId=${brandFilter},
-                             categoryId=${categoryFilter}, status=${statusFilter})}">1</a>
-            </li>
-            <li class="page-item" th:classappend="${products.last} ? 'disabled'">
-                <a class="page-link" rel="next"
-                   th:href="@{/admin/san-pham(page=${products.number + 2}, keyword=${keyword}, brandId=${brandFilter},
-                             categoryId=${categoryFilter}, status=${statusFilter})}">
-                    Sau <i class="bi bi-chevron-right"></i>
-                </a>
-            </li>
-        </ul>
-        <p class="text-center text-muted small mb-0"
-           th:text="|Trang ${products.number + 1}/${products.totalPages}|">Trang 1/1</p>
-    </nav>
+    <!-- Phân trang dùng chung – giữ nguyên bộ lọc (từ khoá, hãng, loại, trạng thái) khi sang trang -->
+    <div th:replace="~{fragments/pagination :: pager(
+            page=${products}, pageNumbers=${pageNumbers},
+            url='/admin/san-pham', ariaLabel='Phân trang sản phẩm', itemLabel='sản phẩm',
+            query=|keyword=${#uris.escapeQueryParam(keyword ?: '')}&brandId=${brandFilter ?: ''}&categoryId=${categoryFilter ?: ''}&status=${statusFilter ?: ''}|)}"></div>
 
 </th:block>
 

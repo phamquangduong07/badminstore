@@ -99,6 +99,7 @@ public class CheckoutController {
      */
     private void prepareGhnModel(Model model, CheckoutSummary summary) {
         model.addAttribute("ghnEnabled", ghnAddressService.isAvailable());
+        model.addAttribute("ghnShippingEnabled", ghnAddressService.isShippingAvailable());
         model.addAttribute("ghnMock", ghnAddressService.isMock());
         model.addAttribute("ghnWeightGram", ghnAddressService.shippingWeight(summary.getTotalQuantity()));
         model.addAttribute("ghnWarehouse", ghnAddressService.warehouseAddress());

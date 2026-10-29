@@ -1,0 +1,330 @@
+- generic [active] [ref=f26e1]:
+  - link "Bỏ qua tới nội dung chính" [ref=f26e2] [cursor=pointer]:
+    - /url: "#noi-dung-chinh"
+  - main [ref=f26e5]:
+    - generic [ref=f26e6]:
+      - button "Mở menu quản trị" [ref=f26e7] [cursor=pointer]:
+        - generic [aria-hidden] [ref=f26e8]: 
+      - text: 
+      - generic [ref=f26e9]:
+        - text:  
+        - button "Đăng xuất" [ref=f26e11] [cursor=pointer]:
+          - generic [aria-hidden] [ref=f26e12]: 
+    - generic [ref=f26e13]:
+      - generic [ref=f26e14]:
+        - heading "Quản lý sản phẩm" [level=1] [ref=f26e15]:
+          - generic [aria-hidden] [ref=f26e16]: 
+          - text: Quản lý sản phẩm
+        - generic [ref=f26e17]:
+          - generic [ref=f26e18]: Tổng 21 sản phẩm phù hợp
+          - link "Thêm sản phẩm" [ref=f26e19] [cursor=pointer]:
+            - /url: /admin/san-pham/tao-moi
+            - generic [aria-hidden] [ref=f26e20]: 
+            - text: Thêm sản phẩm
+      - generic [ref=f26e22]:
+        - generic [ref=f26e23]:
+          - generic [ref=f26e24]: Tìm theo mã / tên
+          - textbox "Tìm theo mã / tên" [ref=f26e25]:
+            - /placeholder: "Ví dụ: Astrox 100 ZZ"
+        - generic [ref=f26e26]:
+          - generic [ref=f26e27]: Hãng
+          - combobox "Hãng" [ref=f26e28]:
+            - option "-- Tất cả --" [selected]
+            - option "Apacs"
+            - option "Kumpoo"
+            - option "Li-Ning"
+            - option "Mizuno"
+            - option "Victor"
+            - option "Yonex"
+        - generic [ref=f26e29]:
+          - generic [ref=f26e30]: Loại (lối chơi)
+          - combobox "Loại (lối chơi)" [ref=f26e31]:
+            - option "-- Tất cả --" [selected]
+            - option "Vợt phòng thủ"
+            - option "Vợt tấn công"
+            - option "Vợt toàn diện"
+        - generic [ref=f26e32]:
+          - generic [ref=f26e33]: Trạng thái
+          - combobox "Trạng thái" [ref=f26e34]:
+            - option "-- Tất cả --" [selected]
+            - option "Đang bán"
+            - option "Bản nháp"
+            - option "Đã ẩn"
+        - generic [ref=f26e35]:
+          - button "Lọc" [ref=f26e36] [cursor=pointer]:
+            - generic [aria-hidden] [ref=f26e37]: 
+            - text: Lọc
+          - link "Xoá lọc" [ref=f26e38] [cursor=pointer]:
+            - /url: /admin/san-pham
+      - table [ref=f26e41]:
+        - rowgroup [ref=f26e42]:
+          - row [ref=f26e43]:
+            - columnheader "Ảnh" [ref=f26e44]
+            - columnheader "Mã / Tên sản phẩm" [ref=f26e45]
+            - columnheader "Hãng – Loại" [ref=f26e46]
+            - columnheader "Giá từ" [ref=f26e47]
+            - columnheader "Biến thể / Tồn kho" [ref=f26e48]
+            - columnheader "Trạng thái" [ref=f26e49]
+            - columnheader "Thao tác" [ref=f26e50]
+        - rowgroup [ref=f26e51]:
+          - row [ref=f26e52]:
+            - cell [ref=f26e53]:
+              - img "Ảnh sssss2232" [ref=f26e54]
+            - cell "sssss2232 SSFFF" [ref=f26e55]:
+              - generic [ref=f26e56]: sssss2232
+              - generic [ref=f26e57]: SSFFF
+            - cell "Apacs Vợt tấn công" [ref=f26e58]:
+              - generic [ref=f26e59]: Apacs
+              - generic [ref=f26e60]: Vợt tấn công
+            - cell "123.123 ₫" [ref=f26e61]
+            - cell "1 biến thể – 22323 chiếc" [ref=f26e62]
+            - cell "Đang bán" [ref=f26e63]
+            - cell [ref=f26e65]:
+              - generic [ref=f26e66]:
+                - link "Sửa sssss2232" [ref=f26e67] [cursor=pointer]:
+                  - /url: /admin/san-pham/1849/sua
+                  - generic [aria-hidden] [ref=f26e68]: 
+                - link "Biến thể và ảnh của sssss2232" [ref=f26e69] [cursor=pointer]:
+                  - /url: /admin/san-pham/1849/bien-the
+                  - generic [aria-hidden] [ref=f26e70]: 
+                - button "Đổi trạng thái sssss2232" [ref=f26e72] [cursor=pointer]:
+                  - generic [aria-hidden] [ref=f26e73]: 
+                - button "Xoá sssss2232" [ref=f26e75] [cursor=pointer]:
+                  - generic [aria-hidden] [ref=f26e76]: 
+          - row [ref=f26e77]:
+            - cell [ref=f26e78]:
+              - img "Ảnh Vợt cầu lông Yonex Astrox 100 ZZ" [ref=f26e79]
+            - cell "Vợt cầu lông Yonex Astrox 100 ZZ YX-AX100ZZ" [ref=f26e80]:
+              - generic [ref=f26e81]: Vợt cầu lông Yonex Astrox 100 ZZ
+              - generic [ref=f26e82]: YX-AX100ZZ
+            - cell "Yonex Vợt tấn công" [ref=f26e83]:
+              - generic [ref=f26e84]: Yonex
+              - generic [ref=f26e85]: Vợt tấn công
+            - cell "519.000 ₫" [ref=f26e86]
+            - cell "2 biến thể – 18 chiếc" [ref=f26e87]
+            - cell "Đang bán" [ref=f26e88]
+            - cell [ref=f26e90]:
+              - generic [ref=f26e91]:
+                - link "Sửa Vợt cầu lông Yonex Astrox 100 ZZ" [ref=f26e92] [cursor=pointer]:
+                  - /url: /admin/san-pham/124/sua
+                  - generic [aria-hidden] [ref=f26e93]: 
+                - link "Biến thể và ảnh của Vợt cầu lông Yonex Astrox 100 ZZ" [ref=f26e94] [cursor=pointer]:
+                  - /url: /admin/san-pham/124/bien-the
+                  - generic [aria-hidden] [ref=f26e95]: 
+                - button "Đổi trạng thái Vợt cầu lông Yonex Astrox 100 ZZ" [ref=f26e97] [cursor=pointer]:
+                  - generic [aria-hidden] [ref=f26e98]: 
+                - button "Xoá Vợt cầu lông Yonex Astrox 100 ZZ" [ref=f26e100] [cursor=pointer]:
+                  - generic [aria-hidden] [ref=f26e101]: 
+          - row [ref=f26e102]:
+            - cell [ref=f26e103]:
+              - img "Ảnh Vợt cầu lông Yonex Astrox 88D Pro" [ref=f26e104]
+            - cell "Vợt cầu lông Yonex Astrox 88D Pro YX-AX88DP" [ref=f26e105]:
+              - generic [ref=f26e106]: Vợt cầu lông Yonex Astrox 88D Pro
+              - generic [ref=f26e107]: YX-AX88DP
+            - cell "Yonex Vợt tấn công" [ref=f26e108]:
+              - generic [ref=f26e109]: Yonex
+              - generic [ref=f26e110]: Vợt tấn công
+            - cell "4.290.000 ₫" [ref=f26e111]
+            - cell "3 biến thể – 11 chiếc" [ref=f26e112]
+            - cell "Đang bán" [ref=f26e113]
+            - cell [ref=f26e115]:
+              - generic [ref=f26e116]:
+                - link "Sửa Vợt cầu lông Yonex Astrox 88D Pro" [ref=f26e117] [cursor=pointer]:
+                  - /url: /admin/san-pham/125/sua
+                  - generic [aria-hidden] [ref=f26e118]: 
+                - link "Biến thể và ảnh của Vợt cầu lông Yonex Astrox 88D Pro" [ref=f26e119] [cursor=pointer]:
+                  - /url: /admin/san-pham/125/bien-the
+                  - generic [aria-hidden] [ref=f26e120]: 
+                - button "Đổi trạng thái Vợt cầu lông Yonex Astrox 88D Pro" [ref=f26e122] [cursor=pointer]:
+                  - generic [aria-hidden] [ref=f26e123]: 
+                - button "Xoá Vợt cầu lông Yonex Astrox 88D Pro" [ref=f26e125] [cursor=pointer]:
+                  - generic [aria-hidden] [ref=f26e126]: 
+          - row [ref=f26e127]:
+            - cell [ref=f26e128]:
+              - img "Ảnh Vợt cầu lông Yonex Nanoflare 800" [ref=f26e129]
+            - cell "Vợt cầu lông Yonex Nanoflare 800 YX-NF800" [ref=f26e130]:
+              - generic [ref=f26e131]: Vợt cầu lông Yonex Nanoflare 800
+              - generic [ref=f26e132]: YX-NF800
+            - cell "Yonex Vợt phòng thủ" [ref=f26e133]:
+              - generic [ref=f26e134]: Yonex
+              - generic [ref=f26e135]: Vợt phòng thủ
+            - cell "3.990.000 ₫" [ref=f26e136]
+            - cell "3 biến thể – 15 chiếc" [ref=f26e137]
+            - cell "Đang bán" [ref=f26e138]
+            - cell [ref=f26e140]:
+              - generic [ref=f26e141]:
+                - link "Sửa Vợt cầu lông Yonex Nanoflare 800" [ref=f26e142] [cursor=pointer]:
+                  - /url: /admin/san-pham/126/sua
+                  - generic [aria-hidden] [ref=f26e143]: 
+                - link "Biến thể và ảnh của Vợt cầu lông Yonex Nanoflare 800" [ref=f26e144] [cursor=pointer]:
+                  - /url: /admin/san-pham/126/bien-the
+                  - generic [aria-hidden] [ref=f26e145]: 
+                - button "Đổi trạng thái Vợt cầu lông Yonex Nanoflare 800" [ref=f26e147] [cursor=pointer]:
+                  - generic [aria-hidden] [ref=f26e148]: 
+                - button "Xoá Vợt cầu lông Yonex Nanoflare 800" [ref=f26e150] [cursor=pointer]:
+                  - generic [aria-hidden] [ref=f26e151]: 
+          - row [ref=f26e152]:
+            - cell [ref=f26e153]:
+              - img "Ảnh Vợt cầu lông Yonex Arcsaber 11 Pro" [ref=f26e154]
+            - cell "Vợt cầu lông Yonex Arcsaber 11 Pro YX-ARC11P" [ref=f26e155]:
+              - generic [ref=f26e156]: Vợt cầu lông Yonex Arcsaber 11 Pro
+              - generic [ref=f26e157]: YX-ARC11P
+            - cell "Yonex Vợt toàn diện" [ref=f26e158]:
+              - generic [ref=f26e159]: Yonex
+              - generic [ref=f26e160]: Vợt toàn diện
+            - cell "4.190.000 ₫" [ref=f26e161]
+            - cell "2 biến thể – 10 chiếc" [ref=f26e162]
+            - cell "Đang bán" [ref=f26e163]
+            - cell [ref=f26e165]:
+              - generic [ref=f26e166]:
+                - link "Sửa Vợt cầu lông Yonex Arcsaber 11 Pro" [ref=f26e167] [cursor=pointer]:
+                  - /url: /admin/san-pham/127/sua
+                  - generic [aria-hidden] [ref=f26e168]: 
+                - link "Biến thể và ảnh của Vợt cầu lông Yonex Arcsaber 11 Pro" [ref=f26e169] [cursor=pointer]:
+                  - /url: /admin/san-pham/127/bien-the
+                  - generic [aria-hidden] [ref=f26e170]: 
+                - button "Đổi trạng thái Vợt cầu lông Yonex Arcsaber 11 Pro" [ref=f26e172] [cursor=pointer]:
+                  - generic [aria-hidden] [ref=f26e173]: 
+                - button "Xoá Vợt cầu lông Yonex Arcsaber 11 Pro" [ref=f26e175] [cursor=pointer]:
+                  - generic [aria-hidden] [ref=f26e176]: 
+          - row [ref=f26e177]:
+            - cell [ref=f26e178]:
+              - img "Ảnh Vợt cầu lông Li-Ning Halbertec 9000" [ref=f26e179]
+            - cell "Vợt cầu lông Li-Ning Halbertec 9000 LN-HLBT9000" [ref=f26e180]:
+              - generic [ref=f26e181]: Vợt cầu lông Li-Ning Halbertec 9000
+              - generic [ref=f26e182]: LN-HLBT9000
+            - cell "Li-Ning Vợt tấn công" [ref=f26e183]:
+              - generic [ref=f26e184]: Li-Ning
+              - generic [ref=f26e185]: Vợt tấn công
+            - cell "4.590.000 ₫" [ref=f26e186]
+            - cell "2 biến thể – 8 chiếc" [ref=f26e187]
+            - cell "Đang bán" [ref=f26e188]
+            - cell [ref=f26e190]:
+              - generic [ref=f26e191]:
+                - link "Sửa Vợt cầu lông Li-Ning Halbertec 9000" [ref=f26e192] [cursor=pointer]:
+                  - /url: /admin/san-pham/128/sua
+                  - generic [aria-hidden] [ref=f26e193]: 
+                - link "Biến thể và ảnh của Vợt cầu lông Li-Ning Halbertec 9000" [ref=f26e194] [cursor=pointer]:
+                  - /url: /admin/san-pham/128/bien-the
+                  - generic [aria-hidden] [ref=f26e195]: 
+                - button "Đổi trạng thái Vợt cầu lông Li-Ning Halbertec 9000" [ref=f26e197] [cursor=pointer]:
+                  - generic [aria-hidden] [ref=f26e198]: 
+                - button "Xoá Vợt cầu lông Li-Ning Halbertec 9000" [ref=f26e200] [cursor=pointer]:
+                  - generic [aria-hidden] [ref=f26e201]: 
+          - row [ref=f26e202]:
+            - cell [ref=f26e203]:
+              - img "Ảnh Vợt cầu lông Li-Ning Axforce 90 Tiger" [ref=f26e204]
+            - cell "Vợt cầu lông Li-Ning Axforce 90 Tiger LN-AXF90T" [ref=f26e205]:
+              - generic [ref=f26e206]: Vợt cầu lông Li-Ning Axforce 90 Tiger
+              - generic [ref=f26e207]: LN-AXF90T
+            - cell "Li-Ning Vợt tấn công" [ref=f26e208]:
+              - generic [ref=f26e209]: Li-Ning
+              - generic [ref=f26e210]: Vợt tấn công
+            - cell "3.590.000 ₫" [ref=f26e211]
+            - cell "3 biến thể – 19 chiếc" [ref=f26e212]
+            - cell "Đang bán" [ref=f26e213]
+            - cell [ref=f26e215]:
+              - generic [ref=f26e216]:
+                - link "Sửa Vợt cầu lông Li-Ning Axforce 90 Tiger" [ref=f26e217] [cursor=pointer]:
+                  - /url: /admin/san-pham/129/sua
+                  - generic [aria-hidden] [ref=f26e218]: 
+                - link "Biến thể và ảnh của Vợt cầu lông Li-Ning Axforce 90 Tiger" [ref=f26e219] [cursor=pointer]:
+                  - /url: /admin/san-pham/129/bien-the
+                  - generic [aria-hidden] [ref=f26e220]: 
+                - button "Đổi trạng thái Vợt cầu lông Li-Ning Axforce 90 Tiger" [ref=f26e222] [cursor=pointer]:
+                  - generic [aria-hidden] [ref=f26e223]: 
+                - button "Xoá Vợt cầu lông Li-Ning Axforce 90 Tiger" [ref=f26e225] [cursor=pointer]:
+                  - generic [aria-hidden] [ref=f26e226]: 
+          - row [ref=f26e227]:
+            - cell [ref=f26e228]:
+              - img "Ảnh Vợt cầu lông Li-Ning Windstorm 78" [ref=f26e229]
+            - cell "Vợt cầu lông Li-Ning Windstorm 78 LN-WS78" [ref=f26e230]:
+              - generic [ref=f26e231]: Vợt cầu lông Li-Ning Windstorm 78
+              - generic [ref=f26e232]: LN-WS78
+            - cell "Li-Ning Vợt phòng thủ" [ref=f26e233]:
+              - generic [ref=f26e234]: Li-Ning
+              - generic [ref=f26e235]: Vợt phòng thủ
+            - cell "1.690.000 ₫" [ref=f26e236]
+            - cell "2 biến thể – 23 chiếc" [ref=f26e237]
+            - cell "Đang bán" [ref=f26e238]
+            - cell [ref=f26e240]:
+              - generic [ref=f26e241]:
+                - link "Sửa Vợt cầu lông Li-Ning Windstorm 78" [ref=f26e242] [cursor=pointer]:
+                  - /url: /admin/san-pham/130/sua
+                  - generic [aria-hidden] [ref=f26e243]: 
+                - link "Biến thể và ảnh của Vợt cầu lông Li-Ning Windstorm 78" [ref=f26e244] [cursor=pointer]:
+                  - /url: /admin/san-pham/130/bien-the
+                  - generic [aria-hidden] [ref=f26e245]: 
+                - button "Đổi trạng thái Vợt cầu lông Li-Ning Windstorm 78" [ref=f26e247] [cursor=pointer]:
+                  - generic [aria-hidden] [ref=f26e248]: 
+                - button "Xoá Vợt cầu lông Li-Ning Windstorm 78" [ref=f26e250] [cursor=pointer]:
+                  - generic [aria-hidden] [ref=f26e251]: 
+          - row [ref=f26e252]:
+            - cell [ref=f26e253]:
+              - img "Ảnh Vợt cầu lông Victor Thruster Ryuga II" [ref=f26e254]
+            - cell "Vợt cầu lông Victor Thruster Ryuga II VC-TKRYUGA2" [ref=f26e255]:
+              - generic [ref=f26e256]: Vợt cầu lông Victor Thruster Ryuga II
+              - generic [ref=f26e257]: VC-TKRYUGA2
+            - cell "Victor Vợt tấn công" [ref=f26e258]:
+              - generic [ref=f26e259]: Victor
+              - generic [ref=f26e260]: Vợt tấn công
+            - cell "4.350.000 ₫" [ref=f26e261]
+            - cell "2 biến thể – 0 chiếc" [ref=f26e262]
+            - cell "Đang bán" [ref=f26e263]
+            - cell [ref=f26e265]:
+              - generic [ref=f26e266]:
+                - link "Sửa Vợt cầu lông Victor Thruster Ryuga II" [ref=f26e267] [cursor=pointer]:
+                  - /url: /admin/san-pham/131/sua
+                  - generic [aria-hidden] [ref=f26e268]: 
+                - link "Biến thể và ảnh của Vợt cầu lông Victor Thruster Ryuga II" [ref=f26e269] [cursor=pointer]:
+                  - /url: /admin/san-pham/131/bien-the
+                  - generic [aria-hidden] [ref=f26e270]: 
+                - button "Đổi trạng thái Vợt cầu lông Victor Thruster Ryuga II" [ref=f26e272] [cursor=pointer]:
+                  - generic [aria-hidden] [ref=f26e273]: 
+                - button "Xoá Vợt cầu lông Victor Thruster Ryuga II" [ref=f26e275] [cursor=pointer]:
+                  - generic [aria-hidden] [ref=f26e276]: 
+          - row [ref=f26e277]:
+            - cell [ref=f26e278]:
+              - img "Ảnh Vợt cầu lông Victor Auraspeed 90K II" [ref=f26e279]
+            - cell "Vợt cầu lông Victor Auraspeed 90K II VC-ARS90K2" [ref=f26e280]:
+              - generic [ref=f26e281]: Vợt cầu lông Victor Auraspeed 90K II
+              - generic [ref=f26e282]: VC-ARS90K2
+            - cell "Victor Vợt toàn diện" [ref=f26e283]:
+              - generic [ref=f26e284]: Victor
+              - generic [ref=f26e285]: Vợt toàn diện
+            - cell "3.890.000 ₫" [ref=f26e286]
+            - cell "3 biến thể – 17 chiếc" [ref=f26e287]
+            - cell "Đang bán" [ref=f26e288]
+            - cell [ref=f26e290]:
+              - generic [ref=f26e291]:
+                - link "Sửa Vợt cầu lông Victor Auraspeed 90K II" [ref=f26e292] [cursor=pointer]:
+                  - /url: /admin/san-pham/132/sua
+                  - generic [aria-hidden] [ref=f26e293]: 
+                - link "Biến thể và ảnh của Vợt cầu lông Victor Auraspeed 90K II" [ref=f26e294] [cursor=pointer]:
+                  - /url: /admin/san-pham/132/bien-the
+                  - generic [aria-hidden] [ref=f26e295]: 
+                - button "Đổi trạng thái Vợt cầu lông Victor Auraspeed 90K II" [ref=f26e297] [cursor=pointer]:
+                  - generic [aria-hidden] [ref=f26e298]: 
+                - button "Xoá Vợt cầu lông Victor Auraspeed 90K II" [ref=f26e300] [cursor=pointer]:
+                  - generic [aria-hidden] [ref=f26e301]: 
+      - navigation "Phân trang sản phẩm" [ref=f26e302]:
+        - list [ref=f26e303]:
+          - listitem [ref=f26e304]:
+            - link [disabled]:
+              - /url: /admin/san-pham?keyword=&brandId=&categoryId=&status=&page=0
+              - generic [aria-hidden]: 
+          - listitem [ref=f26e305]:
+            - link "1" [ref=f26e306] [cursor=pointer]:
+              - /url: /admin/san-pham?keyword=&brandId=&categoryId=&status=&page=1
+          - listitem [ref=f26e307]:
+            - link "2" [ref=f26e308] [cursor=pointer]:
+              - /url: /admin/san-pham?keyword=&brandId=&categoryId=&status=&page=2
+          - listitem [ref=f26e309]:
+            - link "3" [ref=f26e310] [cursor=pointer]:
+              - /url: /admin/san-pham?keyword=&brandId=&categoryId=&status=&page=3
+          - listitem [ref=f26e311]:
+            - link [ref=f26e312] [cursor=pointer]:
+              - /url: /admin/san-pham?keyword=&brandId=&categoryId=&status=&page=2
+              - generic [aria-hidden] [ref=f26e313]: 
+        - paragraph [ref=f26e314]: Trang 1/3 – 21 sản phẩm
+  - text: 

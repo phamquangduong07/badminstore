@@ -28,54 +28,77 @@ sqlcmd -S localhost,1433 -U test -P 123456 -C -I -f 65001 -d BadminStore -i docs
 
 ## 3. Cấu hình
 
-`src/main/resources/application-local.yml` (file này **không commit** – chỉ có file mẫu `application-local.example.yml`):
+Cấu hình chia 2 tầng: `application.yml` giữ **mặc định chung** (đã commit), `application-local.yml` chỉ ghi đè **phần riêng của máy bạn** (không commit).
+
+| File | Nội dung | Commit? |
+|---|---|---|
+| `src/main/resources/application.yml` | Mặc định chung: CSDL, JPA (`validate`), Thymeleaf, upload, cổng **8088**, `app.shop`, `app.ghn`, `app.shipping`, `app.admin` | có |
+| `src/main/resources/application-local.yml` | Chỉ những gì khác giữa các máy: tài khoản CSDL, mật khẩu ADMIN, token GHN | **không** |
+| `src/main/resources/application-local.example.yml` | File mẫu để sao chép | có |
+| `.env.example` | Danh sách biến môi trường tương ứng (dùng thay file local cũng được) | có |
+
+Tạo `application-local.yml` từ file mẫu rồi điền – thực ra **chỉ cần 2 mục**:
 
 ```yaml
 spring:
   datasource:
-    url: jdbc:sqlserver://localhost:1433;databaseName=BadminStore;encrypt=true;trustServerCertificate=true
-    username: test
-    password: 123456
+    username: test           # tài khoản SQL Server đã dùng ở bước 2
+    password: "123456"
 app:
-  upload-dir: uploads        # thư mục lưu ảnh sản phẩm do admin tải lên
-  ghn:                       # tuỳ chọn: tích hợp GHN. Không khai báo ⇒ app chạy bình thường, phí ship 30.000 ₫
-    enabled: false           # bật/tắt toàn bộ phần GHN (địa chỉ + phí + vận đơn)
-    mock: true               # true = dùng dữ liệu giả (chỉ có tác dụng khi enabled=true, không cần mạng/token)
-    token: ${GHN_TOKEN:}     # token GHN thật – KHÔNG commit, đặt qua biến môi trường
-    shop-id: ${GHN_SHOP_ID:}
-    from-district-id: 1442   # quận của shop để GHN tính phí
-    from-ward-code: "20308"
-    mock-status: delivered   # trạng thái GHN giả trả về: picked|storing|delivering|delivered|returned
-    sync-enabled: false      # bật scheduler tự đồng bộ trạng thái vận đơn (mặc định tắt)
+  admin:
+    password: "Admin@123"    # mật khẩu tài khoản quản trị tạo tự động ở lần chạy đầu
 ```
 
-| Biến môi trường | Ý nghĩa |
-|---|---|
-| `GHN_TOKEN` / `GHN_SHOP_ID` | Token + mã shop GHN (chỉ cần khi `app.ghn.mock=false`) |
-| `GHN_BASE_URL` | Mặc định `https://dev-online-gateway.ghn.vn/shiip/public-api` (môi trường thử nghiệm của GHN) |
+Mọi giá trị trong `application.yml` đều đọc được từ biến môi trường, nên máy khác không cần file local:
 
+| Biến môi trường | Mặc định | Ý nghĩa |
+|---|---|---|
+| `DB_URL`, `DB_USERNAME`, `DB_PASSWORD` | `localhost,1433` / `sa` / trống | Kết nối CSDL `BadminStore` |
+| `ADMIN_EMAIL`, `ADMIN_PASSWORD` | `admin@badstore.local` / trống | Tài khoản quản trị tạo tự động (bỏ trống ⇒ không tạo) |
+| `UPLOAD_DIR` | `uploads` | Thư mục lưu ảnh sản phẩm do admin tải lên |
+| `SHOP_NAME`, `SHOP_ADDRESS`, `SHOP_HOTLINE`, `SHOP_EMAIL` | BadStore… | Thông tin in trên phiếu bán tại quầy + chân trang |
+| `GHN_ENABLED`, `GHN_MOCK`, `GHN_MOCK_STATUS` | `true` / `true` / `delivering` | Bật tích hợp GHN và chế độ ngoại tuyến: `mock=true` dùng **dữ liệu GHN lưu sẵn** (địa chỉ đầy đủ, không cần mạng/token; phí ship + mã vận đơn là số giả) |
+| `GHN_TOKEN` | trống | Token GHN – **chỉ cần token là lấy được địa chỉ** Tỉnh → Huyện → Xã (khi `GHN_MOCK=false`) |
+| `GHN_SHOP_ID` | trống | Mã shop GHN – chỉ cần khi **tính phí/tạo vận đơn** GHN |
+| `GHN_BASE_URL` | online-gateway | `https://online-gateway.ghn.vn/shiip/public-api` (đổi sang `dev-online-gateway` khi dùng môi trường thử nghiệm GHN) |
+| `GHN_FROM_DISTRICT_ID`, `GHN_FROM_WARD_CODE`, `GHN_FROM_PHONE` | trống / trống / `0900000000` | Kho lấy hàng của shop (cần khi tính phí/tạo vận đơn) |
+| `GHN_SYNC_ENABLED` | `false` | Scheduler tự đồng bộ trạng thái vận đơn định kỳ |
+
+> **Lấy địa chỉ thật từ GHN** (chỉ cần token): đặt `GHN_MOCK=false` + `GHN_TOKEN=<token của shop>`
+> ⇒ sổ địa chỉ và bước thanh toán có dropdown **Tỉnh → Huyện → Xã** lấy trực tiếp từ GHN.
+> Chưa khai báo `GHN_SHOP_ID` / `GHN_FROM_DISTRICT_ID` thì phí ship vẫn dùng mức mặc định 30.000 ₫.
+>
 > Khi **chưa có token** vẫn demo được đầy đủ: đặt `app.ghn.enabled=true` + `app.ghn.mock=true`
-> ⇒ dropdown Tỉnh–Huyện–Xã, phí vận chuyển, mã vận đơn `GHNMOCK…` và đồng bộ trạng thái đều chạy bằng dữ liệu giả.
+> ⇒ dropdown **Tỉnh–Huyện–Xã vẫn đầy đủ 63 tỉnh/thành** (dữ liệu GHN lưu sẵn trong
+> `src/main/resources/ghn/*.json`, mã thật nên đổi sang GHN thật không phải nhập lại địa chỉ),
+> chỉ có phí vận chuyển, mã vận đơn `GHNMOCK…` và trạng thái giao hàng là số giả.
+> Cần cập nhật lại dữ liệu địa chỉ: chạy `docs/ghn-fetch-address.mjs` (Node 18+) với biến môi trường
+> `GHN_TOKEN` rồi chép 3 file JSON vào `src/main/resources/ghn/`.
 > GHN tắt hoặc lỗi mạng thì trang địa chỉ/thanh toán **không vỡ**: form tự chuyển về nhập tay, phí ship dùng mức 30.000 ₫.
 
 ## 4. Chạy ứng dụng
 
 ```bat
-.\mvnw spring-boot:run -Dspring-boot.run.profiles=local
+.\mvnw spring-boot:run
 ```
 
 hoặc đóng gói rồi chạy:
 
 ```bat
 .\mvnw -B -DskipTests package
-java -jar target\demo-0.0.1-SNAPSHOT.jar --spring.profiles.active=local
+java -jar target\demo-0.0.1-SNAPSHOT.jar
 ```
 
-Mở http://localhost:8080
+Mở http://localhost:8088 (đổi cổng bằng `--server.port=...`)
+
+> Profile `local` (đọc `application-local.yml`) được nạp **tự động** nhờ `spring.profiles.default=local`,
+> nên không cần thêm tham số; nếu muốn chỉ rõ thì dùng `-Dspring-boot.run.profiles=local`
+> hoặc `--spring.profiles.active=local`.
 
 > Muốn demo phần **GHN** thì thêm cờ khi chạy (không cần token thật):
-> `--app.ghn.enabled=true --app.ghn.mock=true --app.ghn.from-district-id=1442 --app.ghn.mock-status=delivered`
-> (với `spring-boot:run` thì để trong `-Dspring-boot.run.arguments="..."`; nếu cổng 8080 đang bận, thêm `--server.port=8081`)
+> `--app.ghn.enabled=true --app.ghn.mock=true --app.ghn.from-district-id=1489 --app.ghn.mock-status=delivered`
+> (`1489` = Quận Hoàn Kiếm, Hà Nội – mã thật của GHN; muốn gọi API thật thì đặt `--app.ghn.mock=false --app.ghn.token=<token>`)
+> (với `spring-boot:run` thì để trong `-Dspring-boot.run.arguments="..."`; nếu cổng 8088 đang bận, thêm `--server.port=8089`)
 
 | Vai trò | Đăng nhập |
 |---|---|
@@ -88,7 +111,7 @@ Mở http://localhost:8080
 .\mvnw -B clean test
 ```
 
-Hiện tại: **225 test – 0 lỗi** (unit test Service bằng JUnit 5 + Mockito, test tích hợp MockMvc chạy trên CSDL thật). Trong đó 47 test của 2 chức năng làm thêm: **bán hàng tại quầy** và **tích hợp GHN**.
+Hiện tại: **280 test – 0 lỗi** (unit test Service bằng JUnit 5 + Mockito, test tích hợp MockMvc chạy trên CSDL thật). Trong đó 44 test của 2 chức năng làm thêm: **bán hàng tại quầy** (10 test) và **tích hợp GHN** (34 test: địa chỉ, phí vận chuyển, vận đơn, đồng bộ trạng thái).
 
 ## 6. Các chức năng chính để demo
 
@@ -97,7 +120,7 @@ Hiện tại: **225 test – 0 lỗi** (unit test Service bằng JUnit 5 + Mocki
 - Chi tiết sản phẩm: chọn biến thể (màu × trọng lượng × cỡ cán), giá gạch ngang, tồn kho theo biến thể, nút **So sánh**, khối **Đánh giá** (điểm trung bình + bình luận).
 - **So sánh sản phẩm** `/so-sanh`: thêm tối đa 4 cây, bảng so sánh chiều dài – điểm cân bằng – độ cứng thân – mức căng dây – chất liệu – giá – tồn kho.
 - **Đánh giá sản phẩm** (chỉ khách đã mua và đã nhận hàng, mỗi lượt mua 1 lần) – gửi bằng SweetAlert2 xác nhận rồi hiện flash.
-- Giỏ hàng → thanh toán (COD / chuyển khoản), sổ địa chỉ, voucher, phí ship 30.000 ₫ (miễn phí từ 5.000.000 ₫). Khi bật GHN: sổ địa chỉ và bước thanh toán có **dropdown Tỉnh → Huyện → Xã**, phí ship lấy theo GHN (tạm tính ngay khi chọn), vẫn nhập tay được nếu GHN tắt/lỗi.
+- Giỏ hàng → thanh toán (COD / chuyển khoản), sổ địa chỉ, voucher, phí ship 30.000 ₫ (miễn phí từ 5.000.000 ₫). Khi bật GHN: sổ địa chỉ và bước thanh toán có **dropdown Tỉnh → Huyện → Xã đầy đủ 63 tỉnh/thành** (mã thật của GHN, chọn tới đâu tạm tính phí tới đó), vẫn nhập tay được nếu GHN tắt/lỗi.
 - "Đơn hàng của tôi": timeline trạng thái, tự huỷ khi chờ xác nhận, yêu cầu hoàn trả khi đã giao.
 
 **Quản trị** (`/admin`)
@@ -117,7 +140,7 @@ Hiện tại: **225 test – 0 lỗi** (unit test Service bằng JUnit 5 + Mocki
 5. Không có bảng promotion: giảm giá chỉ bằng **voucher** (theo tổng hoá đơn) và cặp cột `original_price → price` của biến thể.
 6. Mọi thao tác ghi CSDL đều có **xác nhận SweetAlert2 trước** + **flash message sau** (Post-Redirect-Get).
 7. **Bán tại quầy** dùng lại đúng luồng đơn `MANUAL` (không viết luồng trừ kho riêng): đơn được xác nhận ngay ⇒ trừ kho; giá, voucher, tiền thối **tính ở server** từ CSDL, trình duyệt chỉ hiển thị tạm.
-8. **GHN là tuỳ chọn**: token GHN chỉ nằm ở server (trình duyệt gọi `/api/ghn/*` nội bộ), mã Tỉnh/Huyện/Xã khách gửi lên được **kiểm tra lại với GHN** (mã sai bị bỏ, không lưu) nên không thể sửa mã để ăn phí ship rẻ; phí ship luôn tính lại ở server khi đặt hàng.
+8. **GHN là tuỳ chọn**: token GHN chỉ nằm ở server (trình duyệt gọi `/api/ghn/*` nội bộ), mã Tỉnh/Huyện/Xã khách gửi lên được **kiểm tra lại với GHN** (mã sai hoặc lệch tên địa danh bị bỏ, không lưu) nên không thể sửa mã để ăn phí ship rẻ; phí ship luôn tính lại ở server khi đặt hàng.
 
 ## 8. Ghi chú kỹ thuật
 

@@ -220,6 +220,48 @@ class AdminProductServiceTest {
     }
 
     @Test
+    @DisplayName("Thêm biến thể: lưu ảnh upload và gán vào image_url của biến thể")
+    void createVariant_storesUploadedImage() {
+        VariantForm form = variantForm("YX-AX100ZZ-01");
+        form.setImageFile(upload("bien-the.png"));
+
+        when(productRepository.findDetailById(PRODUCT_ID)).thenReturn(Optional.of(product(ProductStatus.ACTIVE)));
+        when(productVariantRepository.existsBySku("YX-AX100ZZ-01")).thenReturn(false);
+        when(productVariantRepository.existsByProductIdAndColorAndWeightClassAndGripSize(
+                PRODUCT_ID, "Xanh đen", "4U", "G5")).thenReturn(false);
+        when(fileStorageService.storeImage(any())).thenReturn("/uploads/bien-the.png");
+        when(productVariantRepository.save(any(ProductVariant.class)))
+                .thenAnswer(invocation -> invocation.getArgument(0));
+
+        ProductVariant created = adminProductService.createVariant(PRODUCT_ID, form);
+
+        assertThat(created.getImageUrl()).isEqualTo("/uploads/bien-the.png");
+    }
+
+    @Test
+    @DisplayName("Sửa biến thể: tích gỡ ảnh ⇒ image_url về null và xoá file upload cũ")
+    void updateVariant_removesUploadedImage() {
+        ProductVariant variant = variant();
+        variant.setImageUrl("/uploads/anh-cu.png");
+        when(productVariantRepository.findByIdAndProductId(VARIANT_ID, PRODUCT_ID))
+                .thenReturn(Optional.of(variant));
+        when(productVariantRepository.existsBySkuAndIdNot("YX-AX100ZZ-01", VARIANT_ID)).thenReturn(false);
+        when(productVariantRepository.existsByProductIdAndColorAndWeightClassAndGripSizeAndIdNot(
+                PRODUCT_ID, "Xanh đen", "4U", "G5", VARIANT_ID)).thenReturn(false);
+        when(productVariantRepository.save(any(ProductVariant.class)))
+                .thenAnswer(invocation -> invocation.getArgument(0));
+
+        VariantForm form = variantForm("YX-AX100ZZ-01");
+        form.setImageUrl("/uploads/anh-cu.png");
+        form.setRemoveImage(true);
+
+        ProductVariant updated = adminProductService.updateVariant(PRODUCT_ID, VARIANT_ID, form);
+
+        assertThat(updated.getImageUrl()).isNull();
+        verify(fileStorageService).deleteIfUploaded("/uploads/anh-cu.png");
+    }
+
+    @Test
     @DisplayName("Xoá biến thể đã có trong đơn hàng ⇒ chặn và hướng dẫn chuyển sang Ngừng bán")
     void deleteVariant_blockedWhenUsedInOrder() {
         ProductVariant variant = variant();
@@ -237,12 +279,29 @@ class AdminProductServiceTest {
     @DisplayName("Xoá biến thể chưa từng vào đơn ⇒ xoá thật")
     void deleteVariant_deletesWhenNeverOrdered() {
         ProductVariant variant = variant();
+        variant.setImageUrl("/uploads/anh-bien-the.png");
         when(productVariantRepository.findByIdAndProductId(VARIANT_ID, PRODUCT_ID)).thenReturn(Optional.of(variant));
         when(orderItemRepository.existsByProductVariantId(VARIANT_ID)).thenReturn(false);
 
         adminProductService.deleteVariant(PRODUCT_ID, VARIANT_ID);
 
         verify(productVariantRepository).delete(variant);
+        verify(fileStorageService).deleteIfUploaded("/uploads/anh-bien-the.png");
+    }
+
+    @Test
+    @DisplayName("Xoá biến thể: ảnh còn được bộ ảnh sản phẩm dùng ⇒ giữ file, chỉ xoá bản ghi")
+    void deleteVariant_keepsImageSharedWithProductGallery() {
+        ProductVariant variant = variant();
+        variant.setImageUrl("/uploads/anh-dung-chung.png");
+        when(productVariantRepository.findByIdAndProductId(VARIANT_ID, PRODUCT_ID)).thenReturn(Optional.of(variant));
+        when(orderItemRepository.existsByProductVariantId(VARIANT_ID)).thenReturn(false);
+        when(productImageRepository.existsByImageUrl("/uploads/anh-dung-chung.png")).thenReturn(true);
+
+        adminProductService.deleteVariant(PRODUCT_ID, VARIANT_ID);
+
+        verify(productVariantRepository).delete(variant);
+        verify(fileStorageService, never()).deleteIfUploaded(any());
     }
 
     // ==================== CẬP NHẬT GIÁ HÀNG LOẠT ====================

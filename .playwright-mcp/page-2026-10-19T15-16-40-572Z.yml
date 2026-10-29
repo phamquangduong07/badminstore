@@ -1,0 +1,78 @@
+- generic [active] [ref=f13e1]:
+  - link "Bỏ qua tới nội dung chính" [ref=f13e2] [cursor=pointer]:
+    - /url: "#noi-dung-chinh"
+  - main [ref=f13e5]:
+    - generic [ref=f13e6]:
+      - button "Mở menu quản trị" [ref=f13e7] [cursor=pointer]:
+        - generic [aria-hidden] [ref=f13e8]: 
+      - text: 
+      - generic [ref=f13e9]:
+        - text:  
+        - button "Đăng xuất" [ref=f13e11] [cursor=pointer]:
+          - generic [aria-hidden] [ref=f13e12]: 
+    - generic [ref=f13e13]:
+      - generic [ref=f13e14]:
+        - heading "Quản lý voucher" [level=1] [ref=f13e15]:
+          - generic [aria-hidden] [ref=f13e16]: 
+          - text: Quản lý voucher
+        - generic [ref=f13e17]:
+          - generic [ref=f13e18]: Tổng 1 voucher
+          - link "Tạo voucher" [ref=f13e19] [cursor=pointer]:
+            - /url: /admin/voucher/tao-moi
+            - generic [aria-hidden] [ref=f13e20]: 
+            - text: Tạo voucher
+      - generic [ref=f13e22]:
+        - generic [ref=f13e23]:
+          - generic [ref=f13e24]: Trạng thái
+          - combobox "Trạng thái" [ref=f13e25]:
+            - option "-- Tất cả --" [selected]
+            - option "Đang áp dụng"
+            - option "Ngừng áp dụng"
+        - generic [ref=f13e26]:
+          - generic [ref=f13e27]: Tìm theo mã / tên chương trình
+          - textbox "Tìm theo mã / tên chương trình" [ref=f13e28]:
+            - /placeholder: "Ví dụ: GIAM10"
+        - generic [ref=f13e29]:
+          - button "Lọc" [ref=f13e30] [cursor=pointer]:
+            - generic [aria-hidden] [ref=f13e31]: 
+            - text: Lọc
+          - link "Xoá lọc" [ref=f13e32] [cursor=pointer]:
+            - /url: /admin/voucher
+      - table [ref=f13e35]:
+        - rowgroup [ref=f13e36]:
+          - row [ref=f13e37]:
+            - columnheader "Mã / Chương trình" [ref=f13e38]
+            - columnheader "Giảm giá" [ref=f13e39]
+            - columnheader "Điều kiện" [ref=f13e40]
+            - columnheader "Lượt dùng" [ref=f13e41]
+            - columnheader "Thời gian áp dụng" [ref=f13e42]
+            - columnheader "Trạng thái" [ref=f13e43]
+            - columnheader "Thao tác" [ref=f13e44]
+        - rowgroup [ref=f13e45]:
+          - row [ref=f13e46]:
+            - cell "GIAM10 claude code free" [ref=f13e47]:
+              - generic [ref=f13e48]: GIAM10
+              - generic [ref=f13e49]: claude code free
+            - cell "Giảm 99.97% (tối đa 34.434 ₫)" [ref=f13e50]
+            - cell "Đơn từ 322 ₫ Tối đa 34.434 ₫" [ref=f13e51]:
+              - generic [ref=f13e52]:
+                - text: Đơn từ
+                - generic [ref=f13e53]: 322 ₫
+              - generic [ref=f13e54]:
+                - text: Tối đa
+                - generic [ref=f13e55]: 34.434 ₫
+            - cell "0/10" [ref=f13e56]
+            - cell "16/10/2026 01:35 → 15/11/2026 01:35" [ref=f13e57]:
+              - generic [ref=f13e58]: 16/10/2026 01:35
+              - generic [ref=f13e59]:
+                - text: →
+                - generic [ref=f13e60]: 15/11/2026 01:35
+            - cell "Đang áp dụng" [ref=f13e61]
+            - cell [ref=f13e63]:
+              - generic [ref=f13e64]:
+                - link "Sửa voucher GIAM10" [ref=f13e65] [cursor=pointer]:
+                  - /url: /admin/voucher/83/sua
+                  - generic [aria-hidden] [ref=f13e66]: 
+                - button "Đổi trạng thái voucher GIAM10" [ref=f13e68] [cursor=pointer]:
+                  - generic [aria-hidden] [ref=f13e69]: 
+  - text: 

@@ -1,0 +1,146 @@
+- generic [active] [ref=f187e1]:
+  - link "Bỏ qua tới nội dung chính" [ref=f187e2] [cursor=pointer]:
+    - /url: "#noi-dung-chinh"
+  - banner [ref=f187e3]:
+    - navigation "Điều hướng chính" [ref=f187e4]:
+      - generic [ref=f187e5]:
+        - link "BadStore – về trang chủ" [ref=f187e6] [cursor=pointer]:
+          - /url: /
+          - generic [aria-hidden] [ref=f187e8]: 
+          - generic [ref=f187e9]: BadStore
+        - generic [ref=f187e10]:
+          - link "Giỏ hàng" [ref=f187e11] [cursor=pointer]:
+            - /url: /gio-hang
+            - generic [aria-hidden] [ref=f187e12]: 
+            - generic [ref=f187e13]: "1"
+          - button "Mở menu" [ref=f187e14] [cursor=pointer]
+  - main [ref=f187e16]:
+    - generic [ref=f187e17]:
+      - navigation "breadcrumb" [ref=f187e18]:
+        - list [ref=f187e19]:
+          - listitem [ref=f187e20]:
+            - link "Trang chủ" [ref=f187e21] [cursor=pointer]:
+              - /url: /
+          - listitem [ref=f187e22]: / Giỏ hàng
+      - heading "Giỏ hàng của bạn" [level=1] [ref=f187e23]:
+        - generic [aria-hidden] [ref=f187e24]: 
+        - text: Giỏ hàng của bạn
+      - list "Các bước mua hàng" [ref=f187e25]:
+        - listitem [ref=f187e26]:
+          - generic [ref=f187e27]: "1"
+          - text: Giỏ hàng
+        - listitem [ref=f187e28]:
+          - generic [ref=f187e29]: "2"
+          - text: Thanh toán
+          - generic [aria-hidden] [ref=f187e30]: ›
+        - listitem [ref=f187e31]:
+          - generic [ref=f187e32]: "3"
+          - text: Hoàn tất
+      - generic [ref=f187e33]:
+        - generic [ref=f187e34]:
+          - table [ref=f187e37]:
+            - caption [ref=f187e38]: Giá bán và tồn kho được kiểm tra lại ngay tại thời điểm bạn đặt hàng.
+            - rowgroup [ref=f187e39]:
+              - row [ref=f187e40]:
+                - cell "Ảnh Vợt cầu lông Yonex Astrox 100 ZZ Vợt cầu lông Yonex Astrox 100 ZZ Đỏ đô · 3U · G5 · SKU YX-AX100ZZ-02 Còn 6" [ref=f187e41]:
+                  - generic [ref=f187e42]:
+                    - img "Ảnh Vợt cầu lông Yonex Astrox 100 ZZ" [ref=f187e43]
+                    - generic [ref=f187e44]:
+                      - link "Vợt cầu lông Yonex Astrox 100 ZZ" [ref=f187e45] [cursor=pointer]:
+                        - /url: /san-pham/124
+                      - generic [ref=f187e46]: Đỏ đô · 3U · G5 · SKU YX-AX100ZZ-02
+                      - generic [ref=f187e47]: Còn 6
+                - cell "Đơn giá 519.000 ₫ 5.190.000 ₫" [ref=f187e48]:
+                  - text: Đơn giá
+                  - generic [ref=f187e49]: 519.000 ₫
+                  - generic [ref=f187e50]: 5.190.000 ₫
+                - cell [ref=f187e51]:
+                  - text: Số lượng
+                  - generic [ref=f187e52]:
+                    - generic [ref=f187e53]:
+                      - button "Giảm số lượng" [ref=f187e54] [cursor=pointer]: −
+                      - spinbutton "Số lượng sản phẩm" [ref=f187e55]: "1"
+                      - button "Tăng số lượng" [ref=f187e56] [cursor=pointer]: +
+                    - button "Cập nhật" [ref=f187e57] [cursor=pointer]:
+                      - generic [aria-hidden] [ref=f187e58]: 
+                      - text: Cập nhật
+                - cell "Thành tiền 519.000 ₫" [ref=f187e59]:
+                  - text: Thành tiền
+                  - generic [ref=f187e60]: 519.000 ₫
+                - cell [ref=f187e61]:
+                  - text: Thao tác
+                  - button "Xoá Vợt cầu lông Yonex Astrox 100 ZZ khỏi giỏ hàng" [ref=f187e63] [cursor=pointer]:
+                    - generic [aria-hidden] [ref=f187e64]: 
+          - generic [ref=f187e65]:
+            - link "Tiếp tục mua sắm" [ref=f187e66] [cursor=pointer]:
+              - /url: /san-pham
+              - generic [aria-hidden] [ref=f187e67]: 
+              - text: Tiếp tục mua sắm
+            - button "Xoá tất cả" [ref=f187e69] [cursor=pointer]:
+              - generic [aria-hidden] [ref=f187e70]: 
+              - text: Xoá tất cả
+        - generic [ref=f187e71]:
+          - generic [ref=f187e72]:
+            - generic [ref=f187e73]: Tóm tắt giỏ hàng
+            - generic [ref=f187e74]:
+              - generic [ref=f187e75]:
+                - term [ref=f187e76]: Số sản phẩm
+                - definition [ref=f187e77]: "1"
+                - term [ref=f187e78]: Tạm tính
+                - definition [ref=f187e79]: 519.000 ₫
+                - term [ref=f187e80]: Giảm giá voucher
+                - definition [ref=f187e81]: áp dụng ở bước thanh toán
+                - term [ref=f187e82]: Phí vận chuyển
+                - definition [ref=f187e83]: tính ở bước thanh toán
+              - separator [ref=f187e84]
+              - generic [ref=f187e85]:
+                - generic [ref=f187e86]: Tổng tiền hàng
+                - generic [ref=f187e87]: 519.000 ₫
+              - paragraph [ref=f187e88]: Chưa gồm phí vận chuyển và giảm giá – số tiền chính xác hiện ở bước thanh toán.
+              - link "Tiến hành đặt hàng" [ref=f187e89] [cursor=pointer]:
+                - /url: /thanh-toan
+                - generic [aria-hidden] [ref=f187e90]: 
+                - text: Tiến hành đặt hàng
+          - generic [ref=f187e92]:
+            - generic [ref=f187e93]:
+              - generic [aria-hidden] [ref=f187e94]: 
+              - text: Hàng chính hãng, bảo hành theo hãng.
+            - generic [ref=f187e95]:
+              - generic [aria-hidden] [ref=f187e96]: 
+              - text: Kiểm tra hàng trước khi thanh toán.
+  - contentinfo [ref=f187e97]:
+    - generic [ref=f187e98]:
+      - generic [ref=f187e99]:
+        - generic [ref=f187e100]:
+          - heading "BadStore" [level=2] [ref=f187e101]:
+            - generic [aria-hidden] [ref=f187e103]: 
+          - paragraph [ref=f187e105]: Website bán vợt cầu lông – đồ án tốt nghiệp, sản phẩm mang tính minh hoạ.
+          - paragraph [ref=f187e106]: Dữ liệu sản phẩm, hình ảnh dùng cho mục đích học tập.
+        - generic [ref=f187e107]:
+          - generic [ref=f187e108]:
+            - generic [aria-hidden] [ref=f187e109]: 
+            - text: Liên hệ
+          - paragraph [ref=f187e110]: "Hotline: 1900 0000"
+          - paragraph [ref=f187e111]: "Email: cskh@badstore.local"
+          - paragraph [ref=f187e112]: "Địa chỉ: Số 1 Đại Cồ Việt, Bách Khoa, Hà Nội"
+          - paragraph [ref=f187e113]: "Giờ mở cửa: 8:00 – 21:30 hằng ngày"
+        - generic [ref=f187e114]:
+          - generic [ref=f187e115]:
+            - generic [aria-hidden] [ref=f187e116]: 
+            - text: Mua hàng & giao nhận
+          - list [ref=f187e117]:
+            - listitem [ref=f187e118]:
+              - link "Danh mục vợt cầu lông" [ref=f187e119] [cursor=pointer]:
+                - /url: /san-pham
+            - listitem [ref=f187e120]:
+              - link "So sánh sản phẩm" [ref=f187e121] [cursor=pointer]:
+                - /url: /so-sanh
+            - listitem [ref=f187e122]:
+              - link "Giỏ hàng của bạn" [ref=f187e123] [cursor=pointer]:
+                - /url: /gio-hang
+            - listitem [ref=f187e124]: Vận chuyển toàn quốc – tích hợp GHN khi cấu hình token.
+      - separator [ref=f187e125]
+      - generic [ref=f187e126]:
+        - generic [ref=f187e127]: © 2026 BadStore
+        - generic [ref=f187e128]: Đơn giá hiển thị bằng Việt Nam đồng (₫).
+  - text: 

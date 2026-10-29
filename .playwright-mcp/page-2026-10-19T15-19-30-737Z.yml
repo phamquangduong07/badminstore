@@ -1,0 +1,133 @@
+- generic [active] [ref=f139e1]:
+  - link "Bỏ qua tới nội dung chính" [ref=f139e2] [cursor=pointer]:
+    - /url: "#noi-dung-chinh"
+  - main [ref=f139e5]:
+    - generic [ref=f139e6]:
+      - button "Mở menu quản trị" [ref=f139e7] [cursor=pointer]:
+        - generic [aria-hidden] [ref=f139e8]: 
+      - generic [ref=f139e9]:
+        - generic [aria-hidden] [ref=f139e10]: 
+        - text: Khu quản trị BadStore
+      - generic [ref=f139e11]:
+        - link "Xem cửa hàng" [ref=f139e12] [cursor=pointer]:
+          - /url: /
+          - generic [aria-hidden] [ref=f139e13]: 
+          - text: Xem cửa hàng
+        - text: 
+        - button "Đăng xuất" [ref=f139e15] [cursor=pointer]:
+          - generic [aria-hidden] [ref=f139e16]: 
+          - text: Đăng xuất
+    - generic [ref=f139e17]:
+      - navigation "breadcrumb" [ref=f139e18]:
+        - list [ref=f139e19]:
+          - listitem [ref=f139e20]:
+            - link "Tổng quan" [ref=f139e21] [cursor=pointer]:
+              - /url: /admin
+          - listitem [ref=f139e22]:
+            - text: /
+            - link "Sản phẩm" [ref=f139e23] [cursor=pointer]:
+              - /url: /admin/san-pham
+          - listitem [ref=f139e24]: / Thêm mới
+      - generic [ref=f139e25]:
+        - heading "Thêm sản phẩm mới" [level=1] [ref=f139e26]:
+          - generic [aria-hidden] [ref=f139e27]: 
+        - link "Danh sách sản phẩm" [ref=f139e29] [cursor=pointer]:
+          - /url: /admin/san-pham
+          - generic [aria-hidden] [ref=f139e30]: 
+          - text: Danh sách sản phẩm
+      - generic [ref=f139e32]:
+        - generic [ref=f139e34]:
+          - generic [ref=f139e35]:
+            - generic [aria-hidden] [ref=f139e36]: 
+            - text: Thông tin chung
+          - generic [ref=f139e37]:
+            - generic [ref=f139e38]:
+              - generic [ref=f139e39]: Mã sản phẩm *
+              - textbox "Mã sản phẩm *" [ref=f139e40]:
+                - /placeholder: YX-AX100ZZ
+              - generic [ref=f139e41]: Hệ thống tự viết hoa; mã dùng làm tiền tố SKU biến thể.
+            - generic [ref=f139e42]:
+              - generic [ref=f139e43]: Tên sản phẩm *
+              - textbox "Tên sản phẩm *" [ref=f139e44]:
+                - /placeholder: Vợt cầu lông Yonex Astrox 100 ZZ
+            - generic [ref=f139e45]:
+              - generic [ref=f139e46]: Hãng sản xuất *
+              - combobox "Hãng sản xuất *" [ref=f139e47]:
+                - option "-- Chọn hãng --" [selected]
+                - option "Apacs"
+                - option "Kumpoo"
+                - option "Li-Ning"
+                - option "Mizuno"
+                - option "Victor"
+                - option "Yonex"
+            - generic [ref=f139e48]:
+              - generic [ref=f139e49]: Loại (lối chơi) *
+              - combobox "Loại (lối chơi) *" [ref=f139e50]:
+                - option "-- Chọn loại --" [selected]
+                - option "Vợt phòng thủ"
+                - option "Vợt tấn công"
+                - option "Vợt toàn diện"
+            - generic [ref=f139e51]:
+              - generic [ref=f139e52]: Trạng thái *
+              - combobox "Trạng thái *" [ref=f139e53]:
+                - option "Đang bán" [selected]
+                - option "Bản nháp"
+                - option "Đã ẩn"
+              - generic [ref=f139e54]:
+                - text: Chỉ sản phẩm
+                - emphasis [ref=f139e55]: Đang bán
+                - text: mới hiện trên trang khách.
+            - generic [ref=f139e56]:
+              - generic [ref=f139e57]: Mô tả sản phẩm
+              - textbox "Mô tả sản phẩm" [ref=f139e58]:
+                - /placeholder: Điểm nổi bật, công nghệ, phù hợp với lối chơi nào…
+        - generic [ref=f139e59]:
+          - generic [ref=f139e60]:
+            - generic [ref=f139e61]:
+              - generic [aria-hidden] [ref=f139e62]: 
+              - text: Thông số kỹ thuật
+            - generic [ref=f139e63]:
+              - generic [ref=f139e64]:
+                - generic [ref=f139e65]: Chiều dài (mm)
+                - spinbutton "Chiều dài (mm)" [ref=f139e66]
+              - generic [ref=f139e67]:
+                - generic [ref=f139e68]: Điểm cân bằng (mm)
+                - spinbutton "Điểm cân bằng (mm)" [ref=f139e69]
+              - generic [ref=f139e70]:
+                - generic [ref=f139e71]: Kiểu cân bằng
+                - combobox "Kiểu cân bằng" [ref=f139e72]:
+                  - option "-- Không rõ --" [selected]
+                  - option "Nặng đầu (tấn công)"
+                  - option "Cân bằng"
+                  - option "Nhẹ đầu (phòng thủ)"
+              - generic [ref=f139e73]:
+                - generic [ref=f139e74]: Độ cứng thân vợt
+                - combobox "Độ cứng thân vợt" [ref=f139e75]:
+                  - option "-- Không rõ --" [selected]
+                  - option "Mềm"
+                  - option "Trung bình"
+                  - option "Cứng"
+                  - option "Rất cứng"
+              - generic [ref=f139e76]:
+                - generic [ref=f139e77]: Căng tối đa (kg)
+                - spinbutton "Căng tối đa (kg)" [ref=f139e78]
+              - generic [ref=f139e79]:
+                - generic [ref=f139e80]: Chất liệu khung
+                - textbox "Chất liệu khung" [ref=f139e81]:
+                  - /placeholder: Graphite + Namd
+              - generic [ref=f139e82]:
+                - generic [ref=f139e83]: Chất liệu thân vợt
+                - textbox "Chất liệu thân vợt" [ref=f139e84]:
+                  - /placeholder: Graphite siêu bền
+            - generic [ref=f139e85]:
+              - button "Lưu sản phẩm" [ref=f139e86] [cursor=pointer]:
+                - generic [aria-hidden] [ref=f139e87]: 
+                - text: Lưu sản phẩm
+              - link "Huỷ" [ref=f139e88] [cursor=pointer]:
+                - /url: /admin/san-pham
+          - generic [ref=f139e89]:
+            - generic [aria-hidden] [ref=f139e90]: 
+            - text: Giá bán và tồn kho nằm ở từng
+            - strong [ref=f139e91]: biến thể
+            - text: (màu × trọng lượng × cỡ cán). Sau khi lưu sản phẩm, hãy sang trang “Biến thể & ảnh” để bổ sung.
+  - text: 

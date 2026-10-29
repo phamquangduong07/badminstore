@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="vi"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/admin}">
+<head>
+    <title>Quản lý loại vợt</title>
+</head>
+<body>
+
+<th:block layout:fragment="content">
+
+    <div class="page-head">
+        <div>
+            <h1 class="page-title"><i class="bi bi-collection" aria-hidden="true"></i> Quản lý loại vợt</h1>
+            <p class="text-muted small mb-0">Loại vợt (lối chơi) dùng khi tạo sản phẩm và làm bộ lọc trên trang khách.</p>
+        </div>
+        <div class="d-flex align-items-center gap-2">
+            <span class="text-muted small" th:text="|${categories.size()} loại vợt|">0 loại vợt</span>
+            <a class="btn btn-sm btn-primary" th:href="@{/admin/loai-vot/tao-moi}">
+                <i class="bi bi-plus-square" aria-hidden="true"></i> Thêm loại vợt
+            </a>
+        </div>
+    </div>
+
+    <form class="card-soft mb-3" method="get" th:action="@{/admin/loai-vot}">
+        <div class="card-body row g-2 align-items-end">
+            <div class="col-sm-8 col-lg-5">
+                <label class="form-label small" for="keyword">Tìm theo tên / mô tả</label>
+                <input class="form-control" id="keyword" name="keyword" th:value="${keyword}"
+                       placeholder="Ví dụ: Vợt tấn công">
+            </div>
+            <div class="col-lg-4 d-flex gap-2">
+                <button class="btn btn-primary" type="submit">
+                    <i class="bi bi-search" aria-hidden="true"></i> Tìm
+                </button>
+                <a class="btn btn-outline-secondary" th:href="@{/admin/loai-vot}">Xoá lọc</a>
+            </div>
+        </div>
+    </form>
+
+    <div class="card-soft">
+        <div class="table-responsive table-scroll">
+            <table class="table table-hover align-middle mb-0 table-sticky">
+                <thead>
+                <tr>
+                    <th scope="col">Tên / Mô tả</th>
+                    <th scope="col" class="text-center">Sản phẩm đang dùng</th>
+                    <th scope="col">Cập nhật</th>
+                    <th scope="col" class="text-end">Thao tác</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="row : ${categories}">
+                    <td>
+                        <div class="fw-semibold" th:text="${row.category.name}">Tên loại</div>
+                        <div class="small text-muted" th:if="${row.category.description != null}"
+                             th:text="${row.category.description}">Mô tả</div>
+                    </td>
+                    <td class="text-center">
+                        <a th:if="${row.productCount > 0}"
+                           th:href="@{/admin/san-pham(categoryId=${row.category.id})}"
+                           th:attr="aria-label=|Xem ${row.productCount} sản phẩm thuộc ${row.category.name}|"
+                           th:text="${row.productCount}">0</a>
+                        <span th:unless="${row.productCount > 0}" class="text-muted">0</span>
+                    </td>
+                    <td class="small">
+                        <span th:insert="~{fragments/common :: dateTime(${row.category.updatedAt})}">00/00/0000</span>
+                    </td>
+                    <td class="text-end">
+                        <div class="d-flex justify-content-end gap-1">
+                            <a class="btn btn-sm btn-outline-primary"
+                               th:href="@{/admin/loai-vot/{id}/sua(id=${row.category.id})}"
+                               th:attr="aria-label=|Sửa loại vợt ${row.category.name}|" title="Sửa loại vợt">
+                                <i class="bi bi-pencil-square" aria-hidden="true"></i>
+                                <span class="d-none d-xl-inline">Sửa</span>
+                            </a>
+                            <form th:action="@{/admin/loai-vot/{id}/xoa(id=${row.category.id})}"
+                                  method="post" class="d-inline"
+                                  th:data-confirm="${'Xoá loại vợt ' + row.category.name + '? Chỉ xoá được khi chưa có sản phẩm nào dùng loại này.'}">
+                                <button class="btn btn-sm btn-outline-danger" type="submit"
+                                        th:attr="aria-label=|Xoá loại vợt ${row.category.name}|" title="Xoá loại vợt">
+                                    <i class="bi bi-trash3" aria-hidden="true"></i>
+                                </button>
+                            </form>
+                        </div>
+                    </td>
+                </tr>
+                <tr th:if="${categories.isEmpty()}">
+                    <td colspan="4" class="p-0"
+                        th:insert="~{fragments/common :: emptyState('bi-collection', 'Chưa có loại vợt nào. Hãy thêm loại để dùng khi tạo sản phẩm.')}"></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+</th:block>
+
+</body>
+</html>
